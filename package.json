@@ -4,6 +4,7 @@
   "description": "The best project ever.",
   "main": "main.js",
   "directories": {
+    "lib":"lib"
     "test": "test"
   },
   "dependencies": {
@@ -27,7 +28,8 @@
     "open": "0.0.4"
   },
   "scripts": {
-    "test": "grunt nodeunit"
+    "test": "grunt nodeunit",
+    "debug":"grunt debug"
   },
   "repository": {
     "type": "git",

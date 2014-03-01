@@ -5,13 +5,13 @@ var requirejs = require('requirejs')
   , fs = require('fs')
   , _ = require('underscore')
   , program = require('commander')
-  , matcher = require("./matcher")
-  , factory = require("./factory")
+  , matcher = require("./lib/matcher")
+  , factory = require("./lib/factory")
   , config = {
-      baseUrl: 'demo2'
+      baseUrl: ''
+    , name: ''
+    , out: ''
     , optimize: 'none'
-    , name: 'main'
-    , out: './demo2/dist.js'
     , onBuildWrite: parse
     , injectGlobals: ["this","window","document"]
     , customGlobals: ["scope1","scope2"]
@@ -20,6 +20,17 @@ var requirejs = require('requirejs')
                       ,{lib:"one", global:"scope2"}]
   }
   , output = []
+
+  program
+    .option('-r, --root [value]', 'project root')
+    .option('-o, --out [value]', 'output')
+    .option('-s, --src [value]', 'main requirejs file')
+    .parse(process.argv);
+
+  if(program.root) config.baseUrl = program.root
+  if(program.out) config.out = program.out
+  if(program.src) config.name = program.src
+  if(!(program.root && program.out && program.src)) process.exit()
   
   requirejs.optimize(config, build, error)
   

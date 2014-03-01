@@ -5,11 +5,9 @@ Install the module with: `npm install bbamd`
 
 ###Config
 ```javascript
+  //Hardcoded atm
   var config = {
-      baseUrl: 'demo'
     , optimize: 'none'
-    , name: 'main'
-    , out: './demo/dist.js'
     , onBuildWrite: parse
     , injectGlobals: ["this","window","document"]
     , customGlobals: ["scope1","scope2"]
@@ -17,6 +15,11 @@ Install the module with: `npm install bbamd`
     , attachToGlobal: [{lib:"three", global:"scope1"}
                       ,{lib:"one", global:"scope2"}]
   }
+```
+
+###Usage
+```
+node main.js --root "demo1" --out "./dist.out" --src "main"
 ```
 
 ###Result
