@@ -1,26 +1,34 @@
 //TODO make fluent api
 var matcher = require('./matcher')
+  , _ = require('underscore')
 
-module.exports.createProgram = createProgram
-module.exports.createVar = createVar
-module.exports.resolveFunction = resolveFunction
+function introduceVar(body) {
+  //TODO make camelCase
+  var name = body.arguments[0].value
+    , deps = body.arguments[1].elements
+    , fun  = body.arguments[2]
 
+  return createProgram(createVar(escapeNestedDeps(name), deps, fun))
+}
 
-//TODO name at the end of sign
-function createProgram(body, name) {
-  var newBody = !!name 
-    ? createVar(name, resolveFunction(body))
-    : createSelfInvokingFunctionWithClousure(
-      body.arguments[0]
-    , resolveFunction(body.arguments[1]))
+function introduceClosure(body) {
+  var deps = body.arguments[0]
+    , fun  = body.arguments[1]
 
+  return createProgram(createClosure(deps, fun))
+}
+
+module.exports.introduceVar = introduceVar
+module.exports.introduceClosure = introduceClosure
+
+function createProgram(body) {
   return {
     "type": "Program",
-    "body": [newBody] 
+    "body": [body] 
   }
 }
 
-function createVar(name, expression) {
+function createVar(name, deps, expression) {
   return {
     "type": "VariableDeclaration",
     "declarations": [
@@ -30,46 +38,58 @@ function createVar(name, expression) {
         "type": "Identifier",
         "name": name
       },
-      "init": convertExpression(expression)
+      "init": convertExpression(expression, deps)
     }
     ],
     "kind": "var"
   }
-}
 
-function createVarSelfInvokingFunction(functionExpression) {
-  return {
-    "type": "CallExpression",
-    "callee": functionExpression,
-    "arguments": functionExpression.params
+  function convertExpression(block, deps) {
+    var body = block.body.body
+      , len = body.length
+
+    return len == 1 && matcher.isReturn(body[0]) && deps.length == 0
+           ? resolveInlineDeps(body)
+           : createVarSelfInvokingFunction(deps, block)
+
+      function resolveInlineDeps(body) { return body[0].argument }
+
+      function createVarSelfInvokingFunction(deps, functionExpression) {
+
+        return {
+          "type": "CallExpression",
+          "callee": functionExpression,
+          "arguments": overrideDeps(deps)
+        }
+      }
   }
+
 }
 
-function createSelfInvokingFunctionWithClousure(arguments, functionExpression) {
+function createClosure(arguments, functionExpression) {
   return {
     "type": "ExpressionStatement",
     "expression": {
       "type": "CallExpression",
       "callee": functionExpression,
-      "arguments": arguments.elements
+      "arguments": overrideDeps(arguments.elements)
     }
-}
-}
-
-function resolveFunction(fun){
-  var body = fun.body.body
-    , len = body.length
-
-  return len == 1 && matcher.isReturn(body[0])
-         ? body[0]
-         : fun
-}
-
-function convertExpression(block) {
-  if(matcher.isReturn(block))
-    return block.argument
-  else{
-    return createVarSelfInvokingFunction(block) 
   }
 }
 
+function escapeNestedDeps(name) {
+  return name.replace(/^.\//,"")
+             .replace(/[\/]([a-z])/g, function(v) {
+               return v.toUpperCase().replace("/","")
+             })
+
+}
+
+function overrideDeps(deps) {
+  return _(deps).map(function(d) {
+    d.name = escapeNestedDeps(d.value)
+    d.type = "Identifier"
+
+    return  d
+  })
+}
