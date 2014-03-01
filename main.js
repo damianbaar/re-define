@@ -25,8 +25,7 @@ var requirejs = require('requirejs')
   function build(response, code, contents) {
     var name = config.out
       , ast = factory.wrap(output, config)
-      
-     var content = escodegen.generate(ast)
+      , content = escodegen.generate(ast)
 
     fs.writeFileSync(name, content)
   }
@@ -37,7 +36,7 @@ var requirejs = require('requirejs')
     output.push(
       estraverse.replace(
         esprima.parse(contents)
-        , {enter: enter, leave:leave}
+      , {enter: enter, leave:leave}
       )
     )
 

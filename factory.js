@@ -40,7 +40,7 @@ function createVar(name, deps, expression, config) {
         "name": name
       },
       "init": shouldAttach
-        ? assignmentGlobalExpression(relation.global, right) 
+        ? assignmentGlobalExpression(relation.global, name, right) 
         : right
     }
     ],
@@ -129,8 +129,6 @@ function createGlobalWrapper(body, config) {
     }())
   })
 
-  debugger
-
   return createProgram(
     initializeGlobals,
     createClosure(orgParams,
@@ -142,14 +140,22 @@ function createGlobalWrapper(body, config) {
                   }))
 }
 
-function assignmentGlobalExpression(left, right) {
+function assignmentGlobalExpression(left, name, right) {
   return {
     "type": "AssignmentExpression",
     "operator": "=",
     "left": {
-      "type": "Identifier",
-      "name": left 
-    },
+      "type": "MemberExpression",
+      "computed": false,
+      "object": {
+          "type": "Identifier",
+          "name": left
+      },
+      "property": {
+          "type": "Identifier",
+          "name": name
+      }
+  },
     "right": right
   }
 }
