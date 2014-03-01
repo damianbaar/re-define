@@ -12,29 +12,29 @@ var requirejs = require('requirejs')
     , name: 'main'
     , out: './demo/dist.js'
     , onBuildWrite: parse
-    , insertGlobals: true
-    , globals: []
+    , globals: ["d3","jquery"] //add shorthands for globals, such $, _
+    , attachToNamespace: ["four"]
   }
   , output = []
   
   requirejs.optimize(config, build, error)
-
+  
   function build(response, code, contents) {
-    var all = _(output).reduce(
-                  function(memo, num){ 
-                    return memo + num
-                })
+    var name = config.out
+      , content = escodegen.generate(factory.wrap(output, config.globals))
 
-    fs.writeFileSync(config.out, all)
+    fs.writeFileSync(name, content)
   }
 
   function error(e) { console.log(e) }
 
   function parse( name, path, contents ) {
-    var ast = esprima.parse(contents)
-      , cast = estraverse.replace(ast, {enter: enter, leave:leave})
-
-    output.push(escodegen.generate(cast) + "\n")
+    output.push(
+      estraverse.replace(
+        esprima.parse(contents)
+        , {enter: enter, leave:leave}
+      )
+    )
 
     function enter(node, parent) {
       var main

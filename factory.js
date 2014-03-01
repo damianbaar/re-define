@@ -1,32 +1,28 @@
-//TODO make fluent api
 var matcher = require('./matcher')
   , _ = require('underscore')
 
 function introduceVar(body) {
-  //TODO make camelCase
   var name = body.arguments[0].value
     , deps = body.arguments[1].elements
     , fun  = body.arguments[2]
 
-  return createProgram(createVar(escapeNestedDeps(name), deps, fun))
+  return createVar(escapeNestedDeps(name), deps, fun)
 }
 
 function introduceClosure(body) {
   var deps = body.arguments[0]
     , fun  = body.arguments[1]
 
-  return createProgram(createClosure(deps, fun))
+  return createClosure(overrideDeps(deps.elements), fun)
+}
+
+function wrap(body, globals) {
+  return createGlobalWrapper(body, globals)
 }
 
 module.exports.introduceVar = introduceVar
 module.exports.introduceClosure = introduceClosure
-
-function createProgram(body) {
-  return {
-    "type": "Program",
-    "body": [body] 
-  }
-}
+module.exports.wrap = wrap
 
 function createVar(name, deps, expression) {
   return {
@@ -66,15 +62,38 @@ function createVar(name, deps, expression) {
 
 }
 
-function createClosure(arguments, functionExpression) {
+function createClosure(args, functionExpression) {
   return {
     "type": "ExpressionStatement",
     "expression": {
       "type": "CallExpression",
       "callee": functionExpression,
-      "arguments": overrideDeps(arguments.elements)
+      "arguments": args
     }
   }
+}
+
+function createGlobalWrapper(body, globals, ns) {
+  var deps = _(globals).map(function(d){
+                return {type:"Identifier", name: d}
+              })
+
+  return createProgram(
+          createClosure(deps,
+            {
+              "type": "FunctionExpression",
+              "defaults": [],
+              "params": deps,
+              "body": createBlockStatement(body)
+            }))
+}
+
+function createProgram(body) {
+  return { "type": "Program", "body": [body]}
+}
+
+function createBlockStatement(body) {
+  return {"type": "BlockStatement", "body": body}
 }
 
 function escapeNestedDeps(name) {
