@@ -1,27 +1,25 @@
-# bbamd
-
-The best project ever.
+# byebyeAMD
 
 ## Getting Started
 Install the module with: `npm install bbamd`
 
 ```javascript
-var bbamd = require('bbamd');
-bbamd.awesome(); // "awesome"
+var depsFour = 'I\'m in different folder';
+var one = function (four) {
+        return 'Hi there!' + ' and I\'m talking to four:' + four;
+    }(depsFour);
+var three = { hello: 'Yo!' };
+var two = function (three) {
+        return three;
+    }(three);
+(function (one, two, four) {
+    console.log(one, two.hello, four);
+}(one, two, depsFour));
 ```
 
 ## Documentation
 _(Coming soon)_
 
 ## Examples
-_(Coming soon)_
+to find out more, check demo folder
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-## Release History
-_(Nothing yet)_
-
-## License
-Copyright (c) 2014 Damian Baar  
-Licensed under the MIT license.
