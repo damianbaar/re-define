@@ -1,3 +1,3 @@
-require(["one","two"], function(one, two){
-  console.log(one.name, two.name)
+require(["one","two","deps/four"], function(one, two, four){
+  console.log(one, two.hello, four)
 })

@@ -1,7 +1,9 @@
+var deps_four = 'I\'m in different folder';
+var one = 'Hi there!';
+var three = { hello: 'Yo!' };
+var two = three;
+(function (one, two, four) {
+    console.log(one, two.hello, four);
+}('one', 'two', 'deps/four'));
+define("main", function(){});
 
-/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/bbamd/demo/dist.js
-----------------
-/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/bbamd/demo/one.js
-/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/bbamd/demo/three.js
-/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/bbamd/demo/two.js
-/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/bbamd/demo/main.js

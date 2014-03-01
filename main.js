@@ -15,33 +15,32 @@ var requirejs = require('requirejs')
 
   requirejs.optimize(config, build, error)
 
-  function build(response) {
-    fs.writeFile(config.out, response)
-  }
+  function build(response, code, contents) {}
 
-  function error(e) {
-    console.log(e)
-  }
-
+  function error(e) { console.log(e) }
 
   function parse( name, path, contents ) {
     var ast = esprima.parse(contents)
-      , define
       , cast = estraverse.replace(ast, {enter: enter, leave:leave})
 
-    debugger
     return escodegen.generate(cast)
 
     function enter(node, parent) {
-      define = matcher.isDefine(node)
-      if(define) {
-        var name = define.arguments[0].value
-          , deps = define.arguments[1]
-          , fun = define.arguments[2]
+      var main
 
-        return factory.createProgram(
-          factory.createVar(name, 
-                            matcher.resolveFunction(fun)))
+      if(main = matcher.isDefine(node)) {
+        //TODO make camelCase
+        var name = main.arguments[0].value.replace("/","_")
+          , deps = main.arguments[1]
+          , fun  = main.arguments[2]
+
+        return factory.createProgram(fun, name)
+      }
+      else if(main = matcher.isRequire(node)) {
+        return factory.createProgram(main)
+      }
+      else if(main = matcher.isCommonJS(node)) {
+        //TODO implementation will be soon
       }
       else
         this.break()
