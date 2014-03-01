@@ -12,8 +12,11 @@ var requirejs = require('requirejs')
     , name: 'main'
     , out: './demo/dist.js'
     , onBuildWrite: parse
-    , globals: ["d3","jquery"] //add shorthands for globals, such $, _
-    , attachToNamespace: ["four"]
+    , injectGlobals: ["this","window","document"]
+    , customGlobals: ["scope1","scope2"]
+    , initializeGlobals: ["scope1","scope2"] 
+    , attachToGlobal: [{lib:"three", global:"scope1"}
+                      ,{lib:"one", global:"scope2"}]
   }
   , output = []
   
@@ -21,14 +24,16 @@ var requirejs = require('requirejs')
   
   function build(response, code, contents) {
     var name = config.out
-      , content = escodegen.generate(factory.wrap(output, config.globals))
+      , ast = factory.wrap(output, config)
+      
+     var content = escodegen.generate(ast)
 
     fs.writeFileSync(name, content)
   }
 
   function error(e) { console.log(e) }
 
-  function parse( name, path, contents ) {
+  function parse(name, path, contents) {
     output.push(
       estraverse.replace(
         esprima.parse(contents)
@@ -40,7 +45,7 @@ var requirejs = require('requirejs')
       var main
 
       if(main = matcher.isDefine(node)) {
-        return factory.introduceVar(main)
+        return factory.introduceVar(main, config)
       }
       else if(main = matcher.isRequire(node)) {
         return factory.introduceClosure(main)

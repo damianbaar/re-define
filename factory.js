@@ -1,12 +1,12 @@
 var matcher = require('./matcher')
   , _ = require('underscore')
 
-function introduceVar(body) {
+function introduceVar(body, config) {
   var name = body.arguments[0].value
     , deps = body.arguments[1].elements
     , fun  = body.arguments[2]
 
-  return createVar(escapeNestedDeps(name), deps, fun)
+  return createVar(escapeNestedDeps(name), deps, fun, config)
 }
 
 function introduceClosure(body) {
@@ -24,7 +24,12 @@ module.exports.introduceVar = introduceVar
 module.exports.introduceClosure = introduceClosure
 module.exports.wrap = wrap
 
-function createVar(name, deps, expression) {
+function createVar(name, deps, expression, config) {
+  //TODO limitation: is able only to attach to one global
+  var relation = _(config.attachToGlobal).where({lib:name})[0]
+    , shouldAttach = !!relation
+    , right = convertExpression(expression, deps)
+
   return {
     "type": "VariableDeclaration",
     "declarations": [
@@ -34,7 +39,9 @@ function createVar(name, deps, expression) {
         "type": "Identifier",
         "name": name
       },
-      "init": convertExpression(expression, deps)
+      "init": shouldAttach
+        ? assignmentGlobalExpression(relation.global, right) 
+        : right
     }
     ],
     "kind": "var"
@@ -45,8 +52,8 @@ function createVar(name, deps, expression) {
       , len = body.length
 
     return len == 1 && matcher.isReturn(body[0]) && deps.length == 0
-           ? resolveInlineDeps(body)
-           : createVarSelfInvokingFunction(deps, block)
+      ? resolveInlineDeps(body)
+      : createVarSelfInvokingFunction(deps, block)
 
       function resolveInlineDeps(body) { return body[0].argument }
 
@@ -73,23 +80,81 @@ function createClosure(args, functionExpression) {
   }
 }
 
-function createGlobalWrapper(body, globals, ns) {
-  var deps = _(globals).map(function(d){
-                return {type:"Identifier", name: d}
-              })
+function createGlobalWrapper(body, config) {
+  var orgParams = []
+    , escapedParams = []
+    , initializeGlobals = []
+
+  _(config.injectGlobals).each(function(d){
+    orgParams.push({type:"Identifier", name: d})
+    escapedParams.push({type:"Identifier", name: function(d){
+      //TODO make that smarter, this = root, underscore = _
+      //refresh inner references also
+      //
+      //TODO make safe custom globals function(g){if(g) return g }
+      //noConflict
+      if(d == "this")
+        return "parent"
+
+      return d
+    }(d)})
+  })
+
+  _(config.customGlobals).each(function(d){
+    orgParams.push({type:"Identifier", name: d})
+    escapedParams.push({type:"Identifier", name: d})
+  })
+
+  ////initialize globals
+  //
+  _(config.initializeGlobals).each(function(d){
+    initializeGlobals.push(function(){
+      return {
+            "type": "VariableDeclaration",
+            "declarations": [
+                {
+                    "type": "VariableDeclarator",
+                    "id": {
+                        "type": "Identifier",
+                        "name": d 
+                    },
+                    "init": {
+                        "type": "ObjectExpression",
+                        "properties": []
+                    }
+                }
+            ],
+            "kind": "var"
+        }
+    }())
+  })
+
+  debugger
 
   return createProgram(
-          createClosure(deps,
-            {
-              "type": "FunctionExpression",
-              "defaults": [],
-              "params": deps,
-              "body": createBlockStatement(body)
-            }))
+    initializeGlobals,
+    createClosure(orgParams,
+                  {
+                    "type": "FunctionExpression",
+                    "defaults": [],
+                    "params": escapedParams,
+                    "body": createBlockStatement(body)
+                  }))
 }
 
-function createProgram(body) {
-  return { "type": "Program", "body": [body]}
+function assignmentGlobalExpression(left, right) {
+  return {
+    "type": "AssignmentExpression",
+    "operator": "=",
+    "left": {
+      "type": "Identifier",
+      "name": left 
+    },
+    "right": right
+  }
+}
+function createProgram(vars, body) {
+  return { "type": "Program", "body": vars.concat(body)}
 }
 
 function createBlockStatement(body) {
