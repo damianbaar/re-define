@@ -1,10 +1,12 @@
 var matcher = require('./matcher')
   , _ = require('underscore')
 
+//FIXME define({}) 
+//FIXME define(function(require){}) 
 function introduceVar(body, config) {
   var name = body.arguments[0].value
     , deps = body.arguments[1].elements
-    , fun  = body.arguments[2]
+    , fun  = body.arguments[2] || body.arguments[1] //define({})
 
   return createVar(escapeNestedDeps(name), deps, fun, config)
 }
@@ -48,6 +50,9 @@ function createVar(name, deps, expression, config) {
   }
 
   function convertExpression(block, deps) {
+    if(matcher.isObjectExpression(block))
+      return block
+
     var body = block.body.body
       , len = body.length
 
@@ -55,7 +60,10 @@ function createVar(name, deps, expression, config) {
       ? resolveInlineDeps(body)
       : createVarSelfInvokingFunction(deps, block)
 
-      function resolveInlineDeps(body) { return body[0].argument }
+      function resolveInlineDeps(body) { 
+        return body[0].argument 
+      }
+
 
       function createVarSelfInvokingFunction(deps, functionExpression) {
 

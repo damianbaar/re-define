@@ -26,10 +26,13 @@ function isCommonJS(node) {
 
 function isReturn(node) { return node.type == "ReturnStatement" }
 
+function isObjectExpression(node) {return node.type == "ObjectExpression"}
+
 module.exports.isDefine = isDefine
 module.exports.isRequire = isRequire
 module.exports.isCommonJS = isCommonJS
 module.exports.isReturn = isReturn
+module.exports.isObjectExpression = isObjectExpression
 
 function isAMD(node) {
   var body = node.body

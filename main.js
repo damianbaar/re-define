@@ -4,13 +4,14 @@ var requirejs = require('requirejs')
   , escodegen = require('escodegen')
   , fs = require('fs')
   , _ = require('underscore')
+  , program = require('commander')
   , matcher = require("./matcher")
   , factory = require("./factory")
   , config = {
-      baseUrl: 'demo'
+      baseUrl: 'demo2'
     , optimize: 'none'
     , name: 'main'
-    , out: './demo/dist.js'
+    , out: './demo2/dist.js'
     , onBuildWrite: parse
     , injectGlobals: ["this","window","document"]
     , customGlobals: ["scope1","scope2"]
