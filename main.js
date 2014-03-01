@@ -4,11 +4,15 @@ var requirejs = require('requirejs')
   , escodegen = require('escodegen')
   , fs = require('fs')
   , _ = require('underscore')
-  , program = require('commander')
   , matcher = require("./lib/matcher")
   , factory = require("./lib/factory")
-  , config = {
-      baseUrl: ''
+
+module.exports.convert = convert
+
+function convert(override) {
+  var config = 
+  {
+    baseUrl: ''
     , name: ''
     , out: ''
     , optimize: 'none'
@@ -17,23 +21,12 @@ var requirejs = require('requirejs')
     , customGlobals: ["scope1","scope2"]
     , initializeGlobals: ["scope1","scope2"] 
     , attachToGlobal: [{lib:"three", global:"scope1"}
-                      ,{lib:"one", global:"scope2"}]
+    ,{lib:"one", global:"scope2"}]
   }
   , output = []
 
-  program
-    .option('-r, --root [value]', 'project root')
-    .option('-o, --out [value]', 'output')
-    .option('-s, --src [value]', 'main requirejs file')
-    .parse(process.argv);
+  requirejs.optimize(_(config).extend(override), build, error)
 
-  if(program.root) config.baseUrl = program.root
-  if(program.out) config.out = program.out
-  if(program.src) config.name = program.src
-  if(!(program.root && program.out && program.src)) process.exit()
-  
-  requirejs.optimize(config, build, error)
-  
   function build(response, code, contents) {
     var name = config.out
       , ast = factory.wrap(output, config)
@@ -49,7 +42,7 @@ var requirejs = require('requirejs')
       estraverse.replace(
         esprima.parse(contents)
       , {enter: enter, leave:leave}
-      )
+    )
     )
 
     function enter(node, parent) {
@@ -71,4 +64,6 @@ var requirejs = require('requirejs')
     function leave(node, parent) {}
   }
 
+
+}
 

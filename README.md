@@ -1,4 +1,4 @@
-# byebyeAMD
+# ByeByeAMD
 
 ## Getting Started
 Install the module with: `npm install bbamd`
@@ -20,10 +20,13 @@ Install the module with: `npm install bbamd`
 ###Usage
 ```
 node main.js --root "demo1" --out "./dist.out" --src "main"
+
+bbamd --root "demo1" --out "./dist.out" --src "main"
 ```
 
 ###Result
 ```javascript
+//demo1
 var scope1 = {};
 var scope2 = {};
 (function (parent, window, document, scope1, scope2) {

@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "description": "The best project ever.",
   "main": "main.js",
+  "bin" : { 
+    "bbamd" : "./bin/bbamd.js"
+  },
   "directories": {
-    "lib":"lib"
+    "lib":"lib",
     "test": "test"
   },
   "dependencies": {
@@ -29,7 +32,8 @@
   },
   "scripts": {
     "test": "grunt nodeunit",
-    "debug":"grunt debug"
+    "debug":"grunt debug",
+    "link":"npm link bbamd"
   },
   "repository": {
     "type": "git",
