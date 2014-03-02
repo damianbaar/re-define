@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -14,12 +12,12 @@ module.exports = function(grunt) {
       gruntfile: {
         src: 'Gruntfile.js'
       },
-      lib: {
-        src: ['lib/**/*.js']
-      },
-      test: {
-        src: ['test/**/*.js']
-      },
+      // lib: {
+      //   src: ['lib/**/*.js']
+      // },
+      // test: {
+      //   src: ['test/**/*.js']
+      // },
     },
     'node-inspector': {
       debug: {
@@ -70,11 +68,6 @@ module.exports = function(grunt) {
       }
     }
   })
-
-  grunt.registerTask('spec', 'Runs a task on a specified file', function (fileName) {
-    globalConfig.file = fileName;
-    grunt.task.run('simplemocha:spec');
-  });
 
   grunt.loadNpmTasks('grunt-contrib-nodeunit')
   grunt.loadNpmTasks('grunt-contrib-jshint')

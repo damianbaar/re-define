@@ -1,6 +1,6 @@
 'use strict';
 
-var bbamd = require('../lib/bbamd.js');
+var bbamd = require('../main')
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -22,15 +22,12 @@ var bbamd = require('../lib/bbamd.js');
     test.ifError(value)
 */
 
-exports['awesome'] = {
+exports['main'] = {
   setUp: function(done) {
-    // setup here
     done();
   },
-  'no args': function(test) {
-    test.expect(1);
-    // tests here
-    test.equal(bbamd.awesome(), 'awesome', 'should be awesome.');
+  'init': function(test) {
+    test.ok(false, "TODO implement")
     test.done();
   },
 };

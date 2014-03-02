@@ -8,7 +8,7 @@ var requirejs = require('requirejs')
   , factory = require("./lib/factory")
 
 module.exports.convert = convert
-
+  
 function convert(override) {
   var config = _(
     { baseUrl: ''

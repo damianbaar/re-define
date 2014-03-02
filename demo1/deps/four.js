@@ -1,3 +1,3 @@
 define(function() {
-  return "I'm in different folder"
+  return "Yeah that's me, and I'm in different folder"
 })

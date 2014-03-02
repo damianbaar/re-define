@@ -2,3 +2,5 @@ node_modules
 .rebooted
 tags
 *.out
+.idea
+bbamd.iml
