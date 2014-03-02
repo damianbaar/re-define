@@ -10,22 +10,17 @@ var requirejs = require('requirejs')
 module.exports.convert = convert
 
 function convert(override) {
-  var config = 
-  {
-    baseUrl: ''
-    , name: ''
-    , out: ''
-    , optimize: 'none'
-    , onBuildWrite: parse
-    , injectGlobals: ["this","window","document"]
-    , customGlobals: ["scope1","scope2"]
-    , initializeGlobals: ["scope1","scope2"] 
-    , attachToGlobal: [{lib:"three", global:"scope1"}
-    ,{lib:"one", global:"scope2"}]
-  }
+  var config = _(
+    { baseUrl: ''
+      , name: ''
+      , out: ''
+      , optimize: 'none'
+    }).extend(override)
   , output = []
 
-  requirejs.optimize(_(config).extend(override), build, error)
+  config.onBuildWrite = parse
+
+  requirejs.optimize(config, build, error)
 
   function build(response, code, contents) {
     var name = config.out
@@ -63,7 +58,5 @@ function convert(override) {
 
     function leave(node, parent) {}
   }
-
-
 }
 

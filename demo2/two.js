@@ -1,6 +1,5 @@
-//TODO I do not want to resolve so akrward patterns
-//latter one will be supported CommonJS
-// define(function (require) {
+//TODO resolving commonjs (r.js convert) and then require/exports/module
+// define(function (require, exports, module) {
 //     var three = require('three');
 //     return {
 //         name: 'two',

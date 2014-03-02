@@ -5,23 +5,22 @@ Install the module with: `npm install bbamd`
 
 ###Config
 ```javascript
-  //Hardcoded atm
   var config = {
     , optimize: 'none'
-    , onBuildWrite: parse
-    , injectGlobals: ["this","window","document"]
-    , customGlobals: ["scope1","scope2"]
-    , initializeGlobals: ["scope1","scope2"] 
-    , attachToGlobal: [{lib:"three", global:"scope1"}
-                      ,{lib:"one", global:"scope2"}]
+    , injectGlobals: [] //i.e. "this","window","document"
+    , customGlobals: [] //i.e. "scope1","scope2"
+    , initializeGlobals: [] //i.e. "scope1","scope2"
+    , attachToGlobal: [] //i.e. list of {lib:"three", global:"scope1"}
   }
 ```
 
 ###Usage
 ```
-node main.js --root "demo1" --out "./dist.out" --src "main"
-
 bbamd --root "demo1" --out "./dist.out" --src "main"
+```
+or
+```
+bbamd --config demo1/build.config
 ```
 
 ###Result
@@ -48,5 +47,5 @@ var scope2 = {};
 _(Coming soon)_
 
 ## Examples
-to find out more, check demo folder
+Check demo folder
 

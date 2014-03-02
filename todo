@@ -3,5 +3,6 @@
 [x] if api, attach to custom global
 [ ] excluding external dependencies
 [ ] handling commonJS (check https://github.com/jrburke/r.js/blob/master/build/jslib/commonJs.js)
+[ ] safe scope initialization (noConflict)
 
 
