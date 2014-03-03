@@ -25,11 +25,15 @@ var program = require('commander')
   if(program.out) config.out = program.out
   if(program.src) config.name = program.src || "main"
 
+  if(!(config.baseUrl && config.out && config.name)) {
+    console.log("Good start!")
+    console.log("To move forward, provide the config file.")
+    process.exit()
+  }
+
   console.log("Base url for project:", config.baseUrl)
   console.log("Output file:", config.out)
   console.log("RequireJS main file:", config.name)
-
-  if(!(config.baseUrl && config.out && config.name)) process.exit()
 
   console.log("\n")
 

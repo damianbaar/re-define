@@ -1,8 +1,11 @@
 # ByeByeAMD
 Proof of concept rather than fully functional lib.
 
+### How it works:
+All AMD modules (soon CommonJS) are resolved into one, clean javascript file.
+
 ## Getting Started
-Install the module (not in npm yet): `git clone https://github.com/damianbaar/bbamd.git && cd bbamd && npm link`
+Install the module: `npm install -g bbamd`
 
 ###Config
 ```javascript
@@ -12,7 +15,9 @@ Install the module (not in npm yet): `git clone https://github.com/damianbaar/bb
     , customGlobals: [] //i.e. "scope1","scope2"
     , initializeGlobals: [] //i.e. "scope1","scope2"
     , attachToGlobal: [] //i.e. list of {lib:"three", global:"scope1"}
-    , "amd-module-name": "name/lib"
+    , "amd-module-name": "ns/lib" //register as amd module
+    , "exclude-libs" : ["text"] 
+    , "exclude-folder": "vendor" 
   }
 ```
 
@@ -23,6 +28,10 @@ bbamd --root "demo1" --out "./dist.out" --src "main"
 or
 ```
 bbamd --config demo1/build.config
+```
+or
+```
+bbamd.convert(config, f excludeFunc(name){return 0 || 1}, f done(content){})
 ```
 
 ###Result
