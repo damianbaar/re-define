@@ -2,7 +2,7 @@
 Proof of concept rather than fully functional lib.
 
 ## Getting Started
-Install the module with: `npm install bbamd`
+Install the module (not in npm yet): `git clone https://github.com/damianbaar/bbamd.git && npm link`
 
 ###Config
 ```javascript
