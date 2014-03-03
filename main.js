@@ -15,6 +15,8 @@ function convert(override, exclude, done) {
       , name: ''
       , out: ''
       , optimize: 'none'
+      , "exclude-libs": []
+      , "exclude-folder":"" 
     }).extend(override)
   , output = []
 
@@ -36,7 +38,7 @@ function convert(override, exclude, done) {
   function parse(name, path, contents) {
     if(excludeDependencies(name))
         return
-
+    
     output.push(
       estraverse.replace(
         esprima.parse(contents)
@@ -47,7 +49,8 @@ function convert(override, exclude, done) {
 
       var exclude = name.indexOf("!") == -1 
                     && (config["exclude-libs"].indexOf(name) > -1
-                    || name.indexOf(config["exclude-folder"]) > -1)
+                    || (!!config["exclude-folder"] 
+                        && name.indexOf(config["exclude-folder"]) > -1))
 
       console.log(exclude ? "excluding: " : "including: ", name)
 
