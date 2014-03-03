@@ -1,7 +1,7 @@
 #!/usr/bin/env node 
 
 var program = require('commander')
-  , bbamd = require('bbamd')
+  , bbamd = require('../main')
   , fs = require('fs')
   , path = require('path')
   , _ = require('underscore')
