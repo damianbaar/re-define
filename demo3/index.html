@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <title>amd ...</title>
-</head>
-<body>
-<script type="text/javascript">
-  define(['ns/lib'] , function (lib) {
-debugger
-    return function () {};
-});
-</script> 
-</body>
+    <script src="http://requirejs.org/docs/release/2.1.11/minified/require.js"></script>
+    <script src="dist/lib.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      require(["ns/lib"], function(lib){
+        console.log("from require", lib)
+      })
+    </script>
+  </body>
 </html>
