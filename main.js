@@ -6,6 +6,8 @@ var requirejs = require('requirejs')
   , _ = require('underscore')
   , matcher = require("./lib/matcher")
   , factory = require("./lib/factory")
+  , events = require('events')
+  , util = require('util')
 
 module.exports.convert = convert
   
