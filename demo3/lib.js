@@ -1,12 +1,12 @@
-define(["vendor/text!./test.json"], function() {
+define(["vendor/text!./test.json"], function(data) {
   function test(){
-    console.log("test")
+    return "outside:"+data.toString()
   }
 
   return function(selection) {
           function test2() {
-            return "test"
+            return "inside"
           }
-          return test()
+          return test() + test2()
          }
 })
