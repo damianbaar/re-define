@@ -4,3 +4,4 @@ tags
 *.out
 .idea
 bbamd.iml
+npm-debug.log

@@ -4,5 +4,6 @@
 [ ] excluding external dependencies
 [ ] handling commonJS (check https://github.com/jrburke/r.js/blob/master/build/jslib/commonJs.js)
 [x] safe scope initialization (noConflict)
+[ ] smarte resolving ../../../, ../.., atm removing all dots and slashes
 
 

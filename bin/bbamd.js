@@ -33,6 +33,7 @@ var program = require('commander')
 
   console.log("\n")
 
-  bbamd.convert(config)
+  bbamd.convert(config, null, function(content){
+    console.log("Check your output file", config.out)
+  })
 
-  console.log("Check your output file", config.out)

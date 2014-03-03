@@ -12,6 +12,7 @@ Install the module with: `npm install bbamd`
     , customGlobals: [] //i.e. "scope1","scope2"
     , initializeGlobals: [] //i.e. "scope1","scope2"
     , attachToGlobal: [] //i.e. list of {lib:"three", global:"scope1"}
+    , "amd-module-name": "name/lib"
   }
 ```
 
