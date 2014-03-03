@@ -9,7 +9,7 @@ var requirejs = require('requirejs')
 
 module.exports.convert = convert
   
-function convert(override) {
+function convert(override, exclude, done) {
   var config = _(
     { baseUrl: ''
       , name: ''
@@ -28,17 +28,31 @@ function convert(override) {
       , content = escodegen.generate(ast)
 
     fs.writeFileSync(name, content)
+    if(done) done(content)
   }
 
   function error(e) { console.log(e) }
 
   function parse(name, path, contents) {
+    if(excludeDependencies(name))
+        return
+
     output.push(
       estraverse.replace(
         esprima.parse(contents)
-      , {enter: enter, leave:leave}
-    )
-    )
+      , {enter: enter, leave:leave}))
+
+    function excludeDependencies(name) {
+      if(exclude) return exclude(name)
+
+      var exclude = name.indexOf("!") == -1 
+                    && (config["exclude-libs"].indexOf(name) > -1
+                    || name.indexOf(config["exclude-folder"]) > -1)
+
+      console.log(exclude ? "excluding: " : "including: ", name)
+
+      return exclude 
+    }
 
     function enter(node, parent) {
       var main

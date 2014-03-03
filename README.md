@@ -12,6 +12,7 @@ Install the module (not in npm yet): `git clone https://github.com/damianbaar/bb
     , customGlobals: [] //i.e. "scope1","scope2"
     , initializeGlobals: [] //i.e. "scope1","scope2"
     , attachToGlobal: [] //i.e. list of {lib:"three", global:"scope1"}
+    , "amd-module-name": "name/lib"
   }
 ```
 
