@@ -1,4 +1,4 @@
-define(["deps/four"],function(four){
+define(["jQuery","d3","deps/four"],function(four){
   return function () {
      d3
        .select("body")

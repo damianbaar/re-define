@@ -18,6 +18,7 @@ Install the module: `npm install -g bbamd`
     , "amd-module-name": "ns/lib" //register as amd module
     , "exclude-libs" : ["text"] 
     , "exclude-folder": "vendor" 
+    , "removeDeps":["jquery", "d3"] //expect that those libs are defined globally
   }
 ```
 

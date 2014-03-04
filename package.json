@@ -1,7 +1,6 @@
 {
   "name": "bbamd",
-  "version": "0.0.2",
-  "description": "The best project ever.",
+  "version": "0.0.3",
   "main": "main.js",
   "bin" : { 
     "bbamd" : "./bin/bbamd.js"

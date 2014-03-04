@@ -15,6 +15,7 @@ function convert(override, exclude, done) {
       , name: ''
       , out: ''
       , optimize: 'none'
+      , removeDeps: []
       , "exclude-libs": []
       , "exclude-folder":"" 
     }).extend(override)
