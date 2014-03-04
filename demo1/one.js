@@ -1,4 +1,5 @@
-define(["jQuery","d3","deps/four"],function(four){
+define(["jquery","d3", "jquery-plugins","deps/four"]
+,function($, d3, plugin, four){
   return function () {
      d3
        .select("body")
