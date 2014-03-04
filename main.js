@@ -3,6 +3,7 @@ var requirejs = require('requirejs')
   , estraverse = require('estraverse')
   , escodegen = require('escodegen')
   , fs = require('fs')
+  , path = require('path')
   , _ = require('underscore')
   , matcher = require("./lib/matcher")
   , factory = require("./lib/factory")
@@ -36,7 +37,7 @@ function convert(override, exclude, done) {
 
   function error(e) { console.log(e) }
 
-  function parse(name, path, contents) {
+  function parse(name, filePath, contents) {
     if(excludeDependencies(name))
         return
     
@@ -62,6 +63,17 @@ function convert(override, exclude, done) {
       var main
 
       if(main = matcher.isDefine(node)) {
+        var paths = main.arguments[1]
+
+        _(paths.elements).each(function(d){
+          if(d.value.indexOf("/") == -1) return
+
+          d.value = path.normalize(
+                      filePath.replace(/[^\/]*$/,'') + d.value
+                    )
+                    .replace(process.cwd()+"/","")
+        })
+
         return factory.introduceVar(main, config)
       }
       else if(main = matcher.isRequire(node)) {
