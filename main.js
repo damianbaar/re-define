@@ -63,20 +63,7 @@ function convert(override, exclude, done) {
       var main
 
       if(main = matcher.isDefine(node)) {
-        var paths = main.arguments[1]
-
-        _(paths.elements).each(function(d){
-          if(d.value.indexOf("/") == -1) return
-          
-            d.value = path.normalize(
-                        filePath.replace(/[^\/]*$/,'') + d.value
-                      )
-                      .replace(path.resolve(config.baseUrl),"")
-                      .replace("\\","")
-                      .replace("\/","")
-        })
-
-        return factory.introduceVar(main, config)
+        return factory.introduceVar(main, config, filePath)
       }
       else if(main = matcher.isRequire(node)) {
         return factory.introduceClosure(main)

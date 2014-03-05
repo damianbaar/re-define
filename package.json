@@ -1,12 +1,12 @@
 {
-  "name": "bbamd",
-  "version": "0.0.5",
+  "name": "redefine",
+  "version": "0.0.1",
   "main": "main.js",
-  "bin" : { 
-    "bbamd" : "./bin/bbamd.js"
+  "bin": {
+    "redefine": "./bin/redefine.js"
   },
   "directories": {
-    "lib":"lib",
+    "lib": "lib",
     "test": "test"
   },
   "dependencies": {
@@ -30,11 +30,11 @@
     "open": "0.0.4"
   },
   "scripts": {
-    "link":"npm link bbamd"
+    "link": "npm link redefine"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/damianbaar/bbamd.git"
+    "url": "https://github.com/damianbaar/redefine.git"
   },
   "keywords": [
     "byebye",
@@ -43,7 +43,7 @@
   "author": "Damian Baar",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/damianbaar/bbamd/issues"
+    "url": "https://github.com/damianbaar/redefine/issues"
   },
-  "homepage": "https://github.com/damianbaar/bbamd"
+  "homepage": "https://github.com/damianbaar/redefine"
 }
