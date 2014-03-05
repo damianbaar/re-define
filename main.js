@@ -67,11 +67,13 @@ function convert(override, exclude, done) {
 
         _(paths.elements).each(function(d){
           if(d.value.indexOf("/") == -1) return
-
-          d.value = path.normalize(
-                      filePath.replace(/[^\/]*$/,'') + d.value
-                    )
-                    .replace(process.cwd()+"/","")
+          
+            d.value = path.normalize(
+                        filePath.replace(/[^\/]*$/,'') + d.value
+                      )
+                      .replace(path.resolve(config.baseUrl),"")
+                      .replace("\\","")
+                      .replace("\/","")
         })
 
         return factory.introduceVar(main, config)
