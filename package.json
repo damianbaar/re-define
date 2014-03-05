@@ -30,8 +30,6 @@
     "open": "0.0.4"
   },
   "scripts": {
-    "test": "grunt nodeunit",
-    "debug":"grunt debug",
     "link":"npm link bbamd"
   },
   "repository": {
