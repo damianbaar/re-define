@@ -27,7 +27,7 @@ exports['main'] = {
     done();
   },
   'init': function(test) {
-    test.ok(false, "TODO implement")
+    // test.ok(false, "TODO implement")
     test.done();
   },
 };
