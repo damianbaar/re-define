@@ -95,6 +95,9 @@ var d3 = d3 || {};
     }
 }(this, d3, $, demo1));
 ```
+## Limitation
+* ability to attach only to one global object
+* tested only with requirejs 'text!' plugin
 
 ## TODO
 * make better api, at the moment there is a mess
