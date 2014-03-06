@@ -1,43 +1,20 @@
-# reason
+## reason
+All AMD modules (soon CommonJS) are resolved into one, clean javascript file.
 This is not a clone of AMDClean. Way of resolving RequireJS modules is pretty much the same, however there are some differences ... will post latter about that.
 
-### How it works:
-All AMD modules (soon CommonJS) are resolved into one, clean javascript file.
+### Why
+* to get decent encapsulation
+* in most cases we can live without requirejs, but in general for development purpose is pretty neat.
 
-## Reason:
-* get decent encapsulation
-* in some cases we can live without requirejs, but in general for development purpose is preatty neat.
+### How it can help
+There is an option, to register result bundle as requirejs module. It presents one of the key features of `reason`, all inner modules won't be accessible outside the bundle scope, as well as whole lib could live as a global and requirejs module.
 
-## How it can help
-There is an option, to register result bundle as requirejs module. It presents one key feature of `redefine`, which is, all inner modules won't be accessible outside the bundle scope, as well as whole lib could live as a global and requirejs module.
-
-## Getting Started
+### Getting Started
 Install the module: `npm install -g reason`
 
-## Under the hood
+### Under the hood
 * wrapped 'requirejs' (not sure if I will stick to that)
 * and AST tools
-
-###Config
-```javascript
-  var config = {
-    , optimize: 'none'
-    , injectGlobals: ["d3"] //i.e. "this","window","document"
-    , customGlobals: ["custom_global"] //i.e. "scope1","scope2"
-    , initializeGlobals: ["custom_global"] //i.e. var custom_global = custom_global || {} 
-    , attachToGlobal: [] //i.e. list of {lib:"three", global:"custom_global"}
-    , "amd-module-name": "ns/lib" //register as amd module define(ns/lib, fun(){})
-    , "exclude-libs" : ["text","d3"]  //we don`t want to have a d3 and text in our bundle
-    , "exclude-folder": "vendor" 
-    , "removeDeps":["jquery"] //expect that those libs are defined globally
-	  , shim: {
-			"d3/d3": { exports: "d3" }
-	  }
-    , paths: {
-      "d3/d3": "bower_components/d3/d3-v3"
-    }
-  }
-```
 
 ###Usage
 ```
@@ -52,10 +29,31 @@ or
 reason.convert(config, f excludeFunc(name){return 0 || 1}, f done(content){})
 ```
 
+###Config
+```javascript
+// demo1/build.config
+{
+    "baseUrl": "."
+    , "name": "main"
+    , "out": "./build.js"
+    , "optimize": "none"
+    , "injectGlobals": ["this","d3", "$"]
+    , "customGlobals": ["demo1"]
+    , "initializeGlobals": ["demo1", "$", "d3"] 
+    , "attachToGlobal": [{"lib":"one", "global":"demo1"}]
+    , "removeDeps": []
+    , "shim": {
+      "jquery":{"exports":"$"}
+    }
+    , "exclude-libs": ["d3","jquery"]
+    , "amd-module-name": "namespace/demo1"
+  }
+```
+
 ###Result 
 ```javascript
 
-// output: 'demo1'
+// output: 'demo1/build.js'
 var demo1 = demo1 || {};
 var $ = $ || {};
 var d3 = d3 || {};
