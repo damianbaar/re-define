@@ -51,8 +51,10 @@ or
 redefine.convert(config, f excludeFunc(name){return 0 || 1}, f done(content){})
 ```
 
-###Result (check demo1 folder, to get the source)
+###Result 
 ```javascript
+
+// output: 'demo1'
 var demo1 = demo1 || {};
 var $ = $ || {};
 var d3 = d3 || {};
