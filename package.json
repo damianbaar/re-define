@@ -1,9 +1,9 @@
 {
-  "name": "redefine",
+  "name": "reason",
   "version": "0.0.1",
   "main": "main.js",
   "bin": {
-    "redefine": "./bin/redefine.js"
+    "reason": "./bin/reason.js"
   },
   "directories": {
     "lib": "lib",
@@ -30,20 +30,20 @@
     "open": "0.0.4"
   },
   "scripts": {
-    "link": "npm link redefine"
+    "link": "npm link reason"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/damianbaar/redefine.git"
+    "url": "https://github.com/damianbaar/reason.git"
   },
   "keywords": [
-    "byebye",
+    "module",
     "AMD"
   ],
   "author": "Damian Baar",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/damianbaar/redefine/issues"
+    "url": "https://github.com/damianbaar/reason/issues"
   },
-  "homepage": "https://github.com/damianbaar/redefine"
+  "homepage": "https://github.com/damianbaar/reason"
 }

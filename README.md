@@ -1,8 +1,9 @@
-# Redefine
+# reason
 This is not a clone of AMDClean. Way of resolving RequireJS modules is pretty much the same, however there are some differences ... will post latter about that.
 
 ### How it works:
 All AMD modules (soon CommonJS) are resolved into one, clean javascript file.
+
 ## Reason:
 * get decent encapsulation
 * in some cases we can live without requirejs, but in general for development purpose is preatty neat.
@@ -11,7 +12,7 @@ All AMD modules (soon CommonJS) are resolved into one, clean javascript file.
 There is an option, to register result bundle as requirejs module. It presents one key feature of `redefine`, which is, all inner modules won't be accessible outside the bundle scope, as well as whole lib could live as a global and requirejs module.
 
 ## Getting Started
-Install the module: `npm install -g redefine`
+Install the module: `npm install -g reason`
 
 ## Under the hood
 * wrapped 'requirejs' (not sure if I will stick to that)
@@ -40,15 +41,15 @@ Install the module: `npm install -g redefine`
 
 ###Usage
 ```
-redefine --root "demo1" --out "./dist.out" --src "main"
+reason --root "demo1" --out "./dist.out" --src "main"
 ```
 or
 ```
-redefine --config demo1/build.config
+reason --config demo1/build.config
 ```
 or
 ```
-redefine.convert(config, f excludeFunc(name){return 0 || 1}, f done(content){})
+reason.convert(config, f excludeFunc(name){return 0 || 1}, f done(content){})
 ```
 
 ###Result 
@@ -94,8 +95,6 @@ var d3 = d3 || {};
     }
 }(this, d3, $, demo1));
 ```
-
-## Documentation
 
 ## TODO
 * make better api, at the moment there is a mess
