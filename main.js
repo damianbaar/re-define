@@ -9,21 +9,17 @@ var requirejs = require('requirejs')
   , factory = require("./lib/factory")
 
 module.exports.convert = convert
-  
-function convert(override, exclude, done) {
-  var config = _(
-    { baseUrl: ''
-      , name: ''
-      , out: ''
-      , optimize: 'none'
-      , removeDeps: []
-      , "exclude-libs": []
-      , "exclude-folder":"" 
-    }).extend(override)
-  , output = []
+module.exports.resolveConfig = resolveConfig
 
-  config.onBuildWrite = parse
+convert(JSON.parse(fs.readFileSync("build.config")))
 
+function convert(override, done) {
+  var config = _({resolve:[], export:[]}).extend(resolveConfig(override))
+    , output = []
+
+  _(config).extend({"onBuildWrite": parse})
+
+  console.log(config)
   requirejs.optimize(config, build, error)
 
   function build(response, code, contents) {
@@ -38,26 +34,10 @@ function convert(override, exclude, done) {
   function error(e) { console.log(e) }
 
   function parse(name, filePath, contents) {
-    if(excludeDependencies(name))
-        return
-    
     output.push(
       estraverse.replace(
         esprima.parse(contents)
       , {enter: enter, leave:leave}))
-
-    function excludeDependencies(name) {
-      if(exclude) return exclude(name)
-
-      var exclude = name.indexOf("!") == -1 
-                    && (config["exclude-libs"].indexOf(name) > -1
-                    || (!!config["exclude-folder"] 
-                        && name.indexOf(config["exclude-folder"]) > -1))
-
-      console.log(exclude ? "excluding: " : "including: ", name)
-
-      return exclude 
-    }
 
     function enter(node, parent) {
       var main
@@ -79,3 +59,33 @@ function convert(override, exclude, done) {
   }
 }
 
+function resolveConfig(config) {
+  var paths = {}
+    , shims = {}
+    , globals = []
+    , libs = _(config.resolve).keys()
+    , libConf = _(config.resolve).values()
+    , lib
+
+  _(libConf).each(function(d, i) {
+    if(!(d.path || _(d).has("external"))) return
+
+    lib = libs[i]
+
+    paths[lib] = d.external ? "empty:" : d.path;
+
+    if(d.as)
+      shims[lib] = {exports: d.as}
+  })
+
+  _(libConf).each(function(d, i) {
+    if(!(d.inject || d.global)) return
+
+    lib = { lib: libs[i]
+          , attach: d.attach ? d.attach.join(";") : ""}
+
+    globals.push(_(lib).extend(_.pick(d, ["as", "safe", "global"])))
+  })
+
+  return _(config).extend({paths: paths, shim: shims, globals: globals})
+}
