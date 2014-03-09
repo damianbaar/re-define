@@ -1,4 +1,4 @@
-define(["jquery","d3", "deps/four"]
+define(["jquery","d3/d3", "deps/four"]
 ,function($, d3, four){
   return function () {
      d3

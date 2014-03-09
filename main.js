@@ -74,17 +74,15 @@ function resolveConfig(config) {
 
     paths[lib] = d.external ? "empty:" : d.path;
 
-    if(d.as)
-      shims[lib] = {exports: d.as}
+    if(d.as) shims[lib] = {exports: d.as}
   })
 
   _(libConf).each(function(d, i) {
     if(!(d.inject || d.global)) return
 
-    lib = { lib: libs[i]
-          , attach: d.attach ? d.attach.join(";") : ""}
+    lib = { lib: libs[i] }
 
-    globals.push(_(lib).extend(_.pick(d, ["as", "safe", "global"])))
+    globals.push(_(lib).extend(_.pick(d, ["as", "init", "global"])))
   })
 
   return _(config).extend({paths: paths, shim: shims, globals: globals})
