@@ -26,7 +26,7 @@ reason --config demo1/build.config
 ```
 or
 ```
-reason.convert(config, f excludeFunc(name){return 0 || 1}, f done(content){})
+reason.convert(config, done(content){})
 ```
 
 ###Config
