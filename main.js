@@ -14,12 +14,11 @@ module.exports.resolveConfig = resolveConfig
 convert(JSON.parse(fs.readFileSync("build.config")))
 
 function convert(override, done) {
-  var config = _({resolve:[], export:[]}).extend(resolveConfig(override))
+  var config = _({resolve:{}, export:{}}).extend(resolveConfig(override))
     , output = []
 
   _(config).extend({"onBuildWrite": parse})
 
-  console.log(config)
   requirejs.optimize(config, build, error)
 
   function build(response, code, contents) {
@@ -28,12 +27,16 @@ function convert(override, done) {
       , content = escodegen.generate(ast)
 
     fs.writeFileSync(name, content)
+
     if(done) done(content)
   }
 
   function error(e) { console.log(e) }
 
   function parse(name, filePath, contents) {
+    if(name.indexOf("text") > -1 && name.indexOf("!") == -1)
+      return
+
     output.push(
       estraverse.replace(
         esprima.parse(contents)
@@ -63,26 +66,44 @@ function resolveConfig(config) {
   var paths = {}
     , shims = {}
     , globals = []
-    , libs = _(config.resolve).keys()
-    , libConf = _(config.resolve).values()
+    , keys = _(config.resolve).keys()
+    , values = _(config.resolve).values()
     , lib
 
-  _(libConf).each(function(d, i) {
+  _(values).each(function(d, i) {
     if(!(d.path || _(d).has("external"))) return
 
-    lib = libs[i]
+    lib = keys[i]
 
     paths[lib] = d.external ? "empty:" : d.path;
 
     if(d.as) shims[lib] = {exports: d.as}
   })
 
-  _(libConf).each(function(d, i) {
+  var textPlugin = _(keys).find(function(d){return d.indexOf("text") > -1})
+  paths[textPlugin ? textPlugin : "text"] = __dirname + "/deps/text/text"
+
+  _(values).each(function(d, i) {
     if(!(d.inject || d.global)) return
 
-    lib = { lib: libs[i] }
+    lib = { lib: keys[i] }
 
     globals.push(_(lib).extend(_.pick(d, ["as", "init", "global"])))
+  })
+
+  keys = _(config.export).keys()
+  values = _(config.export).values()
+
+  _(values).each(function(d, i) {
+    var glob = _({init: true, inject:true})
+              .extend(_.isObject(d.global) ? d.global : {lib: d.global})
+    
+    glob.lib = glob.lib || glob.name
+    delete glob.as
+
+    if(config.export[keys[i]]) config.export[keys[i]].global = glob.lib
+
+    globals.push(glob)
   })
 
   return _(config).extend({paths: paths, shim: shims, globals: globals})
