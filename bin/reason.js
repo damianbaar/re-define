@@ -13,7 +13,7 @@ var program = require('commander')
     .option('-s, --src [value]', 'main requirejs file')
     .option('-c, --config [value]', 'custom config for requirejs/bbamd')
     .parse(process.argv);
-console.log(program.config)
+
   if(program.config){
     var customConfig = 
       fs.readFileSync(path.resolve(program.config), "utf-8")
@@ -28,12 +28,6 @@ console.log(program.config)
     console.log("Missing config file")
     process.exit()
   }
-
-  console.log("Base url for project:", config.baseUrl)
-  console.log("Output file:", config.out)
-  console.log("RequireJS main file:", config.name)
-
-  console.log("\n")
 
   bbamd.convert(config, function(content){
     console.log("Check your output file", config.out)
