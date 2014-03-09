@@ -7,14 +7,14 @@ var requirejs = require('requirejs')
   , _ = require('underscore')
   , matcher = require("./lib/matcher")
   , factory = require("./lib/factory")
+  , codeGenConfig = {format: {indent: {style: '  ', base: 0}, space: ' '}} 
 
 module.exports.convert = convert
 module.exports.resolveConfig = resolveConfig
 
-convert(JSON.parse(fs.readFileSync("build.config")))
-
 function convert(override, done) {
-  var config = _({resolve:{}, export:{}}).extend(resolveConfig(override))
+  var config = _({baseUrl:".", resolve:{}, export:{}})
+                .extend(resolveConfig(override))
     , output = []
 
   _(config).extend({"onBuildWrite": parse})
@@ -24,7 +24,7 @@ function convert(override, done) {
   function build(response, code, contents) {
     var name = config.out
       , ast = factory.wrap(output, config)
-      , content = escodegen.generate(ast)
+      , content = escodegen.generate(ast, codeGenConfig)
 
     fs.writeFileSync(name, content)
 

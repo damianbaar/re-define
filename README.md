@@ -31,73 +31,88 @@ reason.convert(config, f excludeFunc(name){return 0 || 1}, f done(content){})
 
 ###Config
 ```javascript
-// demo1/build.config
+// example/demo1/build.config
 {
-    "baseUrl": "."
-    , "name": "main"
-    , "out": "./build.js"
-    , "optimize": "none"
-    , "injectGlobals": ["this","d3", "$"]
-    , "customGlobals": ["demo1"]
-    , "initializeGlobals": ["demo1", "$", "d3"] 
-    , "attachToGlobal": [{"lib":"one", "global":"demo1"}]
-    , "removeDeps": []
-    , "shim": {
-      "jquery":{"exports":"$"}
-    }
-    , "exclude-libs": ["d3","jquery"]
-    , "amd-module-name": "namespace/demo1"
-  }
+  "baseUrl": "example/demo1/"
+  , "name": "main"
+  , "out": "./build.js"
+  , "export":  
+      { "outside/comp1": 
+          { "amd": "namespace/demo1/comp1"
+          , "global": 
+            { "name": "common"
+            , "init": true}
+          }
+      , "deps/four": 
+          { "amd": "namespace/demo1/comp1"
+          , "global": "demo1"
+          }
+      }
+  , "resolve": 
+      { "this":
+        { "as": "parent"
+        , "inject": true
+        }
+      , "d3/d3": 
+        { "external": true
+        , "inject": true
+        , "as" : "d3"
+        , "global":"common"
+        }
+      , "jquery": 
+        { "external": true
+        , "inject": true
+        , "as": "$"
+        }
+      , "namespace/comp1":
+        { "external": true
+        , "as": "ddeemmoo"
+        , "global": "common"
+        }
+      , "outside/comp1":
+        { "as": "matcher"
+        , "path": "../vendor/comp"
+        , "external": false
+        }
+      }
+}
 ```
 
 ###Result 
 ```javascript
 
 // output: 'demo1/build.js'
+var common = common || {};
 var demo1 = demo1 || {};
-var $ = $ || {};
-var d3 = d3 || {};
-
-(function (parent, d3, $, demo1) {
-    var jquery_plugins = function () {
-            console.log('jquery-plugins');
-        }();
-
-    var depsfour = 'Yeah that\'s me, and I\'m in different folder';
-
-    var one = demo1.one = function ($, d3, plugin, four) {
-            return function () {
-                d3.select('body').append('div').text('Hi there! I\'m talking to four, four?' + four);
-            };
-        }($, d3, jquery_plugins, depsfour);
-
-    var three = { hello: 'Yo!' };
-
-    var two = function (three) {
-            return three;
-        }(three);
-
-    var dotpathinner = function () {
-            console.log('inner');
-        }();
-
-    var dotpathfi_ve = function (four, inner) {
-            return four;
-        }(depsfour, dotpathinner);
-
-    (function (one, two, four, five) {
-        console.log(one, two.hello, four, five);
-    }(one, two, depsfour, dotpathfi_ve));
-    if (typeof define === 'function' && define.amd) {
-        define('namespace/demo1', main);
-    }
-}(this, d3, $, demo1));
+(function (parent, d3, $, ddeemmoo, common, demo1) {
+  var scope = {};
+  var matcher = common['outside/comp1'] = 'I\'m from outside the project.';
+  scope['template.html'] = '<div>test</div>\n<div></div>\n<div></div>\n<div></div>\n';
+  scope['deps/template.html'] = '<li></li>\n<li></li>\n<li></li>\n<li></li>\n';
+  scope['deps/four'] = demo1['deps/four'] = function (d3, $, template1, template2) {
+    return 'Yeah that\'s me, and I\'m in different folder' + template1 + template2;
+  }(d3, $, scope['template.html'], scope['deps/template.html']);
+  scope['dotpath/inner'] = function () {
+    console.log('inner');
+  }();
+  scope['dotpath/fi-ve'] = function (four, inner) {
+    return four;
+  }(scope['deps/four'], scope['dotpath/inner']);
+  var one = function ($, d3, four, template1, template2) {
+      return function () {
+        d3.select('body').append('div').text('Hi there! I\'m talking to four, four?' + four);
+      };
+    }($, d3, scope['deps/four'], scope['dotpath/fi-ve'], scope['template.html'], scope['deps/template.html']);
+  (function (d3, $, comp1, comp2, one) {
+    console.log(d3, $, comp1, comp2, one);
+  }(d3, $, ddeemmoo, matcher, one));
+  if (typeof define === 'function' && define.amd)
+    define('namespace/demo1/comp1', matcher);
+  if (typeof define === 'function' && define.amd)
+    define('namespace/demo1/comp1', scope['deps/four']);
+}(this, common['d3/d3'], $, common['namespace/comp1'], common, demo1));
 ```
-## Limitation
-* ability to attach only to one global object
-* tested only with requirejs 'text!' plugin
 
 ## TODO
-* make better api, at the moment there is a mess
 * increase test coverage, at least a few tests
 * documentation
