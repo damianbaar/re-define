@@ -33,8 +33,7 @@ reason.convert(config, done(content){})
 ```javascript
 // example/demo1/build.config
 {
-  "baseUrl": "example/demo1/"
-  , "name": "main"
+  "name": "main"
   , "out": "./build.js"
   , "export":  
       { "outside/comp1": 
