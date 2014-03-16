@@ -1,10 +1,11 @@
 var demo1 = demo1 || {};
-(function (parent, d3, $, ddeemmoo, demo1) {
+var common = common || {};
+(function (parent, d3, $, ddeemmoo, demo1, common) {
   var scope = {};
   var matcher = demo1['outside/comp1'] = 'I\'m from outside the project.';
   scope['template.html'] = '<div>test</div>\n<div></div>\n<div></div>\n<div></div>\n';
   scope['deps/template.html'] = '<li></li>\n<li></li>\n<li></li>\n<li></li>\n';
-  scope['deps/four'] = demo1['deps/four'] = function (d3, $, template1, template2) {
+  scope['deps/four'] = common['deps/four'] = function (d3, $, template1, template2) {
     return 'Yeah that\'s me, and I\'m in different folder' + template1 + template2;
   }(d3, $, scope['template.html'], scope['deps/template.html']);
   scope['dotpath/inner'] = function () {
@@ -29,4 +30,4 @@ var demo1 = demo1 || {};
     define('namespace/demo1/one', one);
   if (typeof define === 'function' && define.amd)
     define('namespace/demo1/four', scope['deps/four']);
-}(this, common['d3/d3'], $, common['namespace/comp1'], demo1));
+}(this, common['d3/d3'], $, common['namespace/comp1'], demo1, common));
