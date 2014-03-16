@@ -5,3 +5,5 @@ tags
 .idea
 bbamd.iml
 npm-debug.log
+*.sublime-*
+*.tern-project

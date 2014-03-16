@@ -1,9 +1,12 @@
 == TODO ==
 [x] wrap start/start end (arg: custom global)
 [x] if api, attach to custom global
-[ ] excluding external dependencies
+[x] excluding external dependencies
 [ ] handling commonJS (check https://github.com/jrburke/r.js/blob/master/build/jslib/commonJs.js)
 [x] safe scope initialization (noConflict)
-[ ] smarte resolving ../../../, ../.., atm removing all dots and slashes
+[x] smart resolving ../../../, ../.., atm removing all dots and slashes
+[ ] when define pass arguments array - not sure if I need that, as there is a return statement with appropriate scope deps
+[x] needs to be amd define to register a global (issue)
+[x] verbose mode
 
 

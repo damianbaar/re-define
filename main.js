@@ -7,17 +7,24 @@ var requirejs = require('requirejs')
   , _ = require('underscore')
   , matcher = require("./lib/matcher")
   , factory = require("./lib/factory")
-  , codeGenConfig = {format: {indent: {style: '  ', base: 0}, space: ' '}} 
+  , codeGenConfig = {format: {indent: {style: '  ', base: 0}, space: ' '}}
+  , nl = require('./lib/utils').newLine
 
 module.exports.convert = convert
 module.exports.resolveConfig = resolveConfig
 
 function convert(override, done) {
-  var config = _({baseUrl:".", resolve:{}, export:{}})
+  var config = _({baseUrl:".", resolve:{}, export:{}, verbose: false})
                 .extend(resolveConfig(override))
     , output = []
+    , verbose = config.verbose
 
   _(config).extend({"onBuildWrite": parse})
+
+  if(verbose)
+   console.log(nl(), "Gererated config: ", nl(), _(config).omit("resolve", "onBuildWrite", "export"))
+
+  factory.verbose(verbose)
 
   requirejs.optimize(config, build, error)
 
@@ -34,13 +41,19 @@ function convert(override, done) {
   function error(e) { console.log(e) }
 
   function parse(name, filePath, contents) {
-    if(name.indexOf("text") > -1 && name.indexOf("!") == -1)
-      return
+    verbose && console.log(nl(), "MODULE:", name, nl(true))
 
-    output.push(
-      estraverse.replace(
-        esprima.parse(contents)
-      , {enter: enter, leave:leave}))
+    if(name.indexOf("text") > -1 && name.indexOf("!") == -1) {
+      verbose && console.log("Skipping text plugin ", name)
+      return
+    }
+
+    var code = estraverse.replace(esprima.parse(contents)
+                                 , {enter: enter, leave:leave})
+
+    verbose && console.log(escodegen.generate(code))
+
+    output.push(code)
 
     function enter(node, parent) {
       var main
@@ -63,8 +76,8 @@ function convert(override, done) {
 }
 
 function resolveConfig(config) {
-  var paths = {}
-    , shims = {}
+  var paths = _({}).extend(config.paths)
+    , shims = _({}).extend(config.shim)
     , globals = []
     , keys = _(config.resolve).keys()
     , values = _(config.resolve).values()
@@ -80,12 +93,11 @@ function resolveConfig(config) {
     if(d.as) shims[lib] = {exports: d.as}
   })
 
-  var textPlugin = _(keys).find(function(d){return d.indexOf("text") > -1})
+  var textPlugin = _(keys).find(function(d){return d.indexOf("text") === 0})
   paths[textPlugin ? textPlugin : "text"] = __dirname + "/deps/text/text"
 
   _(values).each(function(d, i) {
     if(!(d.inject || d.global)) return
-
     lib = { lib: keys[i] }
 
     globals.push(_(lib).extend(_.pick(d, ["as", "init", "global"])))
@@ -96,15 +108,23 @@ function resolveConfig(config) {
 
   _(values).each(function(d, i) {
     var glob = _({init: true, inject:true})
-              .extend(_.isObject(d.global) ? d.global : {lib: d.global})
-    
+                .extend(_.isObject(d.global) ? d.global : {lib: d.global})
+
     glob.lib = glob.lib || glob.name
-    delete glob.as
 
-    if(config.export[keys[i]]) config.export[keys[i]].global = glob.lib
+    if(!glob.lib) return
+    if(!!_(globals).findWhere({lib: glob.lib})) return
 
-    globals.push(glob)
+    globals.push(_(glob).omit("as","name"))
+  })
+
+  _(values).each(function(d, i) {
+    var ex = config.export[keys[i]]
+
+    if(!!ex && _.isObject(ex.global))
+      config.export[keys[i]].global = ex.global.name
   })
 
   return _(config).extend({paths: paths, shim: shims, globals: globals})
 }
+
