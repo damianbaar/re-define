@@ -83,7 +83,6 @@ reason.convert(config, done(content){})
 ###Result
 ```javascript
 // output: 'example/demo/build.js'
-}(scope['deps/four'], scope['dotpath/inner']);
 var demo1 = demo1 || {};
 var common = common || {};
 (function (parent, d3, $, ddeemmoo, demo1, common) {
