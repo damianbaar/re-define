@@ -42,7 +42,7 @@ function convert(override, done) {
   function parse(name, filePath, contents) {
     verbose && console.log(nl(), "MODULE:", name, nl(true))
 
-    if(name.indexOf("text") > -1 && name.indexOf("!") == -1) {
+    if(name.search(/^(text(\/)?)*$/) > -1 && name.indexOf("!") == -1) {
       verbose && console.log("Skipping text plugin ", name)
       return
     }
