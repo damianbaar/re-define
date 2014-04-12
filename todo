@@ -1,12 +1,11 @@
 == TODO ==
-[x] wrap start/start end (arg: custom global)
-[x] if api, attach to custom global
-[x] excluding external dependencies
-[ ] handling commonJS (check https://github.com/jrburke/r.js/blob/master/build/jslib/commonJs.js)
-[x] safe scope initialization (noConflict)
-[x] smart resolving ../../../, ../.., atm removing all dots and slashes
-[ ] when define pass arguments array - not sure if I need that, as there is a return statement with appropriate scope deps
-[x] needs to be amd define to register a global (issue)
-[x] verbose mode
-
-
+[] rewrite depenency tree
+[] get rid of r.js
+[] registerin as require module (wrapper)
+[] resolving inline text component
+[] global config for libs to exclude (d3/jquery)
+[] new methods conver (single file), bundle (whole module)
+[] new exaples (referencing two bundled modules)
+[] middleware
+[] grunt task
+[] custom matchers/converters
