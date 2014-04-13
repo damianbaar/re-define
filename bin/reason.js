@@ -1,4 +1,4 @@
-#!/usr/bin/env node --debug-brk
+#!/usr/bin/env node
 
 var program = require('commander')
   , reason = require('reason')
@@ -13,9 +13,11 @@ var program = require('commander')
     .option('-i, --input [code/file]', 'Input')
     .parse(process.argv)
 
-var input = resolveInput(program.input)
-  , config = resolveConfig(program.config)
-  , done = function(result) { console.log('end:', result) }
+var input = program.input && resolveInput(program.input)
+  , config = program.config && resolveConfig(program.config)
+  , done = function(result) {
+    console.log(result)
+  }
 
 if(input) reason.convert(config, input, done)
 if(config && !input) reason.bundle(config, done)
