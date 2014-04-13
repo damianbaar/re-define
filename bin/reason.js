@@ -1,35 +1,40 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --debug-brk
 
 var program = require('commander')
   , reason = require('reason')
   , fs = require('fs')
-  , path = require('path')
-  , _ = require('underscore')
-  , config = {}
+  , resolve = fs.resolve
+  , read = function(path) { return fs.readFileSync(path, 'utf-8') }
+  , resolve = require('path').resolve
 
   program
-    .option('-r, --root [value]', 'project root')
-    .option('-o, --out [value]', 'output')
-    .option('-s, --src [value]', 'main requirejs file')
-    .option('-c, --config [value]', 'custom config for requirejs/reason')
-    .parse(process.argv);
+    .option('-v, --verbose', 'Verbose mode')
+    .option('-c, --config [name]', 'Config')
+    .option('-i, --input [code/file]', 'Input')
+    .parse(process.argv)
 
-  if(program.config){
-    var customConfig =
-      fs.readFileSync(path.resolve(program.config), "utf-8")
+var input = resolveInput(program.input)
+  , config = resolveConfig(program.config)
+  , done = function(result) { console.log('end:', result) }
 
-    _(config).extend(JSON.parse(customConfig))
-  }
+if(input) reason.convert(config, input, done)
+if(config && !input) reason.bundle(config, done)
 
-  if(program.out) config.out = program.out
-  if(program.src) config.name = program.src || "main"
+function resolveConfig(config) {
+  return isFile(config) ? JSON.parse(read(resolve(config)))
+                        : {}
+}
 
-  if(!(config.out && config.name)) {
-    console.log("Missing config file")
-    process.exit()
-  }
+function resolveInput(input) {
+  var path = resolve(input)
+  return isFile(input) ? read(path) : input
+}
 
-  reason.convert(config, function(content){
-    console.log("Check your output file", config.out)
-  })
+function isFile(path) {
+  var stats = fs.lstatSync
+    , exists = fs.existsSync
 
+  return path
+         && exists(path)
+         && stats(path).isFile()
+}

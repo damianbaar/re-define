@@ -16,7 +16,8 @@
     "requirejs": "~2.1.11",
     "underscore": "~1.6.0",
     "commander": "~2.1.0",
-    "acorn": "^0.5.0"
+    "acorn": "^0.5.0",
+    "async": "^0.7.0"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

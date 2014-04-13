@@ -1,62 +1,93 @@
 'use strict';
 
 var reason = require('reason')
+  , _ = require('underscore')
 
 var req_mod_1 = {
-    in: "require([], function() { console.log('req') })"
-  , out: "(function () {\n  console.log('req');\n}());"
+    in: 'require([], function() { console.log("req") })'
+  , out: '(function () {console.log("req");}());'
   }
   , req_mod_2 = {
     in: 'require(["a","b","c"], function(a,b,c) { console.log(a, b, c) })'
-  , out: '(function (a, b, c) {\n  console.log(a, b, c);\n}(a, b, c));'
+  , out: '(function (a, b, c) {console.log(a, b, c);}(a, b, c));'
   }
   , def_mod_1 = {
     in: 'define("a", [], function() { return "Hello" })'
-  , out: "var a = \'Hello\';"
+  , out: 'var a = "Hello";'
   }
   , def_mod_2 = {
     in: 'define("b", ["a"], function(a) { var c = wrap(a) })'
-  , out: 'var b = function (a) {\n    var c = wrap(a);\n  }(a);'
+  , out: 'var b = function (a) {var c = wrap(a);}(a);'
   }
   , def_mod_3 = {
     in: 'define("c", ["a","b"], function(a, b) { return "Hello" })'
-  , out: 'var c = function (a, b) {\n    return \'Hello\';\n  }(a, b);'
+  , out: 'var c = function (a, b) {return "Hello";}(a, b);'
+ }
+  , config = {
+    generator: {
+      format: {
+        indent: {style: '', base: 0}
+      , space: ' '
+      , quotes: 'double'
+      , newline:''}
+    }
   }
+
+function convert(input, done) { reason.convert(config, input, done) }
+
+function values(args, out) {
+  var prop = out ? 'out' : 'in'
+    , separator = out ? '' : ';'
+
+  return _(args)
+            .map(function(e){ return e[prop] })
+            .join(separator)
+}
 
 exports['main'] = {
   setUp: function(done) {
     done();
   },
   'convert-define-to-var': function(test) {
-    test.equal(def_mod_1.out, reason().convert(def_mod_1.in))
-
-    test.done()
+    convert(values([def_mod_1]), function(result) {
+      test.equal(values([def_mod_1], true), result)
+      test.done()
+    })
   },
-  ' convert-multiple-define-to-var': function(test) {
-    test.equal([def_mod_1.out, def_mod_2.out].join("\n"),
-               reason().convert([def_mod_1.in, def_mod_2.in].join(";")))
+  'convert-multiple-define-to-var': function(test) {
+    convert(
+      values([def_mod_1, def_mod_2])
+      , function(result) {
+          var exp = values([def_mod_1, def_mod_2], true)
 
-    test.done()
+          test.equal(exp, result)
+          test.done()
+      })
   },
-  'check-order-for-modules': function(test) {
-    test.equal([def_mod_1.out, def_mod_2.out, def_mod_3.out].join("\n"),
-               reason().convert([def_mod_1.in, def_mod_2.in, def_mod_3.in].join(";")))
+  'modules-order': function(test) {
+    convert(
+      values([def_mod_3, def_mod_2, def_mod_1])
+      , function(result) {
+          var exp = values([def_mod_1, def_mod_2, def_mod_3], true)
 
-    test.equal([def_mod_1.out, def_mod_2.out, def_mod_3.out].join("\n"),
-               reason().convert([def_mod_3.in, def_mod_2.in, def_mod_1.in].join(";")))
-
-    test.done();
+          test.equal(exp, result)
+          test.done()
+      })
   },
   'convert-single-require': function(test) {
-    test.equal(req_mod_1.out, reason().convert(req_mod_1.in))
-
-    test.done();
+    convert(values([req_mod_1]), function(result) {
+      test.equal(values([req_mod_1], true), result)
+      test.done()
+    })
   },
-  'convert-require': function(test) {
-    test.equal(
-      [def_mod_1.out, def_mod_2.out, def_mod_3.out, req_mod_2.out].join("\n"),
-      reason().convert([def_mod_1.in, req_mod_2.in, def_mod_2.in, def_mod_3.in].join(";")))
+  'convert-complex-require': function(test) {
+    convert(
+      values([def_mod_1, def_mod_2, def_mod_3, req_mod_2])
+      , function(result) {
+          var exp = values([def_mod_1, def_mod_2, def_mod_3, req_mod_2], true)
 
-    test.done();
+          test.equal(exp, result)
+          test.done()
+      })
   }
 };
