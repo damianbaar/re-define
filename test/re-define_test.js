@@ -24,16 +24,21 @@ var req_mod_1 = {
   , out: 'var c = function (a, b) {return "Hello";}(a, b);'
  }
   , config = {
-    generator: {
-      format: {
-        indent: {style: '', base: 0}
-      , space: ' '
-      , quotes: 'double'
-      , newline:''}
+    converters: [
+      require('../lib/converter/amd-define')
+    , require('../lib/converter/amd-require')
+    ]
+    , generator: {
+        format: {
+          indent: {style: '', base: 0}
+        , space: ' '
+        , quotes: 'double'
+        , newline:''
+      }
     }
   }
 
-function convert(input, done) { reason.convert(config, input, done) }
+function convert(input, done) { reason.convert.stream(config, input, done) }
 
 function values(args, out) {
   var prop = out ? 'out' : 'in'
@@ -50,6 +55,7 @@ exports['main'] = {
   },
   'convert-define-to-var': function(test) {
     convert(values([def_mod_1]), function(result) {
+      console.log('nanana')
       test.equal(values([def_mod_1], true), result)
       test.done()
     })
