@@ -1,3 +1,3 @@
-define(["../deps/four","./inner"],function(four, inner){
-  return four
+define(["./inner"],function(inner){
+  return inner
 })
