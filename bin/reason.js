@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// --debug-brk
+//--debug-brk
 
 var program = require('commander')
   , reason = require('reason')
