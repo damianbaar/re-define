@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-//--debug-brk
 
 var program = require('commander')
   , reason = require('reason')
@@ -17,7 +16,7 @@ var program = require('commander')
   var input = program.input && resolveInput(program.input)
     , config = program.config && resolveConfig(program.config)
     , done = function(result) {
-      console.log(result, '-- DONE --')
+      console.log('\n-- DONE --\n', result, '\n-- DONE --')
     }
 
   if(input) reason.convert.stream(config, input, done)
