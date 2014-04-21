@@ -1,9 +1,4 @@
-define(
-  ["jquery"
-  ,"d3/d3"
-  , "dotpath/fi-ve"
-  ]
-,function($, d3, five){
+define(["dotpath/fi-ve"], function(five){
   return function () {
      d3
        .select("body")
