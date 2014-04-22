@@ -1,6 +1,7 @@
 'use strict';
 
 var reason = require('reason')
+  , config = require('../lib/config')
   , _ = require('underscore')
 
 var req_mod_1 = {
@@ -23,26 +24,17 @@ var req_mod_1 = {
     in: 'define("c", ["a","b"], function(a, b) { return "Hello" })'
   , out: 'var c = function (a, b) {return "Hello";}(a, b);'
  }
-  , config = {
-    converters: {
-      "amd-define":  {
-        resolver: require('../lib/converter/amd-define-resolver')
-      , transformer: require('../lib/converter/amd-define-transformer')
+
+var config = config({
+        formatter: {
+          format: {
+            indent: {style: '', base: 0}
+          , space: ' '
+          , quotes: 'double'
+          , newline: ''
+        }
       }
-      , "amd-require": {
-        resolver: require('../lib/converter/amd-require-resolver')
-      , transformer: require('../lib/converter/amd-require-transformer')
-      }
-    }
-    , formatter: {
-        format: {
-          indent: {style: '', base: 0}
-        , space: ' '
-        , quotes: 'double'
-        , newline:''
-      }
-    }
-  }
+    })
 
 function convert(input, done) { reason.convert.stream(config, input, done) }
 
