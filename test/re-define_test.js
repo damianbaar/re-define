@@ -24,11 +24,17 @@ var req_mod_1 = {
   , out: 'var c = function (a, b) {return "Hello";}(a, b);'
  }
   , config = {
-    converters: [
-      require('../lib/converter/amd-define')
-    , require('../lib/converter/amd-require')
-    ]
-    , generator: {
+    converters: {
+      "amd-define":  {
+        resolver: require('../lib/converter/amd-define-resolver')
+      , transformer: require('../lib/converter/amd-define-transformer')
+      }
+      , "amd-require": {
+        resolver: require('../lib/converter/amd-require-resolver')
+      , transformer: require('../lib/converter/amd-require-transformer')
+      }
+    }
+    , formatter: {
         format: {
           indent: {style: '', base: 0}
         , space: ' '
@@ -55,7 +61,6 @@ exports['main'] = {
   },
   'convert-define-to-var': function(test) {
     convert(values([def_mod_1]), function(result) {
-      console.log('nanana')
       test.equal(values([def_mod_1], true), result)
       test.done()
     })
