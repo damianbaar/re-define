@@ -17,7 +17,7 @@ var program = require('commander')
     .parse(process.argv)
 
   var input = program.input && resolveInput(program.input)
-    , userConfig = program.config && resolveConfig(program.config)
+    , userConfig = program.config && resolveConfig(program.config) || {}
     , done = function(result) {
       console.log('\n----- RESULT ------\n', result, '\n------------')
     }
@@ -25,7 +25,7 @@ var program = require('commander')
   if(program.wrapper) userConfig.wrapper = program.wrapper
 
   if(userConfig && !input) reason.convert.files(config(userConfig), done)
-  if(input) reason.convert.stream(config(), input, done)
+  if(input) reason.convert.stream(config(userConfig), input, done)
 
   function resolveConfig(config) {
     return isFile(config) ? JSON.parse(read(resolve(config)))
