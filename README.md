@@ -75,6 +75,8 @@ or
 ```
 
 ### Verbose mode
+cmd: `re-define -w iife -i "define('a',['jquery','underscore'], function($,_) { console.log($, _) })" -v`
+
 ```
 DETAILS
 
