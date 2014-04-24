@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-//--debug-brk
 
 var program = require('commander')
-  , reason = require('reason')
+  , redefine = require('../lib/index')
   , fs = require('fs')
   , resolve = fs.resolve
   , read = function(path) { return fs.readFileSync(path, 'utf-8') }
@@ -24,8 +23,8 @@ var program = require('commander')
 
   if(program.wrapper) userConfig.wrapper = program.wrapper
 
-  if(userConfig && !input) reason.convert.files(config(userConfig), done)
-  if(input) reason.convert.stream(config(userConfig), input, done)
+  if(userConfig && !input) redefine.convert.files(config(userConfig), done)
+  if(input) redefine.convert.stream(config(userConfig), input, done)
 
   function resolveConfig(config) {
     return isFile(config) ? JSON.parse(read(resolve(config)))

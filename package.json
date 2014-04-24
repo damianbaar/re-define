@@ -1,9 +1,9 @@
 {
-  "name": "reason",
-  "version": "0.0.4",
+  "name": "re-define",
+  "version": "0.0.1",
   "main": "lib/index.js",
   "bin": {
-    "reason": "./bin/reason.js"
+    "re-define": "./bin/re-define.js"
   },
   "directories": {
     "lib": "lib",
@@ -16,28 +16,20 @@
     "requirejs": "~2.1.11",
     "underscore": "~1.6.0",
     "commander": "~2.1.0",
-    "acorn": "^0.5.0",
-    "async": "^0.7.0"
+    "async": "~0.7.0"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-nodemon": "~0.2.0",
-    "grunt-concurrent": "~0.4.3",
-    "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-node-inspector": "~0.1.3",
-    "grunt-contrib-livereload": "~0.1.2",
     "grunt-contrib-nodeunit": "~0.3.2",
-    "nodemon": "~1.0.15",
     "open": "0.0.4"
   },
   "scripts": {
-    "link": "npm link reason",
-    "test-debug": "node --debug-brk `which nodeunit` test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/damianbaar/reason.git"
+    "url": "https://github.com/damianbaar/re-define.git"
   },
   "keywords": [
     "module",
@@ -46,7 +38,7 @@
   "author": "Damian Baar",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/damianbaar/reason/issues"
+    "url": "https://github.com/damianbaar/re-define/issues"
   },
-  "homepage": "https://github.com/damianbaar/reason"
+  "homepage": "https://github.com/damianbaar/re-define"
 }
