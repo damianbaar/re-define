@@ -1,5 +1,6 @@
 ## re-define
 convert AMD, CommonJS (soon) -> AMD, CommonJS (soon), UMD (soon)
+Basicaly you can convert everything.
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -70,4 +71,22 @@ or
 }
 , formatter: { format: {indent: {style: '  ', base: 0}, space: ' '}}
 }
+```
+
+### Verbose mode
+```
+DETAILS
+
+[ { name: 'jquery', external: true },
+  { name: 'underscore', external: true },
+  { deps: [ 'jquery', 'underscore' ], name: 'a' } ]
+
+CODE
+
+(function(jquery,underscore){
+var a = function ($, _) {
+  console.log($, _);
+}(jquery, underscore);
+
+})(jquery,underscore)
 ```
