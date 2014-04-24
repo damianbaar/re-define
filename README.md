@@ -1,5 +1,5 @@
 ## re-define
-Convert anything to anything.
+convert AMD, CommonJS (soon) -> AMD, CommonJS (soon), UMD (soon)
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -23,7 +23,7 @@ Usage: re-define [options]
 #### Examples
 
 ##### From stream
-`re-define -w empty -i "define('a',['jquery','underscore'], function($,_) { console.log($, _) })"`
+cmd: `re-define -w empty -i "define('a',['jquery','underscore'], function($,_) { console.log($, _) })"`
 
 ```
 var a = function ($, _) {
@@ -31,7 +31,7 @@ var a = function ($, _) {
 }(jquery, underscore);
 ```
 
-`re-define -w iife -i "define('a',['jquery','underscore'], function($,_) { console.log($, _) })" `
+cmd: `re-define -w iife -i "define('a',['jquery','underscore'], function($,_) { console.log($, _) })" `
 ```
 (function(jquery,underscore){
   var a = function ($, _) {
@@ -52,7 +52,6 @@ or
 { base: '.'
 , main: ''
 , out: ''
-, namespace: 'ns'
 , wrapper: 'empty'
 , converters: {
   'amd-define':  {
