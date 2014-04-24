@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 var program = require('commander')
-  , redefine = require('../lib/index')
   , fs = require('fs')
   , resolve = fs.resolve
   , read = function(path) { return fs.readFileSync(path, 'utf-8') }
-  , config = require('../lib/config')
   , resolve = require('path').resolve
+  , _ = require('underscore')
   , colors = require('colors')
+  , config = require('../lib/config')
+  , redefine = require('../lib/index')
 
   program
     .option('-v, --verbose', 'Verbose mode')
@@ -26,28 +27,26 @@ var program = require('commander')
   if(program.base)    userConfig.base = program.base
   if(program.main)    userConfig.main = program.main
   if(program.output)  userConfig.output = program.output
+  if(program.verbose)  userConfig.verbose = program.verbose
 
-    console.log('otuput', program.output, userConfig.output)
+  userConfig = config(userConfig)
 
-  if(input) {
-    redefine.stream(config(userConfig), input, done)
-  }
-  else if(userConfig.base && userConfig.main) {
-    redefine.files(config(userConfig), done)
-  }
+  if(input) redefine.stream(userConfig, input, done)
+  if(userConfig.base && userConfig.main) redefine.files(userConfig, done)
 
   function done(result) {
-    if(program.verbose) {
+    if(userConfig.verbose) {
+      var details = _.map(result.details, function(d) { return _.omit(d, "converter", "content") })
       console.log('\n----- RESULT ------\n'.green)
       console.log('DETAILS\n'.grey)
-      console.log(result.details)
+      console.log(details)
       console.log('\nCODE\n'.grey)
       console.log(result.code)
       console.log('\n------------'.green)
     }
 
-    if(program.output) {
-      fs.writeFileSync(resolve(program.output), result.code)
+    if(userConfig.output) {
+      fs.writeFileSync(resolve(userConfig.output), result.code)
     }
   }
 

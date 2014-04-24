@@ -1,6 +1,6 @@
 'use strict';
 
-var reason = require('reason')
+var reason = require('../lib/index')
   , config = require('../lib/config')
   , _ = require('underscore')
 
@@ -36,7 +36,7 @@ var config = config({
       }
     })
 
-function convert(input, done) { reason.convert.stream(config, input, done) }
+function convert(input, done) { reason.stream(config, input, done) }
 
 function values(args, out) {
   var prop = out ? 'out' : 'in'
@@ -53,7 +53,7 @@ exports['main'] = {
   },
   'convert-define-to-var': function(test) {
     convert(values([def_mod_1]), function(result) {
-      test.equal(values([def_mod_1], true), result)
+      test.equal(values([def_mod_1], true), result.code)
       test.done()
     })
   },
@@ -63,7 +63,7 @@ exports['main'] = {
       , function(result) {
           var exp = values([def_mod_1, def_mod_2], true)
 
-          test.equal(exp, result)
+          test.equal(exp, result.code)
           test.done()
       })
   },
@@ -73,13 +73,13 @@ exports['main'] = {
       , function(result) {
           var exp = values([def_mod_1, def_mod_2, def_mod_3], true)
 
-          test.equal(exp, result)
+          test.equal(exp, result.code)
           test.done()
       })
   },
   'convert-single-require': function(test) {
     convert(values([req_mod_1]), function(result) {
-      test.equal(values([req_mod_1], true), result)
+      test.equal(values([req_mod_1], true), result.code)
       test.done()
     })
   },
@@ -89,7 +89,7 @@ exports['main'] = {
       , function(result) {
           var exp = values([def_mod_1, def_mod_2, def_mod_3, req_mod_2], true)
 
-          test.equal(exp, result)
+          test.equal(exp, result.code)
           test.done()
       })
   }

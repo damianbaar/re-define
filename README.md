@@ -43,7 +43,7 @@ var a = function ($, _) {
 ##### from file
 `re-define -m example/demo/main.js -o test.js -b . -v`
 or
-`re-define -c build.conf`
+`cd example/demo && re-define -c build.config`
 
 ###Config
 ```
