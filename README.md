@@ -22,11 +22,10 @@ Usage: re-define [options]
 
 #### Examples
 
-##### from stream
+##### From stream
 `re-define -w empty -i "define('a',['jquery','underscore'], function($,_) { console.log($, _) })"`
 
 ```
-//output:
 var a = function ($, _) {
   console.log($, _);
 }(jquery, underscore);
@@ -34,21 +33,23 @@ var a = function ($, _) {
 
 `re-define -w iife -i "define('a',['jquery','underscore'], function($,_) { console.log($, _) })" `
 ```
-(function(jquery,underscore){var a = function ($, _) {
-  console.log($, _);
-}(jquery, underscore);
+(function(jquery,underscore){
+  var a = function ($, _) {
+    console.log($, _);
+  }(jquery, underscore);
 })(jquery,underscore)
 ```
 
-##### from file
+##### From file
 `re-define -m example/demo/main.js -o test.js -b . -v`
+
 or
+
 `cd example/demo && re-define -c build.config`
 
 ###Config
 ```
-{
-  base: '.'
+{ base: '.'
 , main: ''
 , out: ''
 , namespace: 'ns'
