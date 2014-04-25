@@ -49,7 +49,10 @@ or
 
 `cd example/demo && re-define -c build.config`
 
-###Config
+###Advanced usage
+####Config 
+* if you are not interested in cmd commands or you'd like to attach something new, define your own config
+ 
 ```
 { base: '.'
 , main: ''
