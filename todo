@@ -7,7 +7,7 @@
 [x] new methods conver (single file), bundle (whole module)
 [x] new exaples (referencing two bundled modules)
 [x] ability to define custom matchers/converters
-[] middleware
-[] streams
+[x] streams
 [] grunt task
 [] exports -> ['exports'] || module.exports
+[] umd, commonjs

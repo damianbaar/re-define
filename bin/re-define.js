@@ -15,7 +15,7 @@ var program = require('commander')
     .option('-b, --base [dir]', 'Base folder for project')
     .option('-m, --main [file]', 'Main file')
     .option('-o, --output [file]', 'Output')
-    .option('-f, --follow', 'Whether should resolve whole dep tree')
+    .option('-f, --follow [value]', 'Whether should resolve whole dep tree')
     .parse(process.argv)
 
   var userConfig = program.config && JSON.parse(read(resolve(program.config))) || {}
