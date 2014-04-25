@@ -1,11 +1,13 @@
 == TODO ==
-[] rewrite depenency tree
-[] get rid of r.js
-[] registerin as require module (wrapper)
-[] resolving inline text component
-[] global config for libs to exclude (d3/jquery)
-[] new methods conver (single file), bundle (whole module)
-[] new exaples (referencing two bundled modules)
+[x] rewrite depenency tree
+[x] get rid of r.js
+[x] registerin as require module (wrapper)
+[x] resolving inline text component
+[x] global config for libs to exclude (d3/jquery)
+[x] new methods conver (single file), bundle (whole module)
+[x] new exaples (referencing two bundled modules)
+[x] ability to define custom matchers/converters
 [] middleware
+[] streams
 [] grunt task
-[] custom matchers/converters
+[] exports -> ['exports'] || module.exports
