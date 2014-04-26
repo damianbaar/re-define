@@ -16,20 +16,13 @@
     "underscore": "~1.6.0",
     "commander": "~2.1.0",
     "async": "~0.7.0",
-    "colors": "^0.6.2",
-    "through": "^2.3.4",
-    "concat-stream": "^1.4.5",
-    "readable-stream": "^1.0.27-1",
-    "inherits": "^2.0.1",
-    "through2": "^0.4.1"
+    "through": "~2.3.4",
   },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-nodemon": "~0.2.0",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-nodeunit": "~0.3.2",
-    "open": "0.0.4",
-    "concat-stream": "^1.4.5"
   },
   "scripts": {},
   "repository": {
