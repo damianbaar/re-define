@@ -4,6 +4,8 @@ var program = require('commander')
   , fs = require('fs')
   , resolve = fs.resolve
   , read = function(path) { return fs.readFileSync(path, 'utf-8') }
+  , readStream = fs.createReadStream
+  , writeStream = fs.createWriteStream
   , resolve = require('path').resolve
   , config = require('../lib/config')
   , redefine = require('../lib/index')
@@ -29,11 +31,12 @@ var program = require('commander')
 
   userConfig = config(userConfig)
 
-  process.stdin
-         .pipe(redefine.stream(userConfig))
-         .pipe(process.stdout)
+  // process.stdin
+  //        .pipe(redefine(userConfig))
+  //        .pipe(process.stdout)
 
   if(userConfig.main)
-    fs.createReadStream(resolve(userConfig.main))
-      .pipe(redefine.stream(userConfig))
-      .pipe(userConfig.out ? fs.createWriteStream(resolve(userConfig.out)) : process.stdout)
+    readStream(resolve(userConfig.main))
+      .pipe(redefine(userConfig))
+      .pipe(userConfig.out ? writeStream(resolve(userConfig.out)) : process.stdout)
+      .on('end', function () { console.log('done') })
