@@ -13,7 +13,7 @@ var program = require('commander')
   program
     .option('-v, --verbose', 'Verbose mode')
     .option('-c, --config [name]', 'Re-define config')
-    .option('-w, --wrapper [iife/empty]', 'Wrapper type')
+    .option('-w, --wrapper [type]', 'Wrapper type iife, empty, umd')
     .option('-b, --base [dir]', 'Base folder for project')
     .option('-m, --main [file]', 'Main file')
     .option('-o, --output [file]', 'Output')
@@ -32,12 +32,8 @@ var program = require('commander')
 
   userConfig = config(userConfig)
 
-  if(program.stream)
-    process.stdin
-           .pipe(redefine(userConfig))
-           .pipe(process.stdout)
+  var source = program.stream ? process.stdin : readStream(resolve(userConfig.main))
 
-  if(userConfig.main)
-    readStream(resolve(userConfig.main))
-      .pipe(redefine(userConfig))
-      .pipe(userConfig.output ? writeStream(resolve(userConfig.output)) : process.stdout)
+  source
+     .pipe(redefine(userConfig))
+     .pipe(userConfig.output ? writeStream(resolve(userConfig.output)) : process.stdout)

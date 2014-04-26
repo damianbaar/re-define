@@ -1,7 +1,5 @@
 ## re-define
-convert `AMD`, `CommonJS` (soon) -> `AMD`, `CommonJS` (soon), `UMD` (soon)
-
-Basicaly you can convert everything.
+Easy way to convert `AMD`, `CommonJS` (soon) -> `AMD`, `CommonJS` (soon), `UMD` (soon).
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -15,44 +13,36 @@ Usage: re-define [options]
     -h, --help                  output usage information
     -v, --verbose               Verbose mode
     -c, --config [name]         Re-define config
-    -i, --input [code/file]     Arbitrary code
-    -w, --wrapper [iife/empty]  Wrapper type
-    -b, --base [dir]            Base folder for project, i.e. .
+    -w, --wrapper [type]        Wrapper type iife, empty, umd
+    -b, --base [dir]            Base folder for project
     -m, --main [file]           Main file
     -o, --output [file]         Output
+    -f, --follow [value]        Whether should resolve whole dependency tree
+    -s, --stream                Whether should read from stream
 ```
 
 #### Examples
 
 ##### From stream
-cmd: `re-define -w empty -i "define('a',['jquery','underscore'], function($,_) { console.log($, _) })"`
+`echo "define('a',['b','c'],function(b, c){})" | re-define --stream --wrapper iife"`
 
 ```
-var a = function ($, _) {
-  console.log($, _);
-}(jquery, underscore);
-```
-
-cmd: `re-define -w iife -i "define('a',['jquery','underscore'], function($,_) { console.log($, _) })" `
-```
-(function(jquery,underscore){
-  var a = function ($, _) {
-    console.log($, _);
-  }(jquery, underscore);
-})(jquery,underscore)
+(function( b,c ){
+  var a = function (b, c) {
+    console.log(b, c);
+  }(b, c);
+ })( b,c )
 ```
 
 ##### From file
-`re-define -m example/demo/main.js -o test.js -b . -v`
+to check those commands -> `cd example/demo`
 
+`less main.js | re-define --stream`
 or
-
-`cd example/demo && re-define -c build.config`
+`re-define -c build.config && less dist.js`
 
 ###Advanced usage
-####Config 
-* if you are not interested in cmd commands or you'd like to attach something new, define your own config
- 
+####Config
 ```
 { base: '.'
 , main: ''
@@ -77,22 +67,6 @@ or
 }
 ```
 
-### Verbose mode
-cmd: `re-define -w iife -i "define('a',['jquery','underscore'], function($,_) { console.log($, _) })" -v`
-
-```
-DETAILS
-
-[ { name: 'jquery', external: true },
-  { name: 'underscore', external: true },
-  { deps: [ 'jquery', 'underscore' ], name: 'a' } ]
-
-CODE
-
-(function(jquery,underscore){
-var a = function ($, _) {
-  console.log($, _);
-}(jquery, underscore);
-
-})(jquery,underscore)
-```
+### Extend
+#### Custom converter
+#### Custom wrapper
