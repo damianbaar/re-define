@@ -18,6 +18,7 @@ var program = require('commander')
     .option('-m, --main [file]', 'Main file')
     .option('-o, --output [file]', 'Output')
     .option('-f, --follow [value]', 'Whether should resolve whole dep tree')
+    .option('-s, --stream', 'Whether should read from stream')
     .parse(process.argv)
 
   var userConfig = program.config && JSON.parse(read(resolve(program.config))) || {}
@@ -31,12 +32,12 @@ var program = require('commander')
 
   userConfig = config(userConfig)
 
-  // process.stdin
-  //        .pipe(redefine(userConfig))
-  //        .pipe(process.stdout)
+  if(program.stream)
+    process.stdin
+           .pipe(redefine(userConfig))
+           .pipe(process.stdout)
 
   if(userConfig.main)
     readStream(resolve(userConfig.main))
       .pipe(redefine(userConfig))
-      .pipe(userConfig.out ? writeStream(resolve(userConfig.out)) : process.stdout)
-      .on('end', function () { console.log('done') })
+      .pipe(userConfig.output ? writeStream(resolve(userConfig.output)) : process.stdout)
