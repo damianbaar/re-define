@@ -33,9 +33,7 @@ var program = require('commander')
          .pipe(redefine.stream(userConfig))
          .pipe(process.stdout)
 
-  if(userConfig.base && userConfig.main)
-    redefine.files(userConfig, function(result) {
-      userConfig.output && fs.writeFileSync(resolve(userConfig.output), result)
-      console.log(result)
-      process.exit()
-    })
+  if(userConfig.main)
+    fs.createReadStream(resolve(userConfig.main))
+      .pipe(redefine.stream(userConfig))
+      .pipe(userConfig.out ? fs.createWriteStream(resolve(userConfig.out)) : process.stdout)
