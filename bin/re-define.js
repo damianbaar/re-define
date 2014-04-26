@@ -25,7 +25,7 @@ var program = require('commander')
   if(program.main)    userConfig.main = program.main
   if(program.output)  userConfig.output = program.output
   if(program.verbose) userConfig.verbose = program.verbose
-  if(program.follow)  userConfig.follow = program.follow
+  if(program.follow)  userConfig.follow = program.follow && program.follow === 'true'
 
   userConfig = config(userConfig)
 
