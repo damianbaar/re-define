@@ -58,6 +58,9 @@ or
   , transformer: require('./converter/amd-require-transformer')
   }
 }
+, mixins: [
+  { pattern : /text!/, resolver: require('./converter/plugin/file') }
+]
 , wrappers: {
   'empty': require('./wrapper/empty')
 , 'iife': require('./wrapper/iife')
@@ -70,3 +73,4 @@ or
 ### Extend
 #### Custom converter
 #### Custom wrapper
+#### Custom mixin

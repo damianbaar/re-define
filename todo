@@ -1,13 +1,9 @@
 == TODO ==
 [x] rewrite depenency tree
 [x] get rid of r.js
-[x] registerin as require module (wrapper)
 [x] resolving inline text component
-[x] global config for libs to exclude (d3/jquery)
-[x] new methods conver (single file), bundle (whole module)
-[x] new exaples (referencing two bundled modules)
-[x] ability to define custom matchers/converters
 [x] streams
+[x] exports -> ['exports'] || module.exports
+[x] mixins
 [] grunt task
-[] exports -> ['exports'] || module.exports
 [] umd, commonjs
