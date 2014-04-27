@@ -1,4 +1,4 @@
-(function(exports) {
+define('my-component', ['exports'], function(exports) {
 var dotpath_inner = 'inner';
 var dotpath_fi_ve = function (inner) {
   return inner;
@@ -22,4 +22,4 @@ var file_template = function() { return '<div>test</div><div></div><div></div><d
   ];
 }(one, deps_four, file_template));;
 
-})(exports)
+})
