@@ -16,13 +16,13 @@
     "underscore": "~1.6.0",
     "commander": "~2.1.0",
     "async": "~0.7.0",
-    "through": "~2.3.4",
+    "through2": "^0.4.1"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-nodemon": "~0.2.0",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-nodeunit": "~0.3.2",
+    "grunt-contrib-nodeunit": "~0.3.2"
   },
   "scripts": {},
   "repository": {
