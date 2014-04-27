@@ -1,5 +1,8 @@
-## re-define
-Easy way to convert `AMD`, `CommonJS` (soon) -> `AMD`, `CommonJS` (soon), `UMD` (soon).
+## re-define (work in progress)
+A command line tool for resolving and converting dependency tree for `AMD` projects.
+Currently works for `AMD` to `Plain JS` or `AMD` define module.
+
+`CommonJS`, `UMD` will be implemented soon.
 
 ### Getting Started
 Install the module: `npm install -g re-define`
