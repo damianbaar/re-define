@@ -22,4 +22,4 @@ var file_template = function() { return '<div>test</div><div></div><div></div><d
   ];
 }(one, deps_four, file_template));;
 
-}) (exports)
+})(exports)
