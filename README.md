@@ -24,7 +24,7 @@ Usage: re-define [options]
 #### Examples
 
 ##### From stream
-`echo "define('a',['b','c'],function(b, c){})" | re-define --stream --wrapper iife"`
+`echo "define('a',['b','c'],function(b, c){ console.log(b,c) })" | re-define --stream --wrapper iife`
 
 ```
 (function( b,c ){
