@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+
 var program = require('commander')
   , fs = require('fs')
   , resolve = fs.resolve
