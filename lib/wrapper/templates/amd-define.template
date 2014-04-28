@@ -1,0 +1,6 @@
+define(
+  '{{name}}'
+, [{{deps}}]
+, function({{args}}) {
+  {{code}}
+})')

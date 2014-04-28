@@ -68,8 +68,9 @@ or
 ]
 , wrappers: {
   'empty': require('./wrapper/empty')
-, 'iife': require('./wrapper/iife')
-, 'amd-define': require('./wrapper/amd-define')
+, 'iife': require('./wrapper/external-template')('./templates/iife.template')
+, 'amd-define': require('./wrapper/external-template')('./templates/amd-define.template')
+, 'umd/amd-web': require('./wrapper/external-template')('./templates/amd-web.template')
 }
 , formatter: { format: {indent: {style: '  ', base: 0}, space: ' '}}
 }

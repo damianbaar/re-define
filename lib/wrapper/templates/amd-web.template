@@ -1,0 +1,9 @@
+(function (exports, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define('{{name}}', [{{deps}}], factory);
+    } else {
+      factory({{args}});
+    }
+}(this, function ({{args}}) {
+  {{code}}
+}));
