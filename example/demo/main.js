@@ -1,9 +1,10 @@
 require(
   [ "one"
+  , "jquery"
   , "deps/four"
   , "text!./template.html"
   ]
-  , function(one, four, t1)
+  , function(one, jquery, four, t1)
   {
     return [one, four, t1]
 })

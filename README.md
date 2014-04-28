@@ -1,10 +1,9 @@
 ## re-define (work in progress)
 A command line tool for resolving and converting modules tree.
-Currently supports only `AMD` and output could be presented as `IIFE`, `Plain JS` or `AMD define` module.
+Currently supports only `AMD` and output could be presented as `UMD`, `IIFE`, `Plain JS` or `AMD define` module.
 
 TODO:
-[ ] converters for: `Plain JS`, `CommonJS`
-[ ] wrappers for: `UMD`
+[ ] resolve: `Plain JS`, `CommonJS`
 [ ] grunt task
 
 ### Getting Started
