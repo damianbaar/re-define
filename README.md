@@ -3,8 +3,9 @@ A command line tool for resolving and converting modules tree.
 Currently supports only `AMD` and output could be presented as `UMD`, `IIFE`, `Plain JS` or `AMD define` module.
 
 TODO:
-[ ] resolve: `Plain JS`, `CommonJS`
-[ ] grunt task
+
+[] resolving `Plain JS`, `CommonJS`
+
 
 ### Getting Started
 Install the module: `npm install -g re-define`
