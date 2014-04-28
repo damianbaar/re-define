@@ -1,8 +1,11 @@
 ## re-define (work in progress)
-A command line tool for resolving and converting dependency tree for `AMD` projects.
-Currently works for `AMD` to `Plain JS` or `AMD` define module.
+A command line tool for resolving and converting modules tree.
+Currently supports only `AMD` and output could be presented as `IIFE`, `Plain JS` or `AMD define` module.
 
-`CommonJS`, `UMD` will be implemented soon.
+TODO:
+[ ] converters for: `Plain JS`, `CommonJS`
+[ ] wrappers for: `UMD`
+[ ] grunt task
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -38,7 +41,7 @@ Usage: re-define [options]
 ```
 
 ##### From file
-to check those commands -> `cd example/demo`
+goto -> `cd example/demo`
 
 `less main.js | re-define --stream`
 or
