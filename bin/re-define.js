@@ -30,8 +30,6 @@ var program = require('commander')
   if(program.verbose) userConfig.verbose = program.verbose
   if(program.follow)  userConfig.follow = program.follow && program.follow === 'true'
 
-  userConfig = config(userConfig)
-
   var source = program.stream ? process.stdin : readStream(resolve(userConfig.main))
 
   source
