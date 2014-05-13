@@ -28,10 +28,10 @@ var program = require('commander')
   if(program.main)    userConfig.main    = program.main
   if(program.output)  userConfig.output  = program.output
   if(program.verbose) userConfig.verbose = program.verbose
-  if(program.follow)  userConfig.follow  = program.follow && program.follow =  =  = 'true'
+  if(program.follow)  userConfig.follow  = program.follow && program.follow === 'true'
 
   var source = program.stream ? process.stdin : readStream(resolve(userConfig.main))
-
+  
   source
-     .pipe(redefine.convert(userConfig))
+     .pipe(redefine.convert(redefine.config(userConfig)))
      .pipe(userConfig.output ? writeStream(resolve(userConfig.output)) : process.stdout)
