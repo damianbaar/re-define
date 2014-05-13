@@ -24,14 +24,14 @@ var program = require('commander')
   var userConfig = program.config && JSON.parse(read(resolve(program.config))) || {}
 
   if(program.wrapper) userConfig.wrapper = program.wrapper
-  if(program.base)    userConfig.base = program.base
-  if(program.main)    userConfig.main = program.main
-  if(program.output)  userConfig.output = program.output
+  if(program.base)    userConfig.base    = program.base
+  if(program.main)    userConfig.main    = program.main
+  if(program.output)  userConfig.output  = program.output
   if(program.verbose) userConfig.verbose = program.verbose
-  if(program.follow)  userConfig.follow = program.follow && program.follow === 'true'
+  if(program.follow)  userConfig.follow  = program.follow && program.follow =  =  = 'true'
 
   var source = program.stream ? process.stdin : readStream(resolve(userConfig.main))
 
   source
-     .pipe(redefine(userConfig))
+     .pipe(redefine.convert(userConfig))
      .pipe(userConfig.output ? writeStream(resolve(userConfig.output)) : process.stdout)
