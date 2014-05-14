@@ -16,7 +16,8 @@
     "underscore": "~1.6.0",
     "commander": "~2.1.0",
     "async": "~0.7.0",
-    "through2": "^0.4.1"
+    "through2": "^0.4.1",
+    "lodash": "^2.4.1"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
