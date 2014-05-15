@@ -47,34 +47,32 @@ goto -> `cd example/demo`
 or
 `re-define -c build.config && less dist.js`
 
-###Advanced usage
 ####Config
 ```
-{ base: '.'
-, main: ''
-, out: ''
-, wrapper: 'empty'
-, converters: {
-  'amd-define':  {
-    resolver: require('./converter/amd-define-resolver')
-  , transformer: require('./converter/amd-define-transformer')
+  { base: '.'
+  , main: ''
+  , out: ''
+  , name: 'module_name'
+  , follow: true
+  , verbose: false
+  , wrapper: {
+    type: 'empty'
+    // , ref: { 'dep_name': 'reference i.e. ns[component]'}
+    }
+  , dependencies: { 
+    // { resolve: { '/(text\/?)*\!/': 'file or skip or ...' }
+    }
+
+                          //////////////////
+                         //Advanced usage//
+                        //////////////////
+
+  , escape: function (val) { return val.replace(/\.|\/|\\|-/g, '_') }
+  , format: {format: {indent: {style: '  ', base: 4}, space: ' '}}
+  , converters: { }
+  , resolvers: { }
+  , wrappers: { }
   }
-  , 'amd-require': {
-    resolver: require('./converter/amd-require-resolver')
-  , transformer: require('./converter/amd-require-transformer')
-  }
-}
-, mixins: [
-  { pattern : /text!/, resolver: require('./converter/plugin/file') }
-]
-, wrappers: {
-  'empty': require('./wrapper/empty')
-, 'iife': require('./wrapper/external-template')('./templates/iife.template')
-, 'amd-define': require('./wrapper/external-template')('./templates/amd-define.template')
-, 'umd/amd-web': require('./wrapper/external-template')('./templates/amd-web.template')
-}
-, formatter: { format: {indent: {style: '  ', base: 0}, space: ' '}}
-}
 ```
 
 ### Extend

@@ -1,13 +1,13 @@
-#!/usr/bin/env node
+#!/usr/bin/env node 
 
-var program = require('commander')
-  , _ = require('underscore')
-  , fs = require('fs')
-  , readFile = _.partial(fs.readFileSync, _, 'utf-8')
-  , readStream = fs.createReadStream
-  , writeStream = fs.createWriteStream
+var program     = require('commander')
+  , _           = require('underscore')
+  , fs          = require('fs')
   , resolvePath = require('path').resolve
-  , redefine = require('../lib/index')
+  , readFile    = _.compose(_.partial(fs.readFileSync, _, 'utf-8'), resolvePath)
+  , readStream  = _.compose(fs.createReadStream, resolvePath)
+  , writeStream = _.compose(fs.createWriteStream, resolvePath)
+  , redefine    = require('../lib/index')
 
   program
     .option('-v , --verbose'       , 'Verbose mode')
@@ -20,7 +20,7 @@ var program = require('commander')
     .option('-s , --stream'        , 'Whether should read from stream')
     .parse(process.argv)
 
-  var userConfig = program.config && JSON.parse(readFile(resolvePath(program.config))) || {}
+  var userConfig = program.config && JSON.parse(readFile(program.config)) || {}
 
   if(program.base)    userConfig.base    = program.base
   if(program.main)    userConfig.main    = program.main
@@ -29,8 +29,11 @@ var program = require('commander')
   if(program.verbose) userConfig.verbose = program.verbose
   if(program.wrapper) userConfig.wrapper = program.wrapper
 
-  var source = program.stream ? process.stdin : readStream(resolve(userConfig.main))
-    , output = userConfig.output ? writeStream(resolve(userConfig.output)) : process.stdout
+  //TODO align folders smarter
+  //-append base
+  //-base = userConfig/currentDir
+  var source = program.stream ? process.stdin : readStream(userConfig.main)
+    , output = userConfig.output ? writeStream(userConfig.output) : process.stdout
     , config = redefine.config(userConfig)
 
   source
