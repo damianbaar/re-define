@@ -60,10 +60,29 @@ or
                         //////////////////
 
   , escape: function (val) { return val.replace(/\.|\/|\\|-/g, '_') }
-  , format: {format: {indent: {style: '  ', base: 2}, space: ' '}}
-  , converters: { }
-  , resolvers: { }
-  , wrappers: { }
+  , format: { format: {indent: {style: '  ', base: 2}, space: ' '}}
+  , converters: {
+      amd_define:  {
+        resolver: require('./converter/amd-define-resolver')
+      , transformer: require('./converter/amd-define-transformer')
+      }
+      , amd_require: {
+        resolver: require('./converter/amd-require-resolver')
+      , transformer: require('./converter/amd-require-transformer')
+      }
+    }
+  , resolvers: {
+        text: require('./resolver/file')
+      , css: require('./resolver/css')
+      , skip: require('./resolver/skip')
+    },
+    , wrappers: {
+        'iife'        : file('./templates/iife.template')
+      , 'amd-define'  : file('./templates/amd-define.template')
+      , 'umd/amd-web' : file('./templates/amd-web.template')
+      , 'empty'       : require('./wrapper/empty')
+      }
+    }
   }
 ```
 
