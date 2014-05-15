@@ -3,24 +3,21 @@
 var dotpath_fi_ve = function (inner) {
           return inner;
         }(dotpath_inner);
-var text_deps_template = function() { return <li></li><li></li><li></li><li></li> };
-var css_styles = function() { return {"url":"styles.css","content":"a {  color: #FFFFFF;}"} };
 var one = function (five, template, exports) {
           console.log(five, template, exports);
           return exports.one = function () {
             console.log(template());
           };
-        }(dotpath_fi_ve, text_deps_template, exports, css_styles);
+        }(dotpath_fi_ve, exports);
 var deps_four = function (inner) {
           return 'Yeah that\'s me, and I\'m in different folder' + inner;
         }(dotpath_inner);
-var text_template = function() { return <div>test</div><div></div><div></div><div></div> };
 (function (one, jquery, four, t1) {
           return [
             one,
             four,
             t1
           ];
-        }(one, jquery, deps_four, text_template));;
+        }(one, jquery, deps_four));;
 
 })(external['jquery'], exports)

@@ -1,11 +1,6 @@
 ## re-define (work in progress)
 A command line tool for resolving and converting modules tree.
-Currently supports only `AMD` and output could be presented as `UMD`, `IIFE`, `Plain JS` or `AMD define` module.
-
-TODO:
-
-[] resolving `Plain JS`, `CommonJS`
-
+Currently supports `AMD` and output could be presented as `UMD`, `IIFE`, `Plain JS` or `AMD define` module.
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -55,10 +50,7 @@ or
   , name: 'module_name'
   , follow: true
   , verbose: false
-  , wrapper: {
-    type: 'empty'
-    // , ref: { 'dep_name': 'reference i.e. ns[component]'}
-    }
+  , wrapper: 'empty'
   , dependencies: { 
     // { resolve: { '/(text\/?)*\!/': 'file or skip or ...' }
     }
@@ -68,10 +60,29 @@ or
                         //////////////////
 
   , escape: function (val) { return val.replace(/\.|\/|\\|-/g, '_') }
-  , format: {format: {indent: {style: '  ', base: 4}, space: ' '}}
+  , format: {format: {indent: {style: '  ', base: 2}, space: ' '}}
   , converters: { }
   , resolvers: { }
   , wrappers: { }
+  }
+```
+
+Example config:
+```
+  { "main": "main.js"
+  , "output": "dist.js"
+  , "wrapper": "iife"
+  , "name": "my-component"
+  , "dependencies":
+    { "resolve": 
+      { "^(text\/?)*!": "text",
+        "^(css\/?)*!": "css",
+        "^(domReady\/?)!": "skip"
+      }
+      , "references": {
+        "jquery": "external['jquery']"
+      }
+    }
   }
 ```
 
