@@ -1,12 +1,14 @@
-//skipped: css -> {{css}}
-//external: external -> {{external}}
+{{#if css}} //skip -> alias css -> {{css}} {{/if}}
+{{#if deps}} //deps -> {{deps}} {{/if}}
+{{#if args}} //args -> {{args}} {{/if}}
+
 
 (function (exports, factory) {
     if (typeof define === 'function' && define.amd) {
-      define('{{name}}', [{{deps}}], factory)
-    } else {
-      factory({{args}})
+      define('{{{name}}}', [{{#sequence join escape deps css}}{{/sequence}}], factory)
+     } else {
+      factory({{globals}})
     }
-}}(this, function ({{deps}}) {
-  {{code}}
+}}(this, function ({{args}}) {
+  {{{code}}}
 }));
