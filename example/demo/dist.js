@@ -1,15 +1,14 @@
  //skip -> alias css -> css!./styles.css 
  //deps -> jquery,exports 
- //args -> $,exports 
+ //args -> $,this 
 
-
-(function (exports, factory) {
+(function (jquery,exports, factory) {
     if (typeof define === 'function' && define.amd) {
       define('my-component', ['jquery','exports','css!./styles.css'], factory)
      } else {
-      factory()
+      factory(jquery,exports)
     }
-}}(this, function ($,exports) {
+}}($,this, function (jquery,exports) {
   var dotpath_inner = 'inner';
 var dotpath_fi_ve = function (inner) {
       return inner;

@@ -2,13 +2,12 @@
 {{#if deps}} //deps -> {{deps}} {{/if}}
 {{#if args}} //args -> {{args}} {{/if}}
 
-
-(function (exports, factory) {
+(function ({{deps}}, factory) {
     if (typeof define === 'function' && define.amd) {
       define('{{{name}}}', [{{#sequence join escape deps css}}{{/sequence}}], factory)
      } else {
-      factory({{globals}})
+      factory({{deps}})
     }
-}}(this, function ({{args}}) {
+}}({{args}}, function ({{deps}}) {
   {{{code}}}
 }));
