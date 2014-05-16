@@ -72,9 +72,10 @@ or
       }
     }
   , resolvers: {
-        text: require('./resolver/file')
-      , css: require('./resolver/css')
-      , skip: require('./resolver/skip')
+        text: require('.lib/resolver/file')
+      , css: require('.lib/resolver/css')
+      , skip: require('.lib/resolver/skip')
+      , remove: require('./lib/resolver/remove')
     },
     , wrappers: {
         'iife'        : file('./templates/iife.template')

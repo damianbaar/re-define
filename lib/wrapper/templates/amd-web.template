@@ -1,9 +1,12 @@
+//skipped: css -> {{css}}
+//external: external -> {{external}}
+
 (function (exports, factory) {
     if (typeof define === 'function' && define.amd) {
-        define('{{name}}', [{{deps}}], factory);
+      define('{{name}}', [{{deps}}], factory)
     } else {
-      factory({{args}});
+      factory({{args}})
     }
-}(this, function ({{args}}) {
+}}(this, function ({{deps}}) {
   {{code}}
 }));
