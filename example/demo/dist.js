@@ -8,7 +8,7 @@
      } else {
       factory(jquery,exports)
     }
-}}($,this, function (jquery,exports) {
+}($,this, function (jquery,exports) {
   var dotpath_inner = 'inner';
 var dotpath_fi_ve = function (inner) {
       return inner;

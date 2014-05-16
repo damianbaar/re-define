@@ -8,6 +8,6 @@
      } else {
       factory({{deps}})
     }
-}}({{args}}, function ({{deps}}) {
+}({{args}}, function ({{deps}}) {
   {{{code}}}
 }));
