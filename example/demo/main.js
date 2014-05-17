@@ -5,7 +5,7 @@ require(
   , "text!./template.html"
   , "domReady!"
   ]
-  , function(one, jquery, four, t1, domReady)
+  , function(one, jquery, four, t1)
   {
     return [one, four, t1]
 })

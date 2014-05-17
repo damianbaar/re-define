@@ -1,5 +1,7 @@
 == TODO ==
-[] grunt task
+[x] params
 [] commonjs
-[] params
+[] combine transformer and resolver
+[] grunt task
+[] amd commonjs
 [] mock

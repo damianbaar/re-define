@@ -6,7 +6,7 @@ define(
   ]
   , function(five, template, exports){
 
-    console.log(five, template, exports)
+    console.log(five, two, template, exports)
 
     return exports.one = function () {
       console.log(template())
