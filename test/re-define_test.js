@@ -1,7 +1,6 @@
 'use strict';
 
-var reason = require('../lib/index')
-  , config = require('../lib/config')
+var redefine = require('../lib/index')
   , _ = require('underscore')
 
 var req_mod_1 = {
@@ -25,18 +24,7 @@ var req_mod_1 = {
   , out: 'var c = function (a, b) {return "Hello";}(a, b);'
  }
 
-var config = config({
-        formatter: {
-          format: {
-            indent: {style: '', base: 0}
-          , space: ' '
-          , quotes: 'double'
-          , newline: ''
-        }
-      }
-    })
-
-function convert(input, done) { reason.stream(config, input, done) }
+function convert(input, done) { redefine.convert(input, done) }
 
 function values(args, out) {
   var prop = out ? 'out' : 'in'

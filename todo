@@ -1,9 +1,5 @@
 == TODO ==
-[x] rewrite depenency tree
-[x] get rid of r.js
-[x] resolving inline text component
-[x] streams
-[x] exports -> ['exports'] || module.exports
-[x] mixins
 [] grunt task
-[] umd, commonjs
+[] commonjs
+[] params
+[] mock
