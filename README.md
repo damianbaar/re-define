@@ -52,7 +52,7 @@ or
   , verbose: false
   , wrapper: 'empty'
   , dependencies: { 
-    // { resolve: { '/(text\/?)*\!/': 'file or skip or ...' }
+     { resolve: { 'pattern': 'resolver' }
     }
 
                           //////////////////
@@ -64,30 +64,24 @@ or
       escape: function() { return _.map(arguments, function(i) { return '\'' + i + '\'' }) }
     , join: function() { return _.toArray(arguments).join(',') } 
   }
-  , converters: {
-      amd_define:  {
-        resolver: require('./converter/amd-define-resolver')
-      , transformer: require('./converter/amd-define-transformer')
-      }
-      , amd_require: {
-        resolver: require('./converter/amd-require-resolver')
-      , transformer: require('./converter/amd-require-transformer')
-      }
-    }
+  converter: {
+    common_js: require('./converter/cjs')
+  , amd_define: require('./converter/amd-define')
+  , amd_require: require('./converter/amd-require')
+  },
   , resolvers: {
-        text: require('.lib/resolver/file')
-      , css: require('.lib/resolver/css')
-      , skip: require('.lib/resolver/skip')
-      , remove: require('./lib/resolver/remove')
-    },
-    , wrappers: {
-        'iife'        : file('./templates/iife.template')
-      , 'amd-define'  : file('./templates/amd-define.template')
-      , 'umd/amd-web' : file('./templates/amd-web.template')
-      , 'empty'       : require('./wrapper/empty')
-      }
+      text: require('.lib/resolver/file')
+    , css: require('.lib/resolver/css')
+    , skip: require('.lib/resolver/skip')
+    , remove: require('./lib/resolver/remove')
+  },
+  , wrappers: {
+      'iife'        : file('./templates/iife.template')
+    , 'amd-define'  : file('./templates/amd-define.template')
+    , 'umd/amd-web' : file('./templates/amd-web.template')
     }
   }
+}
 ```
 
 Example config:
@@ -108,6 +102,25 @@ Example config:
       }
     }
   }
+```
+
+Exaple wrapper:
+```
+{{#if css }}//css   -> {{css}}  {{/if}}
+{{#if deps}}//ext   -> {{deps}} {{/if}}
+{{#if args}}//remap -> {{deps}} -> {{args}} {{/if}}
+{{#if skip}}//skip  -> {{skip}} {{/if}}
+//namespace -> {{config.namespace}}
+
+(function ({{sequence join deps factory}}) {
+  if (typeof define === 'function' && define.amd) {
+    define('{{{name}}}', [{{#sequence join escape deps css}}{{/sequence}}], factory)
+   } else {
+    factory({{deps}})
+  }
+}({{args}}, function ({{deps}}) {
+  {{{code}}}
+}));
 ```
 
 ### Extend

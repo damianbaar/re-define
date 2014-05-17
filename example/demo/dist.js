@@ -4,7 +4,7 @@
 //skip  -> domReady! 
 //namespace -> ns
 
-(function (jquery,exports) {
+(function (jquery,exports,factory) {
   if (typeof define === 'function' && define.amd) {
     define('my-component', ['jquery','exports','css!./styles.css'], factory)
    } else {
@@ -22,8 +22,8 @@ var one = function (five, template, exports) {
         console.log(template());
     };
 }(dotpath_fi_ve, text_deps_template, exports);
-var deps_four = (function(r_1400349285305,export) { var inner = r_1400349285305;
-exports = 'Yeah that\'s me, and I\'m in different folder' + inner; })(dotpath_inner);
+var deps_four = (function(r_1400357481915) { var inner = r_1400357481915;
+return 'Yeah that\'s me, and I\'m in different folder' + inner; })(dotpath_inner);
 var text_template = "<div>test</div><div></div><div></div><div></div>";
 (function (one, jquery, four, t1) {
     return [

@@ -4,7 +4,7 @@
 {{#if skip}}//skip  -> {{skip}} {{/if}}
 //namespace -> {{config.namespace}}
 
-(function ({{sequence join deps factory}}) {
+(function ({{sequence join deps 'factory'}}) {
   if (typeof define === 'function' && define.amd) {
     define('{{{name}}}', [{{#sequence join escape deps css}}{{/sequence}}], factory)
    } else {
