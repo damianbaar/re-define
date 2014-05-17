@@ -73,7 +73,6 @@ or
       text: require('.lib/resolver/file')
     , css: require('.lib/resolver/css')
     , skip: require('.lib/resolver/skip')
-    , remove: require('./lib/resolver/remove')
   },
   , wrappers: {
       'iife'        : file('./templates/iife.template')
@@ -112,9 +111,9 @@ Exaple wrapper:
 {{#if skip}}//skip  -> {{skip}} {{/if}}
 //namespace -> {{config.namespace}}
 
-(function ({{sequence join deps factory}}) {
+(function ({{sequence join deps 'factory'}}) {
   if (typeof define === 'function' && define.amd) {
-    define('{{{name}}}', [{{#sequence join escape deps css}}{{/sequence}}], factory)
+    define('{{{name}}}', [{{sequence join escape deps css}}], factory)
    } else {
     factory({{deps}})
   }

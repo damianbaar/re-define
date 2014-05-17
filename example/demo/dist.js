@@ -1,6 +1,6 @@
 //css   -> css!./styles.css  
 //ext   -> jquery,exports 
-//remap -> jquery,exports -> $,this 
+//remap -> jquery,exports -> $,this[&#x27;ns&#x27;] 
 //skip  -> domReady! 
 //namespace -> ns
 
@@ -10,20 +10,20 @@
    } else {
     factory(jquery,exports)
   }
-}($,this, function (jquery,exports) {
+}($,this['ns'], function (jquery,exports) {
   var dotpath_inner = 'inner';
 var dotpath_fi_ve = function (inner) {
     return inner;
 }(dotpath_inner);
 var text_deps_template = "<li></li><li></li><li></li><li></li>";
 var one = function (five, template, exports) {
-    console.log(five, two, template, exports);
+    console.log(five, template, exports);
     return exports.one = function () {
-        console.log(template());
+        console.log(template);
     };
 }(dotpath_fi_ve, text_deps_template, exports);
-var deps_four = (function(r_1400357481915) { var inner = r_1400357481915;
-return 'Yeah that\'s me, and I\'m in different folder' + inner; })(dotpath_inner);
+var deps_four = (function(r_1400360018366) { var inner = r_1400360018366;
+return exports['four'] = 'Yeah that\'s me, and I\'m in different folder' + inner; })(dotpath_inner);
 var text_template = "<div>test</div><div></div><div></div><div></div>";
 (function (one, jquery, four, t1) {
     return [
