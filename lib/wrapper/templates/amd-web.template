@@ -2,8 +2,9 @@
 {{#if deps}}//ext   -> {{deps}} {{/if}}
 {{#if args}}//remap -> {{deps}} -> {{args}} {{/if}}
 {{#if skip}}//skip  -> {{skip}} {{/if}}
+//namespace -> {{config.namespace}}
 
-(function ({{deps}}, factory) {
+(function ({{sequence join deps factory}}) {
   if (typeof define === 'function' && define.amd) {
     define('{{{name}}}', [{{#sequence join escape deps css}}{{/sequence}}], factory)
    } else {

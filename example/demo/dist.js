@@ -1,21 +1,29 @@
 //css   -> css!./styles.css  
-//ext   -> jquery,exports,deps/aaaa___ 
-//remap -> jquery,exports,deps/aaaa___ -> $,this,deps/aaaa___ 
+//ext   -> jquery,exports 
+//remap -> jquery,exports -> $,this 
 //skip  -> domReady! 
+//namespace -> ns
 
-(function (jquery,exports,deps/aaaa___, factory) {
+(function (jquery,exports) {
   if (typeof define === 'function' && define.amd) {
-    define('my-component', ['jquery','exports','deps/aaaa___','css!./styles.css'], factory)
+    define('my-component', ['jquery','exports','css!./styles.css'], factory)
    } else {
-    factory(jquery,exports,deps/aaaa___)
+    factory(jquery,exports)
   }
-}($,this,deps/aaaa___, function (jquery,exports,deps/aaaa___) {
-  var dotpath_inner = [object Object];
-var dotpath_fi_ve = [object Object];
+}($,this, function (jquery,exports) {
+  var dotpath_inner = 'inner';
+var dotpath_fi_ve = function (inner) {
+    return inner;
+}(dotpath_inner);
 var text_deps_template = "<li></li><li></li><li></li><li></li>";
-var one = [object Object];
-var deps_four = (function() { var inner = r_1;
-____ = 'Yeah that\'s me, and I\'m in different folder' + inner; })(___dotpath_inner,deps_aaaa___);
+var one = function (five, template, exports) {
+    console.log(five, two, template, exports);
+    return exports.one = function () {
+        console.log(template());
+    };
+}(dotpath_fi_ve, text_deps_template, exports);
+var deps_four = (function(r_1400349285305,export) { var inner = r_1400349285305;
+exports = 'Yeah that\'s me, and I\'m in different folder' + inner; })(dotpath_inner);
 var text_template = "<div>test</div><div></div><div></div><div></div>";
 (function (one, jquery, four, t1) {
     return [
