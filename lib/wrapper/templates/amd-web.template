@@ -1,13 +1,14 @@
-{{#if css}} //skip -> alias css -> {{css}} {{/if}}
-{{#if deps}} //deps -> {{deps}} {{/if}}
-{{#if args}} //args -> {{args}} {{/if}}
+{{#if css }}//css   -> {{css}}  {{/if}}
+{{#if deps}}//ext   -> {{deps}} {{/if}}
+{{#if args}}//remap -> {{deps}} -> {{args}} {{/if}}
+{{#if skip}}//skip  -> {{skip}} {{/if}}
 
 (function ({{deps}}, factory) {
-    if (typeof define === 'function' && define.amd) {
-      define('{{{name}}}', [{{#sequence join escape deps css}}{{/sequence}}], factory)
-     } else {
-      factory({{deps}})
-    }
+  if (typeof define === 'function' && define.amd) {
+    define('{{{name}}}', [{{#sequence join escape deps css}}{{/sequence}}], factory)
+   } else {
+    factory({{deps}})
+  }
 }({{args}}, function ({{deps}}) {
   {{{code}}}
 }));

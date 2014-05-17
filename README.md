@@ -60,7 +60,10 @@ or
                         //////////////////
 
   , escape: function (val) { return val.replace(/\.|\/|\\|-/g, '_') }
-  , format: { format: {indent: {style: '  ', base: 2}, space: ' '}}
+  , helpers: { 
+      escape: function() { return _.map(arguments, function(i) { return '\'' + i + '\'' }) }
+    , join: function() { return _.toArray(arguments).join(',') } 
+  }
   , converters: {
       amd_define:  {
         resolver: require('./converter/amd-define-resolver')
@@ -100,7 +103,8 @@ Example config:
         "^(domReady\/?)!": "skip"
       }
       , "references": {
-        "jquery": "external['jquery']"
+        "jquery": "$"
+      , "export": "this"
       }
     }
   }
@@ -109,4 +113,5 @@ Example config:
 ### Extend
 #### Custom converter
 #### Custom wrapper
-#### Custom mixin
+#### Custom resolver
+#### Custom helper
