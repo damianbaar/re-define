@@ -1,9 +1,15 @@
-(function (exports, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define('{{name}}', [{{deps}}], factory);
-    } else {
-      factory({{args}});
-    }
-}(this, function ({{args}}) {
-  {{code}}
+{{#if css }}//css   -> {{css}}  {{/if}}
+{{#if deps}}//ext   -> {{deps}} {{/if}}
+{{#if args}}//remap -> {{deps}} -> {{{args}}} {{/if}}
+{{#if skip}}//skip  -> {{skip}} {{/if}}
+//namespace -> {{config.namespace}}
+
+(function ({{{sequence join deps 'factory'}}}) {
+  if (typeof define === 'function' && define.amd) {
+    define('{{{name}}}', [{{{sequence join escape deps css}}}], factory)
+   } else {
+    factory({{{deps}}})
+  }
+}({{{args}}}, function ({{{deps}}}) {
+  {{{code}}}
 }));

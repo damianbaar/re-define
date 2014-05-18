@@ -1,11 +1,6 @@
 ## re-define (work in progress)
 A command line tool for resolving and converting modules tree.
-Currently supports only `AMD` and output could be presented as `UMD`, `IIFE`, `Plain JS` or `AMD define` module.
-
-TODO:
-
-[] resolving `Plain JS`, `CommonJS`
-
+Currently supports `AMD` and output could be presented as `UMD`, `IIFE`, `Plain JS` or `AMD define` module.
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -23,8 +18,8 @@ Usage: re-define [options]
     -b, --base [dir]            Base folder for project
     -m, --main [file]           Main file
     -o, --output [file]         Output
-    -f, --follow [value]        Whether should resolve whole dependency tree
     -s, --stream                Whether should read from stream
+    --separator [value]         Module separator while reading from stream
 ```
 
 #### Examples
@@ -47,37 +42,87 @@ goto -> `cd example/demo`
 or
 `re-define -c build.config && less dist.js`
 
-###Advanced usage
 ####Config
 ```
-{ base: '.'
-, main: ''
-, out: ''
-, wrapper: 'empty'
-, converters: {
-  'amd-define':  {
-    resolver: require('./converter/amd-define-resolver')
-  , transformer: require('./converter/amd-define-transformer')
+  { base: '.'
+  , main: ''
+  , out: ''
+  , name: 'module_name'
+  , verbose: false
+  , wrapper: 'umd/amd-web'
+  , dependencies: { 
+     { resolve: { 'pattern': 'resolver' }
+    }
+
+                          //////////////////
+                         //Advanced usage//
+                        //////////////////
+
+  , escape: function (val) { return val.replace(/\.|\/|\\|-/g, '_') }
+  , helpers: { 
+      escape: function() { return _.map(arguments, function(i) { return '\'' + i + '\'' }) }
+    , join: function() { return _.toArray(arguments).join(',') } 
   }
-  , 'amd-require': {
-    resolver: require('./converter/amd-require-resolver')
-  , transformer: require('./converter/amd-require-transformer')
+  converter: {
+    common_js: require('./converter/cjs')
+  , amd_define: require('./converter/amd-define')
+  , amd_require: require('./converter/amd-require')
+  },
+  , resolvers: {
+      text: require('.lib/resolver/file')
+    , css: require('.lib/resolver/css')
+    , skip: require('.lib/resolver/skip')
+  },
+  , wrappers: {
+      'iife'        : file('./templates/iife.template')
+    , 'amd-define'  : file('./templates/amd-define.template')
+    , 'umd/amd-web' : file('./templates/amd-web.template')
+    }
   }
 }
-, mixins: [
-  { pattern : /text!/, resolver: require('./converter/plugin/file') }
-]
-, wrappers: {
-  'empty': require('./wrapper/empty')
-, 'iife': require('./wrapper/external-template')('./templates/iife.template')
-, 'amd-define': require('./wrapper/external-template')('./templates/amd-define.template')
-, 'umd/amd-web': require('./wrapper/external-template')('./templates/amd-web.template')
-}
-, formatter: { format: {indent: {style: '  ', base: 0}, space: ' '}}
-}
+```
+
+Example config:
+```
+  { "main": "main.js"
+  , "output": "dist.js"
+  , "wrapper": "iife"
+  , "name": "my-component"
+  , "dependencies":
+    { "resolve": 
+      { "^(text\/?)*!": "text",
+        "^(css\/?)*!": "css",
+        "^(domReady\/?)!": "skip"
+      }
+      , "references": {
+        "jquery": "$"
+      , "export": "this"
+      }
+    }
+  }
+```
+
+Exaple wrapper:
+```
+{{#if css }}//css   -> {{css}}  {{/if}}
+{{#if deps}}//ext   -> {{deps}} {{/if}}
+{{#if args}}//remap -> {{deps}} -> {{args}} {{/if}}
+{{#if skip}}//skip  -> {{skip}} {{/if}}
+//namespace -> {{config.namespace}}
+
+(function ({{sequence join deps 'factory'}}) {
+  if (typeof define === 'function' && define.amd) {
+    define('{{{name}}}', [{{sequence join escape deps css}}], factory)
+   } else {
+    factory({{deps}})
+  }
+}({{args}}, function ({{deps}}) {
+  {{{code}}}
+}));
 ```
 
 ### Extend
 #### Custom converter
 #### Custom wrapper
-#### Custom mixin
+#### Custom resolver
+#### Custom helper

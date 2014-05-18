@@ -3,6 +3,7 @@ require(
   , "jquery"
   , "deps/four"
   , "text!./template.html"
+  , "domReady!"
   ]
   , function(one, jquery, four, t1)
   {
