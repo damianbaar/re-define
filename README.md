@@ -1,6 +1,6 @@
 ## re-define (work in progress)
 A command line tool for resolving and converting modules tree.
-Currently supports `AMD` and output could be presented as `UMD`, `IIFE`, `Plain JS` or `AMD define` module.
+`CommonJS` `Plain JS``AMD` to `UMD`, `IIFE`, `Plain JS` or `AMD define` module.
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -27,12 +27,29 @@ Usage: re-define [options]
 ##### From stream
 `echo "define('a',['b','c'],function(b, c){ console.log(b,c) })" | re-define --stream --wrapper iife`
 
-```
+```js
 (function( b,c ){
   var a = function (b, c) {
     console.log(b, c);
   }(b, c);
  })( b,c )
+```
+
+`echo "var a = require('test'); var b = 10" | re-define --stream`
+
+```js
+(function(test, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define('module_name', ['test'], factory)
+  } else {
+    factory(test)
+  }
+}(test, function(test) {
+  var s_1400445386970 = (function(r_1400445386975) {
+    var a = r_1400445386975;
+    var b = 10;
+  })(test);
+}));
 ```
 
 ##### From file
@@ -42,7 +59,7 @@ goto -> `cd example/demo`
 or
 `re-define -c build.config && less dist.js`
 
-####Config
+###Config
 ```
   { base: '.'
   , main: ''
@@ -51,8 +68,11 @@ or
   , verbose: false
   , wrapper: 'umd/amd-web'
   , dependencies: { 
-     { resolve: { 'pattern': 'resolver' }
-    }
+      resolve: { 
+        "^(text\/?)*!": "text",
+        "^(css\/?)*!": "skip"
+      }
+  }
 
                           //////////////////
                          //Advanced usage//
@@ -102,7 +122,7 @@ Example config:
   }
 ```
 
-Exaple wrapper:
+Example wrapper:
 ```
 {{#if css }}//css   -> {{css}}  {{/if}}
 {{#if deps}}//ext   -> {{deps}} {{/if}}
