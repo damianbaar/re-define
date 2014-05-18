@@ -1,6 +1,6 @@
 {{#if css }}//css   -> {{css}}  {{/if}}
 {{#if deps}}//ext   -> {{deps}} {{/if}}
-{{#if args}}//remap -> {{deps}} -> {{args}} {{/if}}
+{{#if args}}//remap -> {{deps}} -> {{{args}}} {{/if}}
 {{#if skip}}//skip  -> {{skip}} {{/if}}
 //namespace -> {{config.namespace}}
 
