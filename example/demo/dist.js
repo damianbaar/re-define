@@ -28,7 +28,7 @@ var one = function (five, template, exports) {
         console.log(template);
     };
 }(dotpath_fi_ve, text_deps_template, exports);
-var deps_four = (function(r_1400414813914) { var inner = r_1400414813914;
+var deps_four = (function(r_1400445209083) { var inner = r_1400445209083;
 return 'Yeah that\'s me, I like better CommonJS style' + inner; })(dotpath_inner);
 var text_template = "<div>test</div><div></div><div></div><div></div>";
 (function (one, jquery, four, t1) {
