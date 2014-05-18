@@ -29,7 +29,7 @@ var program     = require('commander')
   if(program.wrapper) userConfig.wrapper = program.wrapper
   if(program.separator) userConfig.separator = program.separator
 
-  var source = program.stream ? process.stdin : readStream(userConfig.main)
+  var source = program.stream ? process.stdin : readStream(userConfig.base, userConfig.main)
     , output = userConfig.output ? writeStream(userConfig.output) : process.stdout
     , config = redefine.config(userConfig)
 

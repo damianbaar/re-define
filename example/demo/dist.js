@@ -28,8 +28,8 @@ var one = function (five, template, exports) {
         console.log(template);
     };
 }(dotpath_fi_ve, text_deps_template, exports);
-var deps_four = (function(r_1400411995282) { var inner = r_1400411995282;
-return 'Yeah that\'s me, and I\'m in different folder' + inner; })(dotpath_inner);
+var deps_four = (function(r_1400414813914) { var inner = r_1400414813914;
+return 'Yeah that\'s me, I like better CommonJS style' + inner; })(dotpath_inner);
 var text_template = "<div>test</div><div></div><div></div><div></div>";
 (function (one, jquery, four, t1) {
     return [
