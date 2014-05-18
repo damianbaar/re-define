@@ -16,9 +16,8 @@ var program     = require('commander')
     .option('-b , --base [dir]'    , 'Base folder for project')
     .option('-m , --main [file]'   , 'Main file')
     .option('-o , --output [file]' , 'Output')
-    .option('-f , --follow'        , 'Whether should resolve whole dep tree')
     .option('-s , --stream'        , 'Whether should read from stream')
-    .option('--separator [value]'  , 'Module separator when stream')
+    .option('--separator [value]'  , 'Module separator while reading from stream')
     .parse(process.argv)
 
   var userConfig = program.config && JSON.parse(readFile(program.config)) || {}
@@ -26,7 +25,6 @@ var program     = require('commander')
   if(program.base)    userConfig.base    = program.base
   if(program.main)    userConfig.main    = program.main
   if(program.output)  userConfig.output  = program.output
-  if(program.follow)  userConfig.follow  = program.follow
   if(program.verbose) userConfig.verbose = program.verbose
   if(program.wrapper) userConfig.wrapper = program.wrapper
   if(program.separator) userConfig.separator = program.separator

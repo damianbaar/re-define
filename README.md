@@ -18,8 +18,8 @@ Usage: re-define [options]
     -b, --base [dir]            Base folder for project
     -m, --main [file]           Main file
     -o, --output [file]         Output
-    -f, --follow [value]        Whether should resolve whole dependency tree
     -s, --stream                Whether should read from stream
+    --separator [value]         Module separator while reading from stream
 ```
 
 #### Examples
@@ -48,9 +48,8 @@ or
   , main: ''
   , out: ''
   , name: 'module_name'
-  , follow: true
   , verbose: false
-  , wrapper: 'empty'
+  , wrapper: 'umd/amd-web'
   , dependencies: { 
      { resolve: { 'pattern': 'resolver' }
     }
