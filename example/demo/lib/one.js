@@ -1,6 +1,7 @@
 define(
   [ "dotpath/fi-ve"
   , "text!./deps/template.html"
+  , "two"
   , "exports"
   , "css!./styles.css"
   ]

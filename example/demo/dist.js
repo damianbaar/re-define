@@ -17,7 +17,10 @@
                      css.innerHTML = ".a {  color: #FFFF00 !important;}";
                      document.body.appendChild(css);
                    })();
-var dotpath_inner = 'inner';
+var two = 'two';
+var dotpath_inner = function (two) {
+    return 'inner' + two;
+}(two);
 var dotpath_fi_ve = function (inner) {
     return inner;
 }(dotpath_inner);
@@ -27,8 +30,8 @@ var one = function (five, template, exports) {
     return exports.one = function () {
         console.log(template);
     };
-}(dotpath_fi_ve, text_deps_template, exports);
-var deps_four = (function(r_1400445209083) { var inner = r_1400445209083;
+}(dotpath_fi_ve, text_deps_template, two, exports);
+var deps_four = (function(r_1400537385682) { var inner = r_1400537385682;
 return 'Yeah that\'s me, I like better CommonJS style' + inner; })(dotpath_inner);
 var text_template = "<div>test</div><div></div><div></div><div></div>";
 (function (one, jquery, four, t1) {

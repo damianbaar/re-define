@@ -110,9 +110,7 @@ Example config:
   , "name": "my-component"
   , "dependencies":
     { "resolve": 
-      { "^(text\/?)*!": "text",
-        "^(css\/?)*!": "css",
-        "^(domReady\/?)!": "skip"
+      { "^(domReady\/?)!": "skip"
       }
       , "references": {
         "jquery": "$"

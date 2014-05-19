@@ -1,3 +1,3 @@
-define(function(){
-  return "inner"
+define(['../two'], function(two){
+  return "inner" + two
 })

@@ -1,3 +1,3 @@
-define(function(require){
-  return require('./three') 
+define(function(){
+  return "two"
 })
