@@ -5,7 +5,7 @@ define(
   , "exports"
   , "css!./styles.css"
   ]
-  , function(five, template, exports){
+  , function(five, template, two, exports){
 
     console.log(five, template, exports)
 
