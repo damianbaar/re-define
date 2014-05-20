@@ -1,11 +1,12 @@
 define(
-  [ "dotpath/fi-ve"
+  [ "./dotpath/fi-ve"
   , "text!./deps/template.html"
-  , "two"
+  , "./two"
+  , "dep/dep"
   , "exports"
   , "css!./styles.css"
   ]
-  , function(five, template, two, exports){
+  , function(five, template, two, dep, exports){
 
     console.log(five, template, exports)
 

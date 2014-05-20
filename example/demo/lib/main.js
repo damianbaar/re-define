@@ -1,7 +1,7 @@
 require(
-  [ "one"
+  [ "./one"
   , "jquery"
-  , "deps/four"
+  , "./deps/four"
   , "text!./template.html"
   , "domReady!"
   ]
