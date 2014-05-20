@@ -1,7 +1,7 @@
 ## re-define
-Let's 're-define' something ...
+Let's `re-define` something ...
 
-source: `CommonJS`, `Plain JS`, `AMD` output: \* ... yep custom templates are allowed.
+from: `CommonJS`, `Plain JS`, `AMD` to: * ... yep custom templates are allowed.
 
 ### Getting Started
 Install the module: `npm install -g re-define`
