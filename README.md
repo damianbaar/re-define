@@ -1,6 +1,7 @@
-## re-define (work in progress)
-A command line tool for resolving and converting modules tree.
-`CommonJS` `Plain JS``AMD` to `UMD`, `IIFE`, `Plain JS` or `AMD define` module.
+## re-define
+Let's 're-define' something ...
+
+source: `CommonJS`, `Plain JS`, `AMD` output: \* ... yep custom templates are allowed.
 
 ### Getting Started
 Install the module: `npm install -g re-define`
