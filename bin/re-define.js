@@ -17,18 +17,20 @@ var program     = require('commander')
     .option('-m , --main [file]'   , 'Main file')
     .option('-o , --output [file]' , 'Output')
     .option('-s , --stream'        , 'Whether should read from stream')
+    .option('-f, --follow [value]' , 'Whether should resolve whole dep tree')
     .option('--separator [value]'  , 'Module separator while reading from stream')
     .parse(process.argv)
 //folow
   var userConfig = program.config && JSON.parse(readFile(program.config)) || {}
 
-  if(program.base)    userConfig.base    = program.base
-  if(program.main)    userConfig.main    = program.main
-  if(program.output)  userConfig.output  = program.output
-  if(program.verbose) userConfig.verbose = program.verbose
-  if(program.wrapper) userConfig.wrapper = program.wrapper
+  if(program.base)      userConfig.base      = program.base
+  if(program.main)      userConfig.main      = program.main
+  if(program.output)    userConfig.output    = program.output
+  if(program.verbose)   userConfig.verbose   = program.verbose
+  if(program.wrapper)   userConfig.wrapper   = program.wrapper
   if(program.separator) userConfig.separator = program.separator
-
+  if(program.follow)    userConfig.follow    = program.follow && program.follow === 'true'
+  
   var source = program.stream ? process.stdin : readStream(userConfig.base, userConfig.main)
     , output = userConfig.output ? writeStream(userConfig.output) : process.stdout
     , config = redefine.config(userConfig)
