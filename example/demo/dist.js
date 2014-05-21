@@ -1,20 +1,20 @@
 //css   -> css!./styles.css  
-//ext   -> dep/dep,exports,jquery 
-//remap -> dep/dep,exports,jquery -> dep/dep,this['ns'],$ 
+//ext   -> jquery,dep/dep,exports 
+//remap -> jquery,dep/dep,exports -> $,dep/dep,this['ns'] 
 //skip  -> domReady! 
 //namespace -> ns
 
-(function (dep_dep,exports,jquery,factory) {
+(function (jquery,dep_dep,exports,factory) {
   if (typeof define === 'function' && define.amd) {
-    define('my-component', ['dep/dep','exports','jquery','css!./styles.css'], factory)
+    define('my-component', ['jquery','dep/dep','exports','css!./styles.css'], factory)
    } else {
-    factory(dep_dep,exports,jquery)
+    factory(jquery,dep_dep,exports)
   }
-}(dep_dep,this['ns'],$, function (dep_dep,exports,jquery) {
+}($,dep_dep,this['ns'], function (jquery,dep_dep,exports) {
   var two = 'two';
 var dotpath_inner = function (two) {
     return 'inner' + two;
-}(two);
+}(two, jquery);
 var dotpath_fi_ve = function (inner) {
     return inner;
 }(dotpath_inner);
@@ -25,7 +25,7 @@ var one = function (five, template, two, dep, exports) {
         console.log(template);
     };
 }(dotpath_fi_ve, text_deps_template, two, dep_dep, exports);
-var deps_four = (function(r_1400624476329) { var inner = r_1400624476329;
+var deps_four = (function(r_1400696908843) { var inner = r_1400696908843;
 return 'Yeah that\'s me, I like better CommonJS style' + inner; })(dotpath_inner);
 var text_template = "<div>test</div><div></div><div></div><div></div>";
 (function (one, jquery, four, t1) {
