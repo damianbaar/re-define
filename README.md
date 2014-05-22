@@ -84,15 +84,7 @@ or
                         //////////////////
 
   , escape: function (val) { return val.replace(/\.|\/|\\|-/g, '_') }
-  , helpers: { 
-     { quotes: function() { return _.map(arguments, function(i) { return '\'' + i + '\'' }) }
-     , join: function() { return _.toArray(arguments).join(',') }
-     , escape: function() { return _.map(arguments, function(d) { return config.escape(d) }) }
-     , remap: function() { 
-         var refs = config.dependencies.references
-         return _.map(arguments, function(e) { return (refs && refs[e]) || e })
-     }
-  }
+  , helpers: { [join, escape, ref, append] }
   converter: {
     common_js: require('./converter/cjs')
   , amd_define: require('./converter/amd-define')
@@ -138,20 +130,23 @@ Example config:
 
 Example wrapper:
 ```
-{{#if css }}//css   -> {{css}}  {{/if}}
-{{#if deps}}//ext   -> {{deps}} {{/if}}
-{{#if args}}//remap -> {{deps}} -> {{args}} {{/if}}
-{{#if skip}}//skip  -> {{skip}} {{/if}}
-//namespace -> {{config.namespace}}
+{{#if css }}//css       -> {{css}}  {{/if}}
+{{#if external}}//ext   -> {{external}} {{/if}}
+{{#if skip}}//skip      -> {{skip}} {{/if}}
 
-(function ({{sequence join deps 'factory'}}) {
+(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('{{{name}}}', [{{sequence join escape deps css}}], factory)
+    define('{{{name}}}', [{{{seq join quotes external css}}}], factory)
    } else {
-    factory({{deps}})
+    {{#each external}}var {{seq ../escape this}} = {{{seq ../remap this}}}
+    {{/each}}
+
+    parent['{{{seq remap exports}}}'] = factory({{{seq escape external}}})
   }
-}({{args}}, function ({{deps}}) {
+}(this, function ({{{seq escape external}}}) {
   {{{code}}}
+
+  return {{{exports}}}
 }));
 ```
 

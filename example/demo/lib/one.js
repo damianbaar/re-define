@@ -3,14 +3,13 @@ define(
   , "text!./deps/template.html"
   , "./two"
   , "dep/dep"
-  , "exports"
   , "css!./styles.css"
   ]
-  , function(five, template, two, dep, exports){
+  , function(five, template, two, dep){
 
     console.log(five, template)
 
-    return exports.one = function () {
+    return function () {
       console.log(template)
     }
 })

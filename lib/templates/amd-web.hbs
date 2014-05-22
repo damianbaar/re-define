@@ -1,17 +1,16 @@
-{{#if css }}//css   -> {{css}}  {{/if}}
+{{#if css }}//css       -> {{css}}  {{/if}}
 {{#if external}}//ext   -> {{external}} {{/if}}
-{{#if skip}}//skip  -> {{skip}} {{/if}}
+{{#if skip}}//skip      -> {{skip}} {{/if}}
 
-(function (parent, exports, factory){
+(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('{{{name}}}', [{{{seq join quotes external css}}}], factory)
+    define('{{{name}}}', [{{{seq join '\'|\'' append external css}}}], factory)
    } else {
-    {{#each external}}var {{seq ../escape this}} = {{{seq ../remap this}}}
+    {{#each external}}var {{seq ../escape this}} = {{{seq ../ref this}}}
     {{/each}}
-    factory({{{seq escape external}}})
+    parent['{{{seq ref exports}}}'] = factory({{{seq escape external}}})
   }
-}(this, {{{seq remap 'exports'}}}, function ({{{seq escape external}}}) {
-  {{{code}}}
-
+}(this, function ({{{seq escape external}}}) {
+          {{{code}}}
   return {{{exports}}}
 }));

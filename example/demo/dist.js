@@ -1,17 +1,15 @@
-//css   -> css!./styles.css  
-//ext   -> jquery,dep/dep 
-//skip  -> domReady!,exports 
-
-(function (parent, exports, factory){
+(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
     define('component', ['jquery','dep/dep','css!./styles.css'], factory)
-   } else {
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('jquery'),require('dep/dep'))
+  } else {
     var jquery = parent.$
     var dep_dep = parent.dep
     
-    factory(jquery,dep_dep)
+    parent['components'] = factory(jquery,dep_dep)
   }
-}(this, parent, function (jquery,dep_dep) {
+}(this, function (jquery,dep_dep) {
   var two = 'two';
 var dotpath_inner = function (two, jquery) {
     return 'inner' + two;
