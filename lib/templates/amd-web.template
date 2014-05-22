@@ -12,4 +12,6 @@
   }
 }({{{seq escape args}}}, function ({{{seq escape deps}}}) {
   {{{code}}}
+
+  return {{{exports}}}
 }));

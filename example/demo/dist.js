@@ -25,10 +25,10 @@ var one = function (five, template, two, dep, exports) {
         console.log(template);
     };
 }(dotpath_fi_ve, text_deps_template, two, dep_dep, exports);
-var deps_four = (function(r_1400717557912) { var inner = r_1400717557912;
+var deps_four = (function(r_0) { var inner = r_0;
 return 'Yeah that\'s me, I like better CommonJS style' + inner; })(dotpath_inner);
 var text_template = "<div>test</div><div></div><div></div><div></div>";
-(function (one, jquery, four, t1) {
+var m_0 = (function (one, jquery, four, t1) {
     return [
         one,
         four,
@@ -42,4 +42,6 @@ var text_template = "<div>test</div><div></div><div></div><div></div>";
                      document.body.appendChild(css);
                    })();
 
+
+  return one
 }));

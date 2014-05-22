@@ -6,11 +6,11 @@ var redefine = require('../lib')
 
 var req_mod_1 = {
     in: 'require([], function() { console.log("req") })'
-  , out: '(function () {console.log("req");}())'
+  , out: 'var m = (function () {console.log("req");}())'
   }
   , req_mod_2 = {
     in: 'require(["a","b","c"], function(a,b,c) { console.log(a, b, c) })'
-  , out: '(function (a, b, c) {console.log(a, b, c);}(a, b, c))'
+  , out: 'var m = (function (a, b, c) {console.log(a, b, c);}(a, b, c))'
   }
   , def_mod_1 = {
     in: 'define("a", [], function() { return "Hello" })'
@@ -60,6 +60,7 @@ function escape(val) {
   return val.replace(/\r?\n|\r/g,'')
             .replace(/\'|\"/g, '"')
             .replace(/\ |\;/g, '')
+            .replace(/\_[0-9]/g, '')
 }
 
 exports['main'] = {
