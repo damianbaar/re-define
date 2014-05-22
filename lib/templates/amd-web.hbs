@@ -8,7 +8,7 @@
    } else {
     {{#each external}}var {{seq ../escape this}} = {{{seq ../ref this}}}
     {{/each}}
-    parent['{{{seq ref exports}}}'] = factory({{{seq escape external}}})
+    {{#if exports}}parent['{{{seq ref exports}}}'] = {{/if}}factory({{{seq escape external}}})
   }
 }(this, function ({{{seq escape external}}}) {
           {{{code}}}
