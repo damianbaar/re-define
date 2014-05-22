@@ -20,7 +20,7 @@ var program     = require('commander')
     .option('-f, --follow [value]' , 'Whether should resolve whole dep tree')
     .option('--separator [value]'  , 'Module separator while reading from stream')
     .parse(process.argv)
-//folow
+
   var userConfig = program.config && JSON.parse(readFile(program.config)) || {}
 
   if(program.base)      userConfig.base      = program.base
