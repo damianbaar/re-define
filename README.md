@@ -62,7 +62,7 @@ or
 `re-define -c build.config && less dist.js`
 
 ###Config
-```
+```js
   { base: '.'
   , main: ''
   , out: ''
@@ -74,6 +74,9 @@ or
         "^(text\/?)*!": "text",
         "^(css\/?)*!": "skip"
       }
+    , references: {
+        //e.g. "jquery": "parent.$"
+      }
   }
 
                           //////////////////
@@ -82,8 +85,13 @@ or
 
   , escape: function (val) { return val.replace(/\.|\/|\\|-/g, '_') }
   , helpers: { 
-      escape: function() { return _.map(arguments, function(i) { return '\'' + i + '\'' }) }
-    , join: function() { return _.toArray(arguments).join(',') } 
+     { quotes: function() { return _.map(arguments, function(i) { return '\'' + i + '\'' }) }
+     , join: function() { return _.toArray(arguments).join(',') }
+     , escape: function() { return _.map(arguments, function(d) { return config.escape(d) }) }
+     , remap: function() { 
+         var refs = config.dependencies.references
+         return _.map(arguments, function(e) { return (refs && refs[e]) || e })
+     }
   }
   converter: {
     common_js: require('./converter/cjs')
@@ -96,9 +104,10 @@ or
     , skip: require('.lib/resolver/skip')
   },
   , wrappers: {
-      'iife'        : file('./templates/iife.template')
-    , 'amd-define'  : file('./templates/amd-define.template')
-    , 'umd/amd-web' : file('./templates/amd-web.template')
+      'iife'        : file('./templates/iife.hbs')
+    , 'amd-define'  : file('./templates/amd-define.hbs')
+    , 'umd/amd-web' : file('./templates/amd-web.hbs')
+    , 'umd/all'     : file('./templates/return-exports-global.hbs')
     }
   }
 }
@@ -106,17 +115,22 @@ or
 
 Example config:
 ```
-  { "main": "main.js"
+  { "base": "lib"
+  , "main": "main.js"
   , "output": "dist.js"
-  , "wrapper": "iife"
+  , "wrapper": "umd/amd-web"
   , "name": "my-component"
+  , "exports": "one"
+  , "namespace": "ns"
   , "dependencies":
-    { "resolve": 
-      { "^(domReady\/?)!": "skip"
+    { "resolve": {
+        "^(css\/?)*!": "skip:css",
+        "^(domReady\/?)!": "skip"
       }
       , "references": {
-        "jquery": "$"
-      , "export": "this"
+        "jquery": "parent.$"
+      , "exports": "parent['ns']"
+      , "dep/dep": "parent['ns'].dep"
       }
     }
   }

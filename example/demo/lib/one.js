@@ -8,7 +8,7 @@ define(
   ]
   , function(five, template, two, dep, exports){
 
-    console.log(five, template, exports)
+    console.log(five, template)
 
     return exports.one = function () {
       console.log(template)
