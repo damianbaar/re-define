@@ -1,7 +1,9 @@
 == TODO ==
 [x] params
-[] commonjs
-[] combine transformer and resolver
-[] grunt task
-[] amd commonjs
-[] mock
+[x] commonjs
+[x] combine transformer and resolver
+[x] grunt task
+[ ] increase test coverage
+[ ] amd commonjs //function(req, mod, exp) {}
+[ ] named main module
+[ ] follow, avoid resolving plugins

@@ -1,6 +1,8 @@
 ## re-define
 Let's `re-define` something ...
 
+`re-define` is able to resolve whole dependencies tree as well as single module.
+
 from: `CommonJS`, `Plain JS`, `AMD` to: * ... yep custom templates are allowed.
 
 ### Getting Started
@@ -72,36 +74,25 @@ or
   , dependencies: { 
       resolve: { 
         "^(text\/?)*!": "text",
-        "^(css\/?)*!": "skip"
+        "^(css\/?)*!": "css",
+        "pattern": "skip" 
       }
     , references: {
         //e.g. "jquery": "parent.$"
       }
   }
-
-                          //////////////////
-                         //Advanced usage//
-                        //////////////////
-
   , escape: function (val) { return val.replace(/\.|\/|\\|-/g, '_') }
-  , helpers: { [join, escape, ref, append] }
-  converter: {
-    common_js: require('./converter/cjs')
-  , amd_define: require('./converter/amd-define')
-  , amd_require: require('./converter/amd-require')
+
+              /////////////////////
+             // Available parts //
+            /////////////////////
+
+  , helpers: [join, escape, ref, append]
+  , converter: [common_js, amd_define, amd_require]
   },
-  , resolvers: {
-      text: require('.lib/resolver/file')
-    , css: require('.lib/resolver/css')
-    , skip: require('.lib/resolver/skip')
-  },
-  , wrappers: {
-      'iife'        : file('./templates/iife.hbs')
-    , 'amd-define'  : file('./templates/amd-define.hbs')
-    , 'umd/amd-web' : file('./templates/amd-web.hbs')
-    , 'umd/all'     : file('./templates/return-exports-global.hbs')
-    }
-  }
+  , resolvers: [text, css, skip ],
+  , wrappers: [iife, amd-define, umd/amd-web, umd/all }
+  ] 
 }
 ```
 
@@ -121,7 +112,6 @@ Example config:
       }
       , "references": {
         "jquery": "parent.$"
-      , "exports": "parent['ns']"
       , "dep/dep": "parent['ns'].dep"
       }
     }
@@ -130,18 +120,15 @@ Example config:
 
 Example wrapper:
 ```
-{{#if css }}//css       -> {{css}}  {{/if}}
-{{#if external}}//ext   -> {{external}} {{/if}}
-{{#if skip}}//skip      -> {{skip}} {{/if}}
-
 (function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('{{{name}}}', [{{{seq join quotes external css}}}], factory)
-   } else {
-    {{#each external}}var {{seq ../escape this}} = {{{seq ../remap this}}}
+    define('{{{name}}}', [{{{seq join append '\'|\'' external css}}}], factory)
+  } else if (typeof exports === 'object') {
+    module.exports = factory({{{seq join '#require(|)' append '\'|\'' append external}}})
+  } else {
+    {{#each external}}var {{seq ../escape this}} = {{{seq ../ref this}}}
     {{/each}}
-
-    parent['{{{seq remap exports}}}'] = factory({{{seq escape external}}})
+    {{#if exports}}parent['{{{seq ref exports}}}'] = {{/if}}factory({{{seq escape external}}})
   }
 }(this, function ({{{seq escape external}}}) {
   {{{code}}}
@@ -150,8 +137,49 @@ Example wrapper:
 }));
 ```
 
-### Extend
+### Advanced usage(todo)
+
+####Instance
+```js
+var redefine = require('re-define')
+  , config = redefine.config
+
+  readStream
+    .pipe(redefine.convert(config))
+    .pipe(writeStream)
+```
+
 #### Custom converter
+```js
+converter: {
+  common_js   : require('./converter/cjs')
+, amd_define  : require('./converter/amd-define')
+, amd_require : require('./converter/amd-require')
+}
+```
+
 #### Custom wrapper
+```js
+wrappers: {
+  'iife'        : file('./templates/iife.hbs')
+, 'amd-define'  : file('./templates/amd-define.hbs')
+, 'umd/amd-web' : file('./templates/amd-web.hbs')
+, 'umd/all'     : file('./templates/return-exports-global.hbs')
+}
+```
+
 #### Custom resolver
-#### Custom helper
+```js
+resolvers: {
+  text : require('.lib/resolver/file')
+, css  : require('.lib/resolver/css')
+, skip : require('.lib/resolver/skip')
+}
+```
+
+#### Custom handlebars helper
+```js
+helpers: { 
+  join   : function() { return _.toArray(arguments).join(',') }
+, escape : function() { return _.map(arguments, function(d) { return config.escape(d) }) }
+}
