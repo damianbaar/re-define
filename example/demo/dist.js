@@ -1,16 +1,18 @@
 //css   -> css!./styles.css  
-//ext   -> jquery,dep/dep,exports 
-//remap -> jquery,dep/dep,exports -> $,dep/dep,this['ns'] 
+//ext   -> jquery,dep/dep 
 //skip  -> domReady! 
 //namespace -> ns
 
-(function (jquery,dep_dep,exports,factory) {
+(function (parent, exports, factory){
   if (typeof define === 'function' && define.amd) {
-    define('my-component', ['jquery','dep/dep','exports','css!./styles.css'], factory)
+    define('my-component', ['jquery','dep/dep','css!./styles.css'], factory)
    } else {
+     var jquery = parent.$
+     var dep_dep = parent['ns'].dep
+    
     factory(jquery,dep_dep,exports)
   }
-}($,dep_dep,this['ns'], function (jquery,dep_dep,exports) {
+}(this, parent['ns'], function (jquery,dep_dep) {
   var two = 'two';
 var dotpath_inner = function (two, jquery) {
     return 'inner' + two;
@@ -35,12 +37,6 @@ var m_0 = (function (one, jquery, four, t1) {
         t1
     ];
 }(one, jquery, deps_four, text_template));;
-(function () { 
-                     var css = document.createElement("style");
-                     css.type = "text/css";
-                     css.innerHTML = ".a {  color: #FFFF00 !important;}";
-                     document.body.appendChild(css);
-                   })();
 
 
   return one

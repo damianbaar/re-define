@@ -20,6 +20,7 @@ Usage: re-define [options]
     -m, --main [file]           Main file
     -o, --output [file]         Output
     -s, --stream                Whether should read from stream
+    -f, --follow [value]        Whether should resolve whole dep tree
     --separator [value]         Module separator while reading from stream
 ```
 

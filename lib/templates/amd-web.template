@@ -1,16 +1,17 @@
 {{#if css }}//css   -> {{css}}  {{/if}}
-{{#if deps}}//ext   -> {{deps}} {{/if}}
-{{#if args}}//remap -> {{deps}} -> {{{args}}} {{/if}}
+{{#if external}}//ext   -> {{external}} {{/if}}
 {{#if skip}}//skip  -> {{skip}} {{/if}}
 //namespace -> {{config.namespace}}
 
-(function ({{{seq join escape deps 'factory'}}}) {
+(function (parent, exports, factory){
   if (typeof define === 'function' && define.amd) {
-    define('{{{name}}}', [{{{seq join quotes deps css}}}], factory)
+    define('{{{name}}}', [{{{seq join quotes external css}}}], factory)
    } else {
-    factory({{{seq escape deps}}})
+    {{#each external}} var {{seq ../escape this}} = {{{seq ../remap this}}}
+    {{/each}}
+    factory({{{seq escape external}}}{{#if external}},{{/if}}{{#if exports}}exports{{/if}})
   }
-}({{{seq escape args}}}, function ({{{seq escape deps}}}) {
+}(this, {{{seq remap 'exports'}}}, function ({{{seq escape external}}}) {
   {{{code}}}
 
   return {{{exports}}}
