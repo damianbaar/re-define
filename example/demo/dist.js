@@ -27,7 +27,7 @@ var one = function (five, template, two, dep) {
 var deps_four = (function(r_0) { var inner = r_0;
 return 'Yeah that\'s me, I like better CommonJS style' + inner; })(dotpath_inner);
 var text_template = "<div>test</div><div></div><div></div><div></div>";
-var m_0 = (function (one, jquery, four, t1) {
+var main = (function (one, jquery, four, t1) {
     return [
         one,
         four,
