@@ -73,9 +73,9 @@ or
   , wrapper: 'umd/amd-web'
   , dependencies: { 
       resolve: { 
-        "^(text\/?)*!": "text",
-        "^(css\/?)*!": "css",
-        "pattern": "skip" 
+        "^(text\/?)*!" : "text",
+        "^(css\/?)*!"  : "css",
+        "RegExp"       : "skip"
       }
     , references: {
         //e.g. "jquery": "parent.$"
@@ -83,16 +83,14 @@ or
   }
   , escape: function (val) { return val.replace(/\.|\/|\\|-/g, '_') }
 
-              /////////////////////
-             // Available parts //
-            /////////////////////
+                      ///////////////
+                     // Equipment //
+                    ///////////////
 
-  , helpers: [join, escape, ref, append]
-  , converter: [common_js, amd_define, amd_require]
-  },
-  , resolvers: [text, css, skip ],
-  , wrappers: [iife, amd-define, umd/amd-web, umd/all }
-  ] 
+  , helpers:   [ join, escape, ref, append]
+  , converter: [ common_js, amd_define, amd_require]
+  , resolvers: [ text, css, skip ],
+  , wrappers:  [ iife, amd-define, umd/amd-web, umd/all] 
 }
 ```
 
@@ -107,7 +105,7 @@ Example config:
   , "namespace": "ns"
   , "dependencies":
     { "resolve": {
-        "^(css\/?)*!": "skip:css",
+        "^(css\/?)*!": "skip:css", //plugin:alias -> within template available via {{alias}}
         "^(domReady\/?)!": "skip"
       }
       , "references": {
@@ -137,49 +135,51 @@ Example wrapper:
 }));
 ```
 
-### Advanced usage(todo)
+### Advanced usage
 
 ####Instance
 ```js
 var redefine = require('re-define')
-  , config = redefine.config
+  , myConfig = {}
+  , config = redefine.config(myConfig)
 
   readStream
     .pipe(redefine.convert(config))
     .pipe(writeStream)
 ```
 
-#### Custom converter
+#### Custom converter (todo)
 ```js
 converter: {
-  common_js   : require('./converter/cjs')
-, amd_define  : require('./converter/amd-define')
-, amd_require : require('./converter/amd-require')
+  common_js   : require('./lib/converter/cjs')
+, amd_define  : require('./lib/converter/amd-define')
+, amd_require : require('./lib/converter/amd-require')
 }
 ```
 
-#### Custom wrapper
+#### Custom wrapper (todo) 
 ```js
 wrappers: {
-  'iife'        : file('./templates/iife.hbs')
-, 'amd-define'  : file('./templates/amd-define.hbs')
-, 'umd/amd-web' : file('./templates/amd-web.hbs')
-, 'umd/all'     : file('./templates/return-exports-global.hbs')
+  'iife'        : file('./lib/templates/iife.hbs')
+, 'amd-define'  : file('./lib/templates/amd-define.hbs')
+, 'umd/amd-web' : file('./lib/templates/amd-web.hbs')
+, 'umd/all'     : file('./lib/templates/return-exports-global.hbs')
 }
 ```
 
-#### Custom resolver
+#### Custom resolver (todo) 
 ```js
 resolvers: {
-  text : require('.lib/resolver/file')
-, css  : require('.lib/resolver/css')
-, skip : require('.lib/resolver/skip')
+  text : require('./lib/resolver/file')
+, css  : require('./lib/resolver/css')
+, skip : require('./lib/resolver/skip')
 }
 ```
 
-#### Custom handlebars helper
+#### Custom handlebars helper (todo)
 ```js
 helpers: { 
   join   : function() { return _.toArray(arguments).join(',') }
 , escape : function() { return _.map(arguments, function(d) { return config.escape(d) }) }
 }
+```
