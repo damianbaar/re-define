@@ -42,18 +42,22 @@ Usage: re-define [options]
 `echo "var a = require('test'); var b = 10" | re-define --stream`
 
 ```js
-(function(test, factory) {
+(function(parent, factory) {
   if (typeof define === 'function' && define.amd) {
     define('module_name', ['test'], factory)
   } else {
+    var test = test
+
     factory(test)
   }
-}(test, function(test) {
-  var s_1400445386970 = (function(r_1400445386975) {
-    var a = r_1400445386975;
+}(this, function(test) {
+  var main = (function(r_0) {
+    var a = r_0;
     var b = 10;
   })(test);
-}));
+
+  return
+}))
 ```
 
 ##### From file
@@ -70,7 +74,7 @@ or
   , out: ''
   , name: 'module_name'
   , verbose: false
-  , wrapper: 'umd/amd-web'
+  , wrapper: 'umd/4all'
   , dependencies: { 
       resolve: { 
         "^(text\/?)*!" : "text",
