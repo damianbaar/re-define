@@ -10,7 +10,8 @@
     parent['components'] = factory(jquery,dep_dep)
   }
 }(this, function (jquery,dep_dep) {
-  var two = 'two';
+  var two = (function(r_1) { var $ = r_1;
+return 'two'; })(jquery);
 var dotpath_inner = function (two, jquery) {
     return 'inner' + two;
 }(two, jquery);
@@ -37,4 +38,4 @@ var main = (function (one, jquery, four, t1) {
 
 
   return one
-}));
+}))

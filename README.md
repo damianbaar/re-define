@@ -3,7 +3,7 @@ Let's `re-define` something ...
 
 `re-define` is able to resolve whole dependencies tree as well as single module.
 
-from: `CommonJS`, `Plain JS`, `AMD` to: * ... yep custom templates are allowed.
+from: `CommonJS`, `Plain JS`, `AMD`, `AMD CJS` to: * ... yep custom templates are allowed.
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -156,6 +156,7 @@ var redefine = require('re-define')
 ```js
 converter: {
   common_js   : require('./lib/converter/cjs')
+, amd_cjs: require('./converter/amd-cjs')
 , amd_define  : require('./lib/converter/amd-define')
 , amd_require : require('./lib/converter/amd-require')
 }

@@ -1,11 +1,10 @@
 == TODO ==
-[x] params
-[x] commonjs
-[x] combine transformer and resolver
-[x] grunt task
 [ ] increase test coverage
 [ ] amd commonjs //function(req, mod, exp) {}
 [ ] follow, avoid resolving plugins
 [ ] deps reports
-[ ] plugin for making internal external deps
+[ ] plugin for pulling in internal external deps
 [ ] switch to acorn
+[ ] removing debugger/console.log statement
+[ ] grunt task (had to check oldone)
+[ ] check with gulp
