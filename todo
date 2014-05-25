@@ -5,5 +5,7 @@
 [x] grunt task
 [ ] increase test coverage
 [ ] amd commonjs //function(req, mod, exp) {}
-[ ] named main module
 [ ] follow, avoid resolving plugins
+[ ] deps reports
+[ ] plugin for making internal external deps
+[ ] switch to acorn

@@ -31,10 +31,7 @@
     "type": "git",
     "url": "https://github.com/damianbaar/re-define.git"
   },
-  "keywords": [
-    "module",
-    "AMD"
-  ],
+  "keywords": [ "modules", "CommonJS", "AMD", "Plain JS", "Vanila JS", "stream", "converter", "bundle", "resolve", "transform", "ast", "UMD" ],
   "author": "Damian Baar",
   "license": "ISC",
   "bugs": {
