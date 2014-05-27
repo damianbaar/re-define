@@ -23,6 +23,7 @@ Usage: re-define [options]
     -o, --output [file]         Output
     -s, --stream                Whether should read from stream
     -f, --follow [value]        Whether should resolve whole dep tree
+    -r, --report                Bundle overview
     --separator [value]         Module separator while reading from stream
 ```
 
