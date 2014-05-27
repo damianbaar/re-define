@@ -95,7 +95,7 @@ or
 
   , helpers:   [ join, escape, ref, append]
   , converter: [ common_js, amd_define, amd_require]
-  , resolvers: [ text, css, skip ],
+  , resolvers: [ text, css, skip, include ],
   , wrappers:  [ iife, amd-define, umd/amd-web, umd/all] 
 }
 ```
@@ -111,7 +111,7 @@ Example config:
   , "namespace": "ns"
   , "dependencies":
     { "resolve": {
-        "^(css\/?)*!": "skip:css", //plugin:alias -> within template available via {{alias}}
+        "^(css\/?)*!": "skip#css", //plugin#alias -> within template available via {{alias}}
         "^(domReady\/?)!": "skip"
       }
       , "references": {
@@ -140,6 +140,27 @@ Example wrapper:
   return {{{exports}}}
 }));
 ```
+### Release notes
+** 0.0.13 **
+
+1. resolver for including external js file
+2. added new wrapper for detailed report
+
+** 0.0.12 **
+
+1. amd commonjs resolver
+
+#### TODO
+- [x] deps reports - re-define --report
+- [x] converter - amd commonjs - define(function(req, mod, exp) {})
+- [x] resolver - include#path - to pull in already resolver external js files
+- [ ] resolver - for resolving nested external deps
+- [ ] increase test coverage
+- [ ] follow fix - when not following do not resolve plugin
+- [ ] switch to acorn
+- [ ] removing debugger/console.log statements
+- [ ] grunt task
+- [ ] gulp support
 
 ### Advanced usage
 
