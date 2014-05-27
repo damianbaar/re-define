@@ -81,7 +81,6 @@ or
         "^(text\/?)*!" : "text",
         "^(css\/?)*!"  : "css",
         "RegExp"       : "skip",
-        "jquery"       : "include#../external/jquery.js"
       }
     , references: {
         //e.g. "jquery": "parent.$"
@@ -112,7 +111,8 @@ Example config:
   , "dependencies":
     { "resolve": {
         "^(css\/?)*!": "skip#css", //plugin#alias -> within template available via {{alias}}
-        "^(domReady\/?)!": "skip"
+        "^(domReady\/?)!": "skip",
+        "jquery"       : "include#path_relative_to_base"
       }
       , "references": {
         "jquery": "parent.$"
@@ -141,19 +141,14 @@ Example wrapper:
 }));
 ```
 ### Release notes
-** 0.0.13 **
+* 0.0.13
+- [x] resolver - include#path - pull in external js files
+- [x] deps reports - re-define --report
 
-1. resolver for including external js file
-2. added new wrapper for detailed report
-
-** 0.0.12 **
-
-1. amd commonjs resolver
+* 0.0.12
+- [x] converter - amd commonjs - define(function(req, mod, exp) {})
 
 #### TODO
-- [x] deps reports - re-define --report
-- [x] converter - amd commonjs - define(function(req, mod, exp) {})
-- [x] resolver - include#path - to pull in already resolver external js files
 - [ ] resolver - for resolving nested external deps
 - [ ] increase test coverage
 - [ ] follow fix - when not following do not resolve plugin
@@ -209,6 +204,6 @@ resolvers: {
 ```js
 helpers: { 
   join   : function() { return _.toArray(arguments).join(',') }
-, escape : function() { return _.map(arguments, function(d) { return config.escape(d) }) }
+, escape : function() { return _.map(arguments, function(d) { return config.escape(d) })}
 }
 ```
