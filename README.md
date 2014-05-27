@@ -80,7 +80,8 @@ or
       resolve: { 
         "^(text\/?)*!" : "text",
         "^(css\/?)*!"  : "css",
-        "RegExp"       : "skip"
+        "RegExp"       : "skip",
+        "jquery"       : "include#../external/jquery.js"
       }
     , references: {
         //e.g. "jquery": "parent.$"
@@ -179,6 +180,7 @@ resolvers: {
   text : require('./lib/resolver/file')
 , css  : require('./lib/resolver/css')
 , skip : require('./lib/resolver/skip')
+, include: require('./resolver/include')
 }
 ```
 
