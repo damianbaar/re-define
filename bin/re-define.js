@@ -11,14 +11,14 @@ var program     = require('commander')
   , redefine    = require('../lib/index')
 
   program
-    .option('-c , --config [name]' , 'Re-define config')
-    .option('-w , --wrapper [type]', 'Wrapper type iife, empty , umd')
-    .option('-b , --base [dir]'    , 'Base folder for project')
-    .option('-m , --main [file]'   , 'Main file')
-    .option('-o , --output [file]' , 'Output')
-    .option('-f, --follow [value]' , 'Whether should resolve whole dep tree')
-    .option('-r, --report'         , 'Bundle overview')
-    .option('--separator [value]'  , 'Module separator while reading from stream')
+    .option('-c , --config [name]'     , 'Re-define config')
+    .option('-w , --wrapper [type]'    , 'Wrapper type iife, empty , umd')
+    .option('-b , --base [dir]'        , 'Base folder for project')
+    .option('-m , --main [file]'       , 'Main file')
+    .option('-o , --output [file]'     , 'Output')
+    .option('-f, --follow [value]'     , 'Whether should resolve whole dep tree')
+    .option('-r, --report'             , 'Bundle overview')
+    .option('-s, --separator [value]'  , 'Module separator while reading from stream')
     .parse(process.argv)
 
   var userConfig = program.config && JSON.parse(readFile(program.config)) || {}

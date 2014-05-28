@@ -23,7 +23,7 @@ Usage: re-define [options]
     -o, --output [file]         Output
     -f, --follow [value]        Whether should resolve whole dep tree
     -r, --report                Bundle overview
-    --separator [value]         Module separator while reading from stream
+    -s, --separator [value]     Module separator while reading from stream
 ```
 
 #### Examples
@@ -142,7 +142,7 @@ Example wrapper:
 ### Release notes
 0.0.14
 - [x] `colors` not included in package.json
-- [x] `--stream` flag is not longer needed
+- [x] `--stream` flag is no longer needed
 
 0.0.13
 - [x] resolver - include#path - pull in external js files
