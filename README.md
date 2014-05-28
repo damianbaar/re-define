@@ -21,7 +21,6 @@ Usage: re-define [options]
     -b, --base [dir]            Base folder for project
     -m, --main [file]           Main file
     -o, --output [file]         Output
-    -s, --stream                Whether should read from stream
     -f, --follow [value]        Whether should resolve whole dep tree
     -r, --report                Bundle overview
     --separator [value]         Module separator while reading from stream
@@ -30,7 +29,7 @@ Usage: re-define [options]
 #### Examples
 
 ##### From stream
-`echo "define('a',['b','c'],function(b, c){ console.log(b,c) })" | re-define --stream --wrapper iife`
+`echo "define('a',['b','c'],function(b, c){ console.log(b,c) })" | re-define --wrapper iife`
 
 ```js
 (function( b,c ){
@@ -40,7 +39,7 @@ Usage: re-define [options]
  })( b,c )
 ```
 
-`echo "var a = require('test'); var b = 10" | re-define --stream`
+`echo "var a = require('test'); var b = 10" | re-define
 
 ```js
 (function(parent, factory) {
@@ -64,7 +63,7 @@ Usage: re-define [options]
 ##### From file
 goto -> `cd example/demo`
 
-`less main.js | re-define --stream`
+`less main.js | re-define`
 or
 `re-define -c build.config && less dist.js`
 
@@ -141,11 +140,15 @@ Example wrapper:
 }));
 ```
 ### Release notes
-* 0.0.13
+0.0.14
+- [x] `colors` not included in package.json
+- [x] `--stream` flag is not longer needed
+
+0.0.13
 - [x] resolver - include#path - pull in external js files
 - [x] deps reports - re-define --report
 
-* 0.0.12
+0.0.12
 - [x] converter - amd commonjs - define(function(req, mod, exp) {})
 
 #### TODO

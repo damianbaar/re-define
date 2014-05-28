@@ -7,6 +7,7 @@ var program     = require('commander')
   , readFile    = _.compose(_.partial(fs.readFileSync, _, 'utf-8'), resolvePath)
   , readStream  = _.compose(fs.createReadStream, resolvePath)
   , writeStream = _.compose(fs.createWriteStream, resolvePath)
+  , stdin       = process.stdin
   , redefine    = require('../lib/index')
 
   program
@@ -15,7 +16,6 @@ var program     = require('commander')
     .option('-b , --base [dir]'    , 'Base folder for project')
     .option('-m , --main [file]'   , 'Main file')
     .option('-o , --output [file]' , 'Output')
-    .option('-s , --stream'        , 'Whether should read from stream')
     .option('-f, --follow [value]' , 'Whether should resolve whole dep tree')
     .option('-r, --report'         , 'Bundle overview')
     .option('--separator [value]'  , 'Module separator while reading from stream')
@@ -30,8 +30,8 @@ var program     = require('commander')
   if(program.separator) userConfig.separator = program.separator
   if(program.report)    userConfig.wrapper   = program.report ? 'report' : userConfig.wrapper
   if(program.follow)    userConfig.follow    = program.follow && program.follow === 'true'
-  
-  var source = program.stream ? process.stdin : readStream(userConfig.base, userConfig.main)
+ 
+  var source = !stdin.isTTY ? process.stdin : readStream(userConfig.base, userConfig.main)
     , output = userConfig.output && !program.report ? writeStream(userConfig.output) : process.stdout
     , config = redefine.config(userConfig)
 
