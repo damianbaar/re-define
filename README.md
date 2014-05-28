@@ -39,7 +39,7 @@ Usage: re-define [options]
  })( b,c )
 ```
 
-`echo "var a = require('test'); var b = 10" | re-define
+`echo "var a = require('test'); var b = 10" | re-define`
 
 ```js
 (function(parent, factory) {
@@ -177,7 +177,7 @@ var redefine = require('re-define')
 ```js
 converter: {
   common_js   : require('./lib/converter/cjs')
-, amd_cjs: require('./converter/amd-cjs')
+, amd_cjs     : require('./lib/converter/amd-cjs')
 , amd_define  : require('./lib/converter/amd-define')
 , amd_require : require('./lib/converter/amd-require')
 }
@@ -193,13 +193,13 @@ wrappers: {
 }
 ```
 
-#### Custom resolver (todo) 
+#### Custom resolver (todo)
 ```js
 resolvers: {
-  text : require('./lib/resolver/file')
-, css  : require('./lib/resolver/css')
-, skip : require('./lib/resolver/skip')
-, include: require('./resolver/include')
+  text    : require('./lib/resolver/file')
+, css     : require('./lib/resolver/css')
+, skip    : require('./lib/resolver/skip')
+, include : require('./lib/resolver/include')
 }
 ```
 
