@@ -39,7 +39,9 @@ Usage: re-define [options]
 ```
 
 `echo "var a = require('test'); var b = 10" | re-define`
+
 or with output
+
 `echo "var a = require('test'); var b = 10" | re-define > dist.js`
 
 ```js
