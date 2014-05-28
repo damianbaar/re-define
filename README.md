@@ -1,10 +1,12 @@
-## re-define
+# re-define
 Let's `re-define` something ...
 
 `re-define` is able to resolve whole dependencies tree as well as single module.
 
 from: `CommonJS`, `Plain JS`, `AMD`, `AMD CJS` to: * ... yep custom templates are allowed.
 
+[![Build Status](https://travis-ci.org/damianbaar/re-define.svg?branch=master)](https://travis-ci.org/damianbaar/re-define)
+  
 ### Getting Started
 Install the module: `npm install -g re-define`
 
