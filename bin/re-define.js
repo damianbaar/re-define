@@ -11,17 +11,20 @@ var program     = require('commander')
   , redefine    = require('../lib/index')
 
   program
-    .option('-c , --config [name]'     , 'Re-define config')
-    .option('-w , --wrapper [type]'    , 'Wrapper type iife, empty , umd')
-    .option('-b , --base [dir]'        , 'Base folder for project')
-    .option('-m , --main [file]'       , 'Main file')
-    .option('-o , --output [file]'     , 'Output')
+    .option('-c, --config [name]'      , 'Re-define config')
+    .option('-w, --wrapper [type]'     , 'Wrapper type iife, empty , umd')
+    .option('-b, --base [dir]'         , 'Base folder for project')
+    .option('-m, --main [file]'        , 'Main file')
     .option('-f, --follow [value]'     , 'Whether should resolve whole dep tree')
     .option('-r, --report'             , 'Bundle overview')
     .option('-s, --separator [value]'  , 'Module separator while reading from stream')
     .parse(process.argv)
 
-  var userConfig = program.config && JSON.parse(readFile(program.config)) || {}
+  var config = program.config
+
+  if(!config && program.args.length === 1) config = program.args[0]
+
+  var userConfig = config && JSON.parse(readFile(config || program.config)) || {}
 
   if(program.base)      userConfig.base      = program.base
   if(program.main)      userConfig.main      = program.main
@@ -30,9 +33,9 @@ var program     = require('commander')
   if(program.separator) userConfig.separator = program.separator
   if(program.report)    userConfig.wrapper   = program.report ? 'report' : userConfig.wrapper
   if(program.follow)    userConfig.follow    = program.follow && program.follow === 'true'
- 
+
   var source = !stdin.isTTY ? process.stdin : readStream(userConfig.base, userConfig.main)
-    , output = userConfig.output && !program.report ? writeStream(userConfig.output) : process.stdout
+    , output = !stdin.isTTY || program.report || !userConfig.output ? process.stdout : writeStream(userConfig.output)
     , config = redefine.config(userConfig)
 
   source

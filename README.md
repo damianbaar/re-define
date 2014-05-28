@@ -20,7 +20,6 @@ Usage: re-define [options]
     -w, --wrapper [type]        Wrapper type iife, empty, umd
     -b, --base [dir]            Base folder for project
     -m, --main [file]           Main file
-    -o, --output [file]         Output
     -f, --follow [value]        Whether should resolve whole dep tree
     -r, --report                Bundle overview
     -s, --separator [value]     Module separator while reading from stream
@@ -40,6 +39,8 @@ Usage: re-define [options]
 ```
 
 `echo "var a = require('test'); var b = 10" | re-define`
+or with output
+`echo "var a = require('test'); var b = 10" | re-define > dist.js`
 
 ```js
 (function(parent, factory) {
@@ -65,7 +66,7 @@ goto -> `cd example/demo`
 
 `less main.js | re-define`
 or
-`re-define -c build.config && less dist.js`
+`re-define build.config && less dist.js`
 
 ###Config
 ```js
@@ -140,6 +141,9 @@ Example wrapper:
 }));
 ```
 ### Release notes
+0.0.15
+- [x] minor `cli` improvements `re-define build.config`
+
 0.0.14
 - [x] `colors` not included in package.json
 - [x] `--stream` flag is no longer needed
