@@ -18,6 +18,7 @@ var program     = require('commander')
     .option('-f, --follow [value]'     , 'Whether should resolve whole dep tree')
     .option('-r, --report'             , 'Bundle overview')
     .option('-s, --separator [value]'  , 'Module separator while reading from stream')
+    .option('-d, --debug'              , 'Debug mode creates re-define.log file')
     .parse(process.argv)
 
   var config = program.config
@@ -36,7 +37,7 @@ var program     = require('commander')
 
   var source = !stdin.isTTY ? process.stdin : readStream(userConfig.base, userConfig.main)
     , output = !stdin.isTTY || program.report || !userConfig.output ? process.stdout : writeStream(userConfig.output)
-    , config = redefine.config(userConfig)
+    , config = redefine.config(stdin.isTTY, userConfig)
 
   source
     .pipe(redefine.convert(config))

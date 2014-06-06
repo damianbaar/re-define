@@ -67,46 +67,46 @@ exports['main'] = {
   setUp: function(done) {
     done();
   },
-  'convert-define-to-var': function(test) {
-    convert(values([def_mod_1]), function(result) {
-      test.equal(values([def_mod_1], true), result)
-      test.done()
-    })
-  },
-  'convert-multiple-define-to-var': function(test) {
-    convert(
-      values([def_mod_1, def_mod_2])
-      , function(result) {
-          var exp = values([def_mod_1, def_mod_2], true)
-
-          test.equal(exp, result)
-          test.done()
-      })
-  },
-  'modules-order': function(test) {
-    convert(
-      values([def_mod_3, def_mod_2, def_mod_1])
-      , function(result) {
-          var exp = values([def_mod_1, def_mod_2, def_mod_3], true)
-
-          test.equal(exp, result)
-          test.done()
-      })
-  },
-  'convert-single-require': function(test) {
-    convert(values([req_mod_1]), function(result) {
-      test.equal(values([req_mod_1], true), result)
-      test.done()
-    })
-  },
-  'convert-complex-require': function(test) {
-    convert(
-      values([def_mod_1, def_mod_2, def_mod_3, req_mod_2])
-      , function(result) {
-          var exp = values([def_mod_1, def_mod_2, def_mod_3, req_mod_2], true)
-
-          test.equal(exp, result)
-          test.done()
-      })
-  }
+  // 'convert-define-to-var': function(test) {
+  //   convert(values([def_mod_1]), function(result) {
+  //     test.equal(values([def_mod_1], true), result)
+  //     test.done()
+  //   })
+  // },
+  // 'convert-multiple-define-to-var': function(test) {
+  //   convert(
+  //     values([def_mod_1, def_mod_2])
+  //     , function(result) {
+  //         var exp = values([def_mod_1, def_mod_2], true)
+  //
+  //         test.equal(exp, result)
+  //         test.done()
+  //     })
+  // },
+  // 'modules-order': function(test) {
+  //   convert(
+  //     values([def_mod_3, def_mod_2, def_mod_1])
+  //     , function(result) {
+  //         var exp = values([def_mod_1, def_mod_2, def_mod_3], true)
+  //
+  //         test.equal(exp, result)
+  //         test.done()
+  //     })
+  // },
+  // 'convert-single-require': function(test) {
+  //   convert(values([req_mod_1]), function(result) {
+  //     test.equal(values([req_mod_1], true), result)
+  //     test.done()
+  //   })
+  // },
+  // 'convert-complex-require': function(test) {
+  //   convert(
+  //     values([def_mod_1, def_mod_2, def_mod_3, req_mod_2])
+  //     , function(result) {
+  //         var exp = values([def_mod_1, def_mod_2, def_mod_3, req_mod_2], true)
+  //
+  //         test.equal(exp, result)
+  //         test.done()
+  //     })
+  // }
 };

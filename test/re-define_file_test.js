@@ -12,8 +12,7 @@ function convert(file, done, follow) {
     , result
 
   config.wrapper = 'empty'
-  config.base = 'test/files/'
-  config.main = 'main.js'
+  config.base = 'test/test1.in'
   config.follow = follow
 
   write
@@ -37,18 +36,18 @@ exports['main'] = {
   setUp: function(done) {
     done();
   },
-  'module-load-no-follow': function(test) {
-    convert('./files/main.js', function(result) {
-      test.equal(result, escape(readFile('./files/load.no.follow.out.js')))
-      test.done()
-    }, false)
-  },
-  'module-load-no-follow-plugins': function(test) {
-    test.done()
-  },
+  // 'module-load-no-follow': function(test) {
+  //   convert('./files/main.js', function(result) {
+  //     test.equal(result, escape(readFile('./files/load.no.follow.out.js')))
+  //     test.done()
+  //   }, false)
+  // },
+  // 'module-load-no-follow-plugins': function(test) {
+  //   test.done()
+  // },
   'module-load-follow': function(test) {
-    convert('./files/main.js', function(result) {
-      test.equal(result, escape(readFile('./files/load.follow.out.js')))
+    convert('./test1.in/main.js', function(result) {
+      test.equal(result, escape(readFile('./test1.out/load.follow.out.js')))
       test.done()
     }, true)
   }

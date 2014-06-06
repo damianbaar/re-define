@@ -160,6 +160,10 @@ Example wrapper:
 - [x] converter - amd commonjs - define(function(req, mod, exp) {})
 
 #### TODO
+- [ ] read whole files/dir from base folder (load -> convert (plugins/modules)), 
+not referenced, call in template {{orphan 'filename'}}, posibility to attach external folders/files
+- [ ] handling symlinks to attach an external lib
+- [ ] advanced report with d3 charts
 - [ ] resolver - for resolving nested external deps
 - [ ] increase test coverage
 - [ ] follow fix - when not following do not resolve plugin
