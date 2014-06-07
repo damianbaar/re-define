@@ -16,9 +16,11 @@ var program     = require('commander')
     .option('-c, --config [name]'      , 'Re-define config')
     .option('-w, --wrapper [type]'     , 'Wrapper type iife, empty , umd')
     .option('-b, --base [dir]'         , 'Base folder for project')
-    .option('-e, --export [module name]'        , 'Export')
+    .option('-n, --name [module name]' , 'AMD module name')
+    .option('-e, --export [module name]' , 'Export')
     .option('-r, --report'             , 'Bundle overview')
     .option('-d, --debug'              , 'Debug mode creates re-define.log file')
+    .option('-i, --ignore [folders]'   , 'Ignore folders a,b,c,d')
     .parse(process.argv)
 
   var config = program.config
@@ -30,11 +32,13 @@ var program     = require('commander')
   if(program.base)      userConfig.base      = program.base
   if(program.wrapper)   userConfig.wrapper   = program.wrapper
   if(program.report)    userConfig.wrapper   = program.report ? 'report' : userConfig.wrapper
-  if(program.export)   userConfig.exports    = program.export
+  if(program.export)    userConfig.exports   = program.export
+  if(program.ignore)    userConfig.skipFolders = program.ignore.split(',')
+  if(program.name)      userConfig.name = program.name
 
   var source = !stdin.isTTY ? process.stdin : through()
     , output = process.stdout
-    , config = redefine.config(stdin.isTTY, userConfig)
+    , config = redefine.config(userConfig)
 
   if(!!stdin.isTTY) {
     source.write('READY STEADY GO!')
@@ -54,21 +58,22 @@ var program     = require('commander')
   //bower_components
   //node_modules -> remove to make structure flat
   var traverseDir = through.obj(function(chunk, enc, next) {
-    var ignoredFolders = ['.git', 'node_modules']
-      , includeFiles   = ['.js', '.html']
-
+    var ignoredFolders = config.skipFolders
+      , includedFiles  = config.includeTypes
+console.log(ignoredFolders)
     finder(path.resolve(config.base))
       .on('directory', function (dir, stat, stop) {
-        if (ignoredFolders.indexOf(path.basename(dir)) > -1) 
-          stop()
+          ignoreDir(dir) && stop()
       })
       .on("file", function (file, stat) {
-        if(includeFiles.indexOf(path.extname(file)) > -1)
-          this.push({path: file})
+          includeFile(file) && this.push({path: file})
       }.bind(this))
       .on('end', function() {
         next()
       })
+
+    function ignoreDir(dir) { return ignoredFolders.indexOf(path.basename(dir)) > -1 }
+    function includeFile(file) { return includedFiles.indexOf(path.extname(file)) > -1 }
   })
 
   source.setEncoding('utf-8')

@@ -6,7 +6,7 @@
   if (typeof define === 'function' && define.amd) {
     define('{{{name}}}', [{{{seq join '\'|\'' append external css}}}], factory)
    } else {
-    {{#each external}}var {{seq ../escape this}} = {{{seq ../ref this}}}
+    {{#each external}}var {{seq ../escape this}} = {{{seq ../ref ../escape this}}}
     {{/each}}
     {{#if exports}}parent['{{{seq ref exports}}}'] = {{/if}}factory({{{seq escape external}}})
   }
