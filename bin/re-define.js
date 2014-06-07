@@ -3,10 +3,11 @@
 var program     = require('commander')
   , _           = require('underscore')
   , fs          = require('fs')
-  , resolvePath = require('path').resolve
-  , readFile    = _.compose(_.partial(fs.readFileSync, _, 'utf-8'), resolvePath)
-  , readStream  = _.compose(fs.createReadStream, resolvePath)
-  , writeStream = _.compose(fs.createWriteStream, resolvePath)
+  , path        = require('path')
+  , finder      = require('findit')
+  , readFile    = _.compose(_.partial(fs.readFileSync, _, 'utf-8'), path.resolve)
+  , readStream  = _.compose(fs.createReadStream, path.resolve)
+  , writeStream = _.compose(fs.createWriteStream, path.resolve)
   , stdin       = process.stdin
   , through     = require('through2')
   , redefine    = require('../lib/index')
@@ -36,12 +37,43 @@ var program     = require('commander')
     , config = redefine.config(stdin.isTTY, userConfig)
 
   if(!!stdin.isTTY) {
-    source.write('fake')
+    source.write('READY STEADY GO!')
     source.end()
   }
+
+  var split = through.obj(function(chunk, enc, next) {
+      _.each(chunk.split('\n'), function(p) {
+        if(fs.statSync(path.resolve(p)).isFile()){
+          this.push({path: path.resolve(p)})
+        }
+      }.bind(this))
+
+      next()
+    })
+
+  //bower_components
+  //node_modules -> remove to make structure flat
+  var traverseDir = through.obj(function(chunk, enc, next) {
+    var ignoredFolders = ['.git', 'node_modules']
+      , includeFiles   = ['.js', '.html']
+
+    finder(path.resolve(config.base))
+      .on('directory', function (dir, stat, stop) {
+        if (ignoredFolders.indexOf(path.basename(dir)) > -1) 
+          stop()
+      })
+      .on("file", function (file, stat) {
+        if(includeFiles.indexOf(path.extname(file)) > -1)
+          this.push({path: file})
+      }.bind(this))
+      .on('end', function() {
+        next()
+      })
+  })
 
   source.setEncoding('utf-8')
 
   source
+    .pipe(!!stdin.isTTY ? traverseDir : split)
     .pipe(redefine.convert(config))
     .pipe(output)

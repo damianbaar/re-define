@@ -7,25 +7,33 @@ var redefine = require('../lib')
   , readStream  = _.compose(fs.createReadStream, _.partial(path.resolve, __dirname))
 
 function convert(file, done, follow) { 
-  var write = readStream(file)
+  var write = through()
     , config = redefine.config()
+    , convert = redefine.convert(config)
     , result
 
   config.wrapper = 'empty'
-  config.base = 'test/test1.in'
-  config.follow = follow
+  config.base = './test/test1.in/'
   config.fileMode = true
 
-  write
-    .pipe(redefine.convert(config))
+  convert.write({path: path.resolve(__dirname, './test1.in/a.js')})
+  convert.write({path: path.resolve(__dirname, './test1.in/main.js')})
+  convert.write({path: path.resolve(__dirname, './test1.in/template.html')})
+  convert.write({path: path.resolve(__dirname, './test1.in/nested/n1.js')})
+  convert.end()
+
+   convert 
     .pipe(through(function(chunk, enc, cb) { 
       this.push(chunk)
-    }, function() {
-      console.log('end')
+      cb()
     }))
-    .on('data', function(data) {
-      done(escape(data.toString()))
+    .on('end', function() {
+      done(escape(result))
     })
+    .on('data', function(data) {
+      result = data.toString()
+    })
+
 }
 
 function escape(val) {
