@@ -17,7 +17,6 @@ var program     = require('commander')
     .option('-m, --main [file]'        , 'Main file')
     .option('-f, --follow [value]'     , 'Whether should resolve whole dep tree')
     .option('-r, --report'             , 'Bundle overview')
-    .option('-s, --separator [value]'  , 'Module separator while reading from stream')
     .option('-d, --debug'              , 'Debug mode creates re-define.log file')
     .parse(process.argv)
 

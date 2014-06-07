@@ -14,11 +14,14 @@ function convert(file, done, follow) {
   config.wrapper = 'empty'
   config.base = 'test/test1.in'
   config.follow = follow
+  config.fileMode = true
 
   write
     .pipe(redefine.convert(config))
     .pipe(through(function(chunk, enc, cb) { 
       this.push(chunk)
+    }, function() {
+      console.log('end')
     }))
     .on('data', function(data) {
       done(escape(data.toString()))
