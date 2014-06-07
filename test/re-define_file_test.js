@@ -29,7 +29,7 @@ function convert(file, done, follow) {
 }
 
 function escape(val) {
-  return val.replace(/\r?\n|\r/g,'')
+  return val.replace(/\n|\r/g,'')
             .replace(/\'|\"/g, '"')
             .replace(/\ |\;/g, '')
             .replace(/\_[0-9]*/g, '')

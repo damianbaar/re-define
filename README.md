@@ -10,6 +10,16 @@ from: `CommonJS`, `Plain JS`, `AMD`, `AMD CJS` to: * ... yep custom templates ar
 ### Getting Started
 Install the module: `npm install -g re-define`
 
+### Breaking changes:
+* more flexible integration with command line
+```
+find . -type f | re-define --export main | esformatter
+```
+
+* traversing directories
+* changed API
+* works on streams
+
 ###Usage
 ```
 Usage: re-define [options]
@@ -30,47 +40,7 @@ Usage: re-define [options]
 #### Examples
 
 ##### From stream
-`echo "define('a',['b','c'],function(b, c){ console.log(b,c) })" | re-define --wrapper iife`
-
-```js
-(function( b,c ){
-  var a = function (b, c) {
-    console.log(b, c);
-  }(b, c);
- })( b,c )
-```
-
-`echo "var a = require('test'); var b = 10" | re-define`
-
-or with output
-
-`echo "var a = require('test'); var b = 10" | re-define > dist.js`
-
-```js
-(function(parent, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define('module_name', ['test'], factory)
-  } else {
-    var test = test
-
-    factory(test)
-  }
-}(this, function(test) {
-  var main = (function(r_0) {
-    var a = r_0;
-    var b = 10;
-  })(test);
-
-  return
-}))
-```
-
 ##### From file
-goto -> `cd example/demo`
-
-`less main.js | re-define`
-or
-`re-define build.config && less dist.js`
 
 ###Config
 ```js
@@ -81,11 +51,6 @@ or
   , verbose: false
   , wrapper: 'umd/4all'
   , dependencies: { 
-      resolve: { 
-        "^(text\/?)*!" : "text",
-        "^(css\/?)*!"  : "css",
-        "RegExp"       : "skip",
-      }
     , references: {
         //e.g. "jquery": "parent.$"
       }
@@ -98,7 +63,6 @@ or
 
   , helpers:   [ join, escape, ref, append]
   , converter: [ common_js, amd_define, amd_require]
-  , resolvers: [ text, css, skip, include ],
   , wrappers:  [ iife, amd-define, umd/amd-web, umd/all] 
 }
 ```
@@ -145,6 +109,13 @@ Example wrapper:
 }));
 ```
 ### Release notes
+0.0.16
+- [x] more flexible file traversing (no more main file, shims or other odd things)
+- [x] using streams instead of `async`
+- [x] easier to follow code
+- [x] switched to acorn
+- [x] changed API
+
 0.0.15
 - [x] minor `cli` improvements `re-define build.config`
 
@@ -160,14 +131,9 @@ Example wrapper:
 - [x] converter - amd commonjs - define(function(req, mod, exp) {})
 
 #### TODO
-- [ ] read whole files/dir from base folder (load -> convert (plugins/modules)), 
-not referenced, call in template {{orphan 'filename'}}, posibility to attach external folders/files
-- [ ] handling symlinks to attach an external lib
 - [ ] advanced report with d3 charts
-- [ ] resolver - for resolving nested external deps
 - [ ] increase test coverage
 - [ ] follow fix - when not following do not resolve plugin
-- [ ] switch to acorn
 - [ ] removing debugger/console.log statements
 - [ ] grunt task
 - [ ] gulp support

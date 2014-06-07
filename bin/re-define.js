@@ -8,14 +8,14 @@ var program     = require('commander')
   , readStream  = _.compose(fs.createReadStream, resolvePath)
   , writeStream = _.compose(fs.createWriteStream, resolvePath)
   , stdin       = process.stdin
+  , through     = require('through2')
   , redefine    = require('../lib/index')
 
   program
     .option('-c, --config [name]'      , 'Re-define config')
     .option('-w, --wrapper [type]'     , 'Wrapper type iife, empty , umd')
     .option('-b, --base [dir]'         , 'Base folder for project')
-    .option('-m, --main [file]'        , 'Main file')
-    .option('-f, --follow [value]'     , 'Whether should resolve whole dep tree')
+    .option('-e, --export [module name]'        , 'Export')
     .option('-r, --report'             , 'Bundle overview')
     .option('-d, --debug'              , 'Debug mode creates re-define.log file')
     .parse(process.argv)
@@ -27,16 +27,20 @@ var program     = require('commander')
   var userConfig = config && JSON.parse(readFile(config || program.config)) || {}
 
   if(program.base)      userConfig.base      = program.base
-  if(program.main)      userConfig.main      = program.main
-  if(program.output)    userConfig.output    = program.output
   if(program.wrapper)   userConfig.wrapper   = program.wrapper
-  if(program.separator) userConfig.separator = program.separator
   if(program.report)    userConfig.wrapper   = program.report ? 'report' : userConfig.wrapper
-  if(program.follow)    userConfig.follow    = program.follow && program.follow === 'true'
+  if(program.export)   userConfig.exports    = program.export
 
-  var source = !stdin.isTTY ? process.stdin : readStream(userConfig.base, userConfig.main)
-    , output = !stdin.isTTY || program.report || !userConfig.output ? process.stdout : writeStream(userConfig.output)
+  var source = !stdin.isTTY ? process.stdin : through()
+    , output = process.stdout
     , config = redefine.config(stdin.isTTY, userConfig)
+
+  if(!!stdin.isTTY) {
+    source.write('fake')
+    source.end()
+  }
+
+  source.setEncoding('utf-8')
 
   source
     .pipe(redefine.convert(config))

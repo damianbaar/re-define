@@ -15,17 +15,12 @@
     "estraverse": "~1.5.0",
     "underscore": "~1.6.0",
     "commander": "~2.1.0",
-    "async": "~0.7.0",
     "through2": "^0.4.1",
     "lodash": "^2.4.1",
     "handlebars": "^2.0.0-alpha.2",
     "colors": "^0.6.2",
-    "through2-spy": "^1.1.1",
     "stream-combiner": "^0.2.1",
-    "readdirp": "^1.0.1",
     "walk": "^2.3.3",
-    "highland": "^1.25.4",
-    "minimatch": "^0.3.0",
     "acorn": "^0.6.0"
   },
   "devDependencies": {
