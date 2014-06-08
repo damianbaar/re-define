@@ -1,12 +1,12 @@
-# re-define
-Let's `re-define` something ...
+## re-define
+Let's `re-define` something ... without any configuration ... just do the magic.
 
 `re-define` is able to resolve whole dependencies tree as well as single module.
 
 from: `CommonJS`, `Plain JS`, `AMD`, `AMD CJS` to: * ... yep custom templates are allowed.
 
 [![Build Status](https://travis-ci.org/damianbaar/re-define.svg?branch=master)](https://travis-ci.org/damianbaar/re-define)
-  
+
 ### Getting Started
 Install the module: `npm install -g re-define`
 
@@ -28,15 +28,22 @@ Options:
   '-d  , --skip-deps [deps]'       , 'Ignore folders i.e. ".css"'
 ```
 
-#### Examples
+#### Example usage
+```
+//0 configuration
+re-define 
+```
+
+* in case you've got a mess within your project
+
+```
+find . -type f -name '*js' | re-define --return main -e 'jquery#this.jquery,deps_template#this.deps.template'
+```
 
 ###Config
 ```js
   { base: '.'
-  , main: ''
-  , out: ''
   , name: 'module_name'
-  , verbose: false
   , wrapper: 'umd/4all'
   , skipFolders: ['.git', 'node_modules', 'bower_components']
   , includeTypes: ['.html', '.js']
