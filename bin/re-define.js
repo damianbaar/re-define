@@ -60,7 +60,7 @@ var program     = require('commander')
   var traverseDir = through.obj(function(chunk, enc, next) {
     var ignoredFolders = config.skipFolders
       , includedFiles  = config.includeTypes
-console.log(ignoredFolders)
+
     finder(path.resolve(config.base))
       .on('directory', function (dir, stat, stop) {
           ignoreDir(dir) && stop()
