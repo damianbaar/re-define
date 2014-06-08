@@ -34,7 +34,7 @@ Options:
 re-define 
 ```
 
-* in case you've got a mess within your project
+* in case of mess
 
 ```
 find . -type f -name '*js' | re-define --return main -e 'jquery#this.jquery,deps_template#this.deps.template'
@@ -87,7 +87,8 @@ Example wrapper:
 find . -type f | re-define --return main | esformatter
 ```
 
-``` (with builtin dir traversing)
+``` 
+//(builtin dir traversing)
 re-define --return deps/four --include '../external/jquery.js#jquery'
 ```
 
