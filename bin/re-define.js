@@ -16,11 +16,13 @@ var program     = require('commander')
     .option('-c  , --config [name]'          , 'Re-define config')
     .option('-w  , --wrapper [type]'         , 'Wrapper type iife, empty , umd')
     .option('-b  , --base [dir]'             , 'Base folder for project')
-    .option('-n  , --name [module name]'     , 'AMD module name')
-    .option('-e  , --export [module name]'   , 'Export')
+    .option('-n  , --name [module]'          , 'AMD module name')
+    .option('-r  , --return [module]'        , 'Export module')
     .option('-r  , --report'                 , 'Bundle overview')
-    .option('-sf , --skip-folders [folders]' , 'Ignore folders i.e. a, b, c, d')
-    .option('-sd , --skip-deps [deps]'       , 'Ignore folders i.e. ".css"')
+    .option('-i  , --include [file#as]'      , 'Include external files')
+    .option('-f  , --skip-folders [folders]' , 'Ignore folders - a,b,c,d')
+    .option('-d  , --skip-deps [deps]'       , 'Ignore folders - ".css"')
+    .option('-e  , --external [module#as]'   , 'External deps global access - jquery#this.jquery')
     .parse(process.argv)
 
   var config = program.config
@@ -33,11 +35,15 @@ var program     = require('commander')
   if(program.wrapper) userConfig.wrapper = program.wrapper
   if(program.report)  userConfig.wrapper = program.report ? 'report' : userConfig.wrapper
 
-  if(program.export) userConfig.exports = program.export
+  if(program.return) userConfig.return  = program.return
   if(program.name)   userConfig.name    = program.name
 
+  if(program.include) userConfig.include = program.include.split(',')
+
   if(program.skipFolders) userConfig.skipFolders = program.skipFolders.split(',')
-  if(program.skipDeps)    userConfig.skipDeps  = program.skipDeps.split(',')
+  if(program.skipDeps)    userConfig.skipDeps    = program.skipDeps.split(',')
+
+  if(program.external) userConfig.external = program.external.split(',')
 
   var source = !stdin.isTTY ? process.stdin : through()
     , output = process.stdout
