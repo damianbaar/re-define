@@ -16,16 +16,16 @@ Usage: re-define [options]
 
 Options:
 
-  '-c  , --config [name]'          , 'Re-define config'
-  '-w  , --wrapper [type]'         , 'Wrapper type iife, empty , umd'
-  '-b  , --base [dir]'             , 'Base folder for project'
-  '-n  , --name [module name]'     , 'AMD module name'
-  '-r  , --return [module name]'   , 'Export module'
-  '-r  , --report'                 , 'Bundle overview'
-  '-i  , --include [file#as]'      , 'Include external files'
-  '-e  , --external [module#as]'   , 'Parent access to external lib - jquery#this.jquery')
-  '-f  , --skip-folders [folders]' , 'Ignore folders i.e. a, b, c, d'
-  '-d  , --skip-deps [deps]'       , 'Ignore folders i.e. ".css"'
+  '-c , --config [name]'          , 'Re-define config'
+  '-w , --wrapper [type]'         , 'Wrapper type iife, empty , umd'
+  '-b , --base [dir]'             , 'Base folder for project'
+  '-n , --name [module name]'     , 'AMD module name'
+  '-r , --return [module name]'   , 'Export module'
+  '-r , --report'                 , 'Bundle overview'
+  '-i , --include [file#as]'      , 'Include external files'
+  '-e , --external [module#as]'   , 'External dependency reference - jquery#this.jquery')
+  '-f , --skip-folders [folders]' , 'Ignore folders i.e. a, b, c, d'
+  '-d , --skip-deps [deps]'       , 'Ignore deps i.e. ".css"'
 ```
 
 #### Example usage

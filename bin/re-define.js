@@ -21,8 +21,8 @@ var program     = require('commander')
     .option('-r  , --report'                 , 'Bundle overview')
     .option('-i  , --include [file#as]'      , 'Include external files')
     .option('-f  , --skip-folders [folders]' , 'Ignore folders - a,b,c,d')
-    .option('-d  , --skip-deps [deps]'       , 'Ignore folders - ".css"')
-    .option('-e  , --external [module#as]'   , 'External deps global access - jquery#this.jquery')
+    .option('-d  , --skip-deps [deps]'       , 'Ignore deps - ".css"')
+    .option('-e  , --external [module#as]'   , 'External dependency reference - jquery#this.jquery')
     .parse(process.argv)
 
   var config = program.config
