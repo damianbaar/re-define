@@ -13,14 +13,14 @@ var program     = require('commander')
   , redefine    = require('../lib/index')
 
   program
-    .option('-c, --config [name]'      , 'Re-define config')
-    .option('-w, --wrapper [type]'     , 'Wrapper type iife, empty , umd')
-    .option('-b, --base [dir]'         , 'Base folder for project')
-    .option('-n, --name [module name]' , 'AMD module name')
-    .option('-e, --export [module name]' , 'Export')
-    .option('-r, --report'             , 'Bundle overview')
-    .option('-d, --debug'              , 'Debug mode creates re-define.log file')
-    .option('-i, --ignore [folders]'   , 'Ignore folders a,b,c,d')
+    .option('-c  , --config [name]'          , 'Re-define config')
+    .option('-w  , --wrapper [type]'         , 'Wrapper type iife, empty , umd')
+    .option('-b  , --base [dir]'             , 'Base folder for project')
+    .option('-n  , --name [module name]'     , 'AMD module name')
+    .option('-e  , --export [module name]'   , 'Export')
+    .option('-r  , --report'                 , 'Bundle overview')
+    .option('-sf , --skip-folders [folders]' , 'Ignore folders i.e. a, b, c, d')
+    .option('-sd , --skip-deps [deps]'       , 'Ignore folders i.e. ".css"')
     .parse(process.argv)
 
   var config = program.config
@@ -29,12 +29,15 @@ var program     = require('commander')
 
   var userConfig = config && JSON.parse(readFile(config || program.config)) || {}
 
-  if(program.base)      userConfig.base      = program.base
-  if(program.wrapper)   userConfig.wrapper   = program.wrapper
-  if(program.report)    userConfig.wrapper   = program.report ? 'report' : userConfig.wrapper
-  if(program.export)    userConfig.exports   = program.export
-  if(program.ignore)    userConfig.skipFolders = program.ignore.split(',')
-  if(program.name)      userConfig.name = program.name
+  if(program.base)    userConfig.base    = program.base
+  if(program.wrapper) userConfig.wrapper = program.wrapper
+  if(program.report)  userConfig.wrapper = program.report ? 'report' : userConfig.wrapper
+
+  if(program.export) userConfig.exports = program.export
+  if(program.name)   userConfig.name    = program.name
+
+  if(program.skipFolders) userConfig.skipFolders = program.skipFolders.split(',')
+  if(program.skipDeps)    userConfig.skipDeps  = program.skipDeps.split(',')
 
   var source = !stdin.isTTY ? process.stdin : through()
     , output = process.stdout
@@ -63,10 +66,10 @@ var program     = require('commander')
 
     finder(path.resolve(config.base))
       .on('directory', function (dir, stat, stop) {
-          ignoreDir(dir) && stop()
+        ignoreDir(dir) && stop()
       })
       .on("file", function (file, stat) {
-          includeFile(file) && this.push({path: file})
+        includeFile(file) && this.push({path: file})
       }.bind(this))
       .on('end', function() {
         next()
