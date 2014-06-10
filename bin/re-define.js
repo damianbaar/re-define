@@ -3,49 +3,57 @@
 var program = require('commander')
   , _ = require('lodash')
   , redefine = require('../lib/index')
-  , config = {}
+  , combiner = require('stream-combiner')
 
   program
-    .option('-c, --config [name]'          , 'Re-define config')
-    .option('-w, --wrapper [type]'         , 'Wrapper type iife, empty , umd')
-    .option('-b, --base [dir]'             , 'Base folder for project')
-    .option('-n, --name [module]'          , 'AMD module name')
-    .option('-r, --return [module]'        , 'Export module')
-    .option('    --content'                , 'Whether streamed content is a file content')
-    .option('-i, --include [file#as]'      , 'Include external files', toArray)
-    .option('-f, --skip-folders [folders]' , 'Ignore folders - a,b,c,d', toArray)
-    .option('-d, --skip-deps [deps]'       , 'Ignore deps - ".css"', toArray)
-    .option('-m, --map [module#as]'        , 'Map externals to global - jquery#this.jquery', toArray)
+    .option('-c, --config [name]'         , 'Re-define config')
+    .option('-w, --wrapper [type]'        , 'Wrapper type iife, empty , umd')
+    .option('-b, --base [dir]'            , 'Base folder for project')
+    .option('-n, --name [module]'         , 'AMD module name')
+    .option('-r, --return [module]'       , 'Export module')
+    .option('--include-files [file#as]'   , 'Include external files', toArray)
+    .option('--exclude-folders [folders]' , 'Ignore folders - a,b,c,d', toArray)
+    .option('--exclude-deps [deps]'       , 'Ignore deps - ".css"', toArray)
+    .option('--externals [module#as]'     , 'Map externals to global - jquery#this.jquery', toArray)
     .parse(process.argv)
+
+  var config = {}
 
   if(program.args.length === 1 || program.config) 
     config = loadConfig(program.args[0] || program.config)
 
   var options = 
-    { base        : program.base
-    , separator : program.separator 
-    , wrapper     : program.wrapper
-    , return      : program.return
-    , name        : program.name
-    , includeType : program.includeType
-    , includeFile : program.includeFile
+    { base          : program.base
+    , separator     : program.separator
+    , wrapper       : program.wrapper
+    , return        : program.return
+    , name          : program.name
+    , includeType   : program.includeType
+    , includeFile   : program.includeFile
     , excludeFolder : program.skipFolders
-    , excludeFile : program.excludeFile
-    , excludeDep : program.excludeDep
-    , external    : program.external
+    , excludeFile   : program.excludeFile
+    , excludeDep    : program.excludeDep
+    , external      : program.external
     }
+  
+  config = redefine.config(_.defaults(options, config))
 
-  var config = redefine.config(_.defaults(options, config))
-    , source = !process.stdin.isTTY ? process.stdin : require('./transform/traverse-dir')(config)
-    , transform = program.content ? redefine.fromContent(config) : redefine.fromPath(config)
-    , output = process.stdout
+  var source
 
-  if(process.stdin.isTTY) source.open()
-  else source.setEncoding('utf-8')
+  if(!process.stdin.isTTY) {
+    process.stdin.setEncoding('utf-8')
+
+    source = combiner(process.stdin, redefine.split())
+  }
+  else source = redefine.findit(config)
+
+  source.on('data', function(a) {
+    console.log(a)
+  })
 
   source
-    .pipe(transform)
-    .pipe(output)
+    .pipe(redefine.fromPath(config))
+    .pipe(process.stdout)
 
   function toArray(val) { return val.split(',') }
 
