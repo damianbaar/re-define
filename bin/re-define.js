@@ -7,7 +7,7 @@ var program = require('commander')
 
   program
     .option('-c, --config [name]'         , 'Re-define config')
-    .option('-w, --wrapper [type]'        , 'Wrapper type iife, empty , umd')
+    .option('-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd')
     .option('-b, --base [dir]'            , 'Base folder for project')
     .option('-n, --name [module]'         , 'AMD module name')
     .option('-r, --return [module]'       , 'Export module')
@@ -24,18 +24,17 @@ var program = require('commander')
     config = loadConfig(program.args[0] || program.config)
 
   var options = 
-    { base          : program.base
-    , separator     : program.separator
-    , wrapper       : program.wrapper
-    , return        : program.return
-    , name          : program.name
-    , includeType   : program.includeType
-    , includeFile   : program.includeFile
-    , excludeFolder : program.skipFolders
-    , excludeFile   : program.excludeFile
-    , excludeDep    : program.excludeDep
-    , externals     : program.externals
-    , debug         : program.debug
+    { base           : program.base
+    , separator      : program.separator
+    , wrapper        : program.wrapper
+    , return         : program.return
+    , name           : program.name
+    , includeTypes   : program.includeTypes
+    , includeFiles   : program.includeFiles
+    , excludeFolders : program.skipFolders
+    , excludeDeps    : program.excludeDeps
+    , externals      : program.externals
+    , debug          : program.debug
     }
   
   config = redefine.config(_.defaults(options, config))

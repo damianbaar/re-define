@@ -16,7 +16,7 @@ Usage: re-define [options]
 
 Options:
   '-c, --config [name]'         , 'Re-define config'
-  '-w, --wrapper [type]'        , 'Wrapper type iife, empty , umd'
+  '-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd'
   '-b, --base [dir]'            , 'Base folder for project'
   '-n, --name [module]'         , 'AMD module name'
   '-r, --return [module]'       , 'Export module'
