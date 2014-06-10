@@ -9,7 +9,7 @@ var redefine = require('../lib')
 function convert(file, done, follow) { 
   var write = through()
     , config = redefine.config()
-    , convert = redefine.convert(config)
+    , convert = redefine.fromPath(config)
     , result
 
   config.wrapper = 'empty'
