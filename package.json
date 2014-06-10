@@ -22,7 +22,7 @@
     "stream-combiner": "^0.2.1",
     "walk": "^2.3.3",
     "acorn": "^0.6.0",
-    "findit": "^1.2.0",
+    "findit": "^1.2.0"
   },
   "devDependencies": {
     "nodeunit": "^0.9.0"

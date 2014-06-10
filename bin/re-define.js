@@ -11,6 +11,7 @@ var program = require('commander')
     .option('-b, --base [dir]'            , 'Base folder for project')
     .option('-n, --name [module]'         , 'AMD module name')
     .option('-r, --return [module]'       , 'Export module')
+    .option('--debug'                     , 'Debug mode, creating re-define.log file')
     .option('--include-files [file#as]'   , 'Include external files', toArray)
     .option('--exclude-folders [folders]' , 'Ignore folders - a,b,c,d', toArray)
     .option('--exclude-deps [deps]'       , 'Ignore deps - ".css"', toArray)
@@ -34,6 +35,7 @@ var program = require('commander')
     , excludeFile   : program.excludeFile
     , excludeDep    : program.excludeDep
     , external      : program.external
+    , debug         : program.debug
     }
   
   config = redefine.config(_.defaults(options, config))
@@ -42,14 +44,10 @@ var program = require('commander')
 
   if(!process.stdin.isTTY) {
     process.stdin.setEncoding('utf-8')
-
     source = combiner(process.stdin, redefine.split())
   }
-  else source = redefine.findit(config)
-
-  source.on('data', function(a) {
-    console.log(a)
-  })
+  else 
+    source = redefine.findit(config)
 
   source
     .pipe(redefine.fromPath(config))
