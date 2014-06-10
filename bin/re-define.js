@@ -34,7 +34,7 @@ var program = require('commander')
     , excludeFolder : program.skipFolders
     , excludeFile   : program.excludeFile
     , excludeDep    : program.excludeDep
-    , external      : program.external
+    , externals     : program.externals
     , debug         : program.debug
     }
   

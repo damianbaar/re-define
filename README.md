@@ -15,17 +15,16 @@ Install the module: `npm install -g re-define`
 Usage: re-define [options]
 
 Options:
-
-  '-c , --config [name]'          , 'Re-define config'
-  '-w , --wrapper [type]'         , 'Wrapper type iife, empty , umd'
-  '-b , --base [dir]'             , 'Base folder for project'
-  '-n , --name [module name]'     , 'AMD module name'
-  '-r , --return [module name]'   , 'Export module'
-  '-r , --report'                 , 'Bundle overview'
-  '-i , --include [file#as]'      , 'Include external files'
-  '-e , --external [module#as]'   , 'External dependency reference - jquery#this.jquery')
-  '-f , --skip-folders [folders]' , 'Ignore folders i.e. a, b, c, d'
-  '-d , --skip-deps [deps]'       , 'Ignore deps i.e. ".css"'
+  '-c, --config [name]'         , 'Re-define config'
+  '-w, --wrapper [type]'        , 'Wrapper type iife, empty , umd'
+  '-b, --base [dir]'            , 'Base folder for project'
+  '-n, --name [module]'         , 'AMD module name'
+  '-r, --return [module]'       , 'Export module'
+  '--debug'                     , 'Debug mode, creating re-define.log file'
+  '--include-files [file#as]'   , 'Include external files'
+  '--exclude-folders [folders]' , 'Ignore folders - a,b,c,d'
+  '--exclude-deps [deps]'       , 'Ignore deps - ".css"'
+  '--externals [module#as]'     , 'Map externals to global - jquery#this.jquery'
 ```
 
 #### Example usage
@@ -37,19 +36,23 @@ re-define
 * in case of mess
 
 ```
-find . -type f -name '*js' | re-define --return main -e 'jquery#this.jquery,deps_template#this.deps.template'
+find . -type f -name '*js' | re-define --return main -externals 'jquery#this.jquery,deps_template#this.deps.template'
 ```
 
 ###Config
 ```js
-  { base: '.'
-  , name: 'module_name'
-  , wrapper: 'umd/4all'
-  , skipFolders: ['.git', 'node_modules', 'bower_components']
-  , includeTypes: ['.html', '.js']
-  , skipDeps: [/\.css/]
-  , include: [] //filepath#alias, alias = module.name
-  , external: [] //external-module.name#global_ref
+  { base    : '.'
+  , name    : 'module_name'
+  , wrapper : 'umd/amd-web'
+  , debug   : false
+  , return  : ''
+  , separator      : '|'
+  , excludeFolders : ['.git', 'node_modules', 'bower_components']
+  , excludeFiles   : []
+  , excludeDeps    : ['\.css$/']
+  , includeTypes   : ['\.html$', '\.js$']
+  , includeFiles   : [] //filepath#alias, alias = module.name
+  , externals      : [] //external module#global_ref
 
                       ///////////////
                      // Equipment //
