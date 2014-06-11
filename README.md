@@ -49,7 +49,7 @@ find . -type f -name '*js' | re-define --return main -externals 'jquery#this.jqu
   , separator      : '|'
   , excludeFolders : ['.git', 'node_modules', 'bower_components']
   , excludeFiles   : []
-  , excludeDeps    : ['\.css$/']
+  , excludeDeps    : ['\.css$']
   , includeTypes   : ['\.html$', '\.js$']
   , includeFiles   : [] //filepath#alias, alias = module.name
   , externals      : [] //external module#global_ref
