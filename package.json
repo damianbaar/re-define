@@ -1,6 +1,6 @@
 {
   "name": "re-define",
-  "version": "0.0.15-rc",
+  "version": "0.0.16",
   "main": "lib/index.js",
   "bin": {
     "re-define": "./bin/re-define.js"
@@ -36,13 +36,12 @@
     "CommonJS",
     "AMD",
     "Plain JS",
-    "Vanila JS",
-    "stream",
     "converter",
     "bundle",
     "resolve",
     "transform",
     "ast",
+    "r.js",
     "UMD"
   ],
   "author": "Damian Baar",

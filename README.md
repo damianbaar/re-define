@@ -1,11 +1,20 @@
 ## re-define
-Let's `re-define` something ... without any configuration ... just do the magic.
+Let's `re-define` something ... without any configuration ... just do the magic for me.
 
-`re-define` is able to resolve whole dependencies tree as well as single module.
+Easy way to convert AMD and CommonJS projects to one plain javascript file.
 
-from: `CommonJS`, `Plain JS`, `AMD`, `AMD CJS` to: * ... yep custom templates are allowed.
+### Why
+* to get decent encapsulation, registering a bundle not a part
+* to convert project compatibile across node and web without effort
+* in most cases we can live without `requirejs`, however for web development is pretty neat
 
-[![Build Status](https://travis-ci.org/damianbaar/re-define.svg?branch=master)](https://travis-ci.org/damianbaar/re-define)
+### Features
+* resolving whole dependencies trees as well as single file
+* 0 configuration, just run `re-define` and that's all
+* detailed report, to get whole picture, display modules, dependencies and externals
+* highly customizable, custom templates, 6 are already included, you can even create custom 're-define', just connect the dots based on streams available via API
+* handlebars for templating with custom helpers
+* templates included: 'umd/4all', 'report' , 'umd/amd-web', 'iife', 'amd-define',  'empty'
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -33,7 +42,8 @@ Options:
 re-define 
 ```
 
-* in case of mess
+* when piping 
+(note: for piping mode, built in filters for folders and files are disabled)
 
 ```
 find . -type f -name '*js' | re-define --return main -externals 'jquery#this.jquery,deps_template#this.deps.template'
