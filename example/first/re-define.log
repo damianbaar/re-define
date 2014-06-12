@@ -52,34 +52,944 @@
 }[32m
 ----------------------------
 
-[39m[32m------- includeFile---------
+[39m[32m------- loadFile---------
 [39m{
-  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/main.js"
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/main.js",
+  "content": "require(\n  [ \"./one\"\n  , \"jquery\"\n  , \"./deps/four\"\n  , \"text!./template.html\"\n  , \"domReady!\"\n  ]\n  , function(one, jquery, four, t1)\n  {\n    console.log(jquery)\n    return [one, four, t1]\n})\n"
 }[32m
 ----------------------------
 
-[39m[32m------- includeFile---------
+[39m[32m------- setLocation---------
 [39m{
-  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/one.js"
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/main.js",
+  "content": "require(\n  [ \"./one\"\n  , \"jquery\"\n  , \"./deps/four\"\n  , \"text!./template.html\"\n  , \"domReady!\"\n  ]\n  , function(one, jquery, four, t1)\n  {\n    console.log(jquery)\n    return [one, four, t1]\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "main"
 }[32m
 ----------------------------
 
-[39m[32m------- includeFile---------
+[39m[32m------- convert---------
 [39m{
-  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/template.html"
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/main.js",
+  "content": "require(\n  [ \"./one\"\n  , \"jquery\"\n  , \"./deps/four\"\n  , \"text!./template.html\"\n  , \"domReady!\"\n  ]\n  , function(one, jquery, four, t1)\n  {\n    console.log(jquery)\n    return [one, four, t1]\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "main",
+  "alias": "amd-require",
+  "deps": [
+    "./one",
+    "jquery",
+    "./deps/four",
+    "text!./template.html",
+    "domReady!"
+  ],
+  "params": [
+    "one",
+    "jquery",
+    "four",
+    "t1"
+  ],
+  "variable": true
 }[32m
 ----------------------------
 
-[39m[32m------- includeFile---------
+[39m[32m------- excludeDeps---------
 [39m{
-  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/three.js"
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/main.js",
+  "content": "require(\n  [ \"./one\"\n  , \"jquery\"\n  , \"./deps/four\"\n  , \"text!./template.html\"\n  , \"domReady!\"\n  ]\n  , function(one, jquery, four, t1)\n  {\n    console.log(jquery)\n    return [one, four, t1]\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "main",
+  "alias": "amd-require",
+  "deps": [
+    "./one",
+    "jquery",
+    "./deps/four",
+    "text!./template.html",
+    "domReady!"
+  ],
+  "params": [
+    "one",
+    "jquery",
+    "four",
+    "t1"
+  ],
+  "variable": true
 }[32m
 ----------------------------
 
-[39m[32m------- includeFile---------
+[39m[32m------- rewriteDeps---------
 [39m{
-  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/two.js"
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/main.js",
+  "content": "require(\n  [ \"./one\"\n  , \"jquery\"\n  , \"./deps/four\"\n  , \"text!./template.html\"\n  , \"domReady!\"\n  ]\n  , function(one, jquery, four, t1)\n  {\n    console.log(jquery)\n    return [one, four, t1]\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "main",
+  "alias": "amd-require",
+  "deps": [
+    "one",
+    "jquery",
+    "deps/four",
+    "template"
+  ],
+  "params": [
+    "one",
+    "jquery",
+    "four",
+    "t1"
+  ],
+  "variable": true
 }[32m
+----------------------------
+
+[39m[32m------- loadFile---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/one.js",
+  "content": "define(\n  [ \"./dotpath/fi-ve\"\n  , \"text!./deps/template.html\"\n  , \"./two\"\n  , \"dep/dep\"\n  , \"css!./styles.css\"\n  ]\n  , function(five, template, two, dep){\n\n    console.log(five, template)\n\n    return function () {\n      console.log(template)\n    }\n})\n"
+}[32m
+----------------------------
+
+[39m[32m------- setLocation---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/one.js",
+  "content": "define(\n  [ \"./dotpath/fi-ve\"\n  , \"text!./deps/template.html\"\n  , \"./two\"\n  , \"dep/dep\"\n  , \"css!./styles.css\"\n  ]\n  , function(five, template, two, dep){\n\n    console.log(five, template)\n\n    return function () {\n      console.log(template)\n    }\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "one"
+}[32m
+----------------------------
+
+[39m[32m------- convert---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/one.js",
+  "content": "define(\n  [ \"./dotpath/fi-ve\"\n  , \"text!./deps/template.html\"\n  , \"./two\"\n  , \"dep/dep\"\n  , \"css!./styles.css\"\n  ]\n  , function(five, template, two, dep){\n\n    console.log(five, template)\n\n    return function () {\n      console.log(template)\n    }\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "one",
+  "alias": "amd-define",
+  "deps": [
+    "./dotpath/fi-ve",
+    "text!./deps/template.html",
+    "./two",
+    "dep/dep",
+    "css!./styles.css"
+  ],
+  "params": [
+    "five",
+    "template",
+    "two",
+    "dep"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- excludeDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/one.js",
+  "content": "define(\n  [ \"./dotpath/fi-ve\"\n  , \"text!./deps/template.html\"\n  , \"./two\"\n  , \"dep/dep\"\n  , \"css!./styles.css\"\n  ]\n  , function(five, template, two, dep){\n\n    console.log(five, template)\n\n    return function () {\n      console.log(template)\n    }\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "one",
+  "alias": "amd-define",
+  "deps": [
+    "./dotpath/fi-ve",
+    "text!./deps/template.html",
+    "./two",
+    "dep/dep"
+  ],
+  "params": [
+    "five",
+    "template",
+    "two",
+    "dep"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- rewriteDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/one.js",
+  "content": "define(\n  [ \"./dotpath/fi-ve\"\n  , \"text!./deps/template.html\"\n  , \"./two\"\n  , \"dep/dep\"\n  , \"css!./styles.css\"\n  ]\n  , function(five, template, two, dep){\n\n    console.log(five, template)\n\n    return function () {\n      console.log(template)\n    }\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "one",
+  "alias": "amd-define",
+  "deps": [
+    "dotpath/fi-ve",
+    "deps/template",
+    "two",
+    "dep/dep"
+  ],
+  "params": [
+    "five",
+    "template",
+    "two",
+    "dep"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- loadFile---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/template.html",
+  "content": "<div>test</div>\n<div></div>\n<div></div>\n<div></div>\n"
+}[32m
+----------------------------
+
+[39m[32m------- setLocation---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/template.html",
+  "content": "<div>test</div>\n<div></div>\n<div></div>\n<div></div>\n",
+  "ext": ".html",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "template"
+}[32m
+----------------------------
+
+[39m[32m------- convert---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/template.html",
+  "content": "<div>test</div>\n<div></div>\n<div></div>\n<div></div>\n",
+  "ext": ".html",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "template",
+  "alias": "text",
+  "type": "raw",
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- excludeDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/template.html",
+  "content": "<div>test</div>\n<div></div>\n<div></div>\n<div></div>\n",
+  "ext": ".html",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "template",
+  "alias": "text",
+  "type": "raw",
+  "variable": true,
+  "deps": []
+}[32m
+----------------------------
+
+[39m[32m------- rewriteDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/template.html",
+  "content": "<div>test</div>\n<div></div>\n<div></div>\n<div></div>\n",
+  "ext": ".html",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "template",
+  "alias": "text",
+  "type": "raw",
+  "variable": true,
+  "deps": []
+}[32m
+----------------------------
+
+[39m[32m------- loadFile---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/three.js",
+  "content": "define(function(){\n  return {hello:\"Yo!\"}\n})\n"
+}[32m
+----------------------------
+
+[39m[32m------- setLocation---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/three.js",
+  "content": "define(function(){\n  return {hello:\"Yo!\"}\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "three"
+}[32m
+----------------------------
+
+[39m[32m------- convert---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/three.js",
+  "content": "define(function(){\n  return {hello:\"Yo!\"}\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "three",
+  "alias": "amd-define",
+  "deps": [],
+  "params": [],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- excludeDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/three.js",
+  "content": "define(function(){\n  return {hello:\"Yo!\"}\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "three",
+  "alias": "amd-define",
+  "deps": [],
+  "params": [],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- rewriteDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/three.js",
+  "content": "define(function(){\n  return {hello:\"Yo!\"}\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "three",
+  "alias": "amd-define",
+  "deps": [],
+  "params": [],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- loadFile---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/two.js",
+  "content": "define(function(require, exports, module) {\n  var $ = require('jquery')\n  module.exports = \"two\"\n});\n"
+}[32m
+----------------------------
+
+[39m[32m------- setLocation---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/two.js",
+  "content": "define(function(require, exports, module) {\n  var $ = require('jquery')\n  module.exports = \"two\"\n});\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "two"
+}[32m
+----------------------------
+
+[39m[32m------- convert---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/two.js",
+  "content": "define(function(require, exports, module) {\n  var $ = require('jquery')\n  module.exports = \"two\"\n});\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "two",
+  "alias": "amd-define",
+  "deps": [],
+  "params": [
+    "require",
+    "exports",
+    "module"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- excludeDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/two.js",
+  "content": "define(function(require, exports, module) {\n  var $ = require('jquery')\n  module.exports = \"two\"\n});\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "two",
+  "alias": "amd-define",
+  "deps": [],
+  "params": [
+    "require",
+    "exports",
+    "module"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- rewriteDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/two.js",
+  "content": "define(function(require, exports, module) {\n  var $ = require('jquery')\n  module.exports = \"two\"\n});\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+  "name": "two",
+  "alias": "amd-define",
+  "deps": [],
+  "params": [
+    "require",
+    "exports",
+    "module"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- loadFile---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/four.js",
+  "content": "var inner = require('../dotpath/inner')\n\nmodule.exports = \"Yeah that's me, I like better CommonJS style\" + inner\n"
+}[32m
+----------------------------
+
+[39m[32m------- setLocation---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/four.js",
+  "content": "var inner = require('../dotpath/inner')\n\nmodule.exports = \"Yeah that's me, I like better CommonJS style\" + inner\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+  "name": "deps/four"
+}[32m
+----------------------------
+
+[39m[32m------- convert---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/four.js",
+  "content": "var inner = require('../dotpath/inner')\n\nmodule.exports = \"Yeah that's me, I like better CommonJS style\" + inner\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+  "name": "deps/four",
+  "alias": "common-js",
+  "variable": true,
+  "deps": [
+    "../dotpath/inner"
+  ],
+  "params": [
+    "r_0"
+  ]
+}[32m
+----------------------------
+
+[39m[32m------- excludeDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/four.js",
+  "content": "var inner = require('../dotpath/inner')\n\nmodule.exports = \"Yeah that's me, I like better CommonJS style\" + inner\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+  "name": "deps/four",
+  "alias": "common-js",
+  "variable": true,
+  "deps": [
+    "../dotpath/inner"
+  ],
+  "params": [
+    "r_0"
+  ]
+}[32m
+----------------------------
+
+[39m[32m------- rewriteDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/four.js",
+  "content": "var inner = require('../dotpath/inner')\n\nmodule.exports = \"Yeah that's me, I like better CommonJS style\" + inner\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+  "name": "deps/four",
+  "alias": "common-js",
+  "variable": true,
+  "deps": [
+    "dotpath/inner"
+  ],
+  "params": [
+    "r_0"
+  ]
+}[32m
+----------------------------
+
+[39m[32m------- loadFile---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/template.html",
+  "content": "<li></li>\n<li></li>\n<li></li>\n<li></li>\n"
+}[32m
+----------------------------
+
+[39m[32m------- setLocation---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/template.html",
+  "content": "<li></li>\n<li></li>\n<li></li>\n<li></li>\n",
+  "ext": ".html",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+  "name": "deps/template"
+}[32m
+----------------------------
+
+[39m[32m------- convert---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/template.html",
+  "content": "<li></li>\n<li></li>\n<li></li>\n<li></li>\n",
+  "ext": ".html",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+  "name": "deps/template",
+  "alias": "text",
+  "type": "raw",
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- excludeDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/template.html",
+  "content": "<li></li>\n<li></li>\n<li></li>\n<li></li>\n",
+  "ext": ".html",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+  "name": "deps/template",
+  "alias": "text",
+  "type": "raw",
+  "variable": true,
+  "deps": []
+}[32m
+----------------------------
+
+[39m[32m------- rewriteDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/template.html",
+  "content": "<li></li>\n<li></li>\n<li></li>\n<li></li>\n",
+  "ext": ".html",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+  "name": "deps/template",
+  "alias": "text",
+  "type": "raw",
+  "variable": true,
+  "deps": []
+}[32m
+----------------------------
+
+[39m[32m------- loadFile---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/fi-ve.js",
+  "content": "define([\"./inner\"],function(inner){\n  return inner\n})\n"
+}[32m
+----------------------------
+
+[39m[32m------- setLocation---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/fi-ve.js",
+  "content": "define([\"./inner\"],function(inner){\n  return inner\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+  "name": "dotpath/fi-ve"
+}[32m
+----------------------------
+
+[39m[32m------- convert---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/fi-ve.js",
+  "content": "define([\"./inner\"],function(inner){\n  return inner\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+  "name": "dotpath/fi-ve",
+  "alias": "amd-define",
+  "deps": [
+    "./inner"
+  ],
+  "params": [
+    "inner"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- excludeDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/fi-ve.js",
+  "content": "define([\"./inner\"],function(inner){\n  return inner\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+  "name": "dotpath/fi-ve",
+  "alias": "amd-define",
+  "deps": [
+    "./inner"
+  ],
+  "params": [
+    "inner"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- rewriteDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/fi-ve.js",
+  "content": "define([\"./inner\"],function(inner){\n  return inner\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+  "name": "dotpath/fi-ve",
+  "alias": "amd-define",
+  "deps": [
+    "dotpath/inner"
+  ],
+  "params": [
+    "inner"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- loadFile---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/inner.js",
+  "content": "define(['../two','jquery'], function(two, jquery){\n  return \"inner\" + two\n})\n"
+}[32m
+----------------------------
+
+[39m[32m------- setLocation---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/inner.js",
+  "content": "define(['../two','jquery'], function(two, jquery){\n  return \"inner\" + two\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+  "name": "dotpath/inner"
+}[32m
+----------------------------
+
+[39m[32m------- convert---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/inner.js",
+  "content": "define(['../two','jquery'], function(two, jquery){\n  return \"inner\" + two\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+  "name": "dotpath/inner",
+  "alias": "amd-define",
+  "deps": [
+    "../two",
+    "jquery"
+  ],
+  "params": [
+    "two",
+    "jquery"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- excludeDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/inner.js",
+  "content": "define(['../two','jquery'], function(two, jquery){\n  return \"inner\" + two\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+  "name": "dotpath/inner",
+  "alias": "amd-define",
+  "deps": [
+    "../two",
+    "jquery"
+  ],
+  "params": [
+    "two",
+    "jquery"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- rewriteDeps---------
+[39m{
+  "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/inner.js",
+  "content": "define(['../two','jquery'], function(two, jquery){\n  return \"inner\" + two\n})\n",
+  "ext": ".js",
+  "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+  "name": "dotpath/inner",
+  "alias": "amd-define",
+  "deps": [
+    "two",
+    "jquery"
+  ],
+  "params": [
+    "two",
+    "jquery"
+  ],
+  "variable": true
+}[32m
+----------------------------
+
+[39m[32m------- concat---------
+[39m[
+  {
+    "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/main.js",
+    "content": "require(\n  [ \"./one\"\n  , \"jquery\"\n  , \"./deps/four\"\n  , \"text!./template.html\"\n  , \"domReady!\"\n  ]\n  , function(one, jquery, four, t1)\n  {\n    console.log(jquery)\n    return [one, four, t1]\n})\n",
+    "ext": ".js",
+    "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+    "name": "main",
+    "alias": "amd-require",
+    "deps": [
+      "one",
+      "jquery",
+      "deps/four",
+      "template"
+    ],
+    "params": [
+      "one",
+      "jquery",
+      "four",
+      "t1"
+    ],
+    "variable": true
+  },
+  {
+    "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/one.js",
+    "content": "define(\n  [ \"./dotpath/fi-ve\"\n  , \"text!./deps/template.html\"\n  , \"./two\"\n  , \"dep/dep\"\n  , \"css!./styles.css\"\n  ]\n  , function(five, template, two, dep){\n\n    console.log(five, template)\n\n    return function () {\n      console.log(template)\n    }\n})\n",
+    "ext": ".js",
+    "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+    "name": "one",
+    "alias": "amd-define",
+    "deps": [
+      "dotpath/fi-ve",
+      "deps/template",
+      "two",
+      "dep/dep"
+    ],
+    "params": [
+      "five",
+      "template",
+      "two",
+      "dep"
+    ],
+    "variable": true
+  },
+  {
+    "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/template.html",
+    "content": "<div>test</div>\n<div></div>\n<div></div>\n<div></div>\n",
+    "ext": ".html",
+    "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+    "name": "template",
+    "alias": "text",
+    "type": "raw",
+    "variable": true,
+    "deps": []
+  },
+  {
+    "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/three.js",
+    "content": "define(function(){\n  return {hello:\"Yo!\"}\n})\n",
+    "ext": ".js",
+    "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+    "name": "three",
+    "alias": "amd-define",
+    "deps": [],
+    "params": [],
+    "variable": true
+  },
+  {
+    "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/two.js",
+    "content": "define(function(require, exports, module) {\n  var $ = require('jquery')\n  module.exports = \"two\"\n});\n",
+    "ext": ".js",
+    "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+    "name": "two",
+    "alias": "amd-define",
+    "deps": [],
+    "params": [
+      "require",
+      "exports",
+      "module"
+    ],
+    "variable": true
+  },
+  {
+    "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/four.js",
+    "content": "var inner = require('../dotpath/inner')\n\nmodule.exports = \"Yeah that's me, I like better CommonJS style\" + inner\n",
+    "ext": ".js",
+    "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+    "name": "deps/four",
+    "alias": "common-js",
+    "variable": true,
+    "deps": [
+      "dotpath/inner"
+    ],
+    "params": [
+      "r_0"
+    ]
+  },
+  {
+    "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/template.html",
+    "content": "<li></li>\n<li></li>\n<li></li>\n<li></li>\n",
+    "ext": ".html",
+    "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+    "name": "deps/template",
+    "alias": "text",
+    "type": "raw",
+    "variable": true,
+    "deps": []
+  },
+  {
+    "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/fi-ve.js",
+    "content": "define([\"./inner\"],function(inner){\n  return inner\n})\n",
+    "ext": ".js",
+    "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+    "name": "dotpath/fi-ve",
+    "alias": "amd-define",
+    "deps": [
+      "dotpath/inner"
+    ],
+    "params": [
+      "inner"
+    ],
+    "variable": true
+  },
+  {
+    "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/inner.js",
+    "content": "define(['../two','jquery'], function(two, jquery){\n  return \"inner\" + two\n})\n",
+    "ext": ".js",
+    "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+    "name": "dotpath/inner",
+    "alias": "amd-define",
+    "deps": [
+      "two",
+      "jquery"
+    ],
+    "params": [
+      "two",
+      "jquery"
+    ],
+    "variable": true
+  }
+][32m
+----------------------------
+
+[39m[32m------- sort---------
+[39m{
+  "internal": [
+    {
+      "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/two.js",
+      "content": "define(function(require, exports, module) {\n  var $ = require('jquery')\n  module.exports = \"two\"\n});\n",
+      "ext": ".js",
+      "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+      "name": "two",
+      "alias": "amd-define",
+      "deps": [],
+      "params": [
+        "require",
+        "exports",
+        "module"
+      ],
+      "variable": true
+    },
+    {
+      "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/inner.js",
+      "content": "define(['../two','jquery'], function(two, jquery){\n  return \"inner\" + two\n})\n",
+      "ext": ".js",
+      "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+      "name": "dotpath/inner",
+      "alias": "amd-define",
+      "deps": [
+        "two",
+        "jquery"
+      ],
+      "params": [
+        "two",
+        "jquery"
+      ],
+      "variable": true
+    },
+    {
+      "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath/fi-ve.js",
+      "content": "define([\"./inner\"],function(inner){\n  return inner\n})\n",
+      "ext": ".js",
+      "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/dotpath",
+      "name": "dotpath/fi-ve",
+      "alias": "amd-define",
+      "deps": [
+        "dotpath/inner"
+      ],
+      "params": [
+        "inner"
+      ],
+      "variable": true
+    },
+    {
+      "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/template.html",
+      "content": "<li></li>\n<li></li>\n<li></li>\n<li></li>\n",
+      "ext": ".html",
+      "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+      "name": "deps/template",
+      "alias": "text",
+      "type": "raw",
+      "variable": true,
+      "deps": []
+    },
+    {
+      "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/one.js",
+      "content": "define(\n  [ \"./dotpath/fi-ve\"\n  , \"text!./deps/template.html\"\n  , \"./two\"\n  , \"dep/dep\"\n  , \"css!./styles.css\"\n  ]\n  , function(five, template, two, dep){\n\n    console.log(five, template)\n\n    return function () {\n      console.log(template)\n    }\n})\n",
+      "ext": ".js",
+      "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+      "name": "one",
+      "alias": "amd-define",
+      "deps": [
+        "dotpath/fi-ve",
+        "deps/template",
+        "two",
+        "dep/dep"
+      ],
+      "params": [
+        "five",
+        "template",
+        "two",
+        "dep"
+      ],
+      "variable": true
+    },
+    {
+      "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps/four.js",
+      "content": "var inner = require('../dotpath/inner')\n\nmodule.exports = \"Yeah that's me, I like better CommonJS style\" + inner\n",
+      "ext": ".js",
+      "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/deps",
+      "name": "deps/four",
+      "alias": "common-js",
+      "variable": true,
+      "deps": [
+        "dotpath/inner"
+      ],
+      "params": [
+        "r_0"
+      ]
+    },
+    {
+      "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/template.html",
+      "content": "<div>test</div>\n<div></div>\n<div></div>\n<div></div>\n",
+      "ext": ".html",
+      "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+      "name": "template",
+      "alias": "text",
+      "type": "raw",
+      "variable": true,
+      "deps": []
+    },
+    {
+      "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/main.js",
+      "content": "require(\n  [ \"./one\"\n  , \"jquery\"\n  , \"./deps/four\"\n  , \"text!./template.html\"\n  , \"domReady!\"\n  ]\n  , function(one, jquery, four, t1)\n  {\n    console.log(jquery)\n    return [one, four, t1]\n})\n",
+      "ext": ".js",
+      "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+      "name": "main",
+      "alias": "amd-require",
+      "deps": [
+        "one",
+        "jquery",
+        "deps/four",
+        "template"
+      ],
+      "params": [
+        "one",
+        "jquery",
+        "four",
+        "t1"
+      ],
+      "variable": true
+    },
+    {
+      "path": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first/three.js",
+      "content": "define(function(){\n  return {hello:\"Yo!\"}\n})\n",
+      "ext": ".js",
+      "dir": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/first",
+      "name": "three",
+      "alias": "amd-define",
+      "deps": [],
+      "params": [],
+      "variable": true
+    }
+  ],
+  "external": [
+    "jquery",
+    "dep/dep"
+  ]
+}[32m
+----------------------------
+
+[39m[32m------- wrap---------
+[39m"\n//ext   -> jquery,dep/dep \n\n\n(function (parent, factory){\n  if (typeof define === 'function' && define.amd) {\n    define('module_name', ['jquery','dep/dep'], factory)\n   } else {\n    var jquery = jquery\n    var dep_dep = dep_dep\n    \n    factory(jquery,dep_dep)\n  }\n}(this, function (jquery,dep_dep) {\n          var two = function (require, exports, module) {\n    var $ = require('jquery');\n    module.exports = 'two';\n}();\nvar dotpath_inner = function (two, jquery) {\n    return 'inner' + two;\n}(two, jquery);\nvar dotpath_fi_ve = function (inner) {\n    return inner;\n}(dotpath_inner);\nvar deps_template = '<li></li><li></li><li></li><li></li>';\nvar one = function (five, template, two, dep) {\n    console.log(five, template);\n    return function () {\n        console.log(template);\n    };\n}(dotpath_fi_ve, deps_template, two, dep_dep);\nvar deps_four = (function(r_0) { var inner = r_0;\nreturn 'Yeah that\\'s me, I like better CommonJS style' + inner; })(dotpath_inner);\nvar template = '<div>test</div><div></div><div></div><div></div>';\nvar main = (function (one, jquery, four, t1) {\n    console.log(jquery);\n    return [\n        one,\n        four,\n        t1\n    ];\n}(one, jquery, deps_four, template));;\nvar three = { hello: 'Yo!' };\n\n  return \n}))\n"[32m
 ----------------------------
 
 [39m
