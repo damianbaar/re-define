@@ -15,6 +15,8 @@ Easy way to convert AMD and CommonJS projects to one plain javascript file.
 * highly customizable, custom templates, 6 are already included, you can even create custom 're-define', just connect the dots based on streams available via API
 * handlebars for templating with custom helpers
 * templates included: 'umd/4all', 'report' , 'umd/amd-web', 'iife', 'amd-define',  'empty'
+* resolving AMD !text plugin
+* matching files using glob (default argument)
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -24,16 +26,15 @@ Install the module: `npm install -g re-define`
 Usage: re-define [options]
 
 Options:
-  '-c, --config [name]'         , 'Re-define config'
-  '-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd'
-  '-b, --base [dir]'            , 'Base folder for project'
-  '-n, --name [module]'         , 'AMD module name'
-  '-r, --return [module]'       , 'Export module'
-  '--debug'                     , 'Debug mode, creating re-define.log file'
-  '--include-files [file#as]'   , 'Include external files'
-  '--exclude-folders [folders]' , 'Ignore folders - a,b,c,d'
-  '--exclude-deps [deps]'       , 'Ignore deps - ".css"'
-  '--externals [module#as]'     , 'Map externals to global - jquery#this.jquery'
+    '-c, --config [name]'         , 'Re-define config'
+    '-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd'
+    '-b, --base [dir]'            , 'Base folder for project'
+    '-n, --name [module]'         , 'AMD module name'
+    '-r, --return [module]'       , 'Export module'
+    '--debug'                     , 'Debug mode, creating re-define.log file'
+    '--file-filter'               , 'Glob pattern for files and folders'
+    '--exclude-deps [deps]'       , 'Ignore deps - ".css"', toArray
+    '--externals [module#as]'     , 'Map externals to global - jquery#this.jquery', toArray
 ```
 
 #### Example usage
@@ -42,35 +43,31 @@ Options:
 re-define 
 ```
 
+* glob patterns (comma separated) 
+```
+re-define './**/*.+(js),!./**/+(node_modules|bower_components)/**/*.*'
+```
+
 * when piping 
 (note: for piping mode, built in filters for folders and files are disabled)
 
 ```
-find . -type f -name '*js' | re-define --return main -externals 'jquery#this.jquery,deps_template#this.deps.template'
+find . -type f -name '*js' | re-define
 ```
 
 ###Config
 ```js
-  { base    : '.'
-  , name    : 'module_name'
-  , wrapper : 'umd/amd-web'
-  , debug   : false
-  , return  : ''
-  , separator      : '|'
-  , excludeFolders : ['.git', 'node_modules', 'bower_components']
-  , excludeFiles   : []
-  , excludeDeps    : ['\.css$']
-  , includeTypes   : ['\.html$', '\.js$']
-  , includeFiles   : [] //filepath#alias, alias = module.name
-  , externals      : [] //external module#global_ref
-
-                      ///////////////
-                     // Equipment //
-                    ///////////////
-
-  , converter: [ common_js, amd_define, amd_require, amd_cjs ]
-  , wrappers:  [ iife, amd-define, umd/amd-web, umd/4all ] 
-}
+  { base         : '.'
+  , name         : 'module_name'
+  , wrapper      : 'umd/4all'
+  , debug        : false
+  , return       : ''
+  , fileFilter   : ["./**/*.+(js|html)", "!./**/+(bin|test|node_modules|bower_components)/**/*.*"]
+  , excludeDeps  : ['\.css$']
+  , includeFiles : [] //filepath#alias, alias = module.name
+  , externals    : [] //external module_name#global_ref
+  , plugins      : [{extension: '.html', pattern : '^(text\/?)*!', prefix : 'txt_'}]
+  , escape       : function (val) { return val.replace(/\.|\/|\\|-/g, '_') }
 ```
 
 Example wrapper:

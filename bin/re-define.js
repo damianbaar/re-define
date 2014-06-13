@@ -4,6 +4,7 @@ var program = require('commander')
   , _ = require('lodash')
   , redefine = require('../lib/index')
   , combiner = require('stream-combiner')
+  , gs = require('glob-stream')
 
   program
     .option('-c, --config [name]'         , 'Re-define config')
@@ -12,16 +13,12 @@ var program = require('commander')
     .option('-n, --name [module]'         , 'AMD module name')
     .option('-r, --return [module]'       , 'Export module')
     .option('--debug'                     , 'Debug mode, creating re-define.log file')
-    .option('--include-files [file#as]'   , 'Include external files', toArray)
-    .option('--exclude-folders [folders]' , 'Ignore folders - a,b,c,d', toArray)
+    .option('--file-filter'               , 'Glob pattern for files and folders')
     .option('--exclude-deps [deps]'       , 'Ignore deps - ".css"', toArray)
     .option('--externals [module#as]'     , 'Map externals to global - jquery#this.jquery', toArray)
     .parse(process.argv)
 
   var config = {}
-
-  if(program.args.length === 1 || program.config) 
-    config = loadConfig(program.args[0] || program.config)
 
   var options = 
     { base           : program.base
@@ -29,15 +26,15 @@ var program = require('commander')
     , wrapper        : program.wrapper
     , return         : program.return
     , name           : program.name
-    , includeTypes   : program.includeTypes
-    , includeFiles   : program.includeFiles
-    , excludeFolders : program.skipFolders
     , excludeDeps    : program.excludeDeps
     , externals      : program.externals
     , debug          : program.debug
     }
-  
+
   config = redefine.config(_.defaults(options, config))
+
+  if(program.args.length === 1) 
+    config.fileFilter = program.fileFilter || toArray(program.args[0])
 
   var source
 
@@ -46,7 +43,7 @@ var program = require('commander')
     source = combiner(process.stdin, redefine.split())
   }
   else 
-    source = redefine.findit(config)
+    source = gs.create(config.fileFilter, {cwd: config.base})
 
   source
     .pipe(redefine.fromPath(config))

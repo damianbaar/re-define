@@ -1,6 +1,6 @@
 {
   "name": "re-define",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "main": "lib/index.js",
   "bin": {
     "re-define": "./bin/re-define.js"
@@ -19,7 +19,7 @@
     "colors": "^0.6.2",
     "stream-combiner": "^0.2.1",
     "acorn": "^0.6.0",
-    "findit": "^1.2.0"
+    "glob-stream": "^3.1.12"
   },
   "devDependencies": {
     "nodeunit": "^0.9.0"
