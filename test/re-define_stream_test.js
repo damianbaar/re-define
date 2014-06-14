@@ -6,11 +6,11 @@ var redefine = require('../lib')
 
 var req_mod_1 = {
     in: 'require([], function() { console.log("req") })'
-  , out: 'var main = (function () {console.log("req");}())'
+  , out: '(function () {console.log("req");}())'
   }
   , req_mod_2 = {
     in: 'require(["a","b","c"], function(a,b,c) { console.log(a, b, c) })'
-  , out: 'var main = (function (a, b, c) {console.log(a, b, c);}(a, b, c))'
+  , out: '(function (a, b, c) {console.log(a, b, c);}(a, b, c))'
   }
   , def_mod_1 = {
     in: 'define("a", [], function() { return "Hello" })'
@@ -26,7 +26,11 @@ var req_mod_1 = {
   }
   , cjs_mod_1 = {
     in: 'var test = require("a"); module.exports = test'
-  , out: 'var r_0 = (function(r_0) { var test = r_0; return test })(a)'
+  , out: 'var cjs_0 = (function(r_0) { var test = r_0; return test })(a)'
+  }
+  , cjs_mod_2 = {
+    in: 'var test = require("a");'
+  , out: '(function(r_0) { var test = r_0 })(a)'
   }
 
 exports['main'] = {
@@ -72,13 +76,22 @@ exports['main'] = {
     write.write(req_mod_1.in)
     write.end()
   },
-  'convert-cjs': function(test) {
+  'convert-cjs-exports': function(test) {
     var write = convert(function(r) {
       test.equal(r, escape(cjs_mod_1.out))
       test.done()
     })
 
     write.write(cjs_mod_1.in)
+    write.end()
+  },
+  'convert-cjs-no-exports': function(test) {
+    var write = convert(function(r) {
+      test.equal(r, escape(cjs_mod_2.out))
+      test.done()
+    })
+
+    write.write(cjs_mod_2.in)
     write.end()
   },
   'convert-complex-require': function(test) {
