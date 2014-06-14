@@ -5,7 +5,7 @@ Easy way to convert AMD and CommonJS projects to one plain javascript file.
 
 ### Why
 * to get decent encapsulation, registering a bundle not a part
-* to convert project compatibile across node and web without effort
+* to make project compatibile across node and web without effort
 * in most cases we can live without `requirejs`, however for web development is pretty neat
 
 ### Features
