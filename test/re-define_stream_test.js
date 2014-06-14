@@ -10,7 +10,7 @@ var req_mod_1 = {
   }
   , req_mod_2 = {
     in: 'require(["a","b","c"], function(a,b,c) { console.log(a, b, c) })'
-  , out: 'var s_0 = (function (a, b, c) {console.log(a, b, c);}(a, b, c))'
+  , out: 'var main = (function (a, b, c) {console.log(a, b, c);}(a, b, c))'
   }
   , def_mod_1 = {
     in: 'define("a", [], function() { return "Hello" })'
@@ -25,7 +25,64 @@ var req_mod_1 = {
   , out: 'var c = function (a, b) {return "Hello";}(a, b)'
  }
 
-function convert(input, done) { 
+exports['main'] = {
+  setUp: function(done) {
+    done();
+  },
+  'convert-define-to-var': function(test) {
+    var write = convert(function(r) {
+      test.equal(r, escape(def_mod_1.out))
+      test.done()
+    })
+
+    write.write(def_mod_1.in)
+    write.end()
+  },
+  'convert-multiple-define-to-var': function(test) {
+    var write = convert(function(r) {
+      test.equal(r, escape(def_mod_1.out + def_mod_2.out))
+      test.done()
+    })
+
+    write.write(def_mod_1.in)
+    write.write(def_mod_2.in)
+    write.end()
+  },
+  'modules-order': function(test) {
+    var write = convert(function(r) {
+      test.equal(r, escape(def_mod_1.out + def_mod_2.out + def_mod_3.out))
+      test.done()
+    })
+
+    write.write(def_mod_3.in)
+    write.write(def_mod_2.in)
+    write.write(def_mod_1.in)
+    write.end()
+  },
+  'convert-single-require': function(test) {
+    var write = convert(function(r) {
+      test.equal(r, escape(req_mod_1.out))
+      test.done()
+    })
+
+    write.write(req_mod_1.in)
+    write.end()
+  },
+  'convert-complex-require': function(test) {
+    var write = convert(function(r) {
+      test.equal(r, escape(def_mod_1.out + def_mod_2.out + def_mod_3.out + req_mod_2.out))
+      test.done()
+    })
+
+    write.write(req_mod_2.in)
+    write.write(def_mod_3.in)
+    write.write(def_mod_2.in)
+    write.write(def_mod_1.in)
+    write.end()
+  }
+};
+
+function convert(done) { 
   var write = through()
     , config = redefine.config()
     , result
@@ -33,27 +90,18 @@ function convert(input, done) {
   config.wrapper = 'empty'
   config.separator = '|'
 
+  write.setEncoding('utf-8')
+
   write
     .pipe(redefine.fromContent(config))
-    .pipe(through(function(chunk, enc, cb) { 
-      this.push(chunk)
-    }))
     .on('data', function(data) {
-      done(escape(data.toString()))
+      result = data
+    })
+    .on('end', function() {
+      done(escape(result))
     })
 
-  write.push(input)
-}
-
-function values(args, out) {
-  var prop = out ? 'out' : 'in'
-    , separator = out ? '' : '|'
-
-  var s = _(args)
-            .map(function(e){ return e[prop] })
-            .join(separator)
-
-  return out ? escape(s) : s
+  return write
 }
 
 function escape(val) {
@@ -63,50 +111,3 @@ function escape(val) {
             .replace(/\_[0-9]*/g, '')
 }
 
-exports['main'] = {
-  setUp: function(done) {
-    done();
-  },
-  // 'convert-define-to-var': function(test) {
-  //   convert(values([def_mod_1]), function(result) {
-  //     test.equal(values([def_mod_1], true), result)
-  //     test.done()
-  //   })
-  // },
-  // 'convert-multiple-define-to-var': function(test) {
-  //   convert(
-  //     values([def_mod_1, def_mod_2])
-  //     , function(result) {
-  //         var exp = values([def_mod_1, def_mod_2], true)
-  //
-  //         test.equal(exp, result)
-  //         test.done()
-  //     })
-  // },
-  // 'modules-order': function(test) {
-  //   convert(
-  //     values([def_mod_3, def_mod_2, def_mod_1])
-  //     , function(result) {
-  //         var exp = values([def_mod_1, def_mod_2, def_mod_3], true)
-  //
-  //         test.equal(exp, result)
-  //         test.done()
-  //     })
-  // },
-  // 'convert-single-require': function(test) {
-  //   convert(values([req_mod_1]), function(result) {
-  //     test.equal(values([req_mod_1], true), result)
-  //     test.done()
-  //   })
-  // },
-  // 'convert-complex-require': function(test) {
-  //   convert(
-  //     values([def_mod_1, def_mod_2, def_mod_3, req_mod_2])
-  //     , function(result) {
-  //         var exp = values([def_mod_1, def_mod_2, def_mod_3, req_mod_2], true)
-  //
-  //         test.equal(exp, result)
-  //         test.done()
-  //     })
-  // }
-};
