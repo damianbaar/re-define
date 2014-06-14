@@ -23,7 +23,11 @@ var req_mod_1 = {
   , def_mod_3 = {
     in: 'define("c", ["a","b"], function(a, b) { return "Hello" })'
   , out: 'var c = function (a, b) {return "Hello";}(a, b)'
- }
+  }
+  , cjs_mod_1 = {
+    in: 'var test = require("a"); module.exports = test'
+  , out: 'var r_0 = (function(r_0) { var test = r_0; return test })(a)'
+  }
 
 exports['main'] = {
   setUp: function(done) {
@@ -66,6 +70,15 @@ exports['main'] = {
     })
 
     write.write(req_mod_1.in)
+    write.end()
+  },
+  'convert-cjs': function(test) {
+    var write = convert(function(r) {
+      test.equal(r, escape(cjs_mod_1.out))
+      test.done()
+    })
+
+    write.write(cjs_mod_1.in)
     write.end()
   },
   'convert-complex-require': function(test) {
