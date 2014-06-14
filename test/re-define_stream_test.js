@@ -1,7 +1,7 @@
 'use strict';
 
 var redefine = require('../lib')
-  , _ = require('underscore')
+  , _ = require('lodash')
   , through = require('through2')
 
 var req_mod_1 = {
@@ -34,7 +34,7 @@ function convert(input, done) {
   config.separator = '|'
 
   write
-    .pipe(redefine.convert(config))
+    .pipe(redefine.fromContent(config))
     .pipe(through(function(chunk, enc, cb) { 
       this.push(chunk)
     }))

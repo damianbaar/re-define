@@ -29,6 +29,7 @@ var program = require('commander')
     , excludeDeps    : program.excludeDeps
     , externals      : program.externals
     , debug          : program.debug
+    , debug          : program.debug
     }
 
   config = redefine.config(_.defaults(options, config))

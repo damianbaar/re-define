@@ -1,32 +1,56 @@
 var redefine = require('../lib')
-  , _ = require('underscore')
+  , _ = require('lodash')
   , fs = require('fs')
   , path = require('path')
   , through = require('through2')
-  , readFile    = _.compose(_.partial(fs.readFileSync, _, 'utf-8'), _.partial(path.resolve, __dirname))
-  , readStream  = _.compose(fs.createReadStream, _.partial(path.resolve, __dirname))
+  , readFile    = _.compose(_.partialRight(fs.readFileSync, 'utf-8'), _.partial(path.resolve, __dirname))
+  , outputs
 
-function convert(file, done, follow) { 
-  var write = through()
+exports['main'] = {
+  setUp: function(done) {
+    
+    done();
+  },
+  'load-module': function(test) {
+    var write = convert(function(result) {
+      test.equal(result, getFiles(['./files.out/a.out']))
+      test.done()
+    })
+
+    write.write({path: path.resolve(__dirname, './files/a.js')})
+    write.end()
+  },
+  'load-modules': function(test) {
+    var files = getFiles(
+      [ './files.out/nested_n1.out'
+      , './files.out/template.out'
+      , './files.out/a.out'
+      , './files.out/main.out'
+      ])
+
+    var write = convert(function(result) {
+      test.equal(result, files)
+      test.done()
+    })
+
+    write.write({path: path.resolve(__dirname, './files/a.js')})
+    write.write({path: path.resolve(__dirname, './files/main.js')})
+    write.write({path: path.resolve(__dirname, './files/template.html')})
+    write.write({path: path.resolve(__dirname, './files/nested/n1.js')})
+    write.end()
+  }
+};
+
+function convert(done) { 
+  var write = through.obj()
     , config = redefine.config()
-    , convert = redefine.fromPath(config)
     , result
 
   config.wrapper = 'empty'
-  config.base = './test/test1.in/'
-  config.fileMode = true
+  config.base = './test/files/'
 
-  convert.write({path: path.resolve(__dirname, './test1.in/a.js')})
-  convert.write({path: path.resolve(__dirname, './test1.in/main.js')})
-  convert.write({path: path.resolve(__dirname, './test1.in/template.html')})
-  convert.write({path: path.resolve(__dirname, './test1.in/nested/n1.js')})
-  convert.end()
-
-   convert 
-    .pipe(through(function(chunk, enc, cb) { 
-      this.push(chunk)
-      cb()
-    }))
+  write
+    .pipe(redefine.fromPath(config))
     .on('end', function() {
       done(escape(result))
     })
@@ -34,6 +58,22 @@ function convert(file, done, follow) {
       result = data.toString()
     })
 
+  return write
+}
+
+var cache = {}
+
+function getFiles(files) {
+  var r = _.reduce(files, function(memo, d) {
+    var content
+
+    if(!!cache[d]) content = cache[d]
+    else content = readFile(d)
+
+    return memo + content
+  }, '')
+
+  return escape(r)
 }
 
 function escape(val) {
@@ -43,23 +83,3 @@ function escape(val) {
             .replace(/\_[0-9]*/g, '')
 }
 
-exports['main'] = {
-  setUp: function(done) {
-    done();
-  },
-  // 'module-load-no-follow': function(test) {
-  //   convert('./files/main.js', function(result) {
-  //     test.equal(result, escape(readFile('./files/load.no.follow.out.js')))
-  //     test.done()
-  //   }, false)
-  // },
-  // 'module-load-no-follow-plugins': function(test) {
-  //   test.done()
-  // },
-  'module-load-follow': function(test) {
-    convert('./test1.in/main.js', function(result) {
-      test.equal(result, escape(readFile('./test1.out/load.follow.out.js')))
-      test.done()
-    }, true)
-  }
-};
