@@ -5,6 +5,7 @@ var program = require('commander')
   , redefine = require('../lib/index')
   , combiner = require('stream-combiner')
   , gs = require('glob-stream')
+  , debug = require('debug')('re-define:bin')
 
   program
     .option('-c, --config [name]'         , 'Re-define config')
@@ -12,7 +13,6 @@ var program = require('commander')
     .option('-b, --base [dir]'            , 'Base folder for project')
     .option('-n, --name [module]'         , 'AMD module name')
     .option('-r, --return [module]'       , 'Export module')
-    .option('--debug'                     , 'Debug mode, creating re-define.log file')
     .option('--file-filter'               , 'Glob pattern for files and folders')
     .option('--exclude-deps [deps]'       , 'Ignore deps - ".css"', toArray)
     .option('--externals [module#as]'     , 'Map externals to global - jquery#this.jquery', toArray)
@@ -29,7 +29,6 @@ var program = require('commander')
     , excludeDeps    : program.excludeDeps
     , externals      : program.externals
     , debug          : program.debug
-    , debug          : program.debug
     }
 
   config = redefine.config(_.defaults(options, config))
@@ -38,6 +37,9 @@ var program = require('commander')
     config.fileFilter = program.fileFilter || toArray(program.args[0])
 
   var source
+
+  debug('starting re-define')
+  debug(!process.stdin.isTTY ? 'reading data from pipe' : 'traversing dirs')
 
   if(!process.stdin.isTTY) {
     process.stdin.setEncoding('utf-8')

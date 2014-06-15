@@ -31,7 +31,6 @@ Options:
     '-b, --base [dir]'            , 'Base folder for project'
     '-n, --name [module]'         , 'AMD module name'
     '-r, --return [module]'       , 'Export module'
-    '--debug'                     , 'Debug mode, creating re-define.log file'
     '--file-filter'               , 'Glob pattern for files and folders'
     '--exclude-deps [deps]'       , 'Ignore deps - ".css"', toArray
     '--externals [module#as]'     , 'Map externals to global - jquery#this.jquery', toArray
@@ -53,6 +52,17 @@ re-define './**/*.+(js),!./**/+(node_modules|bower_components)/**/*.*'
 
 ```
 find . -type f -name '*js' | re-define
+```
+
+#### Debbuging
+Running in debug mode: (based on `debug` lib)
+```
+DEBUG=re-define:*
+
+//specific categories:
+re-define:transform:*
+re-define:converter
+re-define:bin
 ```
 
 ###Config

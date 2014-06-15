@@ -19,7 +19,8 @@
     "colors": "^0.6.2",
     "stream-combiner": "^0.2.1",
     "acorn": "^0.6.0",
-    "glob-stream": "^3.1.12"
+    "glob-stream": "^3.1.12",
+    "debug": "^1.0.2"
   },
   "devDependencies": {
     "nodeunit": "^0.9.0"
