@@ -55,12 +55,14 @@ find . -type f -name '*js' | re-define
 ```
 
 #### Debbuging
-Running in debug mode: (based on `debug` lib)
-```
-DEBUG=re-define:*
+To run `re-define` in debug mode (thanks to `debug`) is fairly easy, just run `re-define` with appropriate category like below
 
-//specific categories:
-re-define:transform:*
+```
+//all
+DEBUG=re-define:* 
+
+//specific:
+re-define:transform:* 
 re-define:converter
 re-define:bin
 ```

@@ -32,6 +32,10 @@ var req_mod_1 = {
     in: 'var test = require("a");'
   , out: '(function(r_0) { var test = r_0 })(a)'
   }
+  , amd_cjs_mod_1 = {
+    in: 'define(function(require, exports, module) { module.exports = { test: "test" } })' 
+  , out: 'var cjs_0 = return { test: \'test\' };;'
+  }
 
 exports['main'] = {
   setUp: function(done) {
@@ -56,17 +60,6 @@ exports['main'] = {
     write.write(def_mod_2.in)
     write.end()
   },
-  'modules-order': function(test) {
-    var write = convert(function(r) {
-      test.equal(r, escape(def_mod_1.out + def_mod_2.out + def_mod_3.out))
-      test.done()
-    })
-
-    write.write(def_mod_3.in)
-    write.write(def_mod_2.in)
-    write.write(def_mod_1.in)
-    write.end()
-  },
   'convert-single-require': function(test) {
     var write = convert(function(r) {
       test.equal(r, escape(req_mod_1.out))
@@ -85,6 +78,15 @@ exports['main'] = {
     write.write(cjs_mod_1.in)
     write.end()
   },
+  'convert-amd-cjs': function(test) {
+    var write = convert(function(r) {
+      test.equal(r, escape(amd_cjs_mod_1.out))
+      test.done()
+    })
+
+    write.write(amd_cjs_mod_1.in)
+    write.end()
+  },
   'convert-cjs-no-exports': function(test) {
     var write = convert(function(r) {
       test.equal(r, escape(cjs_mod_2.out))
@@ -92,6 +94,17 @@ exports['main'] = {
     })
 
     write.write(cjs_mod_2.in)
+    write.end()
+  },
+  'modules-order': function(test) {
+    var write = convert(function(r) {
+      test.equal(r, escape(def_mod_1.out + def_mod_2.out + def_mod_3.out))
+      test.done()
+    })
+
+    write.write(def_mod_3.in)
+    write.write(def_mod_2.in)
+    write.write(def_mod_1.in)
     write.end()
   },
   'convert-complex-require': function(test) {
