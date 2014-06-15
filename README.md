@@ -18,6 +18,9 @@ Easy way to convert AMD and CommonJS projects to one plain javascript file.
 * resolving AMD !text plugin
 * matching files using glob (default argument)
 
+### Limitation
+* does not resolve circular dependencies
+
 ### Getting Started
 Install the module: `npm install -g re-define`
 
