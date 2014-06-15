@@ -37,7 +37,7 @@ var req_mod_1 = {
   , out: 'var cjs_0 = return { test: \'test\' };;'
   }
 
-exports['main'] = {
+exports['integration-file'] = {
   setUp: function(done) {
     done();
   },

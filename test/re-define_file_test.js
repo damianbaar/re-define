@@ -6,11 +6,7 @@ var redefine = require('../lib')
   , readFile    = _.compose(_.partialRight(fs.readFileSync, 'utf-8'), _.partial(path.resolve, __dirname))
   , outputs
 
-exports['main'] = {
-  setUp: function(done) {
-    
-    done();
-  },
+exports['integration-stream'] = {
   'load-module': function(test) {
     var write = convert(function(result) {
       test.equal(result, getFiles(['./files.out/a.out']))
