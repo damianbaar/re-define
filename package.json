@@ -23,10 +23,12 @@
     "debug": "^1.0.2"
   },
   "devDependencies": {
-    "nodeunit": "^0.9.0"
+    "nodeunit": "^0.9.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-nodeunit": "^0.4.0"
   },
   "scripts": {
-    "test": "nodeunit test/**/**_test.js"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
