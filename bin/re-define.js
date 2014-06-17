@@ -13,9 +13,10 @@ var program = require('commander')
     .option('-b, --base [dir]'            , 'Base folder for project')
     .option('-n, --name [module]'         , 'AMD module name')
     .option('-r, --return [module]'       , 'Export module')
-    .option('--file-filter'               , 'Glob pattern for files and folders')
-    .option('--exclude-deps [deps]'       , 'Ignore deps - ".css"', toArray)
-    .option('--externals [module#as]'     , 'Map externals to global - jquery#this.jquery', toArray)
+    .option('-m, --map [module#as]'       , 'Map externals to global - jquery#this.jquery', toArray)
+    .option('-i, --include [filePath#as]' , 'Include external file, filepath#external_dep', toArray)
+    .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
+    .option('-f, --file-filter'           , 'Glob pattern for files and folders')
     .parse(process.argv)
 
   var config = {}
@@ -29,6 +30,7 @@ var program = require('commander')
     , excludeDeps    : program.excludeDeps
     , externals      : program.externals
     , debug          : program.debug
+    , include        : program.include
     }
 
   config = redefine.config(_.defaults(options, config))

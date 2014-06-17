@@ -34,9 +34,10 @@ Options:
     '-b, --base [dir]'            , 'Base folder for project'
     '-n, --name [module]'         , 'AMD module name'
     '-r, --return [module]'       , 'Export module'
-    '--file-filter'               , 'Glob pattern for files and folders'
-    '--exclude-deps [deps]'       , 'Ignore deps - ".css"', toArray
-    '--externals [module#as]'     , 'Map externals to global - jquery#this.jquery', toArray
+    '-m, --map [module#as]'       , 'Map externals to global - jquery#this.jquery'
+    '-i, --include [filePath#as]' , 'Include external file, filepath#external_dep'
+    '-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"'
+    '-f, --file-filter'           , 'Glob pattern for files and folders'
 ```
 
 #### Example usage
@@ -103,3 +104,7 @@ Example wrapper:
   return {{{exports}}}
 }));
 ```
+
+### API (todo)
+* from path
+* from stream
