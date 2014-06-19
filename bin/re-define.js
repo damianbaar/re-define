@@ -28,7 +28,7 @@ var program = require('commander')
     , return         : program.return
     , name           : program.name
     , excludeDeps    : program.excludeDeps
-    , externals      : program.externals
+    , map            : program.map
     , debug          : program.debug
     , include        : program.include
     }
