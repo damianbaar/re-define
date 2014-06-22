@@ -46,12 +46,12 @@ Options:
 re-define 
 ```
 
-* glob patterns (comma separated) 
+glob patterns (comma separated) 
 ```
 re-define './**/*.+(js),!./**/+(node_modules|bower_components)/**/*.*'
 ```
 
-* when piping 
+when piping 
 (note: for piping mode, built in filters for folders and files are disabled)
 
 ```
