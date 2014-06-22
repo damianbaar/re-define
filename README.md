@@ -90,19 +90,20 @@ Example wrapper:
 ```
 (function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('{{{name}}}', [{{{seq join append '\'|\'' external css}}}], factory)
+    define('{{{name}}}', [{{{chain external map '\'|\'' reduce}}}], factory)
   } else if (typeof exports === 'object') {
-    module.exports = factory({{{seq join '#require(|)' append '\'|\'' append external}}})
+  module.exports = factory({{{chain external map 'require(\'|\')' reduce}}})
   } else {
-    {{#each external}}var {{seq ../escape this}} = {{{seq ../ref this}}}
+    {{#each external}}var {{{escape this}}} = {{{global this}}}
     {{/each}}
-    {{#if exports}}parent['{{{seq ref exports}}}'] = {{/if}}factory({{{seq escape external}}})
+    //included {{included}}
+    {{#if return}}parent['{{{name}}}'] = {{/if}}factory({{{chain external escape}}})
   }
-}(this, function ({{{seq escape external}}}) {
-  {{{code}}}
+  }(this, function ({{{chain external escape}}}) {
 
-  return {{{exports}}}
-}));
+  {{{code}}}
+  return {{{returns}}}
+}))
 ```
 
 ### API (todo)

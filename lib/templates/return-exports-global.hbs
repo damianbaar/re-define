@@ -2,14 +2,15 @@
   if (typeof define === 'function' && define.amd) {
     define('{{{name}}}', [{{{chain external map '\'|\'' reduce}}}], factory)
   } else if (typeof exports === 'object') {
-    module.exports = factory({{{chain external map 'require(\'|\')' reduce}}})
+  module.exports = factory({{{chain external map 'require(\'|\')' reduce}}})
   } else {
     {{#each external}}var {{{escape this}}} = {{{global this}}}
     {{/each}}
-    {{#if exports}}parent['{{{name}}}'] = {{/if}}factory({{{chain external escape}}})
+    //includes {{included}}
+    {{#if return}}parent['{{{name}}}'] = {{/if}}factory({{{chain external escape}}})
   }
   }(this, function ({{{chain external escape}}}) {
 
   {{{code}}}
-  return {{{exports}}}
+  return {{{returns}}}
 }))
