@@ -17,6 +17,7 @@ Easy way to convert AMD and CommonJS projects to one plain javascript file.
 * templates included: 'umd/4all', 'report' , 'umd/amd-web', 'iife', 'amd-define',  'empty'
 * resolving AMD !text plugin
 * matching files using glob (default argument)
+* resolving internal require calls for AMD
 
 ### Limitation
 * does not resolve circular dependencies
@@ -32,7 +33,7 @@ Options:
     '-c, --config [name]'         , 'Re-define config'
     '-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd'
     '-b, --base [dir]'            , 'Base folder for project'
-    '-n, --name [module]'         , 'AMD module name'
+    '-n, --name [module]'         , 'Module name'
     '-r, --return [module]'       , 'Export module'
     '-m, --map [module#as]'       , 'Map externals to global - jquery#this.jquery'
     '-i, --include [filePath#as]' , 'Include external file, filepath#external_dep'

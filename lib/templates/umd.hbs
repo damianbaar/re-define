@@ -1,0 +1,23 @@
+(function (parent, factory){
+  if (typeof define === 'function' && define.amd) {
+    define('{{{name}}}', [{{{chain external map '\'|\'' reduce}}}], factory)
+  } else if (typeof exports === 'object') {
+  module.exports = factory({{{chain external map 'require(\'|\')' reduce}}})
+  } else {
+    {{#each external}}var {{{escape this}}} = {{{global this}}}
+    {{/each}}
+    {{#if returns}}parent['{{{name}}}'] = {{/if}}factory({{{chain external escape}}})
+  }
+  }(this, function ({{{chain external escape}}}) {
+  //includes {{included}}
+  var {{{config.scopeVar}}} = {}
+  {{{code}}}
+
+  function {{{config.requireFunc}}} (name) { 
+    debugger
+    name = name.replace(/\.+\//g, '')
+    return {{{config.scopeVar}}}[name] || [{{{chain external escape}}}][[{{{chain external map '\'|\''}}}].indexOf(name)]
+    }
+
+ return {{{returns}}}
+}))
