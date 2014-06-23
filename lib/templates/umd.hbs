@@ -14,7 +14,6 @@
   {{{code}}}
 
   function {{{config.requireFunc}}} (name) { 
-    debugger
     name = name.replace(/\.+\//g, '')
     return {{{config.scopeVar}}}[name] || [{{{chain external escape}}}][[{{{chain external map '\'|\''}}}].indexOf(name)]
     }
