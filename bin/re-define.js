@@ -6,6 +6,7 @@ var program = require('commander')
   , combiner = require('stream-combiner')
   , gs = require('glob-stream')
   , debug = require('debug')('re-define:bin')
+  , through = require('through2')
 
   program
     .option('-c, --config [name]'         , 'Re-define config')
@@ -50,9 +51,66 @@ var program = require('commander')
   else 
     source = gs.create(config.fileFilter, {cwd: config.base})
 
-  source
-    .pipe(redefine.fromPath(config))
-    .pipe(process.stdout)
+function DuplexThrough(options) {
+  var convert
+    , find 
+    , stream
+    , data = []
+    , added = false
+
+  convert = through(options, function(chunk, enc, cb) {
+    console.log('convert', chunk)
+    data.push(chunk)
+    this.push(data)
+    cb()
+  }, function(cb) {
+    console.log('convert','end')
+    stream.end()
+    cb()
+  })
+
+
+  convert
+    .pipe(through(options, function(chunk, enc, cb) {
+      console.log('pipe', chunk)
+      this.push(chunk)
+      cb()
+    }))
+    .pipe(through(options, function(chunk, enc, cb) {
+      if(added) {
+        this.push(null)
+        return
+      }
+      stream.write('./main2.js')
+      stream.write('./main2.js')
+      cb()
+      added = true
+    }))
+    .pipe(convert)
+
+  stream = through(options, function(chunk, enc, next) {
+    convert.write(chunk.toString())
+    next()
+  }, function(end) {
+    this.push(data.toString())
+    end()
+  })
+
+  return stream
+}
+
+var duplex = DuplexThrough({objectMode: true})
+//wrapper
+duplex.pipe(process.stdout)
+
+duplex.write('./main.js')
+duplex.write('./main.js')
+duplex.write('./main.js')
+
+
+  // source
+  //   .pipe(redefine.fromPath(config))
+  //   .pipe(process.stdout)
 
   function toArray(val) { return val.split(',') }
 
