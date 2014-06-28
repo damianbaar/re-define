@@ -7,6 +7,7 @@ var program = require('commander')
   , gs = require('glob-stream')
   , debug = require('debug')('re-define:bin')
   , through = require('through2')
+  , fs = require('fs')
 
   program
     .option('-c, --config [name]'         , 'Re-define config')
@@ -56,43 +57,50 @@ function DuplexThrough(options) {
     , find 
     , stream
     , data = []
-    , added = false
+
+  var File = require('vinyl')
 
   convert = through(options, function(chunk, enc, cb) {
-    console.log('convert', chunk)
-    data.push(chunk)
-    this.push(data)
-    cb()
-  }, function(cb) {
-    console.log('convert','end')
-    stream.end()
+    this.push(chunk)
     cb()
   })
 
-
   convert
-    .pipe(through(options, function(chunk, enc, cb) {
-      console.log('pipe', chunk)
-      this.push(chunk)
-      cb()
+    .pipe(through(options, function(path, enc, next) {
+      fs.createReadStream(path)
+        .pipe(through(function(content, enc, done) {
+          this.push(new File({path: path, contents: content }))
+          next()
+        }.bind(this)))
     }))
-    .pipe(through(options, function(chunk, enc, cb) {
-      if(added) {
+    .pipe(through(options, function(file, enc, cb) {
+      if(_.pluck(data, 'path').indexOf(file.path) > -1) {
         this.push(null)
+        cb()
         return
       }
-      stream.write('./main2.js')
-      stream.write('./main2.js')
+      
+      //write missing dependencies
+      convert.write('./umd.js')
+
+      this.push(file)
       cb()
-      added = true
+    }, function(end) {
+      console.log('end')
     }))
-    .pipe(convert)
+    .pipe(through(options, function(chunk, enc, cb) {
+      data.push(chunk)
+      cb()
+    }, function(end) {
+      stream.end()
+      end()
+    }))
 
   stream = through(options, function(chunk, enc, next) {
-    convert.write(chunk.toString())
+    convert.write(_.has(chunk, 'path') ? chunk.path : chunk.toString())
     next()
   }, function(end) {
-    this.push(data.toString())
+    this.push(_.pluck(data, 'contents').toString())
     end()
   })
 
@@ -101,16 +109,10 @@ function DuplexThrough(options) {
 
 var duplex = DuplexThrough({objectMode: true})
 //wrapper
+// source.pipe(duplex).pipe(process.stdout)
 duplex.pipe(process.stdout)
 
 duplex.write('./main.js')
-duplex.write('./main.js')
-duplex.write('./main.js')
-
-
-  // source
-  //   .pipe(redefine.fromPath(config))
-  //   .pipe(process.stdout)
 
   function toArray(val) { return val.split(',') }
 
