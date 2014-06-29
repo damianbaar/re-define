@@ -11,6 +11,7 @@ var program = require('commander')
     .option('-i, --include [filePath#as]' , 'Include external file, filepath#external_dep', toArray)
     .option('-m, --main [filepath]', 'Main file')
     .option('-e, --external [json]'        , 'External modules', JSON.parse)
+    .option('-b, --base [json]'            , 'External modules', JSON.parse)
 
     .option('-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd')
     .option('-n, --name [module]'         , 'Module name')
