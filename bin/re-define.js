@@ -3,7 +3,6 @@
 var program = require('commander')
   , _ = require('lodash')
   , redefine = require('../lib/index')
-  , combiner = require('stream-combiner')
   , debug = require('debug')('re-define:bin')
 
   program
@@ -11,11 +10,11 @@ var program = require('commander')
     .option('-m, --main [filepath]'       , 'Main file')
     .option('-b, --base [dir]'            , 'CWD')
     .option('-e, --external [json]'       , 'External modules', JSON.parse)
+    .option('-g, --glob [module#as]'       , 'Map externals to global - jquery#this.jquery', toArray)
 
     .option('-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd')
     .option('-n, --name [module]'         , 'Module name')
-    .option('-m, --map [module#as]'       , 'Map externals to global - jquery#this.jquery', toArray)
-    .option('-r, --return [module]'       , 'Export module')
+    .option('-r, --returns [module]'      , 'Return module')
     .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
     .parse(process.argv)
 
@@ -24,13 +23,11 @@ var program = require('commander')
   var options = 
     { base           : program.base
     , main           : program.main
-    , separator      : program.separator
     , wrapper        : program.wrapper
-    , return         : program.return
+    , returns        : program.returns
     , name           : program.name
     , excludeDeps    : program.excludeDeps
-    , map            : program.map
-    , external       : program.external
+    , glob           : program.glob
     }
 
   config = redefine.config(_.defaults(options, config))
