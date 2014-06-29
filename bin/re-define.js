@@ -35,28 +35,18 @@ var program = require('commander')
 
   config = redefine.config(_.defaults(options, config))
 
-  if(program.args.length === 1) config.main = program.main
-
-  var source
+  if(program.args.length === 1)  config.main = program.args[0]
 
   debug('starting re-define')
-  debug(!process.stdin.isTTY ? 'reading data from pipe' : 'traversing dirs')
 
-  if(!process.stdin.isTTY) {
-    process.stdin.setEncoding('utf-8')
-    source = combiner(process.stdin, redefine.split())
+  var re = redefine.start(config)
+
+  re.pipe(process.stdout)
+
+  re.write(config.main)
+
+  function toArray(val) { return val.split(',') }
+
+  function loadConfig(configPath) {
+    return require('fs').readFileSync(require('path').resolve(configPath), 'utf-8')
   }
-
-//wrapper
-// source.pipe(duplex).pipe(process.stdout)
-
-var re = redefine.start(config)
-
-re.pipe(process.stdout)
-re.write(config.main)
-
-function toArray(val) { return val.split(',') }
-
-function loadConfig(configPath) {
-  return require('fs').readFileSync(require('path').resolve(configPath), 'utf-8')
-}
