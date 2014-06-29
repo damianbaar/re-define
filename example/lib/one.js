@@ -3,10 +3,10 @@ define(
   , "text!./deps/template.html"
   // , "./two"
   // , "dep/dep"
-  // , "require"
+  , "require"
   // , "css!./styles.css"
   ]
-  , function(five, template, two, dep, require){
+  , function(five, template, require){
 
     console.log(five, template)
     var a = require('dep/dep')

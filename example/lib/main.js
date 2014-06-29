@@ -2,14 +2,10 @@ require(
   [ "./one"
   , "jquery"
   , "d3"
-  // , "two"
-  // , "./deps/four"
-  // , "./umd"
-  // , "text!./template.html"
-  // , 'require'
-  // , "domReady!"
+  , 'require'
+  , "domReady!"
   ]
-  , function(one, jquery, four, umd, t1, require)
+  , function(one, jquery, d3, require)
   {
     var t = require('jquery')
       , b = require('async')
