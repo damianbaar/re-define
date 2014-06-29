@@ -1,6 +1,6 @@
-// (function() {
-//   return {name: 'jquery'}
-// })()
-define(['nested_external_1','nested_external_2'], function(a, b) {
-  return {name: 'jquery'}
+define([
+  './lib/dep1'
+, './lib-2/dep1'
+], function(a) {
+  return {name: a}
 })

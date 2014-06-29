@@ -1,7 +1,7 @@
 require(
   [ "./one"
-  // , "jquery"
-  // , "two"
+  , "jquery"
+  , "two"
   // , "./deps/four"
   // , "./umd"
   // , "text!./template.html"
