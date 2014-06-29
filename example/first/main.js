@@ -1,10 +1,10 @@
 require(
   [ "./one"
-  , "jquery"
-  , "two"
-  , "./deps/four"
-  , "./umd"
-  , "text!./template.html"
+  // , "jquery"
+  // , "two"
+  // , "./deps/four"
+  // , "./umd"
+  // , "text!./template.html"
   // , 'require'
   // , "domReady!"
   ]

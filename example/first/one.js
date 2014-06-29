@@ -1,6 +1,6 @@
 define(
   [ "./dotpath/fi-ve"
-  // , "text!./deps/template.html"
+  , "text!./deps/template.html"
   // , "./two"
   // , "dep/dep"
   // , "require"
