@@ -51,8 +51,8 @@ var program = require('commander')
 //wrapper
 // source.pipe(duplex).pipe(process.stdout)
 
- var re = redefine.start(config)
-        
+var re = redefine.start(config)
+
 re.pipe(process.stdout)
 re.write(config.main)
 
