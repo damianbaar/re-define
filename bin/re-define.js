@@ -8,6 +8,8 @@ var program = require('commander')
   , debug = require('debug')('re-define:bin')
   , through = require('through2')
   , fs = require('fs')
+  , path = require('path')
+  , File = require('vinyl')
 
   program
     .option('-c, --config [name]'         , 'Re-define config')
@@ -52,67 +54,104 @@ var program = require('commander')
   else 
     source = gs.create(config.fileFilter, {cwd: config.base})
 
-function DuplexThrough(options) {
-  var convert
-    , find 
+function define(options) {
+  var converter
     , stream
+    , processing = []
+    , pending = []
     , data = []
+    , external = []
 
-  var File = require('vinyl')
-
-  convert = through(options, function(chunk, enc, cb) {
-    this.push(chunk)
-    cb()
-  })
-
-  convert
-    .pipe(through(options, function(path, enc, next) {
-      fs.createReadStream(path)
-        .pipe(through(function(content, enc, done) {
-          this.push(new File({path: path, contents: content }))
-          next()
-        }.bind(this)))
-    }))
-    .pipe(through(options, function(file, enc, cb) {
-      if(_.pluck(data, 'path').indexOf(file.path) > -1) {
-        this.push(null)
-        cb()
+  converter = through(options, function(file, enc, next) {
+      if(processing.indexOf(file.path) > -1) {
+        next()
         return
       }
-      
-      //write missing dependencies
-      convert.write('./umd.js')
+
+      processing.push(file.path)
+      pending.push(file.path)
 
       this.push(file)
-      cb()
-    }, function(end) {
-      console.log('end')
+      next()
+    })
+
+  converter
+    .pipe(through(options, function(file, enc, next) {
+      if (file.isNull()) {
+        var read = fs.createReadStream(file.path)
+                     .on('error', function(e) { console.log(e) })
+
+        file.contents = read
+      }
+
+      if (file.isBuffer()) next()
+      if (file.isStream()) {
+        file.pipe(through(function(content) {
+          file.contents = content
+          this.push(file)
+          next()
+        }.bind(this)))
+      }
     }))
-    .pipe(through(options, function(chunk, enc, cb) {
+    .pipe(redefine.transform.convert(config))
+    .pipe(redefine.transform.excludeDeps(config))
+    .pipe(redefine.transform.rewriteDeps(config))
+    .pipe(through(options, function(file, enc, next) {
+      var that = this
+        , depLen = file.deps.length
+
+      if(depLen === 0) {
+        this.push(file)
+        next()
+      }
+
+      _.each(file.deps, function(d, i) {
+        d.path = path.relative(file.base, path.resolve(path.dirname(file.path), d.path))
+
+        fs.exists(d.path, function(exists) {
+          if(!exists) {
+            d.path = d.name
+            _.pluck(external, 'name').indexOf(d.name) === -1 && external.push(d)
+          }
+          else stream.write(new File(_.extend(d, { base: file.base })))
+
+          if(depLen === i + 1) {
+            that.push(file)
+            next()
+          }
+        })
+      })
+    }))
+    .pipe(through(options, function(chunk, enc, next) {
+      var idx = pending.indexOf(chunk.path)
+      if(idx > -1) pending.splice(idx, 1)
+
       data.push(chunk)
-      cb()
-    }, function(end) {
-      stream.end()
-      end()
+
+      if(!pending.length) {
+        converter.end()
+        stream.end()
+      }
+      next()
     }))
 
   stream = through(options, function(chunk, enc, next) {
-    convert.write(_.has(chunk, 'path') ? chunk.path : chunk.toString())
+    converter.write(chunk)
     next()
   }, function(end) {
-    this.push(_.pluck(data, 'contents').toString())
+    this.push('----->' + _.pluck(data, 'relative', 'exists').toString())
     end()
   })
 
   return stream
 }
 
-var duplex = DuplexThrough({objectMode: true})
+var duplex = define({objectMode: true})
 //wrapper
 // source.pipe(duplex).pipe(process.stdout)
 duplex.pipe(process.stdout)
 
-duplex.write('./main.js')
+duplex.write(new File({path: './main.js'}))
 
   function toArray(val) { return val.split(',') }
 

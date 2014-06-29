@@ -1,10 +1,10 @@
 define(
   [ "./dotpath/fi-ve"
-  , "text!./deps/template.html"
-  , "./two"
-  , "dep/dep"
-  , "require"
-  , "css!./styles.css"
+  // , "text!./deps/template.html"
+  // , "./two"
+  // , "dep/dep"
+  // , "require"
+  // , "css!./styles.css"
   ]
   , function(five, template, two, dep, require){
 

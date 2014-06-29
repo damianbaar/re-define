@@ -1,11 +1,12 @@
 require(
   [ "./one"
   , "jquery"
+  , "two"
   , "./deps/four"
   , "./umd"
-  , "text!./template.html"
-  , 'require'
-  , "domReady!"
+  // , "text!./template.html"
+  // , 'require'
+  // , "domReady!"
   ]
   , function(one, jquery, four, umd, t1, require)
   {
