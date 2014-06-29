@@ -1,6 +1,6 @@
 require(
-  [ //"./one"
-   "jquery"
+  [ "./one"
+  , "jquery"
   , "d3"
   // , "two"
   // , "./deps/four"
