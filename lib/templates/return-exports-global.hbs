@@ -6,24 +6,22 @@
   } else {
     {{#each external}}var {{{escape this}}} = {{{global this}}}
     {{/each}}
-
     {{#if config.returns}}parent['{{{config.name}}}'] = {{/if}}factory({{{chain external escape}}})
   }
   }(this, function ({{{chain external escape}}}) {
 
   var {{{config.scopeVar}}} = {}
-  {{{code}}}
 
-  {{#each bundles}}var {{{this.name}}} = (function()) {
+  {{#each bundles}}var {{{this.name}}} = (function() {
     {{{this.code}}}
     return {{{this.returns}}}
-    })()
+    })();
     {{/each}}
 
   function {{{config.requireFunc}}} (name) { 
     name = name.replace(/\.+\//g, '')
     return {{{config.scopeVar}}}[name] || [{{{chain external escape}}}][[{{{chain external map '\'|\''}}}].indexOf(name)]
-    }
+  }
 
     {{#if config.returns }} return {{{config.returns}}} {{/if}}
 }))
