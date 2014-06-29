@@ -4,7 +4,7 @@ require(
   , "two"
   , "./deps/four"
   , "./umd"
-  // , "text!./template.html"
+  , "text!./template.html"
   // , 'require'
   // , "domReady!"
   ]
