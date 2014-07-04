@@ -7,7 +7,7 @@ var program = require('commander')
   , File = require('vinyl')
 
   program
-    .option('-t, --transform'             , 'Attach transform stream')
+    .option('-t, --transform [libs]'      , 'Attach transform stream', toArray)
     .option('-m, --main [filepath]'       , 'Main file')
     .option('-b, --base [dir]'            , 'CWD')
     .option('-e, --external [json]'       , 'External modules', JSON.parse)
@@ -25,6 +25,7 @@ var program = require('commander')
     { base           : program.base
     , main           : program.main
     , wrapper        : program.wrapper
+    , transform      : program.transform
     , returns        : program.returns
     , name           : program.name
     , excludeDeps    : program.excludeDeps
@@ -33,7 +34,7 @@ var program = require('commander')
 
   config = redefine.config(_.defaults(options, config))
 
-  if(program.args.length === 1)  config.main = program.args[0]
+  if(program.args.length > 0)  config.main = program.args[0]
 
   debug('starting re-define')
 
