@@ -1,16 +1,16 @@
 require(
-  [ "./one"
-  , "jquery"
+  [ //"./one"
+  "jquery"
   , "d3"
-  , "notFound"
-  , 'require'
-  , "domReady!"
+  // , "notFound"
+  // 'require'
+  // , "domReady!"
   ]
-  , function(one, jquery, d3, empty, require)
+  , function(one, d3)
   {
-    var t = require('jquery')
-      , b = require('async')
+    var b = require('async')
 
     console.log(jquery, umd)
+    module.exports = {}
     return [one, four, t1, umd]
 })

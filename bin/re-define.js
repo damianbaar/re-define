@@ -4,6 +4,7 @@ var program = require('commander')
   , _ = require('lodash')
   , redefine = require('../lib/index')
   , debug = require('debug')('re-define:bin')
+  , File = require('vinyl')
 
   program
     .option('-t, --transform'             , 'Attach transform stream')
@@ -40,7 +41,7 @@ var program = require('commander')
 
   re.pipe(process.stdout)
 
-  re.write(config.main)
+  re.write(new File({path: config.main, cwd: config.base}))
 
   function toArray(val) { return val.split(',') }
 
