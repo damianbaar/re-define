@@ -1,12 +1,12 @@
 define(
   [ "./dotpath/fi-ve"
-  // , "text!./deps/template.html"
+  , "text!./deps/template.html"
   , "./two"
   // , "dep/dep"
   , "require"
   // , "css!./styles.css"
   ]
-  , function(five, template, require){
+  , function(five, template, two, require){
 
     console.log(five, template)
     // var a = require('dep/dep')

@@ -1,12 +1,12 @@
 require(
-  [ //"./one"
-  "jquery"
-  , "d3"
+  [ "./one"
+  // , "jquery"
+  // , "d3"
   // , "notFound"
   // 'require'
   // , "domReady!"
   ]
-  , function(one, d3)
+  , function(one, $, d3)
   {
     var b = require('async')
 
