@@ -1,6 +1,6 @@
 require(
   [ "./one"
-  // , "jquery"
+  , "jquery"
   // , "d3"
   // , "notFound"
   // 'require'
