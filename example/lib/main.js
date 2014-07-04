@@ -2,9 +2,8 @@ require(
   [ "./one"
   , "jquery"
   // , "d3"
-  // , "notFound"
-  // 'require'
-  // , "domReady!"
+  , "notFound"
+  , 'require'
   ]
   , function(one, $, d3)
   {

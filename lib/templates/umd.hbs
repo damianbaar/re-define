@@ -10,10 +10,10 @@
   }
   }(this, function ({{{chain external escape}}}) {
   {{#if initScope}} var {{{config.scopeVar}}} = {} {{/if}}
-  {{#each bundles}}var {{{this.name}}} = (function() {
+  {{#each bundles}}(function() {
     {{{this.code}}}
     return {{{this.returns}}}
-    })();
+    }).call(this);
     {{/each}}
 
   function {{{config.internalRequire}}} (name) { 
