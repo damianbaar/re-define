@@ -9,14 +9,15 @@
     {{#if config.returns}}parent['{{{config.name}}}'] = {{/if}}factory({{{chain external escape}}})
   }
   }(this, function ({{{chain external escape}}}) {
-  var {{{config.scopeVar}}} = {}
-  {{#each bundles}}(function() {
+
+  {{#each bundles}}
+  {{#if this.wrap}} 
+  (function() {
+    var {{{../../config.scopeVar}}} = {}
     {{{this.code}}}
-    this.{{{this.returns}}} = {{{this.returns}}}
-    }).call(this);
-    {{/each}}
+    function {{{../../config.internalRequire}}} (name) { return this[name] || {{{../../config.scopeVar}}}[name] }
+  }).call(this);
+  {{else}} {{{this.code}}} {{/if}} {{/each}}
 
-  function {{{config.internalRequire}}} (name) { return {{{config.scopeVar}}}[name] }
-
-    {{#if config.returns }} return {{{config.returns}}} {{/if}}
+  {{#if config.returns }} return this.{{{config.returns}}} {{/if}}
 }))

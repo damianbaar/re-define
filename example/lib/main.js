@@ -1,16 +1,11 @@
 require(
-  [ //"./one"
-   "jquery"
-  , "text!./deps/template.html"
-  // "d3"
-  // , "notFound"
-  // , 'require'
+  [ "jquery"
+  , "d3"
+  , "./model/model"
+  , "./view/view"
+  , "text!./template.html"
   ]
-  , function($, tmpl)
+  , function($, d3, model, view, template)
   {
-    var b = require('async')
-
-    console.log(jquery, umd)
-
-    return [$, tmpl]
+    return [$, d3, model, view, template]
 })
