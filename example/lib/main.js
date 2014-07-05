@@ -1,7 +1,7 @@
 require(
-  [ "./one"
-   , "jquery"
-  , "d3"
+  [ //"./one"
+  //  , "jquery"
+  "d3"
   // , "notFound"
   // , 'require'
   ]
@@ -11,6 +11,6 @@ require(
 
     console.log(jquery, umd)
     module.exports = {first: 'test'}
-    exports = {first: 'test'}
+
     return [one, four, t1, umd]
 })
