@@ -1,7 +1,7 @@
 require(
   [ //"./one"
-  //  , "jquery"
-  "d3"
+   "jquery"
+  // "d3"
   // , "notFound"
   // , 'require'
   ]

@@ -9,10 +9,10 @@
     {{#if config.returns}}parent['{{{config.name}}}'] = {{/if}}factory({{{chain external escape}}})
   }
   }(this, function ({{{chain external escape}}}) {
-  {{#if initScope}} var {{{config.scopeVar}}} = {} {{/if}}
+  var {{{config.scopeVar}}} = {}
   {{#each bundles}}(function() {
     {{{this.code}}}
-    {{{../config.scopeVar}}}['{{{this.returns}}}'] = {{{this.returns}}}
+    this.{{{this.returns}}} = {{{this.returns}}}
     }).call(this);
     {{/each}}
 
