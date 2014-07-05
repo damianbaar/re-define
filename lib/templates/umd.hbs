@@ -12,13 +12,11 @@
   {{#if initScope}} var {{{config.scopeVar}}} = {} {{/if}}
   {{#each bundles}}(function() {
     {{{this.code}}}
-    return {{{this.returns}}}
+    {{{../config.scopeVar}}}['{{{this.returns}}}'] = {{{this.returns}}}
     }).call(this);
     {{/each}}
 
-  function {{{config.internalRequire}}} (name) { 
-    return {{{config.scopeVar}}}[name]
-  }
+  function {{{config.internalRequire}}} (name) { return {{{config.scopeVar}}}[name] }
 
     {{#if config.returns }} return {{{config.returns}}} {{/if}}
 }))
