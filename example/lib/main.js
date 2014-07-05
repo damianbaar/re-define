@@ -1,16 +1,16 @@
 require(
   [ //"./one"
    "jquery"
+  , "text!./deps/template.html"
   // "d3"
   // , "notFound"
   // , 'require'
   ]
-  , function(one, $, d3)
+  , function($, tmpl)
   {
     var b = require('async')
 
     console.log(jquery, umd)
-    module.exports = {first: 'test'}
 
-    return [one, four, t1, umd]
+    return [$, tmpl]
 })
