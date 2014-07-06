@@ -9,6 +9,7 @@
     {{#if config.returns}}parent['{{{config.name}}}'] = {{/if}}factory({{{chain external escape}}})
   }
   }(this, function ({{{chain external escape}}}) {
+  {{{chain external escape map 'this.| = |'}}}
 
   {{#each bundles}}
   {{#if this.wrap}} 
