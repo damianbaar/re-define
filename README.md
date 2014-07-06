@@ -18,7 +18,7 @@ Easy way to convert AMD and CommonJS projects to one plain javascript bundle wra
 * (WiP) detailed report, to get whole picture, display modules, dependencies and externals
 
 ### Limitation
-* does not resolve circular dependencies, and won't be
+* does not resolve circular dependencies
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -129,7 +129,7 @@ module.exports = function(config) {
       ]
     */
 
-    //do your magic
+    //your own spells
 
     this.push(file)
     next()
