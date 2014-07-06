@@ -40,7 +40,7 @@ Options:
 ```
 
 #### Example usage
-check [example folder](re-define/example) and appropriate build files
+check [example folder](example) and appropriate build files
 
 #### Debbuging
 To run `re-define` in debug mode is fairly easy, just run `re-define` with appropriate category like below
