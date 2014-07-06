@@ -3,56 +3,45 @@
 var program = require('commander')
   , _ = require('lodash')
   , redefine = require('../lib/index')
-  , combiner = require('stream-combiner')
-  , gs = require('glob-stream')
   , debug = require('debug')('re-define:bin')
+  , File = require('vinyl')
 
   program
-    .option('-c, --config [name]'         , 'Re-define config')
+    .option('-t, --transform [libs]'      , 'Attach transform stream', toArray)
+    .option('-m, --main [filepath]'       , 'Main file')
+    .option('-b, --base [dir]'            , 'CWD')
+    .option('-e, --external [json]'       , 'External modules', JSON.parse)
+    .option('-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery', toArray)
     .option('-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd')
-    .option('-b, --base [dir]'            , 'Base folder for project')
     .option('-n, --name [module]'         , 'Module name')
-    .option('-r, --return [module]'       , 'Export module')
-    .option('-m, --map [module#as]'       , 'Map externals to global - jquery#this.jquery', toArray)
-    .option('-i, --include [filePath#as]' , 'Include external file, filepath#external_dep', toArray)
+    .option('-r, --returns [module]'      , 'Return module')
     .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
-    .option('-f, --file-filter'           , 'Glob pattern for files and folders')
     .parse(process.argv)
 
   var config = {}
 
   var options = 
     { base           : program.base
-    , separator      : program.separator
+    , main           : program.main
     , wrapper        : program.wrapper
-    , return         : program.return
+    , transform      : program.transform
+    , returns        : program.returns
     , name           : program.name
     , excludeDeps    : program.excludeDeps
-    , map            : program.map
-    , debug          : program.debug
-    , include        : program.include
+    , globals        : program.globals
     }
 
   config = redefine.config(_.defaults(options, config))
 
-  if(program.args.length === 1) 
-    config.fileFilter = program.fileFilter || toArray(program.args[0])
-
-  var source
+  if(program.args.length > 0)  config.main = program.args[0]
 
   debug('starting re-define')
-  debug(!process.stdin.isTTY ? 'reading data from pipe' : 'traversing dirs')
 
-  if(!process.stdin.isTTY) {
-    process.stdin.setEncoding('utf-8')
-    source = combiner(process.stdin, redefine.split())
-  }
-  else 
-    source = gs.create(config.fileFilter, {cwd: config.base})
+  var re = redefine.start(config)
 
-  source
-    .pipe(redefine.fromPath(config))
-    .pipe(process.stdout)
+  re.pipe(process.stdout)
+
+  re.write(new File({path: config.main, cwd: config.base}))
 
   function toArray(val) { return val.split(',') }
 
