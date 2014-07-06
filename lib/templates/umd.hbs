@@ -16,6 +16,7 @@
   (function() {
     var {{{../../config.scopeVar}}} = {}
     {{{this.code}}}
+    this.{{{escape this.returns}}} = {{{../../config.scopeVar}}}['{{{this.returns}}}']
     function {{{../../config.internalRequire}}} (name) { return this[name] || {{{../../config.scopeVar}}}[name] }
   }).call(this);
   {{else}} {{{this.code}}} {{/if}} {{/each}}

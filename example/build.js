@@ -15,18 +15,18 @@
 
   (function() {
     var _scope_ = {}
-    var lib_2_dep1 = _scope_['lib-2/dep1'] = (function() {
+    _scope_['lib-2/dep1'] = (function() {
       return {
         name: 'dep'
       };
     })()
-    var lib_dep1 = _scope_['lib/dep1'] = (function() {
+    _scope_['lib/dep1'] = (function() {
       var a = require('lib-2/dep1');
       return {
         name: 'dep'
       };
     })()
-    var jquery = _scope_['jquery'] = (function() {
+    _scope_['jquery'] = (function() {
       var a = require('lib/dep1');
       var a = 'jquery';
       return {
@@ -49,13 +49,13 @@
 
     (function() {
       var _scope_ = {}
-      var model_helper = _scope_['model/helper'] = (function() {
+      _scope_['model/helper'] = (function() {
         var async = require('async');
         return {
           getAsync: async
         };
       })()
-      var model_model = _scope_['model/model'] = (function() {
+      _scope_['model/model'] = (function() {
         var helper = require('model/helper');
         var async = helper.getAsync();
         return {
@@ -64,8 +64,8 @@
           }
         };
       })()
-      var text__view_template_html = _scope_['text!./view/template.html'] = '<li></li><li></li><li></li><li></li>'
-      var view_view = _scope_['view/view'] = (function() {
+      _scope_['text!./view/template.html'] = '<li></li><li></li><li></li><li></li>'
+      _scope_['view/view'] = (function() {
         var model = require('model/model'),
           tmpl = require('text!./view/template.html');
         return function() {
@@ -75,8 +75,8 @@
           };
         };
       })()
-      var text__template_html = _scope_['text!./template.html'] = '<div>test</div><div></div><div></div><div></div>'
-      var main = _scope_['main'] = (function() {
+      _scope_['text!./template.html'] = '<div>test</div><div></div><div></div><div></div>'
+      _scope_['main'] = (function() {
         var $ = require('jquery');
         var d3 = require('d3');
         var model = require('model/model');
