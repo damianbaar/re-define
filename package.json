@@ -1,6 +1,6 @@
 {
   "name": "re-define",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "lib/index.js",
   "bin": {
     "re-define": "./bin/re-define.js"
@@ -23,7 +23,9 @@
     "async": "^0.9.0",
     "ast-types": "^0.3.36"
   },
-  "bundledDependencies" : [ "spy" ],
+  "bundledDependencies": [
+    "spy"
+  ],
   "devDependencies": {
     "nodeunit": "^0.9.0",
     "grunt-contrib-watch": "^0.6.1",
