@@ -4,7 +4,7 @@
   } else if (typeof exports === 'object') {
     module.exports = factory(require('async'))
   } else {
-    var async = this.async
+    var async = parent.async
 
     parent['module_name'] = factory(async)
   }
@@ -98,4 +98,4 @@
 
 
   return this.main
-}))
+}.bind({})))
