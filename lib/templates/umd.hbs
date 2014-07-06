@@ -13,12 +13,15 @@
 
   {{#each bundles}}
   {{#if this.wrap}} 
-  (function() {
+  this['{{{this.name}}}'] = (function() {
+    var __context = this
     var {{{../../config.scopeVar}}} = {}
     {{{this.code}}}
-    this.{{{escape this.returns}}} = {{{../../config.scopeVar}}}['{{{this.returns}}}']
-    function {{{../../config.internalRequire}}} (name) { return this[name] || {{{../../config.scopeVar}}}[name] }
-  }).call(this);
+    return {{{../../config.scopeVar}}}['{{{this.returns}}}']
+
+    function {{{../../config.internalRequire}}} (name) { return __context[name] || {{{../../config.scopeVar}}}[name] }
+    })
+    .call(this);
   {{else}} {{{this.code}}} {{/if}} {{/each}}
 
   {{#if config.returns }} return this.{{{config.returns}}} {{/if}}

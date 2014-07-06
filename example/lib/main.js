@@ -7,5 +7,9 @@ require(
   ]
   , function($, d3, model, view, template)
   {
-    return [$, d3, model, view, template]
+    return { jquery: $
+           , d3: d3
+           , model: model
+           , view: view
+           , template: template }
 })

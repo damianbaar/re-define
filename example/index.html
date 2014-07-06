@@ -4,17 +4,27 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>Re-define</title>
     <script type="text/javascript" charset="utf-8">
+      //external lib
       this.async = function() {
         return {name: 'async'}
       }
     </script>
-    <script src="build.js" type="text/javascript" charset="utf-8"></script>
 
-    <script type="text/javascript" charset="utf-8">
-     console.log(this.module_name) 
-   </script>
+    <script src="build.js" type="text/javascript" charset="utf-8"></script>
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      var module = this.module_name
+
+      document.querySelector('body').innerHTML = module.template
+      document.querySelector('#module_name').innerHTML = 'modules: ' +  JSON.stringify(
+        { d3: !!module.d3
+        , jquery: !!module.jquery
+        , model: !!module.model
+        , view: !!module.view
+        }, null, 2)
+   </script>
+
   </body>
 </html>
