@@ -1,7 +1,7 @@
 ## re-define
 Let's `re-define` something ... without any configuration ... just do the magic for me.
 
-Easy way to convert AMD and CommonJS projects to one plain javascript bundle wrapped in `UMD`.
+Easy way to convert AMD and CommonJS projects to one bundle wrapped in `UMD`.
 
 ### Why
 * to get decent encapsulation, registering a bundle not a part
@@ -17,6 +17,10 @@ Easy way to convert AMD and CommonJS projects to one plain javascript bundle wra
 * using `vinyl`, integration with `gulp` should be easy
 * (WiP) detailed report, to get whole picture, display modules, dependencies and externals
 
+### Nice things
+* when `re-define` meet external dep, automatically checks descriptor files, such as `bower.json` and `package.json, there is also a fallback to `node_modules` as well as `bower_components` when descriptor is missing or there is no `main` defined
+* when including an `UMD` file as a dep and your `define` module is anonymous, `re-define` will add a name for you also check internal depenencies
+
 ### Limitation
 * does not resolve circular dependencies
 
@@ -31,6 +35,7 @@ Options:
   '-t, --transform [libs]'      , 'Custom transforms stream invoked for each module'
   '-m, --main [filepath]'       , 'Main file'
   '-b, --base [dir]'            , 'CWD'
+  '-d, --discoverable [dirs]'   , 'Check in folders when encouter an external dep'
   '-e, --external [json]'       , 'Exact dep locations, when discoverable is not enough'
   '-g, --globals [module#as]'   , 'Global reference to external libs'
   '-w, --wrapper [type]'        , 'Wrapper type report, default: umd'

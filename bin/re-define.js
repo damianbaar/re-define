@@ -10,9 +10,7 @@ var program = require('commander')
     .option('-t, --transform [libs]'      , 'Attach transform stream', toArray)
     .option('-m, --main [filepath]'       , 'Main file')
     .option('-b, --base [dir]'            , 'CWD')
-
-    .option('-d, --discoverable [dirs]'   , 'Where should look for deps when not available in scope')
-
+    .option('-d, --discoverable [dirs]'   , 'In which folders should check when encouter external dep', toArray)
     .option('-e, --external [json]'       , 'External modules', JSON.parse)
     .option('-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery', toArray)
     .option('-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd')
@@ -28,6 +26,7 @@ var program = require('commander')
     , main           : program.main
     , wrapper        : program.wrapper
     , transform      : program.transform
+    , discoverable   : program.discoverable
     , returns        : program.returns
     , name           : program.name
     , excludeDeps    : program.excludeDeps

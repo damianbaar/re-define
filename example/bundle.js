@@ -30,6 +30,7 @@
     })();
     _scope_['jquery'] = (function() {
       var a = require('lib/dep1');
+      require('lib-2/dep1');
       var a = 'jquery';
       return {
         name: a
@@ -44,7 +45,7 @@
   })
   .call(this);
 
-  _scope_['d3'] = (function(root, factory) {
+  (function(root, factory) {
     if (typeof define === 'function' && define.amd) {
       define('d3', ['b'], factory);
     } else if (typeof exports === 'object') {

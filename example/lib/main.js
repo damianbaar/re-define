@@ -4,8 +4,6 @@ require(
   , "./model/model"
   , "./view/view"
   , "text!./template.html"
-  , "_d3"
-  , "__d3"
   ]
   , function($, d3, model, view, template)
   {
