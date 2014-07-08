@@ -27,6 +27,7 @@ var program = require('commander')
     , wrapper        : program.wrapper
     , transform      : program.transform
     , discoverable   : program.discoverable
+    , external       : program.external
     , returns        : program.returns
     , name           : program.name
     , excludeDeps    : program.excludeDeps
