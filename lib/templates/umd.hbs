@@ -24,5 +24,5 @@
     .call(this);
   {{else}} {{{this.code}}} {{/if}} {{/each}}
 
-  {{#if config.returns }} return this.{{{config.returns}}} {{/if}}
+  {{#if config.returns }} return this['{{{config.returns}}}'] {{/if}}
   }.bind({})))

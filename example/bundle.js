@@ -114,5 +114,5 @@
   .call(this);
 
 
-  return this.main
+  return this['main']
 }.bind({})))
