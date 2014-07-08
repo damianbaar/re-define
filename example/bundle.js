@@ -44,33 +44,19 @@
   })
   .call(this);
 
-
-  this['d3'] = (function() {
-    var __context = this
-    var _scope_ = {}
-    _scope_['d3'] = (function() {
-      (function(root, factory) {
-        if (typeof define === 'function' && define.amd) {
-          define('d3', ['b'], factory);
-        } else if (typeof exports === 'object') {
-          module.exports = factory(require('b'));
-        } else {
-          root.d3 = factory(root.b);
-        }
-      }(this, function(b) {
-        return {
-          d3: 'd3'
-        };
-      }));
-    })();
-
-    return _scope_['d3']
-
-    function require(name) {
-      return __context[name] || _scope_[name]
+  _scope_['d3'] = (function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+      define('d3', ['b'], factory);
+    } else if (typeof exports === 'object') {
+      module.exports = factory(require('b'));
+    } else {
+      root.d3 = factory(root.b);
     }
-  })
-  .call(this);
+  }(this, function(b) {
+    return {
+      d3: 'd3'
+    };
+  }));;
 
 
   this['main'] = (function() {
