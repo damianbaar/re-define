@@ -1,6 +1,6 @@
 {
   "name": "re-define",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "lib/index.js",
   "bin": {
     "re-define": "./bin/re-define.js"
@@ -32,7 +32,7 @@
     "grunt-contrib-nodeunit": "^0.4.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": ""
   },
   "repository": {
     "type": "git",

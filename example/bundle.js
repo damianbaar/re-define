@@ -1,15 +1,16 @@
 (function(parent, factory) {
   if (typeof define === 'function' && define.amd) {
-    define('module_name', ['async'], factory)
+    define('module_name', ['b', 'async'], factory)
   } else if (typeof exports === 'object') {
-    module.exports = factory(require('async'))
+    module.exports = factory(require('b'), require('async'))
   } else {
+    var b = b
     var async = parent.async
 
-    parent['module_name'] = factory(async)
+    parent['module_name'] = factory(b, async)
   }
-}(this, function(async) {
-  this.async = async
+}(this, function(b, async) {
+  this.b = b, this.async = async
 
 
 
@@ -29,6 +30,7 @@
     })();
     _scope_['jquery'] = (function() {
       var a = require('lib/dep1');
+      require('lib-2/dep1');
       var a = 'jquery';
       return {
         name: a
@@ -43,12 +45,19 @@
   })
   .call(this);
 
-  (function(parent) {
-    return parent.d3 = {
-      name: 'd3'
+  (function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+      define('d3', ['b'], factory);
+    } else if (typeof exports === 'object') {
+      module.exports = factory(require('b'));
+    } else {
+      root.d3 = factory(root.b);
     }
-  })(this)
-  ;
+  }(this, function(b) {
+    return {
+      d3: 'd3'
+    };
+  }));;
 
 
   this['main'] = (function() {
