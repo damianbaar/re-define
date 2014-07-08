@@ -32,7 +32,7 @@
     "grunt-contrib-nodeunit": "^0.4.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": ""
   },
   "repository": {
     "type": "git",
