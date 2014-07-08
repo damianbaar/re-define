@@ -21,7 +21,8 @@
     "acorn": "^0.6.0",
     "debug": "^1.0.2",
     "async": "^0.9.0",
-    "ast-types": "^0.3.36"
+    "ast-types": "^0.3.36",
+    "vinyl": "^0.2.3"
   },
   "bundledDependencies": [
     "spy"
