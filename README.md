@@ -66,7 +66,7 @@ re-define:bin
   , name         : 'module_name'
   , wrapper      : 'umd'
   , returns      : ''
-  , excludeDeps  : ['\.css$', 'require', 'modules', 'exports']
+  , excludeDepRef  : ['\.css$', 'require', 'modules', 'exports']
   , globals      : [] //external module_name#global_ref
   , external     : {} //{"jquery": "location"} or {"..": "{path: "...", cwd: "..."}
   , discoverable : ['node_modules', 'bower_component']
