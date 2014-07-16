@@ -1,0 +1,34 @@
+(function (parent, factory){
+  if (typeof define === 'function' && define.amd) {
+    define('<%- config.name %>', [<%= 
+           _.map(external, function(d){ return "'" + d + "'" }).join(',') %>], factory)
+  } else if (typeof exports === 'object') {
+    module.exports = factory(<%=
+           _.map(external, function(d){ return "require('" + d + "')" }).join(',') %>)
+  } else {
+  <% _.chain(external)
+      .map(function(d) { return 'var ' + util.escape(d) + " = " + util.global(d) })
+      .each(function(name) {;
+  %>  <%= name %>
+  <%})%>
+    parent['<%= config.name %>'] = factory(<%= _.map(external, util.escape).join(',') %>)
+  }
+  }(this, function (<%= _.map(external, util.escape).join(',') %>) {
+  <% _.each(bundles, function(b) { %>
+    (function(context) {
+      context['<%= b.name %>'] = (function(scope, context) {
+      <% _.each(b.code, function(c) { 
+      if(c.type !== 'raw') { %>
+        scope['<%= c.name %>'] = (function(exports) { <%=
+          c.content %>
+          return exports
+        })({})
+      <% } else { %>
+        scope['<%= c.type %>'] = <%= c.content %>
+      <% }}) %>
+
+      function require(name) { return context[name] || scope[name] }
+    })({}, this)
+  <% }) %>
+
+}.bind({})))

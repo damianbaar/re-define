@@ -5,3 +5,6 @@ module.exports = function() {
   return { model: model.getData()
          , view: tmpl }
 }
+
+exports.test = {}
+exports.test2 = {}

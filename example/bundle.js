@@ -1,12 +1,101 @@
-<File "../jquery" <Buffer 72 65 71 75 69 72 65 28 0a 20 20 5b 20 22 6a 71 75 65 72 79 22 0a 20 20 2c 20 22 64 33 22 0a 20 20 2c 20 22 2e 2f 6d 6f 64 65 6c 2f 6d 6f 64 65 6c 22 0a ...>>
-<File "../d3" <Buffer 72 65 71 75 69 72 65 28 0a 20 20 5b 20 22 6a 71 75 65 72 79 22 0a 20 20 2c 20 22 64 33 22 0a 20 20 2c 20 22 2e 2f 6d 6f 64 65 6c 2f 6d 6f 64 65 6c 22 0a ...>>
-<File "model/model.js" <Buffer 72 65 71 75 69 72 65 28 0a 20 20 5b 20 22 6a 71 75 65 72 79 22 0a 20 20 2c 20 22 64 33 22 0a 20 20 2c 20 22 2e 2f 6d 6f 64 65 6c 2f 6d 6f 64 65 6c 22 0a ...>>
-<File "view/view.js" <Buffer 72 65 71 75 69 72 65 28 0a 20 20 5b 20 22 6a 71 75 65 72 79 22 0a 20 20 2c 20 22 64 33 22 0a 20 20 2c 20 22 2e 2f 6d 6f 64 65 6c 2f 6d 6f 64 65 6c 22 0a ...>>
-<File "template.html" <Buffer 72 65 71 75 69 72 65 28 0a 20 20 5b 20 22 6a 71 75 65 72 79 22 0a 20 20 2c 20 22 64 33 22 0a 20 20 2c 20 22 2e 2f 6d 6f 64 65 6c 2f 6d 6f 64 65 6c 22 0a ...>>
-<File "../../jquery" <Buffer 64 65 66 69 6e 65 28 5b 0a 20 20 27 2e 2f 6c 69 62 2f 64 65 70 31 27 0a 2c 20 27 2e 2f 6c 69 62 2d 32 2f 64 65 70 31 27 0a 5d 2c 20 66 75 6e 63 74 69 6f ...>>
-<File "../../d3" <Buffer 64 65 66 69 6e 65 28 5b 0a 20 20 27 2e 2f 6c 69 62 2f 64 65 70 31 27 0a 2c 20 27 2e 2f 6c 69 62 2d 32 2f 64 65 70 31 27 0a 5d 2c 20 66 75 6e 63 74 69 6f ...>>
-<File "../../lib/model/model.js" <Buffer 64 65 66 69 6e 65 28 5b 0a 20 20 27 2e 2f 6c 69 62 2f 64 65 70 31 27 0a 2c 20 27 2e 2f 6c 69 62 2d 32 2f 64 65 70 31 27 0a 5d 2c 20 66 75 6e 63 74 69 6f ...>>
-<File "../../lib/view/view.js" <Buffer 64 65 66 69 6e 65 28 5b 0a 20 20 27 2e 2f 6c 69 62 2f 64 65 70 31 27 0a 2c 20 27 2e 2f 6c 69 62 2d 32 2f 64 65 70 31 27 0a 5d 2c 20 66 75 6e 63 74 69 6f ...>>
-<File "template.html" <Buffer 64 65 66 69 6e 65 28 5b 0a 20 20 27 2e 2f 6c 69 62 2f 64 65 70 31 27 0a 2c 20 27 2e 2f 6c 69 62 2d 32 2f 64 65 70 31 27 0a 5d 2c 20 66 75 6e 63 74 69 6f ...>>
-<File "lib/dep1.js" <Buffer 64 65 66 69 6e 65 28 5b 0a 20 20 27 2e 2f 6c 69 62 2f 64 65 70 31 27 0a 2c 20 27 2e 2f 6c 69 62 2d 32 2f 64 65 70 31 27 0a 5d 2c 20 66 75 6e 63 74 69 6f ...>>
-<File "lib-2/dep1.js" <Buffer 64 65 66 69 6e 65 28 5b 0a 20 20 27 2e 2f 6c 69 62 2f 64 65 70 31 27 0a 2c 20 27 2e 2f 6c 69 62 2d 32 2f 64 65 70 31 27 0a 5d 2c 20 66 75 6e 63 74 69 6f ...>>
+./lib/main.js undefined
+/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/node_modules/jquery/jquery.js undefined
+/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/node_modules/d3/dist/d3.min.js undefined
+/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/lib/model/model.js true
+/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/lib/view/view.js true
+/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/lib/template.html false
+/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/node_modules/jquery/lib/dep1.js true
+/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/node_modules/jquery/lib-2/dep1.js false
+/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/lib/model/helper.js true
+/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/lib/view/template.html false
+(function (parent, factory){
+  if (typeof define === 'function' && define.amd) {
+    define('module_name', ['b','async'], factory)
+  } else if (typeof exports === 'object') {
+  module.exports = factory(require('b'),require('async'))
+  } else {
+    var b = b
+    var async = parent.async
+    
+    parent['module_name'] = factory(b,async)
+  }
+  }(this, function (b,async) {
+  this.b = b,this.async = async
+
+  
+   
+  this['jquery'] = (function() {
+    var __context = this
+    var _scope_ = {}
+    _scope_['lib-2/dep1'] = (function() { return { name: 'dep' }; })();
+_scope_['lib/dep1'] = (function() { var a = require('lib-2/dep1');
+return { name: 'dep' }; })();
+_scope_['jquery'] = (function() { var a = require('lib/dep1');
+require('lib-2/dep1');
+var a = 'jquery';
+return { name: a }; })();
+
+    return _scope_['jquery']
+
+    function require (name) { return __context[name] || _scope_[name] }
+    })
+    .call(this);
+   
+   (function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define('d3', ['b'], factory);
+    } else if (typeof exports === 'object') {
+        module.exports = factory(require('b'));
+    } else {
+        root.d3 = factory(root.b);
+    }
+}(this, function (b) {
+    return { d3: 'd3' };
+}));;
+  
+   
+  this['main'] = (function() {
+    var __context = this
+    var _scope_ = {}
+    _scope_['model/helper'] = (function() { var async = require('async');
+return { getAsync: async }; })();
+_scope_['model/model'] = (function() { var helper = require('model/helper');
+var async = helper.getAsync();
+return {
+    getData: function () {
+        return async ? 'async_data' : 'data';
+    }
+}; })();
+_scope_['text!./view/template.html'] = '<li></li><li></li><li></li><li></li>';
+_scope_['view/view'] = (function() { var model = require('model/model'), tmpl = require('text!./view/template.html');
+return function () {
+    return {
+        model: model.getData(),
+        view: tmpl
+    };
+};
+exports.test = {};
+exports.test2 = {}; })();
+_scope_['text!./template.html'] = '<div id="module_name">test</div>';
+_scope_['main'] = (function() { var $ = require('jquery');
+var d3 = require('d3');
+var model = require('model/model');
+var view = require('view/view');
+var template = require('text!./template.html');
+return {
+    jquery: $,
+    d3: d3,
+    model: model,
+    view: view,
+    template: template
+}; })();
+
+    return _scope_['main']
+
+    function require (name) { return __context[name] || _scope_[name] }
+    })
+    .call(this);
+   
+
+   return this['main'] 
+  }.bind({})))

@@ -15,9 +15,11 @@
   {{#if this.wrap}} 
   this['{{{this.name}}}'] = (function() {
     var __context = this
-    var {{{../../config.scopeVar}}} = {}
+      , {{{../../config.scopeVar}}} = {}
+      , __exports
+
     {{{this.code}}}
-    return {{{../../config.scopeVar}}}['{{{this.returns}}}']
+    return exports
 
     function {{{../../config.internalRequire}}} (name) { return __context[name] || {{{../../config.scopeVar}}}[name] }
     })

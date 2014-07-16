@@ -23,6 +23,8 @@ Easy way to convert AMD and CommonJS projects to one bundle wrapped in `UMD`.
 
 ### Limitation
 * does not resolve circular dependencies
+* `module.export` override `exports` when defined below exports
+* whilist using `require(a+b)` that path needs to be relative to base
 
 ### Getting Started
 Install the module: `npm install -g re-define`
