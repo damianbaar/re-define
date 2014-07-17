@@ -14,21 +14,32 @@
     parent['<%= config.name %>'] = factory(<%= _.map(external, util.escape).join(',') %>)
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
+
+  <% _(external).map(util.escape).each(function(d) { %>  this.<%= d %> = <%= d %>; <% }) %>
   <% _.each(bundles, function(b) { %>
+    <% if(b.type === 'iife') { %> <%= 
+      b.content %>;
+    <% return 
+    } else { 
+    %>
     (function(context) {
-      context['<%= b.name %>'] = (function(scope, context) {
+      context['<%= b.name %>'] = (function(scope) { <% } %>
       <% _.each(b.code, function(c) { 
-      if(c.type !== 'raw') { %>
+      if(c.ext === '.js') { %>
         scope['<%= c.name %>'] = (function(exports) { <%=
           c.content %>
           return exports
-        })({})
-      <% } else { %>
-        scope['<%= c.type %>'] = <%= c.content %>
-      <% }}) %>
-
-      function require(name) { return context[name] || scope[name] }
-    })({}, this)
+        })({});
+        <% } else { %>
+        scope['<%= c.name %>'] = <%= c.content %>
+    <% }}) %>
+        return scope['<%= b.returns %>']
+        function require(name) { return scope[name] || context[name] }
+      })({});
+    })(this);
   <% }) %>
+
+  <% if(config.returns) {%> return this['<%= config.returns %>']
+  <%} else {%> return this <% } %>
 
 }.bind({})))

@@ -75,8 +75,6 @@ re-define:bin
   , descriptors  : ['package.json', 'bower.json']
   , plugins      : [{extension: '.html', pattern : '^(text\/?)*!'}]
   , escape       : function (val) { return val.replace(/\.\/|\!|\.|\/|\\|-/g, '_') }
-  , scopeVar     : '_scope_'
-  , internalRequire : 'require'
   }
 ```
 
