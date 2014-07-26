@@ -15,7 +15,8 @@
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
 
-  <% _(external).map(util.escape).each(function(d) { %>  this.<%= d %> = <%= d %>; <% }) %>
+  <% _(external).map(util.escape).each(function(d) { %>  this.<%= d %> = <%= d %>; 
+  <% }) %>
   <% _.each(bundles, function(b) { %>
     <% if(b.type === 'iife') { %> <%= 
       b.content %>;
