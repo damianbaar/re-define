@@ -12,7 +12,6 @@ Easy way to convert AMD and CommonJS projects to one bundle wrapped in `UMD`.
 * now also resolving modules dependencies
 * looking for dependencies in `node_modules` and `bower_components`
 * resolving whole dependencies trees as well as single file
-* handlebars for templating with custom helpers
 * resolving AMD !text plugin within `cjs` and `amd` code
 * using `vinyl`, integration with `gulp` should be easy
 * (WiP) detailed report, to get whole picture, display modules, dependencies and externals
@@ -24,7 +23,7 @@ Easy way to convert AMD and CommonJS projects to one bundle wrapped in `UMD`.
 ### Limitation
 * does not resolve circular dependencies
 * `module.export` override `exports` when defined below exports
-* whilist using `require(a+b)` that path needs to be relative to base
+* resolve only static `require` statements
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -43,6 +42,7 @@ Options:
   '-w, --wrapper [type]'        , 'Wrapper type report, default: umd'
   '-n, --name [module]'         , 'Module name'
   '-r, --returns [module]'      , 'What module returns'
+  '-s, --skip [module]'         , 'Exclude external module from result bundle'
   '-e, --exclude-deps [deps]'   , 'Exclude deps'
 ```
 
@@ -76,34 +76,6 @@ re-define:bin
   , plugins      : [{extension: '.html', pattern : '^(text\/?)*!'}]
   , escape       : function (val) { return val.replace(/\.\/|\!|\.|\/|\\|-/g, '_') }
   }
-```
-
-Example wrapper:
-```
-(function (parent, factory){
-  if (typeof define === 'function' && define.amd) {
-    define('{{{config.name}}}', [{{{chain external map '\'|\'' reduce}}}], factory)
-  } else if (typeof exports === 'object') {
-  module.exports = factory({{{chain external map 'require(\'|\')' reduce}}})
-  } else {
-    {{#each external}}var {{{escape this}}} = {{{global this}}}
-    {{/each}}
-    {{#if config.returns}}parent['{{{config.name}}}'] = {{/if}}factory({{{chain external escape}}})
-  }
-  }(this, function ({{{chain external escape}}}) {
-  {{{chain external escape map 'this.| = |'}}}
-
-  {{#each bundles}}
-  {{#if this.wrap}} 
-  (function() {
-    var {{{../../config.scopeVar}}} = {}
-    {{{this.code}}}
-    function {{{../../config.internalRequire}}} (name) { return this[name] || {{{../../config.scopeVar}}}[name] }
-  }).call(this);
-  {{else}} {{{this.code}}} {{/if}} {{/each}}
-
-  {{#if config.returns }} return this.{{{config.returns}}} {{/if}}
-}))
 ```
 
 ####Custom transform
