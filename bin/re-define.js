@@ -3,7 +3,6 @@
 var program = require('commander')
   , _ = require('lodash')
   , redefine = require('../lib/index')
-  , debug = require('debug')('re-define:bin')
   , File = require('vinyl')
 
   program
@@ -25,9 +24,6 @@ var program = require('commander')
     { base           : program.base
     , main           : program.main
     , wrapper        : program.wrapper
-    , transform      : program.transform
-    , discoverable   : program.discoverable
-    , external       : program.external
     , returns        : program.returns
     , name           : program.name
     , excludeDeps    : program.excludeDeps
@@ -38,13 +34,18 @@ var program = require('commander')
 
   if(program.args.length > 0)  config.main = program.args[0]
 
-  debug('starting re-define')
+  //CUSTOM TRANSFORMS
+  var findExternal = require('../lib/transform/find-external')({
+      external     : program.external || []
+    , discoverable : program.discoverable || ['node_modules', 'bower_component']
+    , descriptors  : program.descriptors || ['package.json', 'bower.json']
+    })
 
-  var re = redefine.start(config)
+  var bundle = redefine.bundle(config, (program.transform || []).concat([findExternal]))
 
-  re.pipe(process.stdout)
+  bundle.pipe(process.stdout)
 
-  re.write(new File({path: config.main, cwd: config.base}))
+  bundle.write(new File({path: config.main, cwd: config.base}))
 
   function toArray(val) { return val.split(',') }
 

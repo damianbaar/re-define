@@ -1,10 +1,9 @@
 require(
-  [ 
-  "jquery"
-    , "d3"
+  [ "jquery"
+  , "d3"
   , "./model/model"
-   //, "./view/view"
-  // , "text!./template.html"
+  , "./view/view"
+  , "text!./template.html"
   ]
   , function($, d3, model, view, template) {
 

@@ -1,5 +1,5 @@
-var model = require('../model/model')
-  , tmpl = require('text!./template.html')
+var tmpl = require('text!./template.html')
+  , model = require('../model/model')
   , helper = require('./helper')
   , type = require('./type')
 

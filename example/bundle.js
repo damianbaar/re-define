@@ -11,7 +11,9 @@
   }
   }(this, function (b,async) {
 
-    this.b = b;   this.async = async; 
+    this.b = b; 
+    this.async = async; 
+  
   
     
     (function(context) {
@@ -92,7 +94,7 @@
         })({});
         
         scope['view/view'] = (function(exports) { 
-          var model = require('model/model'), tmpl = require('view/template.html'), helper = require('view/helper'), type = require('view/type');
+          var tmpl = require('view/template.html'), model = require('model/model'), helper = require('view/helper'), type = require('view/type');
           exports = function () {
             return {
               model: model.getData(),
