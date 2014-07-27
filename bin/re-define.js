@@ -15,6 +15,7 @@ var program = require('commander')
     .option('-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd')
     .option('-n, --name [module]'         , 'Module name')
     .option('-r, --returns [module]'      , 'Return module')
+    .option('-s, --skip [module]'         , 'Skip external module', toArray)
     .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
     .parse(process.argv)
 
@@ -39,6 +40,7 @@ var program = require('commander')
       external     : program.external || []
     , discoverable : program.discoverable || ['node_modules', 'bower_component']
     , descriptors  : program.descriptors || ['package.json', 'bower.json']
+    , skip         : program.skip
     })
 
   var bundle = redefine.bundle(config, (program.transform || []).concat([findExternal]))
