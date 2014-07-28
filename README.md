@@ -1,23 +1,23 @@
 ## re-define
-Let's `re-define` something ... without any configuration ... just do the magic for me.
+Let's `re-define` something ... without any configuration ... just do the magic for me, yet another build tool.
 
 Easy way to convert AMD and CommonJS projects to one bundle wrapped in `UMD`.
 
 ### Why
 * to get decent encapsulation, registering a bundle not a part
 * to make project compatibile across node and web without effort
+* to provide better support for `amd` projects
 
 ### Features
-* highly customizable: templates, transforms (like with browserify), discoverable folders
-* now also resolving modules dependencies
+* highly customizable: templates, transforms (like with browserify)
 * looking for dependencies in `node_modules` and `bower_components`
 * resolving whole dependencies trees as well as single file
 * resolving AMD !text plugin within `cjs` and `amd` code
-* using `vinyl`, integration with `gulp` should be easy
+* extends `vinyl` to keep contents in (file.contents) as AST, parse js file once and play with ast instead of content -> AST -> content 
 * (WiP) detailed report, to get whole picture, display modules, dependencies and externals
 
 ### Nice things
-* when `re-define` meet external dep, automatically checks descriptor files, such as `bower.json` and `package.json, there is also a fallback to `node_modules` as well as `bower_components` when descriptor is missing or there is no `main` defined
+* when `re-define` meet external dep, automatically checks descriptor files, such as `bower.json` and `package.json`, there is also a fallback to `node_modules` as well as `bower_components` when descriptor is missing or there is no `main` defined
 * when including an `UMD` file as a dep and your `define` module is anonymous, `re-define` will add a name for you also check internal depenencies
 
 ### Limitation
@@ -42,7 +42,7 @@ Options:
   '-w, --wrapper [type]'        , 'Wrapper type report, default: umd'
   '-n, --name [module]'         , 'Module name'
   '-r, --returns [module]'      , 'What module returns'
-  '-s, --skip [module]'         , 'Exclude external module from result bundle'
+  '-s, --skip [modules]'        , 'Exclude external modules from bundle'
   '-e, --exclude-deps [deps]'   , 'Exclude deps'
 ```
 
@@ -70,46 +70,46 @@ re-define:bin
   , returns      : ''
   , excludeDepRef  : ['\.css$', 'require', 'modules', 'exports']
   , globals      : [] //external module_name#global_ref
-  , external     : {} //{"jquery": "location"} or {"..": "{path: "...", cwd: "..."}
-  , discoverable : ['node_modules', 'bower_component']
-  , descriptors  : ['package.json', 'bower.json']
   , plugins      : [{extension: '.html', pattern : '^(text\/?)*!'}]
   , escape       : function (val) { return val.replace(/\.\/|\!|\.|\/|\\|-/g, '_') }
+  , discoverable : ['node_modules', 'bower_component']
+  , descriptors  : ['package.json', 'bower.json']
+  , external     : {} //{"jquery": "location"} or {"..": "{path: "...", cwd: "..."}
   }
 ```
 
 ####Custom transform
+[Example](/lib/transform/find-external.js) 
+
+[Usage](/bin/re-define.js#L39)
+
 ```js
 var through = require('through2')
 
 module.exports = function(config) {
-
-  //config instance
-
-  return through.obj(function(file, enc, next) {
-    /* 
-    //inside of file you can find following properties
-    {
-      "cwd": "lib",
-      "base": "lib",
-      "path": "./lib/main.js",
-      "ext": ".js",
-      "type": "require",
-      "ast" : ...
-      "contents" : ...
-      "deps": [
-        {
-          "path": "jquery",
-          "require": "jquery"
-        }
-        ...
-      ]
+  return function(globalConfig, writer) {
+    return through.obj(function(module, enc, next) {
+      /* 
+       //inside of module you can find following properties
+      {
+       "paths": [
+         "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/lib/view/type.js"
+       ],
+       "parent": "main",
+        "base": "lib",
+        "cwd": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example",
+        "ext": ".js",
+        "name": "view/type.js",
+        "reference": "view/type.js",
+        "isAST": "method"
+      }
     */
 
-    //your own spells
+      //your own spells
 
-    this.push(file)
-    next()
-  })
+      this.push(file)
+      next()
+    })
+  }
 }
 ```
