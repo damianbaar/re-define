@@ -78,10 +78,9 @@ re-define:bin
   }
 ```
 
-####Custom transform
-[Example](/lib/transform/find-external.js) 
-
-[Usage](/bin/re-define.js#L39)
+####Custom transforms
+* [example](/lib/transform/find-external.js) 
+* [usage](/bin/re-define.js#L39)
 
 ```js
 var through = require('through2')
