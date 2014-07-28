@@ -89,21 +89,19 @@ var through = require('through2')
 module.exports = function(config) {
   return function(globalConfig, writer) {
     return through.obj(function(module, enc, next) {
-      /* 
-       //inside of module you can find following properties
-      {
-       "paths": [
-         "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example/lib/view/type.js"
-       ],
-       "parent": "main",
-        "base": "lib",
-        "cwd": "/Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/example",
-        "ext": ".js",
-        "name": "view/type.js",
-        "reference": "view/type.js",
-        "isAST": "method"
-      }
-    */
+      /* //inside of module you can find following properties
+        { "paths": [
+         "example/lib/view/type.js"
+        ],
+          "parent": "main",
+          "base": "lib",
+          "cwd": "re-define/example",
+          "ext": ".js",
+          "name": "view/type.js",
+          "reference": "view/type.js",
+          "isAST": "method"
+        }
+      */
 
       //your own spells
 
