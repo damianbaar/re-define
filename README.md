@@ -50,15 +50,10 @@ Options:
 Configuration examples:
 
 * externals
-
 `--external {"lodash":{"path": "./vendor/lodash.js", "deps": ["jquery"]}}` or `{"lodash":"./vendor.lodash.js"}`
 
 * globals
-
 `--globals "async#parent.async"`
-
-* return
-`--returns main'
 
 #### Example usage
 check [example folder](example) and appropriate build files
