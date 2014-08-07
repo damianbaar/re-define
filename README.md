@@ -30,7 +30,7 @@ Install the module: `npm install -g re-define`
 
 ###Usage
 ```
-Usage: re-define [options]
+Usage: re-define [entry-point] -[options]
 
 Options:
   '-t, --transform [libs]'      , 'Custom transforms stream invoked for each module'
@@ -45,6 +45,20 @@ Options:
   '-s, --skip [modules]'        , 'Exclude external modules from bundle'
   '-e, --exclude-deps [deps]'   , 'Exclude deps'
 ```
+
+
+Configuration examples:
+
+* externals
+
+`--external {"lodash":{"path": "./vendor/lodash.js", "deps": ["jquery"]}}` or `{"lodash":"./vendor.lodash.js"}`
+
+* globals
+
+`--globals "async#parent.async"`
+
+* return
+`--returns main'
 
 #### Example usage
 check [example folder](example) and appropriate build files

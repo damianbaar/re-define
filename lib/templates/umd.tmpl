@@ -18,8 +18,9 @@
   <% _(external).map(util.escape).each(function(d) { %>  this.<%= d %> = <%= d %>; 
   <% }) %>
   <% _.each(bundles, function(b) { %>
-    <% if(b.type === 'iife') { %> <%= 
-      b.content %>;
+    <% if(!b.wrap) { %>(function() {
+      <%= b.content %>;
+    }).call(this);
     <% return 
     } else { 
     %>

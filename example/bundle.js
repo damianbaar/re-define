@@ -1,18 +1,20 @@
 (function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('module_name', ['b','async'], factory)
+    define('module_name', ['async','dep1','dep2'], factory)
   } else if (typeof exports === 'object') {
-    module.exports = factory(require('b'),require('async'))
+    module.exports = factory(require('async'),require('dep1'),require('dep2'))
   } else {
-    var b = b
     var async = parent.async
+    var dep1 = dep1
+    var dep2 = dep2
   
-    parent['module_name'] = factory(b,async)
+    parent['module_name'] = factory(async,dep1,dep2)
   }
-  }(this, function (b,async) {
+  }(this, function (async,dep1,dep2) {
 
-    this.b = b; 
     this.async = async; 
+    this.dep1 = dep1; 
+    this.dep2 = dep2; 
   
   
     
@@ -44,24 +46,39 @@
     })(this);
   
      
+      (function() {
+      (function(parent) {
+  parent.lodash = "lodash here"
+})(this)
+;
+      }).call(this);
+    
+     
+      (function() {
+      
     (function (root, factory) {
       if (typeof define === 'function' && define.amd) {
-        define('d3', ['b'], factory);
+        define('d3', [
+          'dep1',
+          'dep2'
+        ], factory);
       } else if (typeof exports === 'object') {
-        exports = factory(require('b'));
+        exports = factory(require('dep1'), require('dep2'));
       } else {
-        root.d3 = factory(root.b);
+        root.d3 = factory(root.dep1, root.dep2);
       }
     }(this, function (b) {
       return { d3: 'd3' };
     }));;
+      }).call(this);
     
     
     (function(context) {
       context['main'] = (function(scope) { 
       
         scope['model/helper'] = (function(exports) { 
-          var async = require('async');
+          var async = require('async') || function () {
+            };
           exports = { getAsync: async };
           return exports
         })({});
@@ -77,7 +94,8 @@
           return exports
         })({});
         
-        scope['view/template.html'] = '<li></li><li></li><li></li><li></li>'
+        scope['view/template.html'] = 
+          '<li></li><li></li><li></li><li></li>';
     
         scope['view/helper'] = (function(exports) { 
           exports = {
@@ -105,9 +123,11 @@
           return exports
         })({});
         
-        scope['template.html'] = '<div id="module_name">test</div>'
+        scope['template.html'] = 
+          '<div id="module_name">test</div>';
     
         scope['main'] = (function(exports) { 
+          var _ = require('lodash');
           var $ = require('jquery');
           var d3 = require('d3');
           var model = require('model/model');
@@ -121,7 +141,8 @@
             d3: d3,
             model: model,
             view: view,
-            template: template
+            template: template,
+            lodash: _
           };
           return exports
         })({});

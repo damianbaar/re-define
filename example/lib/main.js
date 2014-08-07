@@ -1,11 +1,12 @@
 require(
-  [ "jquery"
+  [ "lodash"
+  , "jquery"
   , "d3"
   , "./model/model"
   , "./view/view"
   , "text!./template.html"
   ]
-  , function($, d3, model, view, template) {
+  , function(_, $, d3, model, view, template) {
 
     function getTemplate() {
       return template
@@ -15,5 +16,6 @@ require(
            , d3: d3
            , model: model
            , view: view
-           , template: template }
+           , template: template
+           , lodash: _ }
 })
