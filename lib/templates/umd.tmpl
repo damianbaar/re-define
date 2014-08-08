@@ -14,7 +14,7 @@
     parent['<%= config.name %>'] = factory(<%= _.map(external, util.escape).join(',') %>)
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
-    var window = this
+    var window = this;
   <% _(external).map(util.escape).each(function(d) { %>  this.<%= d %> = <%= d %>; 
   <% }) %>
   <% _.each(bundles, function(b) { %>

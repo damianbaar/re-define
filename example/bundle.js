@@ -13,7 +13,7 @@
     parent['module_name'] = factory(async, jquery2, _does_not_exists, dep1, dep2)
   }
 }(this, function(async, jquery2, _does_not_exists, dep1, dep2) {
-  var window = this
+  var window = this;
   this.async = async;
   this.jquery2 = jquery2;
   this._does_not_exists = _does_not_exists;
