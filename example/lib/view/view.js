@@ -1,4 +1,4 @@
-var tmpl = require('text!./template.html')
+var tmpl = require('./template.html')
   , model = require('../model/model')
   , helper = require('./helper')
   , type = require('./type')

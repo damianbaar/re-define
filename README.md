@@ -50,7 +50,7 @@ Options:
 Configuration examples:
 
 * externals
-`--external {"lodash":{"path": "./vendor/lodash.js", "deps": ["jquery"]}}` or `{"lodash":"./vendor.lodash.js"}`
+`--external {"lodash":{"stopProcessing":true, "path": "./vendor/lodash.js", "deps": ["jquery"]}}` or `{"lodash":"./vendor.lodash.js"}`
 
 * globals
 `--globals "async#parent.async"`
