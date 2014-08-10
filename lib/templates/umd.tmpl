@@ -14,34 +14,34 @@
     parent['<%= config.name %>'] = factory(<%= _.map(external, util.escape).join(',') %>)
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
-    var window = this;
+    var context = this;
+
   <% _(external).map(util.escape).each(function(d) { %>  this.<%= d %> = <%= d %>; 
   <% }) %>
   <% _.each(bundles, function(b) { %>
-    <% if(!b.wrap) { %>(function() {
+    <% if(!b.wrap) { %> 
       <%= b.content %>;
-    }).call(this);
-    <% return 
-    } else { 
-    %>
+    <% } else { %>
     (function(context) {
-      context['<%= b.name %>'] = (function(scope) { <% } %>
-      <% _.each(b.code, function(c) { 
-      if(c.ext === '.js') { %>
-        <% if(c.type === 'iife') { %>
-          <%= c.content %>
-        <% } else { %>
-          scope['<%= c.name %>'] = (function(exports) { <%= c.content %> return exports })({});
-        <% }} else { %>
-        scope['<%= c.name %>'] = <%= c.content %>
+      context['<%= b.name %>'] = (function(scope) { <% _.each(b.code, function(c) { %>
+        <% if(!c.wrap) { %> <%= c.content %>;
+        <% } else if(['.json', '.html'].indexOf(c.ext) > -1) { %>
+        scope['<%= c.name %>'] = <%= c.content %>; <% } else { %>
+        scope['<%= c.name %>'] = (function(exports) { 
+          <%= c.content %> 
+        return exports; })({});
     <% }}) %>
+
         return require('<%= b.returns %>')
+
         function require(name) { return scope[name] || context[name] }
-      })({});
+
+      }.bind(context))({});
     })(this);
-  <% }) %>
+  <% }}) %>
 
   <% if(config.returns) {%> return this['<%= config.returns %>']
   <%} else {%> return this <% } %>
 
+  function require(name) { return context[name] }
 }.bind({})))
