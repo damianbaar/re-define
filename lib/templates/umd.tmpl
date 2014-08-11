@@ -16,11 +16,9 @@
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
     var context = this;
 
-  <% _(external).map(util.escape).each(function(d) { %>  this.<%= d %> = <%= d %>; 
-  <% }) %>
-  <% _.each(bundles, function(b) { %>
-    <% if(!b.wrap) { %> 
-      <%= b.content %>;
+  <% _(external).map(util.escape).each(function(d) { %>  this['<%= d %>'] = <%= d %>; 
+  <% }) %> <% _.each(bundles, function(b) { 
+    if(!b.wrap) { %><%= b.content %>; 
     <% } else { %>
     (function(context) {
       context['<%= b.name %>'] = (function(scope) { <% _.each(b.code, function(c) { %>
@@ -29,7 +27,9 @@
         scope['<%= c.name %>'] = <%= c.content %>; <% } else { %>
         scope['<%= c.name %>'] = (function(exports) { 
           <%= c.content %> 
-        return exports; })({});
+
+          return exports; 
+        })({});
     <% }}) %>
 
         return require('<%= b.returns %>')

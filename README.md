@@ -56,7 +56,7 @@ Configuration examples:
 `--globals "async#parent.async"`
 
 #### Example usage
-check [example folder](example) and appropriate build files
+check [example folder](examples/1) and appropriate build files
 
 #### Debbuging
 To run `re-define` in debug mode is fairly easy, just run `re-define` with appropriate category like below
@@ -64,11 +64,6 @@ To run `re-define` in debug mode is fairly easy, just run `re-define` with appro
 ```
 //all
 DEBUG=re-define:* 
-
-//specific:
-re-define:transform:* 
-re-define:converter
-re-define:bin
 ```
 
 ###Config

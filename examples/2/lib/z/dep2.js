@@ -1,3 +1,3 @@
 define(function(a, b) {
-  return {name: 'dep'}
+  return {name: 'dep2'}
 })
