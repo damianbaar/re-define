@@ -44,7 +44,7 @@ Options:
   '-e, --external [json]'       , 'Exact dep locations, when discoverable is not enough'
   '-g, --globals [module#as]'   , 'Global reference to external libs'
   '-w, --wrapper [type]'        , 'Wrapper type report, default: umd'
-  '-n, --name [module]'         , 'Module name'
+  '-n, --names [json]'          , 'Register names for AMD/Global'
   '-r, --returns [module]'      , 'What module returns'
   '-s, --skip [modules]'        , 'Exclude external modules from bundle'
   '-e, --exclude-deps [deps]'   , 'Exclude deps'
@@ -59,6 +59,9 @@ Configuration examples:
 * globals
 `--globals "async#parent.async"`
 
+* names
+`--names {amd:"amd/name", global:"foo.baz.bar"}`
+
 #### Example usage
 check [example folder](examples/1) and appropriate build files
 
@@ -72,17 +75,16 @@ DEBUG=re-define:*
 
 ###Config
 ```js
-  { cwd          : '.'
-  , name         : 'module_name'
-  , wrapper      : 'umd'
-  , returns      : ''
-  , excludeDepRef  : ['\.css$', 'require', 'modules', 'exports']
+  { cwd           : '.'
+  , names         : {amd: 'amd/name', global: 'global.name'}
+  , wrapper       : 'umd'
+  , returns       : ''
+  , excludeDepRef : ['\.css$', 'require', 'modules', 'exports']
   , globals      : [] //external module_name#global_ref
-  , plugins      : [{extension: '.html', pattern : '^(text\/?)*!'}]
-  , escape       : function (val) { return val.replace(/\.\/|\!|\.|\/|\\|-/g, '_') }
+  , plugins      : ['^(text\/?)*!']
+  , external     : {} //{"jquery": "location"} or {"..": "{path: "...", cwd: "..."}
   , discoverable : ['node_modules', 'bower_component']
   , descriptors  : ['package.json', 'bower.json']
-  , external     : {} //{"jquery": "location"} or {"..": "{path: "...", cwd: "..."}
   }
 ```
 
