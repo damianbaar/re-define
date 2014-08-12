@@ -16,9 +16,13 @@ Easy way to convert AMD and CommonJS projects to one bundle wrapped in `UMD`.
 * extends `vinyl` to keep contents in (file.contents) as AST, parse js file once and play with ast instead of content -> AST -> content 
 * (WiP) detailed report, to get whole picture, display modules, dependencies and externals
 
+### TODO
+* handling libs without index suffix require('sth') -> require('sth/index')
+
 ### Nice things
 * when `re-define` meet external dep, automatically checks descriptor files, such as `bower.json` and `package.json`, there is also a fallback to `node_modules` as well as `bower_components` when descriptor is missing or there is no `main` defined
 * when including an `UMD` file as a dep and your `define` module is anonymous, `re-define` will add a name for you also check internal depenencies
+* when exporting 'a.b.c.d' as a path for global, `re-define` creates safe assignments `||`
 
 ### Limitation
 * does not resolve circular dependencies

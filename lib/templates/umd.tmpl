@@ -1,6 +1,6 @@
 (function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('<%- config.name %>', [<%= 
+    define('<%- config.names.amd %>', [<%= 
            _.map(external, function(d){ return "'" + d + "'" }).join(',') %>], factory)
   } else if (typeof exports === 'object') {
     module.exports = factory(<%=
@@ -11,7 +11,7 @@
       .each(function(name) {;
   %>  <%= name %>
   <%})%>
-    parent['<%= config.name %>'] = factory(<%= _.map(external, util.escape).join(',') %>)
+    <%= util.toGlobal('parent', config.names.global, "factory("+_.map(external, util.escape).join(',') + ")") %>
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
     var context = this;

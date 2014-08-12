@@ -1,6 +1,6 @@
 (function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('module_name', ['async','does_not_exist','dep1','dep2'], factory)
+    define('amd/name', ['async','does_not_exist','dep1','dep2'], factory)
   } else if (typeof exports === 'object') {
     module.exports = factory(require('async'),require('does_not_exist'),require('dep1'),require('dep2'))
   } else {
@@ -9,7 +9,9 @@
     var dep1 =  parent.dep1
     var dep2 =  parent.dep2
   
-    parent['module_name'] = factory(async,does_not_exist,dep1,dep2)
+    parent.global = parent.global || {};
+parent.global.name = factory(async,does_not_exist,dep1,dep2);
+
   }
   }(this, function (async,does_not_exist,dep1,dep2) {
     var context = this;

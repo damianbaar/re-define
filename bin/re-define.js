@@ -13,7 +13,7 @@ var program = require('commander')
     .option('-e, --external [json]'       , 'External modules', JSON.parse)
     .option('-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery', toArray)
     .option('-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd')
-    .option('-n, --name [module]'         , 'Module name')
+    .option('-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}', JSON.parse)
     .option('-r, --returns [module]'      , 'Return module')
     .option('-s, --skip [module]'         , 'Skip external module', toArray)
     .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
@@ -26,7 +26,7 @@ var program = require('commander')
     , main           : program.main
     , wrapper        : program.wrapper
     , returns        : program.returns
-    , name           : program.name
+    , names          : program.names
     , excludeDeps    : program.excludeDeps
     , globals        : program.globals
     }

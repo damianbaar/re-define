@@ -1,13 +1,17 @@
 (function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('module_name', ['d3/d3','d3'], factory)
+    define('test', ['d3/d3','d3'], factory)
   } else if (typeof exports === 'object') {
     module.exports = factory(require('d3/d3'),require('d3'))
   } else {
     var d3_d3 =  parent.d3_d3
     var d3 =  parent.d3
   
-    parent['module_name'] = factory(d3_d3,d3)
+    parent.a = parent.a || {};
+parent.a.b = parent.a.b || {};
+parent.a.b.c = parent.a.b.c || {};
+parent.a.b.c.d = factory(d3_d3,d3);
+
   }
   }(this, function (d3_d3,d3) {
     var context = this;
