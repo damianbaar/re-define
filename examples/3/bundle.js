@@ -1,24 +1,36 @@
 (function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('module_name', ['d3'], factory)
+    define('module_name', ['d3/d3','d3'], factory)
   } else if (typeof exports === 'object') {
-    module.exports = factory(require('d3'))
+    module.exports = factory(require('d3/d3'),require('d3'))
   } else {
-    var d3 = parent.d3
+    var d3_d3 =  parent.d3_d3
+    var d3 =  parent.d3
   
-    parent['module_name'] = factory(d3)
+    parent['module_name'] = factory(d3_d3,d3)
   }
-  }(this, function (d3) {
+  }(this, function (d3_d3,d3) {
     var context = this;
 
+    this['d3/d3'] = d3_d3; 
     this['d3'] = d3; 
    
     (function(context) {
-      context['lib/main'] = (function(scope) { 
+      context['main'] = (function(scope) { 
         
-        scope['lib/a/d'] = (function(exports) { 
+        scope['z/dep'] = (function(exports) { 
+          
+          var d3 = require('d3/d3');
+          d3(); 
+
+          return exports; 
+        })({});
+    
+        
+        scope['a/d'] = (function(exports) { 
           
           var a = require('d3');
+          var z = require('z/dep');
           a();
           exports = { name: 'dep2' }; 
 
@@ -26,19 +38,41 @@
         })({});
     
         
-        scope['lib/a/b/c'] = (function(exports) { 
+        scope['a/b/c'] = (function(exports) { 
           
-          var d = require('lib/a/d');
+          var d = require('a/d');
+          var a = require('d3');
           exports = { name: 'dep' }; 
 
           return exports; 
         })({});
     
         
-        scope['lib/main'] = (function(exports) { 
+        scope['js/dep-amd'] = (function(exports) { 
           
-          var b = require('lib/a/b/c');
-          var d = require('lib/a/d');
+          var d = require('d3/d3');
+          exports = d; 
+
+          return exports; 
+        })({});
+    
+        
+        scope['js/dep-cjs'] = (function(exports) { 
+          
+          var d3 = require('d3/d3'); 
+
+          return exports; 
+        })({});
+    
+        
+        scope['main'] = (function(exports) { 
+          
+          var z = require('z/dep');
+          var d3 = require('d3/d3');
+          var b = require('a/b/c');
+          var d = require('a/d');
+          var a = require('js/dep-amd')();
+          var b = require('js/dep-cjs');
           exports = [
             b,
             d
@@ -48,7 +82,7 @@
         })({});
     
 
-        return require('lib/main')
+        return require('main')
 
         function require(name) { return scope[name] || context[name] }
 
@@ -56,7 +90,8 @@
     })(this);
   
 
-   return this 
+   return this['main']
+  
 
   function require(name) { return context[name] }
 }.bind({})))

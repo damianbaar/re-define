@@ -49,7 +49,7 @@ var program = require('commander')
 
   bundle.write(new File({path: config.main, cwd: config.base}))
 
-  function toArray(val) { return val.split(',') }
+  function toArray(val) { return _.map(val.split(','), function(d) { return d.replace(/\ /g, '') }) }
 
   function loadConfig(configPath) {
     return require('fs').readFileSync(require('path').resolve(configPath), 'utf-8')

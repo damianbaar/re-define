@@ -1,22 +1,20 @@
 (function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('module_name', ['async','jquery2','does_not_exist','dep1','dep2'], factory)
+    define('module_name', ['async','does_not_exist','dep1','dep2'], factory)
   } else if (typeof exports === 'object') {
-    module.exports = factory(require('async'),require('jquery2'),require('does_not_exist'),require('dep1'),require('dep2'))
+    module.exports = factory(require('async'),require('does_not_exist'),require('dep1'),require('dep2'))
   } else {
-    var async = parent.async
-    var jquery2 = jquery2
-    var does_not_exist = does_not_exist
-    var dep1 = dep1
-    var dep2 = dep2
+    var async =  parent.async
+    var does_not_exist =  parent.does_not_exist
+    var dep1 =  parent.dep1
+    var dep2 =  parent.dep2
   
-    parent['module_name'] = factory(async,jquery2,does_not_exist,dep1,dep2)
+    parent['module_name'] = factory(async,does_not_exist,dep1,dep2)
   }
-  }(this, function (async,jquery2,does_not_exist,dep1,dep2) {
+  }(this, function (async,does_not_exist,dep1,dep2) {
     var context = this;
 
     this['async'] = async; 
-    this['jquery2'] = jquery2; 
     this['does_not_exist'] = does_not_exist; 
     this['dep1'] = dep1; 
     this['dep2'] = dep2; 

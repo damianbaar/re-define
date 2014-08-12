@@ -1,1 +1,1 @@
-re-define './lib/main.js' --base lib --returns 'main' --globals "async#parent.async" > bundle.js 
+re-define './lib/main.js' --base lib --returns 'main' -- > bundle.js 

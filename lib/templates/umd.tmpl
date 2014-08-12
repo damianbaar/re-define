@@ -7,7 +7,7 @@
            _.map(external, function(d){ return "require('" + d + "')" }).join(',') %>)
   } else {
   <% _.chain(external)
-      .map(function(d) { return 'var ' + util.escape(d) + " = " + util.global(d) })
+      .map(function(d) { return 'var ' + util.escape(d) + " = " + " parent." + util.global(d) })
       .each(function(name) {;
   %>  <%= name %>
   <%})%>
