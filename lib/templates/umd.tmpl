@@ -16,7 +16,7 @@
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
     var context = this;
 
-  <% _(external).map(util.escape).each(function(d) { %>  this['<%= d %>'] = <%= d %>; 
+  <% _.each(external, function(d) { %>  this['<%= d %>'] = <%= escape(d) %>; 
   <% }) %> <% _.each(bundles, function(b) { 
     if(!b.wrap) { %><%= b.content %>; 
     <% } else { %>
