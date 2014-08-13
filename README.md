@@ -57,7 +57,7 @@ Configuration examples:
 `--external {"lodash":{"stopProcessing":true, "path": "./vendor/lodash.js", "deps": ["jquery"]}}` or `{"lodash":"./vendor.lodash.js"}`
 
 * globals
-`--globals "async#parent.async"`
+`--globals "async#libs.async"`, becomes `parent.lib.async`
 
 * names
 `--names {amd:"amd/name", global:"foo.baz.bar"}`
