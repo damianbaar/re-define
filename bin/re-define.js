@@ -27,7 +27,7 @@ var program = require('commander')
     , wrapper        : program.wrapper
     , returns        : program.returns
     , names          : program.names
-    , excludeDeps    : program.excludeDeps
+    , excludeDepsRef : program.excludeDepsRef
     , globals        : program.globals
     }
 
