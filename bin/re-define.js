@@ -36,7 +36,7 @@ var program = require('commander')
   if(program.args.length > 0)  config.main = program.args[0]
 
   //CUSTOM TRANSFORMS
-  var findExternal = require('../lib/transform/find-external')({
+  var findExternal = require('re-define-include-external')({
       external     : program.external || []
     , discoverable : program.discoverable || ['node_modules', 'bower_component']
     , descriptors  : program.descriptors || ['package.json', 'bower.json']
