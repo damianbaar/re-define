@@ -44,7 +44,7 @@ Options:
   '-d, --discoverable [dirs]'   , 'Check in folders when encouter an external dep'
   '-e, --external [json]'       , 'Exact dep locations, when discoverable is not enough'
   '-g, --globals [module#as]'   , 'Global reference to external libs'
-  '-w, --wrapper [type]'        , 'Wrapper type report, default: umd'
+  '-w, --wrapper [type]'        , 'Wrapper type, i.e. 'umd', 'iife', 'amd-global', default: umd'
   '-n, --names [json]'          , 'Register names for AMD/Global'
   '-r, --returns [module]'      , 'What module returns'
   '-s, --skip [modules]'        , 'Exclude external modules from bundle'
