@@ -12,14 +12,12 @@ var program = require('commander')
     .option('-d, --discoverable [dirs]'   , 'Folders to check when file not found in scope', toArray)
     .option('-e, --external [json]'       , 'External modules', JSON.parse)
     .option('-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery', toArray)
-    .option('-w, --wrapper [type]'        , 'Wrapper type report, iife, empty , umd')
+    .option('-w, --wrapper [type]'        , 'Wrapper type umd')
     .option('-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}', JSON.parse)
     .option('-r, --returns [module]'      , 'Return module')
     .option('-s, --skip [module]'         , 'Skip external module', toArray)
     .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
     .parse(process.argv)
-
-  var config = {}
 
   var options = 
     { base           : program.base
@@ -31,7 +29,7 @@ var program = require('commander')
     , globals        : program.globals
     }
 
-  config = redefine.config(_.defaults(options, config))
+  config = redefine.config(options)
 
   if(program.args.length > 0)  config.main = program.args[0]
 

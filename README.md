@@ -89,8 +89,8 @@ DEBUG=re-define:*
 ```
 
 ####Custom transforms
-* [example](/lib/transform/find-external.js) 
 * [usage](/bin/re-define.js#L39)
+* [example](https://github.com/damianbaar/re-define-include-external)
 
 ```js
 var through = require('through2')
