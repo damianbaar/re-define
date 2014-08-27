@@ -22,44 +22,6 @@ parent.global.name = factory(async,does_not_exist,dep1,dep2);
     this['dep2'] = dep2; 
    
     (function(context) {
-      context['jquery'] = (function(scope) { 
-        
-        scope['lib-2/dep1'] = (function(exports) { 
-          
-          exports = { name: 'dep' }; 
-
-          return exports; 
-        })({});
-    
-        
-        scope['lib/dep1'] = (function(exports) { 
-          
-          var a = require('lib-2/dep1');
-          exports = { name: 'dep' }; 
-
-          return exports; 
-        })({});
-    
-        
-        scope['jquery'] = (function(exports) { 
-          
-          var a = require('lib/dep1');
-          require('lib-2/dep1');
-          var a = 'jquery';
-          exports = { name: a }; 
-
-          return exports; 
-        })({});
-    
-
-        return require('jquery')
-
-        function require(name) { return scope[name] || context[name] }
-
-      }.bind(context))({});
-    })(this);
-  
-    (function(context) {
       context['d3'] = (function(scope) { 
         
         scope['dep1'] = (function(exports) { 
@@ -87,6 +49,45 @@ parent.global.name = factory(async,does_not_exist,dep1,dep2);
         
 
         return require('d3')
+
+        function require(name) { return scope[name] || context[name] }
+
+      }.bind(context))({});
+    })(this);
+  
+    (function(context) {
+      context['jquery'] = (function(scope) { 
+        
+        scope['lib-2/dep1'] = (function(exports) { 
+          
+          exports = { name: 'dep' }; 
+
+          return exports; 
+        })({});
+    
+        
+        scope['lib/dep1'] = (function(exports) { 
+          
+          var a = require('lib-2/dep1');
+          exports = { name: 'dep' }; 
+
+          return exports; 
+        })({});
+    
+        
+        scope['jquery'] = (function(exports) { 
+          
+          var a = require('lib/dep1');
+          require('lib-2/dep1');
+          require('d3');
+          var a = 'jquery';
+          exports = { name: a }; 
+
+          return exports; 
+        })({});
+    
+
+        return require('jquery')
 
         function require(name) { return scope[name] || context[name] }
 
@@ -172,6 +173,7 @@ parent.global.name = factory(async,does_not_exist,dep1,dep2);
           var model = require('model/model');
           var view = require('view/view');
           var template = require('template.html');
+          require('d3');
           function getTemplate() {
             return template;
           }

@@ -69,6 +69,9 @@ parent.a.b.c.d = factory(d3_d3,d3);
         })({});
     
         
+        scope['test.json'] = {"test":"test"}
+; 
+        
         scope['main'] = (function(exports) { 
           
           var z = require('z/dep');
@@ -77,6 +80,7 @@ parent.a.b.c.d = factory(d3_d3,d3);
           var d = require('a/d');
           var a = require('js/dep-amd')();
           var b = require('js/dep-cjs');
+          var z = require('test.json');
           exports = [
             b,
             d

@@ -5,6 +5,7 @@ require(
   , "./model/model"
   , "./view/view"
   , "text!./template.html"
+  , "d3/d3"
   ]
   , function(_, $, d3, model, view, template) {
 

@@ -18,6 +18,7 @@ Easy way to convert AMD and CommonJS projects to one bundle wrapped in `UMD`.
 
 ### TODO
 * handling libs without index suffix require('sth') -> require('sth/index')
+* resolve nested `require` to `iife`
 
 ### Nice things
 * when `re-define` meet external dep, automatically checks descriptor files, such as `bower.json` and `package.json`, there is also a fallback to `node_modules` as well as `bower_components` when descriptor is missing or there is no `main` defined

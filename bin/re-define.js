@@ -35,9 +35,9 @@ var program = require('commander')
 
   //CUSTOM TRANSFORMS
   var findExternal = require('re-define-include-external')({
-      external     : program.external || []
-    , discoverable : program.discoverable || ['node_modules', 'bower_component']
-    , descriptors  : program.descriptors || ['package.json', 'bower.json']
+      external     : program.external || {}
+    , discoverable : program.discoverable || config.discoverable
+    , descriptors  : program.descriptors || config.descriptors
     , skip         : program.skip
     })
 
