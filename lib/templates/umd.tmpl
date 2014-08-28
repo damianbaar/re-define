@@ -25,10 +25,10 @@
         <% if(!c.wrap) { %> <%= c.content %>;
         <% } else if(['.json', '.html'].indexOf(c.ext) > -1) { %>
         scope['<%= c.name %>'] = <%= c.content %>; <% } else { %>
-        scope['<%= c.name %>'] = (function(exports) { 
+        scope['<%= c.name %>'] = (function(<%= config.exportVar %>) { 
           <%= c.content %> 
 
-          return exports; 
+          return <%= config.exportVar %>; 
         })({});
     <% }}) %>
 

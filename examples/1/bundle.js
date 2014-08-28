@@ -39,7 +39,7 @@ parent.global.name = factory(async,does_not_exist,dep1,dep2);
           'dep2'
         ], factory);
       } else if (typeof exports === 'object') {
-        exports = factory(require('dep1'), require('dep2'));
+        module.exports = factory(require('dep1'), require('dep2'));
       } else {
         root.d3 = factory(root.dep1, root.dep2);
       }
