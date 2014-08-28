@@ -8,7 +8,8 @@ module.exports = function(grunt) {
       all: ['test/**/**/*_test.js']
     },
     watch: {
-      files: ['test/**/*.test.js', 'lib/**/*.*']
+      files: ['test/**/*_test.js', 'lib/**/*.*']
+    , tasks: ['nodeunit']
     }
   })
 

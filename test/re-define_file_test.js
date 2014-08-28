@@ -1,81 +1,92 @@
 var redefine = require('../lib')
   , _ = require('lodash')
   , fs = require('fs')
-  , path = require('path')
   , through = require('through2')
-  , readFile    = _.compose(_.partialRight(fs.readFileSync, 'utf-8'), _.partial(path.resolve, __dirname))
-  , outputs
+  , File = require('vinyl')
+  , mock = require('mock-fs')
 
-exports['integration-stream'] = {
-  'load-module': function(test) {
-    var write = convert(function(result) {
-      test.equal(result, getFiles(['./files.out/a.out']))
-      test.done()
-    })
+exports['integration'] = {
+  'simple-require': function(test) {
+    var file = new File({path: 'simple.js'})
+    file.contents = new Buffer('require([],function() { return "test" })')
 
-    write.write({path: path.resolve(__dirname, './files/a.js')})
-    write.end()
+    convert( file
+           , function(result) {
+              test.equal('__e__="test"', result)
+              test.done()
+          })
   },
-  'load-modules': function(test) {
-    var files = getFiles(
-      [ './files.out/nested_n1.out'
-      , './files.out/template.out'
-      , './files.out/a.out'
-      , './files.out/main.out'
-      ])
+  'simple-define': function(test) {
+    var file = new File({path: 'simple.js'})
+    file.contents = new Buffer('define([],function() { return "test" })')
 
-    var write = convert(function(result) {
-      test.equal(result, files)
-      test.done()
-    })
+    convert( file
+           , function(result) {
+              test.equal('__e__="test"', result)
+              test.done()
+          })
+  },
+  'simple-cjs': function(test) {
+    var file = new File({path: 'simple.js'})
+    file.contents = new Buffer('module.exports = "test"')
 
-    write.write({path: path.resolve(__dirname, './files/a.js')})
-    write.write({path: path.resolve(__dirname, './files/main.js')})
-    write.write({path: path.resolve(__dirname, './files/template.html')})
-    write.write({path: path.resolve(__dirname, './files/nested/n1.js')})
-    write.end()
+    convert( file
+           , function(result) {
+              test.equal('__e__="test"', result)
+              test.done()
+          })
+  },
+  'load-dependency': function(test) {
+    var file = new File({path: 'simple.js'})
+    file.contents = new Buffer('module.exports = require("a");require("b");require("c");')
+
+    convert( file
+           , function(result) {
+              test.equal('(function(){return"a"}())'
+                         + '__e__="b"'
+                         + '__e__="c"'
+                         + '__e__=require("a")require("b")require("c")', result)
+
+              mock.restore()
+              test.done() 
+            }
+           , function() {
+              mock({
+                'a.js': '(function() { return "a" })()'
+              , 'b.js': 'define(function() { return "b" })'
+              , 'c.js': 'define([], function() { return "c" })'
+            })
+           })
   }
 };
 
-function convert(done) { 
-  var write = through.obj()
-    , config = redefine.config()
+function convert(file, done, start) { 
+  var config = redefine.config()
     , result
 
   config.wrapper = 'empty'
-  config.base = './test/files/'
+  config.exportVar = '__e__'
 
-  write
-    .pipe(redefine.fromPath(config))
-    .on('end', function() {
-      done(escape(result))
-    })
-    .on('data', function(data) {
-      result = data.toString()
-    })
+  var spy = function(config) {
+      return through.obj(function(m,e,n) {
+        this.push(m)
+        n()
+      })
+  }
 
-  return write
-}
+  var bundle = redefine.bundle(config, [spy])
 
-var cache = {}
+  bundle.pipe(through(function(result, enc, cb) {
+    done(escape(result.toString()))
+  }))
 
-function getFiles(files) {
-  var r = _.reduce(files, function(memo, d) {
-    var content
-
-    if(!!cache[d]) content = cache[d]
-    else content = readFile(d)
-
-    return memo + content
-  }, '')
-
-  return escape(r)
+  !!start && start()
+  bundle.write(file)
 }
 
 function escape(val) {
   return val.replace(/\n|\r/g,'')
             .replace(/\'|\"/g, '"')
             .replace(/\ |\;/g, '')
-            .replace(/\_[0-9]*/g, '')
 }
 
