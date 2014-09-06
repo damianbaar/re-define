@@ -1,0 +1,9 @@
+{
+  "namespace": "a.b.c",
+  "expose": ["*.js"],
+  "cutting-points": {
+    "common/*.js": "common.js"
+  , "*.js": "components.js"
+  , "node_modules/**": "external.js"
+  }
+}

@@ -22,7 +22,8 @@
     "ast-types": "^0.3.36",
     "vinyl": "^0.2.3",
     "re-define-module": "~0.0.0",
-    "re-define-include-external": "~0.0.3"
+    "re-define-include-external": "~0.0.3",
+    "minimatch": "^1.0.0"
   },
   "bundledDependencies": [
     "spy"

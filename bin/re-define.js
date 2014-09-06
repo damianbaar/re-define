@@ -4,6 +4,8 @@ var program = require('commander')
   , _ = require('lodash')
   , redefine = require('../lib/index')
   , File = require('vinyl')
+  , fs = require('fs')
+  , path = require('path')
 
   program
     .option('-t, --transform [libs]'      , 'Attach transform stream', toArray)
@@ -21,7 +23,7 @@ var program = require('commander')
 
   var options = 
     { base           : program.base
-    , main           : program.main
+    , entries        : program.entries
     , wrapper        : program.wrapper
     , returns        : program.returns
     , names          : program.names
@@ -31,7 +33,7 @@ var program = require('commander')
 
   config = redefine.config(options)
 
-  if(program.args.length > 0)  config.main = program.args[0]
+  if(program.args.length > 0)  config.entries = toArray(program.args[0])
 
   //CUSTOM TRANSFORMS
   var findExternal = require('re-define-include-external')({
@@ -41,11 +43,18 @@ var program = require('commander')
     , skip         : program.skip
     })
 
+  if(fs.existsSync(path.resolve(process.cwd(), 're-define.json'))) {
+     var confFile = JSON.parse(fs.readFileSync('./re-define.json'))
+     config = _.merge(config, confFile)
+  }
+
   var bundle = redefine.bundle(config, (program.transform || []).concat([findExternal]))
 
   bundle.pipe(process.stdout)
 
-  bundle.write(new File({path: config.main, cwd: config.base}))
+  _.each(config.entries, function(e) {
+    bundle.write(new File({path: e, cwd: config.base}))
+  })
 
   function toArray(val) { return _.map(val.split(','), function(d) { return d.replace(/\ /g, '') }) }
 
