@@ -5,5 +5,8 @@
     "common/*.js": "common.js"
   , "*.js": "components.js"
   , "node_modules/**": "external.js"
+  },
+  "map": {
+    "d3/d3":"d3"
   }
 }
