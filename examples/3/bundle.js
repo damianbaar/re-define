@@ -20,7 +20,7 @@ parent.a.b.c.d = factory(d3_d3,d3);
     this['d3'] = d3; 
    
     (function(context) {
-      context['main'] = (function(scope) { 
+      context['.'] = (function(scope) { 
         
         scope['z/dep'] = (function(exports) { 
           
@@ -63,14 +63,11 @@ parent.a.b.c.d = factory(d3_d3,d3);
         
         scope['js/dep-cjs'] = (function(exports) { 
           
-          var d3 = require('d3/d3'); 
+          var d3 = require('js/d3/d3'); 
 
           return exports; 
         })({});
     
-        
-        scope['test.json'] = {"test":"test"}
-; 
         
         scope['main'] = (function(exports) { 
           

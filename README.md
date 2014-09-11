@@ -1,12 +1,12 @@
 ## re-define
 Let's `re-define` something ... without any configuration ... just do the magic for me, yet another build tool.
 
-Easy way to convert AMD and CommonJS projects to one bundle wrapped in `UMD`.
+Easy way to convert your AMD and CommonJS projects.
 
 ### Why
 * to get decent encapsulation, registering a bundle not a part
 * to make project compatibile across node and web without effort
-* to provide better support for `amd` projects
+* to provide better support for `amd` projects comparing to other tools
 
 ### Features
 * highly customizable: templates, transforms (like with browserify)
@@ -22,12 +22,9 @@ Easy way to convert AMD and CommonJS projects to one bundle wrapped in `UMD`.
 
 ### Nice things
 * when `re-define` meet external dep, automatically checks descriptor files, such as `bower.json` and `package.json`, there is also a fallback to `node_modules` as well as `bower_components` when descriptor is missing or there is no `main` defined
-* when including an `UMD` file as a dep and your `define` module is anonymous, `re-define` will add a name for you also check internal depenencies
-* when exporting 'a.b.c.d' as a path for global, `re-define` creates safe assignments `||`
 
 ### Limitation
 * does not resolve circular dependencies
-* `module.export` override `exports` when defined below exports
 * resolve only static `require` statements
 
 ### Getting Started

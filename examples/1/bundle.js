@@ -1,26 +1,68 @@
+{}
 (function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('amd/name', ['async','does_not_exist','dep1','dep2'], factory)
+    define('amd/name', ['d3/d3','dep1','dep2','does_not_exist','async'], factory)
   } else if (typeof exports === 'object') {
-    module.exports = factory(require('async'),require('does_not_exist'),require('dep1'),require('dep2'))
+    module.exports = factory(require('d3/d3'),require('dep1'),require('dep2'),require('does_not_exist'),require('async'))
   } else {
-    var async =  parent.async
-    var does_not_exist =  parent.does_not_exist
+    var d3_d3 =  parent.d3_d3
     var dep1 =  parent.dep1
     var dep2 =  parent.dep2
+    var does_not_exist =  parent.does_not_exist
+    var async =  parent.async
   
     parent.global = parent.global || {};
-parent.global.name = factory(async,does_not_exist,dep1,dep2);
+parent.global.name = factory(d3_d3,dep1,dep2,does_not_exist,async);
 
   }
-  }(this, function (async,does_not_exist,dep1,dep2) {
+  }(this, function (d3_d3,dep1,dep2,does_not_exist,async) {
     var context = this;
 
-    this['async'] = async; 
-    this['does_not_exist'] = does_not_exist; 
+    this['d3/d3'] = d3_d3; 
     this['dep1'] = dep1; 
     this['dep2'] = dep2; 
+    this['does_not_exist'] = does_not_exist; 
+    this['async'] = async; 
    
+    (function(context) {
+      context['jquery'] = (function(scope) { 
+        
+        scope['lib-2/dep1'] = (function(exports) { 
+          
+          exports = { name: 'dep' }; 
+
+          return exports; 
+        })({});
+    
+        
+        scope['lib/dep1'] = (function(exports) { 
+          
+          var a = require('lib-2/dep1');
+          exports = { name: 'dep' }; 
+
+          return exports; 
+        })({});
+    
+        
+        scope['jquery'] = (function(exports) { 
+          
+          var a = require('lib/dep1');
+          require('lib-2/dep1');
+          require('d3/d3');
+          var a = 'jquery';
+          exports = { name: a }; 
+
+          return exports; 
+        })({});
+    
+
+        return require('jquery')
+
+        function require(name) { return scope[name] || context[name] }
+
+      }.bind(context))({});
+    })(this);
+  
     (function(context) {
       context['d3'] = (function(scope) { 
         
@@ -49,45 +91,6 @@ parent.global.name = factory(async,does_not_exist,dep1,dep2);
         
 
         return require('d3')
-
-        function require(name) { return scope[name] || context[name] }
-
-      }.bind(context))({});
-    })(this);
-  
-    (function(context) {
-      context['jquery'] = (function(scope) { 
-        
-        scope['lib-2/dep1'] = (function(exports) { 
-          
-          exports = { name: 'dep' }; 
-
-          return exports; 
-        })({});
-    
-        
-        scope['lib/dep1'] = (function(exports) { 
-          
-          var a = require('lib-2/dep1');
-          exports = { name: 'dep' }; 
-
-          return exports; 
-        })({});
-    
-        
-        scope['jquery'] = (function(exports) { 
-          
-          var a = require('lib/dep1');
-          require('lib-2/dep1');
-          require('d3');
-          var a = 'jquery';
-          exports = { name: a }; 
-
-          return exports; 
-        })({});
-    
-
-        return require('jquery')
 
         function require(name) { return scope[name] || context[name] }
 
@@ -173,7 +176,7 @@ parent.global.name = factory(async,does_not_exist,dep1,dep2);
           var model = require('model/model');
           var view = require('view/view');
           var template = require('template.html');
-          require('d3');
+          require('d3/d3');
           function getTemplate() {
             return template;
           }

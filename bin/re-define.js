@@ -6,6 +6,7 @@ var program = require('commander')
   , File = require('vinyl')
   , fs = require('fs')
   , path = require('path')
+  , through = require('through2')
 
   program
     .option('-t, --transform [libs]'      , 'Attach transform stream', toArray)
@@ -50,7 +51,11 @@ var program = require('commander')
 
   var bundle = redefine.bundle(config, (program.transform || []).concat([findExternal]))
 
-  bundle.pipe(process.stdout)
+  bundle.pipe(through.obj(function(file, enc, next) {
+    console.log(file)
+  }, function(end) {
+    console.log('end')
+  })).pipe(process.stdout)
 
   _.each(config.entries, function(e) {
     bundle.write(new File({path: e, cwd: config.base}))

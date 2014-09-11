@@ -1,5 +1,5 @@
-var a = require('common/a')
-  , b = require('common/b')
+var a = require('./common/a')
+  , b = require('./common/b')
   , d3 = require('d3')
 
 module.exports = function() {
