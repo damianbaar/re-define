@@ -1,4 +1,3 @@
-<% _.each(bundles, function(b) { 
-    _.each(b.code, function(c) { %>
-  <%= c.name c.content %>
-<% })}) %>
+<% _.each(files, function(f) { %>
+<%= f.contents %>
+<% }) %>
