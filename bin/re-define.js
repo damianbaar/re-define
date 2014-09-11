@@ -16,22 +16,25 @@ var program = require('commander')
     .option('-t, --transform [libs]'      , 'Attach transform stream', toArray)
 
     .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
-    .option('-m, --remap-deps [deps]'     , 'Remap dependency name (require call)', JSON.parse)
+    .option('-m, --map-deps [deps]'       , 'Remap dependency name (require call)', JSON.parse)
     .option('--namspace [a.b.c.d]'        , 'JS global namespace for bundle')
 
     .option('-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery', toArray)
     .option('-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}', JSON.parse)
     .option('-r, --returns [module]'      , 'Return module')
     .option('-w, --wrapper [type]'        , 'Wrapper type umd')
-
-    .option('-e, --external [json]'       , 'External modules', JSON.parse)
-    .option('-d, --discoverable [dirs]'   , 'Folders to check when file not found in scope', toArray)
-    .option('-s, --skip [module]'         , 'Skip external module', toArray)
+    
+    //Find external file
+    .option('--external [json]'       , 'External modules', JSON.parse)
+    .option('--discoverable [dirs]'   , 'External modules lib, such bower_components', toArray)
+    .option('--descriptors [files]'   , 'Checking main file in external dep', toArray)
+    .option('--skip [module]'         , 'Skip external module', toArray)
     .parse(process.argv)
 
   var options = 
     { base           : program.base
     , output         : program.output
+    , map            : program.mapDeps
     , wrapper        : program.wrapper
     , returns        : program.returns
     , namspace       : program.namspace
@@ -49,9 +52,9 @@ var program = require('commander')
   }
 
   var findExternal = require('re-define-include-external')({
-      external     : program.external || {}
-    , discoverable : program.discoverable || config.discoverable
-    , descriptors  : program.descriptors || config.descriptors
+      external     : program.external
+    , discoverable : program.discoverable
+    , descriptors  : program.descriptors
     , skip         : program.skip
     })
 
