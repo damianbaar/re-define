@@ -4,9 +4,10 @@
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+
       if(f) {
-        f = f[0].call(m, require, m, m.exports)
-        namespace[name] = f || m.exports
+        f = f[0].call(m, m.exports, require, m, f[1].__filename, f[1].__dirname);
+        namespace[name] = f || m.exports;
       } else {
         if(!imports) throw new Error('Module does not exists ' + name);
 
@@ -27,25 +28,26 @@
   return require;
 })({
 
-'4/common/c': [function(require, module, exports) { 
+'4/common/c': [function(exports, require, module, __filename, __dirname) { 
     module.exports = { c: true };
-}], 
-'4/common/a': [function(require, module, exports) { 
+}, {"__filename":"common/c.js","__dirname":"common"}], 
+'4/common/a': [function(exports, require, module, __filename, __dirname) { 
     var c = require('4/common/c');
     return {
       a: true,
       c: c
     };
-}], 
-'4/common/b': [function(require, module, exports) { 
+}, {"__filename":"common/a.js","__dirname":"common"}], 
+'4/common/b': [function(exports, require, module, __filename, __dirname) { 
     var c = require('4/common/c');
     return {
       b: true,
       c: c
     };
-}], 
-'4/entry-1': [function(require, module, exports) { 
+}, {"__filename":"common/b.js","__dirname":"common"}], 
+'4/entry-1': [function(exports, require, module, __filename, __dirname) { 
     var a = require('4/common/a'), b = require('4/common/b'), d3 = require('d3');
+    console.log('dirname', __dirname, 'filename', __filename);
     module.exports = function () {
       return {
         'entry-1': [
@@ -54,13 +56,7 @@
         ]
       };
     };
-}], 
-'4/entry-2': [function(require, module, exports) { 
-    var a = require('4/common/a');
-    module.exports = function () {
-      return { 'entry-2': [a] };
-    };
-}]
+}, {"__filename":"entry-1.js","__dirname":"."}]
 }
 , function() { this.my = this.my || {};this.my.awesome = this.my.awesome || {};this.my.awesome.example = this.my.awesome.example || {}; return my.awesome.example }.call(this)
 , [window]

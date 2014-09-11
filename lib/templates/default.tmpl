@@ -1,12 +1,13 @@
-<% if(!_.isEmpty(external)) { %> //externals: <%= external %> <% } %>
+<% if(!_.isEmpty(external)) { %>//externals: <%= external %> <% } %>
 (function (modules, namespace, imports) {
   function require(name){
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+
       if(f) {
-        f = f[0].call(m, require, m, m.exports)
-        namespace[name] = f || m.exports
+        f = f[0].call(m, m.exports, require, m, f[1].__filename, f[1].__dirname);
+        namespace[name] = f || m.exports;
       } else {
         if(!imports) throw new Error('Module does not exists ' + name);
 
@@ -27,8 +28,8 @@
   return require;
 })({
 <% _.each(files, function(f, i, arr) { %>
-'<%= f.name %>': [function(require, module, exports) { <%= f.contents %>
-}]<% if(arr.length - 1 > i) { %>, <% }}) %>
+'<%= f.name %>': [function(exports, require, module, __filename, __dirname) { <%= f.contents %>
+}, <%= JSON.stringify(f.properties) %>]<% if(arr.length - 1 > i) { %>, <% }}) %>
 }
 , function() { <%= util.namespace(config.namespace, 'this') %> return <%= config.namespace %> }.call(this)
 , [<%= config.imports %>]

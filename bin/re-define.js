@@ -7,7 +7,8 @@ var program = require('commander')
   , fs = require('fs')
   , path = require('path')
   , through = require('through2')
-  , mkdirp = require("mkdirp")
+  , mkdirp = require('mkdirp')
+  , glob = require('glob')
 
   program
     .option('-b, --base [dir]'            , 'CWD')
@@ -40,9 +41,13 @@ var program = require('commander')
 
   config = redefine.config(options)
 
-  if(program.args.length > 0)  config.entries = toArray(program.args[0])
+  if(program.args.length > 0)  {
+    var files = program.args[0]
 
-  //CUSTOM TRANSFORMS
+    if(files.indexOf(',') > -1) config.entries = toArray(files)
+    else config.entries = glob.sync(files)
+  }
+
   var findExternal = require('re-define-include-external')({
       external     : program.external || {}
     , discoverable : program.discoverable || config.discoverable
@@ -54,7 +59,6 @@ var program = require('commander')
      var confFile = JSON.parse(fs.readFileSync('./re-define.json'))
      config = _.merge(config, confFile)
 
-     //override
      config.slice = confFile.slice || config.slice
   }
 
@@ -83,7 +87,7 @@ var program = require('commander')
       fs.writeFile(file.path, file.contents, cb)
     })
   }
-
+  
   _.each(config.entries, function(e) {
     bundle.write(new File({path: e, cwd: config.base}))
   })
