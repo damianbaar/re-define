@@ -26,25 +26,25 @@
   return require;
 })({
 
-'./common/c': [function(require, module, exports) { 
+'4/common/c': [function(require, module, exports) { 
     module.exports = { c: true };
 }], 
-'./common/a': [function(require, module, exports) { 
-    var c = require('./common/c');
+'4/common/a': [function(require, module, exports) { 
+    var c = require('4/common/c');
     return {
       a: true,
       c: c
     };
 }], 
-'./common/b': [function(require, module, exports) { 
-    var c = require('./common/c');
+'4/common/b': [function(require, module, exports) { 
+    var c = require('4/common/c');
     return {
       b: true,
       c: c
     };
 }], 
-'./entry-1': [function(require, module, exports) { 
-    var a = require('./common/a'), b = require('./common/b'), d3 = require('d3');
+'4/entry-1': [function(require, module, exports) { 
+    var a = require('4/common/a'), b = require('4/common/b'), d3 = require('d3');
     module.exports = function () {
       return {
         'entry-1': [
@@ -54,13 +54,13 @@
       };
     };
 }], 
-'./entry-2': [function(require, module, exports) { 
-    var a = require('./common/a');
+'4/entry-2': [function(require, module, exports) { 
+    var a = require('4/common/a');
     module.exports = function () {
       return { 'entry-2': [a] };
     };
 }]
 }
 , function() { this.your = this.your || {};this.your.namespace = this.your.namespace || {}; return your.namespace }.call(this)
-, []
+, [window]
 )

@@ -1,4 +1,5 @@
 {
+  "imports": ["window"],
   "slice": {
     "node_modules/**/**":"dist/external.js"
   , "**/*.js": "dist/components.js"

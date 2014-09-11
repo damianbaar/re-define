@@ -40,7 +40,7 @@
           'dep2'
         ], factory);
       } else if (typeof exports === 'object') {
-        module.exports = factory(require('d3/dep1'), require('d3/lib/dep2'), require('ble'));
+        module.exports = factory(require('d3/dep1'), require('d3/lib/dep2'), require('external-dep'));
       } else {
         root.returnExports = factory(root.dep1, root.dep2);
       }
@@ -50,5 +50,5 @@
 }]
 }
 , function() { this.your = this.your || {};this.your.namespace = this.your.namespace || {}; return your.namespace }.call(this)
-, []
+, [window]
 )
