@@ -1,15 +1,6 @@
 {
-  "imports": ["window", "temp"],
-  "export":{
-    "module":"test",
-    "global": "a.b.c",
-    "amd": "comp/comp"
-  },
-  "namespace": "a.b.c.d",
-  "cutting-points": {
-   "**/*.js": "components.js"
-  },
-  "map": {
-    "d3/d3":"d3"
+  "slice": {
+    "node_modules/**/**":"dist/external.js"
+  , "**/*.js": "dist/components.js"
   }
 }

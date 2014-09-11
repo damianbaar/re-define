@@ -3,10 +3,18 @@ Let's `re-define` something ... without any configuration ... just do the magic 
 
 Easy way to convert your AMD and CommonJS projects.
 
+### Nice things
+* when `re-define` meet external dep, automatically checks descriptor files, such as `bower.json` and `package.json`, there is also a fallback to `node_modules` as well as `bower_components` when descriptor is missing or there is no `main` defined, check `re-define-include-external` to get more details
+* `re-define` make names for module appropriatelty to folder structure and expose it within given namespace which could be referenced further from any other different module, this is:
+assuming your module is placed in folder `my_awesome_component` all internal modules are presented as `my_awesome_component/**`.
+* ability to split modules based on `glob` (to be able to extract common parts)
+* loads configuration from file `re-define.json`
+
 ### Why
 * to get decent encapsulation, registering a bundle not a part
 * to make project compatibile across node and web without effort
 * to provide better support for `amd` projects comparing to other tools
+* to be able to easy share code and expose more than one module (sometimes UMD is not enough)
 
 ### Features
 * highly customizable: templates, transforms (like with browserify)
@@ -17,11 +25,8 @@ Easy way to convert your AMD and CommonJS projects.
 * (WiP) detailed report, to get whole picture, display modules, dependencies and externals
 
 ### TODO
-* handling libs without index suffix require('sth') -> require('sth/index')
-* resolve nested `require` to `iife`
-
-### Nice things
-* when `re-define` meet external dep, automatically checks descriptor files, such as `bower.json` and `package.json`, there is also a fallback to `node_modules` as well as `bower_components` when descriptor is missing or there is no `main` defined
+* incremental builds
+* generating `sourcemaps`
 
 ### Limitation
 * does not resolve circular dependencies
@@ -71,13 +76,20 @@ To run `re-define` in debug mode is fairly easy, just run `re-define` with appro
 DEBUG=re-define:* 
 ```
 
+#### How it works
+* main require function allow to reference different `namespace`
+* each module is wrapped in cjs wrapper
+- do not modify cjs modules
+
+
+
 ###Config
 ```js
   { cwd           : '.'
   , names         : {amd: 'amd/name', global: 'global.name'}
   , wrapper       : 'umd'
   , returns       : ''
-  , excludeDepRef : ['\.css$', 'require', 'modules', 'exports']
+  , excludeAMDModules : ['\.css$', 'require', 'modules', 'exports']
   , globals      : [] //external module_name#global_ref
   , plugins      : ['^(text\/?)*!']
   , external     : {} //{"jquery": "location"} or {"..": "{path: "...", cwd: "..."}

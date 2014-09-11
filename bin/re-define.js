@@ -7,28 +7,34 @@ var program = require('commander')
   , fs = require('fs')
   , path = require('path')
   , through = require('through2')
+  , mkdirp = require("mkdirp")
 
   program
-    .option('-t, --transform [libs]'      , 'Attach transform stream', toArray)
-    .option('-m, --main [filepath]'       , 'Main file')
     .option('-b, --base [dir]'            , 'CWD')
-    .option('-d, --discoverable [dirs]'   , 'Folders to check when file not found in scope', toArray)
-    .option('-e, --external [json]'       , 'External modules', JSON.parse)
+    .option('-o, --output [dir or file]'  , 'Output, when defined saving to appropriate files')
+    .option('-t, --transform [libs]'      , 'Attach transform stream', toArray)
+
+    .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
+    .option('-m, --remap-require [deps]'  , 'Remapping require calls', JSON.parse)
+    .option('--namspace [a.b.c.d]'        , 'JS global namespace for bundle')
+
     .option('-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery', toArray)
-    .option('-w, --wrapper [type]'        , 'Wrapper type umd')
     .option('-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}', JSON.parse)
     .option('-r, --returns [module]'      , 'Return module')
+    .option('-w, --wrapper [type]'        , 'Wrapper type umd')
+
+    .option('-e, --external [json]'       , 'External modules', JSON.parse)
+    .option('-d, --discoverable [dirs]'   , 'Folders to check when file not found in scope', toArray)
     .option('-s, --skip [module]'         , 'Skip external module', toArray)
-    .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
     .parse(process.argv)
 
   var options = 
     { base           : program.base
-    , entries        : program.entries
+    , output         : program.output
     , wrapper        : program.wrapper
     , returns        : program.returns
+    , namspace       : program.namspace
     , names          : program.names
-    , excludeDepsRef : program.excludeDepsRef
     , globals        : program.globals
     }
 
@@ -47,15 +53,36 @@ var program = require('commander')
   if(fs.existsSync(path.resolve(process.cwd(), 're-define.json'))) {
      var confFile = JSON.parse(fs.readFileSync('./re-define.json'))
      config = _.merge(config, confFile)
+
+     //override
+     config.slice = confFile.slice || config.slice
   }
 
   var bundle = redefine.bundle(config, (program.transform || []).concat([findExternal]))
 
-  bundle.pipe(through.obj(function(file, enc, next) {
-    console.log(file)
-  }, function(end) {
-    console.log('end')
-  })).pipe(process.stdout)
+  bundle
+  .pipe(through.obj(function(file, enc, next) {
+    if(_.keys(config.slice).length > 1) {
+      saveFile(file)
+      this.unpipe(process.stdout)
+    } else {
+      if(!!config.output) {
+        saveFile(config.output)
+        this.unpipe(process.stdout)
+      }
+      else this.push(file.contents)
+    }
+
+    next()
+  }))
+  .pipe(process.stdout)
+
+  function saveFile(file, cb) {
+    mkdirp(path.dirname(file.path), function (err) {
+      if (err) return cb(err)
+      fs.writeFile(file.path, file.contents, cb)
+    })
+  }
 
   _.each(config.entries, function(e) {
     bundle.write(new File({path: e, cwd: config.base}))
