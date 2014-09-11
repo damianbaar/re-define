@@ -15,7 +15,7 @@ var program = require('commander')
     .option('-t, --transform [libs]'      , 'Attach transform stream', toArray)
 
     .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
-    .option('-m, --remap-require [deps]'  , 'Remapping require calls', JSON.parse)
+    .option('-m, --remap-deps [deps]'     , 'Remap dependency name (require call)', JSON.parse)
     .option('--namspace [a.b.c.d]'        , 'JS global namespace for bundle')
 
     .option('-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery', toArray)

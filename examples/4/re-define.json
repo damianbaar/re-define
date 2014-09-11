@@ -1,5 +1,6 @@
 {
   "imports": ["window"],
+  "namespace":"my.awesome.example",
   "slice": {
     "node_modules/**/**":"dist/external.js"
   , "**/*.js": "dist/components.js"

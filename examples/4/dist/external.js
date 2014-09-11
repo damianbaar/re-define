@@ -1,3 +1,4 @@
+ //externals: external-dep 
 (function (modules, namespace, imports) {
   function require(name){
     if(!namespace[name]) {
@@ -49,6 +50,6 @@
     }));
 }]
 }
-, function() { this.your = this.your || {};this.your.namespace = this.your.namespace || {}; return your.namespace }.call(this)
+, function() { this.my = this.my || {};this.my.awesome = this.my.awesome || {};this.my.awesome.example = this.my.awesome.example || {}; return my.awesome.example }.call(this)
 , [window]
 )
