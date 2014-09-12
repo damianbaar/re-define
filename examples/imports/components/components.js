@@ -1,3 +1,4 @@
+
 (function (modules, namespace, imports) {
   function require(name){
     if(!namespace[name]) {
@@ -25,3 +26,16 @@
   for(var name in modules) require(name);
   return require;
 })
+({ 
+'components/lookup': [function(exports, require, module, __filename, __dirname) { 
+    return {
+      create: function () {
+        console.log('Creating lookup ...');
+        return this;
+      }
+    };
+}, {"__filename":"lookup.js","__dirname":"."}]
+}
+, function() { this.org = this.org || {};this.org.component = this.org.component || {}; return this.org.component }.call(this)
+, []
+)

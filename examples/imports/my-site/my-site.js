@@ -1,3 +1,4 @@
+//externals: components/lookup 
 (function (modules, namespace, imports) {
   function require(name){
     if(!namespace[name]) {
@@ -25,3 +26,12 @@
   for(var name in modules) require(name);
   return require;
 })
+({ 
+'my-site': [function(exports, require, module, __filename, __dirname) { 
+    var lookup = require('components/lookup');
+    lookup.create();
+}, {"__filename":"index.js","__dirname":"."}]
+}
+, function() { this.org = this.org || {};this.org.site = this.org.site || {}; return this.org.site }.call(this)
+, [this.org.component]
+)
