@@ -13,7 +13,7 @@ var program = require('commander')
   program
     .option('-b, --base [dir]'            , 'CWD')
     .option('-o, --output [dir or file]'  , 'Output, when defined saving to appropriate files')
-    .option('-t, --transform [libs]'      , 'Attach transform stream', toArray)
+    .option('-t, --transforms [libs]'     , 'Attach transform stream', toArray)
 
     .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
     .option('-m, --map-deps [deps]'       , 'Remap dependency name (require call)', JSON.parse)

@@ -5,29 +5,14 @@
     <title>Re-define</title>
     <script type="text/javascript" charset="utf-8">
       //external lib
-      this.async = function() {
-        return {name: 'async'}
-      }
-      this.dep2 = function() {
-        return {name: 'dep2'}
-      }
+      this.async = function() { return {name: 'async'} }
+      this.dep2 = function() { return {name: 'dep2'} }
     </script>
-
-    <script src="bundle.js" type="text/javascript" charset="utf-8"></script>
-
   </head>
   <body>
+    <script src="bundle.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
-      var module = this.global.name
-
-      document.querySelector('body').innerHTML = module.template
-      document.querySelector('#module_name').innerHTML = 'modules: ' +  JSON.stringify(
-        { d3: !!module.d3
-        , jquery: !!module.jquery
-        , model: !!module.model
-        , view: !!module.view
-        , lodash: module.lodash
-        }, null, 2)
+      console.log(this.page)
    </script>
 
   </body>

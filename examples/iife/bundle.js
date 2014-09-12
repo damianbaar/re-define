@@ -1,4 +1,4 @@
-!function (parent,dep2,async_async) {
+(function (parent,dep2,async_async) {
 
 var closure = {}
 
@@ -13,7 +13,7 @@ var require = //externals: dep2,async/async
         , f = modules[name]
 
       if(f) {
-        f = f[0].call(m, m.exports, require, m, f[1].__filename, f[1].__dirname);
+        f = f[0].call(m.exports, m.exports, require, m, f[1].__filename, f[1].__dirname);
         namespace[name] = f || m.exports;
       } else {
         if(!imports) throw new Error('Module does not exists ' + name);
@@ -88,7 +88,7 @@ var require = //externals: dep2,async/async
       }
     };
 }, {"__filename":"lib/model/model.js","__dirname":"lib/model"}], 
-'iife/lib/view/template.html': [function(exports, require, module, __filename, __dirname) { '<li></li><li></li><li></li><li></li>'
+'iife/lib/view/template.html': [function(exports, require, module, __filename, __dirname) { module.exports = '<li></li><li></li><li></li><li></li>'
 }, {"__filename":"lib/view/template.html","__dirname":"lib/view"}], 
 'iife/lib/view/helper': [function(exports, require, module, __filename, __dirname) { 
     module.exports = {
@@ -110,7 +110,7 @@ var require = //externals: dep2,async/async
       };
     };
 }, {"__filename":"lib/view/view.js","__dirname":"lib/view"}], 
-'iife/lib/template.html': [function(exports, require, module, __filename, __dirname) { '<div id=\'module_name\' tabIndex=\'1\'>test</div>'
+'iife/lib/template.html': [function(exports, require, module, __filename, __dirname) { module.exports = '<div id=\'module_name\' tabIndex=\'1\'>test</div>'
 }, {"__filename":"lib/template.html","__dirname":"lib"}], 
 'iife': [function(exports, require, module, __filename, __dirname) { 
     var _ = require('lodash');
@@ -120,17 +120,23 @@ var require = //externals: dep2,async/async
     var view = require('iife/lib/view/view');
     var template = require('iife/lib/template.html');
     require('d3');
-    function getTemplate() {
-      return template;
-    }
-    return {
-      jquery: $,
-      d3: d3,
-      model: model,
-      view: view,
-      template: template,
-      lodash: _
-    };
+    var module = {
+        jquery: $,
+        d3: d3,
+        model: model,
+        view: view,
+        template: template,
+        lodash: _
+      };
+    document.querySelector('body').innerHTML = module.template;
+    document.querySelector('#module_name').innerHTML = 'modules: ' + JSON.stringify({
+      d3: !!module.d3,
+      jquery: !!module.jquery,
+      model: !!module.model,
+      view: !!module.view,
+      lodash: module.lodash
+    }, null, 2);
+    window.page = module;
 }, {"__filename":"lib/index.js","__dirname":"lib"}]
 }
 , function() { this.your = this.your || {};this.your.namespace = this.your.namespace || {}; return this.your.namespace }.call(this)
@@ -139,4 +145,4 @@ var require = //externals: dep2,async/async
 
  return require('iife') 
 
-}.call({},this,dep2,this.async)
+}.call({},this,dep2,this.async))

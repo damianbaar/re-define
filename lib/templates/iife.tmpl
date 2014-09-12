@@ -1,4 +1,4 @@
-!function (parent,<%= _.map(external, util.escape).join(',') %>) {
+(function (parent,<%= _.map(external, util.escape).join(',') %>) {
 
 var closure = {}
 
@@ -10,4 +10,4 @@ var closure = {}
 var require = <%= util.getTemplate('default', ['closure']) %>
 <% if(config.returns) {%> return require('<%= config.returns %>') <%} else {%> return require <% } %>
 
-}.call({},this,<%= _.map(external, util.global).join(',') %>)
+}.call({},this,<%= _.map(external, util.global).join(',') %>))
