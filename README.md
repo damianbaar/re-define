@@ -10,10 +10,9 @@ Easy way to convert your AMD and CommonJS projects for WEB.
 * when piping passing `vinyl` files (integration with gulp)
 * automatically loads configuration from file `re-define.json`
 * handling glob pattern
-* for external deps (outside the lib or those which live in node_modules/bower_components) checks descriptor files, such as `bower.json` or `package.json`, there is also a fallback to `node_modules` as well as `bower_components` when descriptor is missing or there is no `main` defined, check `re-define-include-external` to get more details
+* for external deps (outside the lib or those which live in node_modules/bower_components) checks descriptor files, such as `bower.json` or `package.json`, there is also a fallback to `node_modules` as well as `bower_components` when descriptor is missing or there is no `main` defined, check [re-define-include-external](https://github.com/damianbaar/re-define-include-external) to get more details
 * `re-define` make names for module appropriatelty to folder structure and expose it within given namespace which could be referenced further from any other different module, this is:
-assuming your module is placed in folder `my_awesome_component` all internal modules are presented as `my_awesome_component/**`. (check tests to get more [info](test/transforms/rewrite-require_test.js)
-* play with AST without converting it each time
+assuming your module is placed in folder `my_awesome_component` all internal modules are presented as `my_awesome_component/**`. (check tests to get more [info](test/transform/rewrite-require_test.js))
 
 ### Why
 * to provide better support for `amd`
