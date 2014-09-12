@@ -92,8 +92,8 @@ module.exports =
   }
 ```
 
-####How it works
-###Imports
+###How it works
+####Imports
 ```
 //create namespace for components
 re-define lookup.js --namespace org.component
@@ -103,7 +103,7 @@ re-define index.js --imports this.org.component --namespace org.site
 ```
 To get more, check this [example](/examples/imports)
 
-###Custom transforms
+####Custom transforms
 * [usage](/bin/re-define.js#L56) or [grunt](https://github.com/damianbaar/re-define-grunt)
 * [example](https://github.com/damianbaar/re-define-include-external)
 
