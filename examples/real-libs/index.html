@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="bundle.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        .axis path, .axis line
+        {
+          fill: none;
+          stroke: #777;
+          shape-rendering: crispEdges;
+        }
+
+        .axis text
+        {
+          font-family: 'Arial';
+          font-size: 13px;
+        }
+
+        .tick
+        {
+          stroke-dasharray: 1, 2;
+        }
+
+        .bar
+        {
+          fill: FireBrick;
+        }
+    </style>
+  </head>
+  <body>
+    <svg id="visualisation" width="1000" height="500"></svg>
+    <script type="text/javascript" charset="utf-8">
+      console.log('namespace org.chart', org.chart)
+
+      //to EXPORT only ONE module use iife or umd
+      console.log('bar data:', org.chart['real-libs'].data())
+    </script>
+  </body>
+</html>

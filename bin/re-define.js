@@ -11,14 +11,14 @@ var program = require('commander')
   , glob = require('glob')
 
   program
-    .option('-b, --base [dir]'            , 'CWD')
+    .option('-b, --base [dir]'            , 'Base dir')
     .option('-o, --output [dir or file]'  , 'Output, when defined saving to appropriate files')
     .option('-t, --transforms [libs]'     , 'Attach transform stream', toArray)
 
     .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
     .option('-m, --map-deps [deps]'       , 'Remap dependency name (require call)', JSON.parse)
-    .option('--namspace [a.b.c.d]'        , 'JS global namespace for bundle')
-    .option('--imports [namespaces]'      , 'Import namespace', toArray)
+    .option('--namespace [a.b.c.d]'       , 'Namespace for bundle')
+    .option('--imports [namespaces]'      , 'Import namespaces', toArray)
 
     .option('-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery', toArray)
     .option('-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}', JSON.parse)
@@ -39,7 +39,7 @@ var program = require('commander')
     , wrapper        : program.wrapper
     , returns        : program.returns
     , imports        : program.imports
-    , namspace       : program.namspace
+    , namespace      : program.namespace
     , names          : program.names
     , globals        : program.globals
     }

@@ -1,6 +1,5 @@
-(function(parent) {
-  var $ = require('jquery')
-    , d3 = require('d3')
+var $ = require('jquery')
+  , d3 = require('d3')
 
-  parent.lodash = "lodash here"
-})(this)
+console.log('from lodash', $,d3)
+return "lodash here"

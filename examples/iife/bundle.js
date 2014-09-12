@@ -13,7 +13,7 @@ var require = //externals: dep2,async/async
         , f = modules[name]
 
       if(f) {
-        f = f[0].call(m.exports, m.exports, require, m, f[1].__filename, f[1].__dirname);
+        f = f[0].call(m, m, require, m, f[1].__filename, f[1].__dirname);
         namespace[name] = f || m.exports;
       } else {
         if(!imports) throw new Error('Module does not exists ' + name);
@@ -35,6 +35,13 @@ var require = //externals: dep2,async/async
   return require;
 })
 ({ 
+'lodash': [function(exports, require, module, __filename, __dirname) { var $ = require('jquery')
+  , d3 = require('d3')
+
+console.log('from lodash', $,d3)
+return "lodash here"
+
+}, {"__filename":"vendor/lodash.js","__dirname":"vendor"}], 
 'jquery/lib-2/dep1': [function(exports, require, module, __filename, __dirname) { 
     return { name: 'dep' };
 }, {"__filename":"node_modules/jquery/lib-2/dep1.js","__dirname":"node_modules/jquery/lib-2"}], 
@@ -68,12 +75,6 @@ var require = //externals: dep2,async/async
     var a = 'jquery';
     module.exports = { name: a };
 }, {"__filename":"node_modules/jquery/jquery.js","__dirname":"node_modules/jquery"}], 
-'lodash': [function(exports, require, module, __filename, __dirname) { 
-    (function (parent) {
-      var $ = require('jquery'), d3 = require('d3');
-      parent.lodash = 'lodash here';
-    }(this));
-}, {"__filename":"vendor/lodash.js","__dirname":"vendor"}], 
 'iife/lib/model/helper': [function(exports, require, module, __filename, __dirname) { 
     var async = require('async/async') || function () {
       };
