@@ -1,0 +1,1 @@
+re-define './lib/index.js' --base lib --returns 'iife' --globals "async/async#this.async" --external '{"lodash":"./vendor/lodash.js"}' --wrapper iife --map-deps '{"d3/d3":"d3"}' --imports 'parent.test'

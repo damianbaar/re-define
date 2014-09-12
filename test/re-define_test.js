@@ -87,14 +87,14 @@ function createBundle() {
 
   config.wrapper = 'empty'
 
-  var __spy = function(config) {
-      return spy = through.obj(function(m,e,n) {
-        this.push(m)
-        n()
-      })
+  var _spy = function(config) {
+    return spy = through.obj(function(m,e,n) {
+      this.push(m)
+      n()
+    })
   }
 
-  bundle = redefine.bundle(config, [__spy])
+  bundle = redefine.bundle(config, [_spy])
   var _files = []
 
   bundle.pipe(through.obj(function(result, enc, next) {

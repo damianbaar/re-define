@@ -26,8 +26,8 @@
 
   for(var name in modules) require(name);
   return require;
-})({
-
+})
+({ 
 'e1/common/c': [function(exports, require, module, __filename, __dirname) { 
     module.exports = { c: true };
 }, {"__filename":"common/c.js","__dirname":"common"}], 
@@ -64,6 +64,6 @@
     };
 }, {"__filename":"entry-2.js","__dirname":"."}]
 }
-, function() { this.my = this.my || {};this.my.awesome = this.my.awesome || {};this.my.awesome.example = this.my.awesome.example || {}; return my.awesome.example }.call(this)
+, function() { this.my = this.my || {};this.my.awesome = this.my.awesome || {};this.my.awesome.example = this.my.awesome.example || {}; return this.my.awesome.example }.call(this)
 , [window]
 )

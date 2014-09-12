@@ -18,12 +18,13 @@ var program = require('commander')
     .option('-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"', toArray)
     .option('-m, --map-deps [deps]'       , 'Remap dependency name (require call)', JSON.parse)
     .option('--namspace [a.b.c.d]'        , 'JS global namespace for bundle')
+    .option('--imports [namespaces]'      , 'Import namespace', toArray)
 
     .option('-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery', toArray)
     .option('-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}', JSON.parse)
     .option('-r, --returns [module]'      , 'Return module')
     .option('-w, --wrapper [type]'        , 'Wrapper type umd')
-    
+
     //Find external file
     .option('--external [json]'       , 'External modules', JSON.parse)
     .option('--discoverable [dirs]'   , 'External modules lib, such bower_components', toArray)
@@ -37,6 +38,7 @@ var program = require('commander')
     , map            : program.mapDeps
     , wrapper        : program.wrapper
     , returns        : program.returns
+    , imports        : program.imports
     , namspace       : program.namspace
     , names          : program.names
     , globals        : program.globals

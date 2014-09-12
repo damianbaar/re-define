@@ -1,36 +1,8 @@
 <% if(!_.isEmpty(external)) { %>//externals: <%= external %> <% } %>
-(function (modules, namespace, imports) {
-  function require(name){
-    if(!namespace[name]) {
-      var m = {exports:{}}
-        , f = modules[name]
-
-      if(f) {
-        f = f[0].call(m, m.exports, require, m, f[1].__filename, f[1].__dirname);
-        namespace[name] = f || m.exports;
-      } else {
-        if(!imports) throw new Error('Module does not exists ' + name);
-
-        var mod;
-        for(var i=0; i < imports.length; i++) {
-          mod = imports[i][name];
-          if(mod) return;
-        }
-
-        if(!mod) throw new Error('Module does not exists ' + name);
-        else return mod;
-      }
-    }
-    return namespace[name];
-  }
-
-  for(var name in modules) require(name);
-  return require;
-})({
-<% _.each(files, function(f, i, arr) { %>
+<%= util.getTemplate('part/require') %>({ <% _.each(files, function(f, i, arr) { %>
 '<%= f.name %>': [function(exports, require, module, __filename, __dirname) { <%= f.contents %>
 }, <%= JSON.stringify(f.properties) %>]<% if(arr.length - 1 > i) { %>, <% }}) %>
 }
-, function() { <%= util.namespace(config.namespace, 'this') %> return <%= config.namespace %> }.call(this)
+, function() { <%= util.namespace(config.namespace, 'this') %> return this.<%= config.namespace %> }.call(this)
 , [<%= config.imports %>]
 )

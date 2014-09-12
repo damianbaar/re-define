@@ -26,8 +26,8 @@
 
   for(var name in modules) require(name);
   return require;
-})({
-
+})
+({ 
 'd3/dep1': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'dep1';
 }, {"__filename":"node_modules/d3/dep1.js","__dirname":"node_modules/d3"}], 
@@ -51,6 +51,6 @@
     }));
 }, {"__filename":"node_modules/d3/d3.js","__dirname":"node_modules/d3"}]
 }
-, function() { this.my = this.my || {};this.my.awesome = this.my.awesome || {};this.my.awesome.example = this.my.awesome.example || {}; return my.awesome.example }.call(this)
+, function() { this.my = this.my || {};this.my.awesome = this.my.awesome || {};this.my.awesome.example = this.my.awesome.example || {}; return this.my.awesome.example }.call(this)
 , [window]
 )
