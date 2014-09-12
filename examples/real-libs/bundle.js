@@ -14,11 +14,10 @@
         var mod;
         for(var i=0; i < imports.length; i++) {
           mod = imports[i][name];
-          if(mod) return;
+          if(mod) return mod;
         }
 
         if(!mod) throw new Error('Module does not exists ' + name);
-        else return mod;
       }
     }
     return namespace[name];
