@@ -137,8 +137,6 @@ var require = //externals: dep2,async/async
 , [closure,parent.test]
 )
 
-
- return require['iife']
-
+ return require('iife') 
 
 }.call({},this,dep2,this.async)

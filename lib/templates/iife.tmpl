@@ -8,8 +8,6 @@ var closure = {}
 %><%= name %>
 <%})%>
 var require = <%= util.getTemplate('default', ['closure']) %>
-
-<% if(config.returns) {%> return require['<%= config.returns %>']
-<%} else {%> return require <% } %>
+<% if(config.returns) {%> return require('<%= config.returns %>') <%} else {%> return require <% } %>
 
 }.call({},this,<%= _.map(external, util.global).join(',') %>)
