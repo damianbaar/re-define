@@ -26,4 +26,6 @@ require(
       }, null, 2)
 
     window.page = module
+
+    return {index:true}
 })

@@ -21,11 +21,10 @@ var require = //externals: dep2,async/async
         var mod;
         for(var i=0; i < imports.length; i++) {
           mod = imports[i][name];
-          if(mod) return;
+          if(mod) return mod;
         }
 
         if(!mod) throw new Error('Module does not exists ' + name);
-        else return mod;
       }
     }
     return namespace[name];
@@ -138,6 +137,7 @@ return "lodash here"
       lodash: module.lodash
     }, null, 2);
     window.page = module;
+    return { index: true };
 }, {"__filename":"lib/index.js","__dirname":"lib"}]
 }
 , function() { this.your = this.your || {};this.your.namespace = this.your.namespace || {}; return this.your.namespace }.call(this)
