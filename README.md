@@ -10,7 +10,7 @@ Easy way to convert your AMD and CommonJS projects for WEB.
 * when piping passing `vinyl` files (integration with gulp)
 * automatically loads configuration from file `re-define.json`
 * handling glob pattern
-* for external deps (outside the lib or those which live in node_modules/bower_components) checks descriptor files, such as `bower.json` or `package.json`, there is also a fallback to `node_modules` as well as `bower_components` when descriptor is missing or there is no `main` defined, check [re-define-include-external](https://github.com/damianbaar/re-define-include-external) to get more details
+* for external deps (outside the base folder or those which live in node_modules/bower_components) it checks descriptor files, such as `bower.json` or `package.json`, if there is no descriptor it is trying to match file with requested dep name, check [re-define-include-external](https://github.com/damianbaar/re-define-include-external) to get more details
 * `re-define` make names for module appropriatelty to folder structure and expose it within given namespace which could be referenced further from any other different module, this is:
 assuming your module is placed in folder `my_awesome_component` all internal modules are presented as `my_awesome_component/**`. (check tests to get more [info](test/transform/rewrite-require_test.js))
 
@@ -38,24 +38,24 @@ re-define [file/files or glob pattern] -[options]
 
 Options:
 ```
-    '-b, --base [dir]'            , 'Base dir'
-    '-o, --output [dir or file]'  , 'Output, when defined saving to appropriate files'
-    '-t, --transforms [libs]'     , 'Attach transform streams'
+'-b, --base [dir]'            , 'Base dir'
+'-o, --output [dir or file]'  , 'Output, when defined saving to appropriate files'
+'-t, --transforms [libs]'     , 'Attach transform streams'
 
-    '-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"'
-    '-m, --map-deps [deps]'       , 'Remap dependency name (require call)'
-    '--namespace [a.b.c.d]'       , 'Namespace for bundle'
-    '--imports [namespaces]'      , 'Import namespaces'
+'-e, --exclude-deps [deps]'   , 'Ignore deps - ".css"'
+'-m, --map-deps [deps]'       , 'Remap dependency name (require call)'
+'--namespace [a.b.c.d]'       , 'Namespace for bundle'
+'--imports [namespaces]'      , 'Import namespaces'
 
-    '-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery'
-    '-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}'
-    '-r, --returns [module]'      , 'Return module'
-    '-w, --wrapper [type]'        , 'Wrapper type umd'
+'-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery'
+'-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}'
+'-r, --returns [file/module]' , 'Return module, could be specified as file or resolved module'
+'-w, --wrapper [type]'        , 'Wrapper type umd'
 
-    '--external [json]'           , 'External modules'
-    '--discoverable [dirs]'       , 'External modules lib, such bower_components'
-    '--descriptors [files]'       , 'Checking main file in external dep'
-    '--skip [module]'             , 'Skip external module'
+'--external [json]'           , 'External modules'
+'--discoverable [dirs]'       , 'External modules lib, such bower_components'
+'--descriptors [files]'       , 'Checking main file in external dep'
+'--skip [module]'             , 'Skip external module'
 ```
 
 ###Config

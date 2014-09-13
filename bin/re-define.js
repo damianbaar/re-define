@@ -22,7 +22,7 @@ var program = require('commander')
 
     .option('-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery', toArray)
     .option('-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}', JSON.parse)
-    .option('-r, --returns [module]'      , 'Return module')
+    .option('-r, --returns [file/module]' , 'Return module, could be specified as file or resolved module')
     .option('-w, --wrapper [type]'        , 'Wrapper type umd')
 
     //Find external file
