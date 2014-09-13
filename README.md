@@ -104,7 +104,7 @@ re-define index.js --imports this.org.component --namespace org.site
 To get more, check this [example](/examples/imports)
 
 ####Custom transforms
-* [usage](/bin/re-define.js#L56) or [grunt](https://github.com/damianbaar/re-define-grunt)
+* [usage](/bin/re-define.js#L56) or [grunt](https://github.com/damianbaar/grunt-re-define)
 * [example](https://github.com/damianbaar/re-define-include-external)
 
 ####Compilation time 
