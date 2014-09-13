@@ -9,16 +9,15 @@ var transform = require('../../lib/transform/amd-to-cjs')
 exports['amd-to-cjs'] = {
   'require-function': function(test) {
     convert('require(function() { return "test" })', function(r, f) {
-      test.equal('exports = \'test\';', r)
+      test.equal('return \'test\';', r)
       test.equal('require', f.type)
-      console.log(JSON.stringify(f, null, 2))
       test.done()
     })
   },
 
   'require-function-with-empty-array': function(test) {
     convert('require([], function() { return "test" })', function(r, f) {
-      test.equal('exports = \'test\';', r)
+      test.equal('return \'test\';', r)
       test.equal('require', f.type)
       test.done()
     })
@@ -26,7 +25,7 @@ exports['amd-to-cjs'] = {
 
   'define-function': function(test) {
     convert('define(function() { return "test" })', function(r, f) {
-      test.equal('exports = \'test\';', r)
+      test.equal('return \'test\';', r)
       test.equal('define', f.type)
       test.done()
     })
@@ -34,7 +33,7 @@ exports['amd-to-cjs'] = {
 
   'define-function-with-empty-array': function(test) {
     convert('define([], function() { return "test" })', function(r, f) {
-      test.equal('exports = \'test\';', r)
+      test.equal('return \'test\';', r)
       test.equal('define', f.type)
       test.done()
     })
@@ -42,7 +41,15 @@ exports['amd-to-cjs'] = {
 
   'define-with-object': function(test) {
     convert('define({test:"test"})', function(r, f) {
-      test.equal('exports = { test: \'test\' };', r)
+      test.equal('module.exports = { test: \'test\' };', r)
+      test.equal('define', f.type)
+      test.done()
+    })
+  },
+
+  'define-with-deps': function(test) {
+    convert('define(["a","b","c"], function(a,b,c) {})', function(r, f) {
+      test.equal(escape('var a = require(\'a\');var b = require(\'b\');var c = require(\'c\');'), escape(r))
       test.equal('define', f.type)
       test.done()
     })
@@ -59,4 +66,10 @@ function convert(code, done) {
                 })
 
     amd.write(file)
+}
+
+function escape(val) {
+  return val.replace(/\n|\r/g,'')
+            .replace(/\'|\"/g, '"')
+            .replace(/\ |\;/g, '')
 }

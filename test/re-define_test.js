@@ -5,83 +5,104 @@ var redefine = require('../lib')
   , File = require('vinyl')
   , mock = require('mock-fs')
 
+var bundle
+  , basedir = process.cwd()
+  , spy
+
 exports['integration'] = {
-  'simple-require': function(test) {
-    var file = new File({path: 'simple.js'})
-    file.contents = new Buffer('require([],function() { return "test" })')
+  setUp: function(cb) {
+    process.chdir(__dirname)
 
-    convert( file
-           , function(result) {
-              test.equal('__e__="test"', result)
-              test.done()
-          })
+    createBundle()
+
+    mock({
+      'a.js': '(function() { return "a" })()'
+    , 'b.js': 'define(function() { return "b" })'
+    , 'c.js': 'define([], function() { return "c" })'
+    })
+    cb()
   },
-  'simple-define': function(test) {
-    var file = new File({path: 'simple.js'})
-    file.contents = new Buffer('define([],function() { return "test" })')
-
-    convert( file
-           , function(result) {
-              test.equal('__e__="test"', result)
-              test.done()
-          })
+  tearDown: function(cb) {
+    mock.restore()
+    process.chdir(basedir)
+    cb()
   },
-  'simple-cjs': function(test) {
+  'load dependencies and set namespace for require calls': function(test) {
     var file = new File({path: 'simple.js'})
-    file.contents = new Buffer('module.exports = "test"')
+    file.contents = new Buffer('module.exports = {};require("a");require("b");require("c");')
 
-    convert( file
-           , function(result) {
-              test.equal('__e__="test"', result)
-              test.done()
-          })
+    _.each([file], bundle.write)
+
+    bundle.on('data', function(result) {
+      result = escape(_.pluck([result], 'contents').join())
+
+      test.equal('(function(){return"a"}())'
+                 + 'return"b"'
+                 + 'return"c"'
+                 + 'module.exports={}require("test/a")require("test/b")require("test/c")', result)
+    })
+    .on('end', test.done)
   },
-  'load-dependency': function(test) {
-    var file = new File({path: 'simple.js'})
-    file.contents = new Buffer('module.exports = require("a");require("b");require("c");')
+  'try to load duplicates': function(test) {
+    var callCounts = 0
+      , file
 
-    convert( file
-           , function(result) {
-              test.equal('(function(){return"a"}())'
-                         + '__e__="b"'
-                         + '__e__="c"'
-                         + '__e__=require("a")require("b")require("c")', result)
+    spy.pipe(through.obj(function(f,e,n) {
+      callCounts++
+      this.push(f)
+      n()
+    }))
 
-              mock.restore()
-              test.done() 
-            }
-           , function() {
-              mock({
-                'a.js': '(function() { return "a" })()'
-              , 'b.js': 'define(function() { return "b" })'
-              , 'c.js': 'define([], function() { return "c" })'
-            })
-           })
+    file = new File({path: 'simple.js'})
+    file.contents = new Buffer('module.exports = {};require("a");require("b");require("c");')
+
+    _.each([ file
+           , new File({path:'a.js'})
+           , new File({path:'b.js'})
+           , new File({path:'c.js'})
+           , new File({path:'a.js'})
+           , new File({path:'b.js'})
+           , new File({path:'c.js'})
+           ]
+           , bundle.write)
+
+    bundle.on('data', function(result) {
+      result = escape(_.pluck([result], 'contents').join())
+
+      test.equal('(function(){return"a"}())'
+                 + 'return"b"'
+                 + 'return"c"'
+                 + 'module.exports={}require("test/a")require("test/b")require("test/c")', result)
+    })
+    .on('end', function() {
+      test.equal(callCounts, 4)
+      test.done()
+    })
   }
 };
 
-function convert(file, done, start) { 
+function createBundle() { 
   var config = redefine.config()
     , result
 
   config.wrapper = 'empty'
-  config.exportVar = '__e__'
 
-  var spy = function(config) {
-      return through.obj(function(m,e,n) {
-        this.push(m)
-        n()
-      })
+  var _spy = function(config) {
+    return spy = through.obj(function(m,e,n) {
+      this.push(m)
+      n()
+    })
   }
 
-  var bundle = redefine.bundle(config, [spy])
+  bundle = redefine.bundle(config, [_spy])
+  var _files = []
 
-  bundle.pipe(through(function(result, enc, cb) {
-    done(escape(result.toString()))
+  bundle.pipe(through.obj(function(result, enc, next) {
+    _files.push(result)
+    next()
+  }, function() {
+    this.push(_files)
   }))
-
-  !!start && start()
-  bundle.write(file)
 }
 
 function escape(val) {

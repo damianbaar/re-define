@@ -1,0 +1,8 @@
+<% if(!_.isEmpty(external)) { %>//externals: <%= external %> <% } %>
+<%= util.getTemplate('part/require') %>({ <% _.each(files, function(f, i, arr) { %>
+'<%= f.name %>': [function(exports, require, module, __filename, __dirname) { <%= f.contents %>
+}, <%= JSON.stringify(f.properties) %>]<% if(arr.length - 1 > i) { %>, <% }}) %>
+}
+, function() { <%= util.namespace(config.namespace, 'this') %> return this.<%= config.namespace %> }.call(this)
+, [<%= config.imports %>]
+)

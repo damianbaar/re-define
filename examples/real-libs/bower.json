@@ -1,0 +1,17 @@
+{
+  "name": "real-libs",
+  "version": "1.8.17",
+  "homepage": "https://github.com/damianbaar/re-define",
+  "authors": [
+    "Damian Baar <damian.baar@gmail.com>"
+  ],
+  "main": "index.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

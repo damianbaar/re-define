@@ -14,34 +14,16 @@
     <%= util.toGlobal('parent', config.names.global, "factory("+_.map(external, util.escape).join(',') + ")") %>
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
-    var context = this;
 
-  <% _.each(external, function(d) { %>  this['<%= d %>'] = <%= escape(d) %>; 
-  <% }) %> <% _.each(bundles, function(b) { 
-    if(!b.wrap) { %><%= b.content %>; 
-    <% } else { %>
-    (function(context) {
-      context['<%= b.name %>'] = (function(scope) { <% _.each(b.code, function(c) { %>
-        <% if(!c.wrap) { %> <%= c.content %>;
-        <% } else if(['.json', '.html'].indexOf(c.ext) > -1) { %>
-        scope['<%= c.name %>'] = <%= c.content %>; <% } else { %>
-        scope['<%= c.name %>'] = (function(<%= config.exportVar %>) { 
-          <%= c.content %> 
+  var closure = {}
 
-          return <%= config.exportVar %>; 
-        })({});
-    <% }}) %>
+  <% _.chain(external)
+      .map(function(d) { return "closure['" + d + "'] = " + util.escape(d) })
+      .each(function(name) {;
+  %><%= name %>
+  <%})%>
 
-        return require('<%= b.returns %>')
+var require = <%= util.getTemplate('default', ['closure']) %>
+<% if(config.returns) {%>return require('<%= config.returns %>') <%} else {%>return require <% } %>
 
-        function require(name) { return scope[name] || context[name] }
-
-      }.bind(context))({});
-    })(this);
-  <% }}) %>
-
-  <% if(config.returns) {%> return this['<%= config.returns %>']
-  <%} else {%> return this <% } %>
-
-  function require(name) { return context[name] }
 }.bind({})))
