@@ -11,6 +11,7 @@ var program = require('commander')
   , glob = require('glob')
 
   program
+    .option('--cwd'                       , 'CWD')
     .option('-b, --base [dir]'            , 'Base dir')
     .option('-o, --output [dir or file]'  , 'Output, when defined saving to appropriate files')
     .option('-t, --transforms [libs]'     , 'Attach transform stream', toArray)

@@ -23,6 +23,8 @@ assuming your module is placed in folder `my_awesome_component` all internal mod
 ### TODO
 * incremental builds
 * generating `sourcemaps`
+* disable warnings
+* separate namespace for bundles when slicing
 
 ### Limitation
 * does not resolve circular dependencies
