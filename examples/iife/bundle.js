@@ -41,14 +41,14 @@ console.log('from lodash', $,d3)
 return "lodash here"
 
 }, {"__filename":"vendor/lodash.js","__dirname":"vendor"}], 
-'jquery/lib-2/dep1': [function(exports, require, module, __filename, __dirname) { 
+'nananana/lib-2/dep1': [function(exports, require, module, __filename, __dirname) { 
     return { name: 'dep' };
 }, {"__filename":"node_modules/jquery/lib-2/dep1.js","__dirname":"node_modules/jquery/lib-2"}], 
-'jquery/lib/dep1': [function(exports, require, module, __filename, __dirname) { 
-    var a = require('jquery/lib-2/dep1');
+'nananana/lib/dep1': [function(exports, require, module, __filename, __dirname) { 
+    var a = require('nananana/lib-2/dep1');
     return { name: 'dep' };
 }, {"__filename":"node_modules/jquery/lib/dep1.js","__dirname":"node_modules/jquery/lib"}], 
-'d3/dep1': [function(exports, require, module, __filename, __dirname) { 
+'nananana/dep1': [function(exports, require, module, __filename, __dirname) { 
     module.exports = { test: 'test' };
 }, {"__filename":"node_modules/d3/dep1.js","__dirname":"node_modules/d3"}], 
 'd3': [function(exports, require, module, __filename, __dirname) { 
@@ -59,7 +59,7 @@ return "lodash here"
           'dep2'
         ], factory);
       } else if (typeof exports === 'object') {
-        module.exports = factory(require('d3/dep1'), require('dep2'));
+        module.exports = factory(require('nananana/dep1'), require('dep2'));
       } else {
         root.returnExports = factory(root.dep1, root.dep2);
       }
@@ -68,19 +68,19 @@ return "lodash here"
     }));
 }, {"__filename":"node_modules/d3/d3.js","__dirname":"node_modules/d3"}], 
 'jquery': [function(exports, require, module, __filename, __dirname) { 
-    var a = require('jquery/lib/dep1');
-    require('jquery/lib-2/dep1');
+    var a = require('nananana/lib/dep1');
+    require('nananana/lib-2/dep1');
     require('d3');
     var a = 'jquery';
     module.exports = { name: a };
 }, {"__filename":"node_modules/jquery/jquery.js","__dirname":"node_modules/jquery"}], 
-'iife/lib/model/helper': [function(exports, require, module, __filename, __dirname) { 
+'nananana/model/helper': [function(exports, require, module, __filename, __dirname) { 
     var async = require('async/async') || function () {
       };
     return { getAsync: async };
 }, {"__filename":"lib/model/helper.js","__dirname":"lib/model"}], 
-'iife/lib/model/model': [function(exports, require, module, __filename, __dirname) { 
-    var helper = require('iife/lib/model/helper');
+'nananana/model/model': [function(exports, require, module, __filename, __dirname) { 
+    var helper = require('nananana/model/helper');
     var async = helper.getAsync();
     return {
       getData: function () {
@@ -88,20 +88,20 @@ return "lodash here"
       }
     };
 }, {"__filename":"lib/model/model.js","__dirname":"lib/model"}], 
-'iife/lib/view/template.html': [function(exports, require, module, __filename, __dirname) { module.exports = '<li></li><li></li><li></li><li></li>'
+'nananana/view/template.html': [function(exports, require, module, __filename, __dirname) { module.exports = '<li></li><li></li><li></li><li></li>'
 }, {"__filename":"lib/view/template.html","__dirname":"lib/view"}], 
-'iife/lib/view/helper': [function(exports, require, module, __filename, __dirname) { 
+'nananana/view/helper': [function(exports, require, module, __filename, __dirname) { 
     module.exports = {
       escape: function () {
       }
     };
 }, {"__filename":"lib/view/helper.js","__dirname":"lib/view"}], 
-'iife/lib/view/type': [function(exports, require, module, __filename, __dirname) { 
+'nananana/view/type': [function(exports, require, module, __filename, __dirname) { 
     exports.js = 'ast';
     exports.html = 'raw';
 }, {"__filename":"lib/view/type.js","__dirname":"lib/view"}], 
-'iife/lib/view/view': [function(exports, require, module, __filename, __dirname) { 
-    var tmpl = require('iife/lib/view/template.html'), model = require('iife/lib/model/model'), helper = require('iife/lib/view/helper'), type = require('iife/lib/view/type'), d3 = require('d3');
+'nananana/view/view': [function(exports, require, module, __filename, __dirname) { 
+    var tmpl = require('nananana/view/template.html'), model = require('nananana/model/model'), helper = require('nananana/view/helper'), type = require('nananana/view/type'), d3 = require('d3');
     module.exports = function () {
       return {
         model: model.getData(),
@@ -110,15 +110,15 @@ return "lodash here"
       };
     };
 }, {"__filename":"lib/view/view.js","__dirname":"lib/view"}], 
-'iife/lib/template.html': [function(exports, require, module, __filename, __dirname) { module.exports = '<div id=\'module_name\' tabIndex=\'1\'>test</div>'
+'nananana/template.html': [function(exports, require, module, __filename, __dirname) { module.exports = '<div id=\'module_name\' tabIndex=\'1\'>test</div>'
 }, {"__filename":"lib/template.html","__dirname":"lib"}], 
-'iife': [function(exports, require, module, __filename, __dirname) { 
+'nananana': [function(exports, require, module, __filename, __dirname) { 
     var _ = require('lodash');
     var $ = require('jquery');
     var d3 = require('d3');
-    var model = require('iife/lib/model/model');
-    var view = require('iife/lib/view/view');
-    var template = require('iife/lib/template.html');
+    var model = require('nananana/model/model');
+    var view = require('nananana/view/view');
+    var template = require('nananana/template.html');
     require('d3');
     var module = {
         jquery: $,
@@ -144,6 +144,6 @@ return "lodash here"
 , [closure,parent.test]
 )
 
- return require('iife') 
+ return require('nananana') 
 
 }.call({},this,dep2,this.async))

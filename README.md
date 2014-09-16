@@ -53,10 +53,11 @@ Options:
 '-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}'
 '-r, --returns [file/module]' , 'Return module, could be specified as file or resolved module'
 '-w, --wrapper [type]'        , 'Wrapper type umd'
+'-p, --project-name [name]'   , 'Project name, it becomes prefix for your internal modules name'
 
-'--external [json]'           , 'External modules'
+'--external [json]'           , 'Include module from external location {lib:path}')
 '--discoverable [dirs]'       , 'External modules lib, such bower_components'
-'--descriptors [files]'       , 'Checking main file in external dep'
+'--descriptors [files]'       , 'Checking main file in external dep descriptor'
 '--skip [module]'             , 'Skip external module'
 ```
 
@@ -65,7 +66,8 @@ Options:
 module.exports = 
   { names         : {amd: 'amd/name', global: 'global.name'}
   , returns       : ''
-  , globals      : [] //external module_name#global_ref
+  , globals       : [] //external module_name#global_ref
+  , project       : '' //project name
 
   //define cutting points for modules { glob_pattern: file }
   , slice         : {"**/**": "bundle.js"}

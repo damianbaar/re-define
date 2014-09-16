@@ -25,9 +25,10 @@ var program = require('commander')
     .option('-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}', JSON.parse)
     .option('-r, --returns [file/module]' , 'Return module, could be specified as file or resolved module')
     .option('-w, --wrapper [type]'        , 'Wrapper type umd')
+    .option('-p, --project-name [name]'   , 'Project name')
 
     //Find external file
-    .option('--external [json]'       , 'External modules', JSON.parse)
+    .option('--external [json]'       , 'Include module from external location', JSON.parse)
     .option('--discoverable [dirs]'   , 'External modules lib, such bower_components', toArray)
     .option('--descriptors [files]'   , 'Checking main file in external dep', toArray)
     .option('--skip [module]'         , 'Skip external module', toArray)
@@ -43,6 +44,7 @@ var program = require('commander')
     , namespace      : program.namespace
     , names          : program.names
     , globals        : program.globals
+    , project        : program.projectName
     }
 
   config = redefine.config(options)

@@ -50,6 +50,17 @@ exports['rewrite-require'] = {
       test.done()
     })
   },
+  'add project name to dependency name': function(test) {
+    var m = createModule('foo/baz/bar')
+
+    m.update = function(val) {
+      test.equal(val, 'nanana/foo/baz/bar')
+    }
+
+    convert({internal: [m]}, function(f) {
+      test.done()
+    },{project:'nanana'})
+  },
   'update references - files which where referenced from other modules but path points to the same file': function(test) {
     var m = createModule('foo/baz/bar')
       , ref1 = createModule('../baz/bar')
@@ -81,8 +92,8 @@ function createModule(name, empty) {
   return m
 }
 
-function convert(file, done) {
-  var stream = transform(redefine.config())
+function convert(file, done, config) {
+  stream = transform(redefine.config(config))
                 .on('data', function(f) {
                   done(f)
                 })
