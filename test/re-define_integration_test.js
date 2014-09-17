@@ -36,7 +36,7 @@ exports['integration'] = {
       test.equal('(function(){return"a"}())'
                  + 'return"b"'
                  + 'return"c"'
-                 + 'module.exports={}require("test/a")require("test/b")require("test/c")', result)
+                 + 'module.exports={}require("project/a")require("project/b")require("project/c")', result)
     })
     .on('end', test.done)
   },
@@ -69,7 +69,7 @@ exports['integration'] = {
       test.equal('(function(){return"a"}())'
                  + 'return"b"'
                  + 'return"c"'
-                 + 'module.exports={}require("test/a")require("test/b")require("test/c")', result)
+                 + 'module.exports={}require("project/a")require("project/b")require("project/c")', result)
     })
     .on('end', function() {
       test.equal(callCounts, 4)
@@ -100,9 +100,9 @@ exports['integration'] = {
       var eR = "require('does_not_exists');"
              + "require('does_not_exists');"
              + "require('does_not_exists');"
-             + "require('re-define/test/lib/b');"
-             + "require('re-define/test/lib/c');"
-             + "require('re-define/test/foo/baz/d');"
+             + "require('project/test/lib/b');"
+             + "require('project/test/lib/c');"
+             + "require('project/test/foo/baz/d');"
              + "require('does_not_exists');"
 
       test.equal(escape(eR), escape(result))
@@ -118,7 +118,7 @@ function createBundle() {
     , result
 
   config.wrapper = 'empty'
-  config.project = 'test'
+  config.project = 'project'
 
   var _spy = function(config) {
     return spy = through.obj(function(m,e,n) {
