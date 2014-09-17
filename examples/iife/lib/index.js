@@ -1,6 +1,7 @@
 require(
   [ "lodash"
   , "jquery"
+  , "jquery2"
   , "d3"
   , "./model/model"
   , "./view/view"

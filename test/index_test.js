@@ -81,7 +81,7 @@ exports['re-define core'] = {
 
     var f1 = new File({path: 'simple.js'})
     f1.contents = new Buffer('module.exports = {};require("a");require("b");require("c");')
-    
+
     var spy = sinon.spy()
 
     var f2 = new File({path: 'a.js'})
@@ -97,7 +97,7 @@ exports['re-define core'] = {
     _.each([f1, f1, f2, f2, f3, f3, f4, f4], bundle.write)
 
     bundle.on('data', function(result) {
-      test.equal(true, spy.calledTwice)
+      test.equal(4, spy.callCount)
       test.equal(result.length, 4)
       test.equal([false,false,false,false].join(), _.pluck(result, 'pending').join())
     }).on('end', test.done)
@@ -105,7 +105,7 @@ exports['re-define core'] = {
 };
 
 function createBundle() { 
-  var redefine = require('re-define')
+  var redefine = require('../lib')
     , config = redefine.config()
     , result
 

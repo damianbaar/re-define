@@ -34,7 +34,7 @@
         return this;
       }
     };
-}, {"__filename":"lookup.js","__dirname":"."}]
+}, {"__filename":"./lookup.js","__dirname":"."}]
 }
 , function() { this.org = this.org || {};this.org.component = this.org.component || {}; return this.org.component }.call(this)
 , []

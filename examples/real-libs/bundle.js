@@ -1,4 +1,4 @@
-//externals: jsdom 
+
 (function (modules, namespace, imports) {
   function require(name){
     if(!namespace[name]) {
@@ -5548,29 +5548,7 @@
       }
       return jQuery;
     }));
-}, {"__filename":"node_modules/jquery/dist/jquery.js","__dirname":"node_modules/jquery/dist"}], 
-'d3': [function(exports, require, module, __filename, __dirname) { 
-    var document = require('jsdom').jsdom('<html><head></head><body></body></html>'), window = document.createWindow(), globals = {};
-    if ('window' in global)
-      globals.window = global.window;
-    global.window = window;
-    if ('document' in global)
-      globals.document = global.document;
-    global.document = document;
-    var CSSStyleDeclaration_prototype = window.CSSStyleDeclaration.prototype, CSSStyleDeclaration_setProperty = CSSStyleDeclaration_prototype.setProperty;
-    CSSStyleDeclaration_prototype.setProperty = function (name, value, priority) {
-      return CSSStyleDeclaration_setProperty.call(this, name + '', value == null ? null : value + '', priority == null ? null : priority + '');
-    };
-    module.exports = require('d3');
-    if ('window' in globals)
-      global.window = globals.window;
-    else
-      delete global.window;
-    if ('document' in globals)
-      global.document = globals.document;
-    else
-      delete global.document;
-}, {"__filename":"node_modules/d3/index.js","__dirname":"node_modules/d3"}], 
+}, {"__filename":"./node_modules/jquery/dist/jquery.js","__dirname":"./node_modules/jquery/dist"}], 
 'd3': [function(exports, require, module, __filename, __dirname) { 
     !function () {
       var d3 = { version: '3.4.11' };
@@ -16639,7 +16617,7 @@
         module.exports = d3;
       this.d3 = d3;
     }();
-}, {"__filename":"node_modules/d3/d3.js","__dirname":"node_modules/d3"}], 
+}, {"__filename":"./node_modules/d3/d3.js","__dirname":"./node_modules/d3"}], 
 'real-libs': [function(exports, require, module, __filename, __dirname) { 
     var $ = require('jquery'), d3 = require('d3');
     var barData = [
@@ -16707,7 +16685,7 @@
         d3.select(this).attr('fill', 'grey');
       });
     });
-}, {"__filename":"index.js","__dirname":"."}]
+}, {"__filename":"./index.js","__dirname":"."}]
 }
 , function() { this.org = this.org || {};this.org.chart = this.org.chart || {}; return this.org.chart }.call(this)
 , []

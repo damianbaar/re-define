@@ -6,12 +6,10 @@ var redefine = require('../lib')
   , mock = require('mock-fs')
 
 var bundle
-  , basedir = process.cwd()
   , spy
 
 exports['integration'] = {
   setUp: function(cb) {
-    process.chdir(__dirname)
 
     createBundle()
 
@@ -24,7 +22,6 @@ exports['integration'] = {
   },
   tearDown: function(cb) {
     mock.restore()
-    process.chdir(basedir)
     cb()
   },
   'load dependencies and set namespace for require calls': function(test) {
@@ -48,7 +45,8 @@ exports['integration'] = {
       , file
 
     spy.pipe(through.obj(function(f,e,n) {
-      callCounts++
+      if(f.stopProcessing !== true) callCounts++
+
       this.push(f)
       n()
     }))
@@ -59,10 +57,9 @@ exports['integration'] = {
     _.each([ file
            , new File({path:'a.js'})
            , new File({path:'b.js'})
-           , new File({path:'c.js'})
            , new File({path:'a.js'})
            , new File({path:'b.js'})
-           , new File({path:'c.js'})
+           // , new File({path:'c.js'})
            ]
            , bundle.write)
 
@@ -86,6 +83,7 @@ function createBundle() {
     , result
 
   config.wrapper = 'empty'
+  config.project = 'test'
 
   var _spy = function(config) {
     return spy = through.obj(function(m,e,n) {
