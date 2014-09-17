@@ -79,35 +79,35 @@ var require = //externals: dep2,async/async
     var a = 'jquery';
     module.exports = { name: a };
 }, {"__filename":"jquery2.js","__dirname":"node_modules/jquery"}], 
-'lib/model/helper': [function(exports, require, module, __filename, __dirname) { 
+'nananana/model/helper': [function(exports, require, module, __filename, __dirname) { 
     var async = require('async/async') || function () {
       };
     return { getAsync: async };
-}, {"__filename":"helper.js","__dirname":"lib/model"}], 
-'lib/model/model': [function(exports, require, module, __filename, __dirname) { 
-    var helper = require('lib/model/helper');
+}, {"__filename":"helper.js","__dirname":"model"}], 
+'nananana/model/model': [function(exports, require, module, __filename, __dirname) { 
+    var helper = require('nananana/model/helper');
     var async = helper.getAsync();
     return {
       getData: function () {
         return async ? 'async_data' : 'data';
       }
     };
-}, {"__filename":"model.js","__dirname":"lib/model"}], 
-'lib/view/template.html': [function(exports, require, module, __filename, __dirname) { 
+}, {"__filename":"model.js","__dirname":"model"}], 
+'nananana/view/template.html': [function(exports, require, module, __filename, __dirname) { 
 module.exports = '<li></li><li></li><li></li><li></li>'
-}, {"__filename":"template.html","__dirname":"lib/view"}], 
-'lib/view/helper': [function(exports, require, module, __filename, __dirname) { 
+}, {"__filename":"template.html","__dirname":"view"}], 
+'nananana/view/helper': [function(exports, require, module, __filename, __dirname) { 
     module.exports = {
       escape: function () {
       }
     };
-}, {"__filename":"helper.js","__dirname":"lib/view"}], 
-'lib/view/type': [function(exports, require, module, __filename, __dirname) { 
+}, {"__filename":"helper.js","__dirname":"view"}], 
+'nananana/view/type': [function(exports, require, module, __filename, __dirname) { 
     exports.js = 'ast';
     exports.html = 'raw';
-}, {"__filename":"type.js","__dirname":"lib/view"}], 
-'lib/view/view': [function(exports, require, module, __filename, __dirname) { 
-    var tmpl = require('lib/view/template.html'), model = require('lib/model/model'), helper = require('lib/view/helper'), type = require('lib/view/type'), d3 = require('d3');
+}, {"__filename":"type.js","__dirname":"view"}], 
+'nananana/view/view': [function(exports, require, module, __filename, __dirname) { 
+    var tmpl = require('nananana/view/template.html'), model = require('nananana/model/model'), helper = require('nananana/view/helper'), type = require('nananana/view/type'), d3 = require('d3');
     module.exports = function () {
       return {
         model: model.getData(),
@@ -115,18 +115,18 @@ module.exports = '<li></li><li></li><li></li><li></li>'
         helper: helper
       };
     };
-}, {"__filename":"view.js","__dirname":"lib/view"}], 
-'lib/template.html': [function(exports, require, module, __filename, __dirname) { 
+}, {"__filename":"view.js","__dirname":"view"}], 
+'nananana/template.html': [function(exports, require, module, __filename, __dirname) { 
 module.exports = '<div id=\'module_name\' tabIndex=\'1\'>test</div>'
-}, {"__filename":"template.html","__dirname":"lib"}], 
-'lib': [function(exports, require, module, __filename, __dirname) { 
+}, {"__filename":"template.html","__dirname":"."}], 
+'nananana': [function(exports, require, module, __filename, __dirname) { 
     var _ = require('lodash');
     var $ = require('jquery');
     var $2 = require('jquery/jquery2');
     var d3 = require('d3');
-    var model = require('lib/model/model');
-    var view = require('lib/view/view');
-    var template = require('lib/template.html');
+    var model = require('nananana/model/model');
+    var view = require('nananana/view/view');
+    var template = require('nananana/template.html');
     require('d3');
     var module = {
         jquery: $,
@@ -152,6 +152,6 @@ module.exports = '<div id=\'module_name\' tabIndex=\'1\'>test</div>'
 , [closure,parent.test]
 )
 
- return require('lib') 
+ return require('nananana') 
 
 }.call({},this,dep2,this.async))
