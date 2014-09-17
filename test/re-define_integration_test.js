@@ -59,7 +59,7 @@ exports['integration'] = {
            , new File({path:'b.js'})
            , new File({path:'a.js'})
            , new File({path:'b.js'})
-           // , new File({path:'c.js'})
+           , new File({path:'c.js'})
            ]
            , bundle.write)
 
@@ -73,6 +73,41 @@ exports['integration'] = {
     })
     .on('end', function() {
       test.equal(callCounts, 4)
+      test.done()
+    })
+  },
+  'not existing dependency': function(test) {
+    var file
+
+    mock({
+      'test/a.js': 'require("./lib/b");require("./lib/c");require("./foo/baz/d");require("does_not_exists")'
+    , 'test/lib/b.js': 'require("does_not_exists")'
+    , 'test/lib/c.js': 'require("does_not_exists")'
+    , 'test/foo/baz/d.js': 'require("does_not_exists")'
+    })
+
+    _.each([ new File({path:'test/a.js'})
+           , new File({path:'test/lib/b.js'})
+           , new File({path:'test/lib/a.js'})
+           , new File({path:'test/foo/baz/d.js'})
+           ]
+           , bundle.write)
+
+
+    bundle.on('data', function(result) {
+      result = result.contents.toString()
+
+      var eR = "require('does_not_exists');"
+             + "require('does_not_exists');"
+             + "require('does_not_exists');"
+             + "require('re-define/test/lib/b');"
+             + "require('re-define/test/lib/c');"
+             + "require('re-define/test/foo/baz/d');"
+             + "require('does_not_exists');"
+
+      test.equal(escape(eR), escape(result))
+    })
+    .on('end', function() {
       test.done()
     })
   }

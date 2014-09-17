@@ -5548,7 +5548,7 @@
       }
       return jQuery;
     }));
-}, {"__filename":"./node_modules/jquery/dist/jquery.js","__dirname":"./node_modules/jquery/dist"}], 
+}, {"__filename":"jquery.js","__dirname":"node_modules/jquery/dist"}], 
 'd3': [function(exports, require, module, __filename, __dirname) { 
     !function () {
       var d3 = { version: '3.4.11' };
@@ -16617,7 +16617,7 @@
         module.exports = d3;
       this.d3 = d3;
     }();
-}, {"__filename":"./node_modules/d3/d3.js","__dirname":"./node_modules/d3"}], 
+}, {"__filename":"d3.js","__dirname":"node_modules/d3"}], 
 'real-libs': [function(exports, require, module, __filename, __dirname) { 
     var $ = require('jquery'), d3 = require('d3');
     var barData = [
@@ -16685,8 +16685,8 @@
         d3.select(this).attr('fill', 'grey');
       });
     });
-}, {"__filename":"./index.js","__dirname":"."}]
+}, {"__filename":"index.js","__dirname":"."}]
 }
-, function() { this.org = this.org || {};this.org.chart = this.org.chart || {}; return this.org.chart }.call(this)
+,  function() { this.org = this.org || {};this.org.chart = this.org.chart || {}; return this.org.chart }.call(this) 
 , []
 )

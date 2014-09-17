@@ -49,7 +49,7 @@ Options:
 '--namespace [a.b.c.d]'       , 'Namespace for bundle'
 '--imports [namespaces]'      , 'Import namespaces'
 
-'-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery'
+'-g, --globals [json]'        , 'Map externals to global - {jquery:this.jquery}'
 '-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}'
 '-r, --returns [file/module]' , 'Return module, could be specified as file or resolved module'
 '-w, --wrapper [type]'        , 'Wrapper type umd'
@@ -66,7 +66,7 @@ Options:
 module.exports = 
   { names         : {amd: 'amd/name', global: 'global.name'}
   , returns       : ''
-  , globals       : [] //external module_name#global_ref
+  , globals       : {} //external module_name#global_ref
   , project       : '' //project name
 
   //define cutting points for modules { glob_pattern: file }

@@ -21,7 +21,7 @@ var program = require('commander')
     .option('--namespace [a.b.c.d]'       , 'Namespace for bundle')
     .option('--imports [namespaces]'      , 'Import namespaces', toArray)
 
-    .option('-g, --globals [module#as]'   , 'Map externals to global - jquery#this.jquery', toArray)
+    .option('-g, --globals [json]'        , 'Map externals to global - {jquery:this.jquery}', JSON.parse)
     .option('-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}', JSON.parse)
     .option('-r, --returns [file/module]' , 'Return module, could be specified as file or resolved module')
     .option('-w, --wrapper [type]'        , 'Wrapper type umd')
@@ -92,6 +92,7 @@ var program = require('commander')
   function saveFile(file, cb) {
     mkdirp(path.dirname(file.path), function (err) {
       if (err) return cb(err)
+        console.log(file)
       fs.writeFile(file.path, file.contents, cb)
     })
   }

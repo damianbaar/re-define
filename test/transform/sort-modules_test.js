@@ -16,9 +16,8 @@ exports['sort-modules'] = {
     var m = createModule('main')
     m.dependencies = [d1,d2]
 
-    convert([d2, m, d1], function(bundle) {
-      test.equal(['dep1', 'dep2', 'main'].join(), _.pluck(bundle.internal, 'name').join())
-      test.equal(bundle.external.length, 0)
+    convert([d2, m, d1], function(files) {
+      test.equal(['dep1', 'dep2', 'main'].join(), _.pluck(files, 'name').join())
       test.done()
     })
   },
@@ -29,10 +28,9 @@ exports['sort-modules'] = {
     var m = createModule('main')
     m.dependencies = [d1]
 
-    convert([m, d1, d1_empty, d1_empty], function(bundle) {
-      test.equal(['dep1', 'main'].join(), _.pluck(bundle.internal, 'name').join())
-      test.equal(bundle.internal.length, 2)
-      test.equal(bundle.external.length, 0)
+    convert([m, d1, d1_empty], function(files) {
+      test.equal(['dep1', 'main'].join(), _.pluck(files, 'name').join())
+      test.equal(files.length, 2)
       test.done()
     })
   },

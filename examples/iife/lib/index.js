@@ -8,7 +8,7 @@ require(
   , "text!./template.html"
   , "d3/d3"
   ]
-  , function(_, $, d3, model, view, template) {
+  , function(_, $, $2, d3, model, view, template) {
 
     var module = { jquery: $
                  , d3: d3

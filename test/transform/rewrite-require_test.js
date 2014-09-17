@@ -6,6 +6,7 @@ var transform = require('../../lib/transform/rewrite-require')
   , through = require('through2')
   , escodegen = require('escodegen')
   , path = require('path')
+  , sinon = require('sinon')
 
 var basedir = process.cwd()
 exports['rewrite-require'] = {
@@ -24,7 +25,7 @@ exports['rewrite-require'] = {
       test.equal(val, 'transform')
     }
 
-    convert({internal: [m]}, function(f) {
+    convert([m], function(f) {
       test.done()
     })
   },
@@ -35,7 +36,7 @@ exports['rewrite-require'] = {
       test.equal(val, 'transform')
     }
 
-    convert({internal: [m]}, function(f) {
+    convert([m], function(f) {
       test.done()
     })
   },
@@ -46,7 +47,7 @@ exports['rewrite-require'] = {
       test.equal(val, 'transform/foo/baz/bar')
     }
 
-    convert({internal: [m]}, function(f) {
+    convert([m], function(f) {
       test.done()
     })
   },
@@ -57,7 +58,7 @@ exports['rewrite-require'] = {
       test.equal(val, 'nanana/foo/baz/bar')
     }
 
-    convert({internal: [m]}, function(f) {
+    convert([m], function(f) {
       test.done()
     },{project:'nanana'})
   },
@@ -70,7 +71,7 @@ exports['rewrite-require'] = {
     m.update = function(val) { test.equal(val, 'transform/foo/baz/bar') }
     ref1.update = function(val) { test.equal(val, 'transform/foo/baz/bar') }
 
-    convert({internal: [m]}, function() { test.done() })
+    convert([m], function() { test.done() })
   },
   'group by base and align folders': function(test) {
     var m = createModule('foo')
@@ -82,7 +83,47 @@ exports['rewrite-require'] = {
     m.update = function(val) { test.equal(val, 'bar/foo') }
     ref1.update = function(val) { test.equal(val, 'dep') }
 
-    convert({internal: [m, ref1]}, function() { test.done() })
+    convert([m, ref1], function() { test.done() })
+  },
+  'revert external modules': function(test) {
+    var m = createModule('foo')
+      , ref1 = createModule('index')
+      , a = createModule('a', true)
+      , b = createModule('b', true)
+      , revert = sinon.spy() 
+      , update = sinon.spy()
+
+    a.revert = b.revert = revert
+    m.update = ref1.update = update
+
+    m.base = '/bar'
+    m.contents = new Buffer('require("a");require("b")')
+
+    ref1.base = '/bar/node_modules/dep'
+
+    convert([m, ref1, a, b], function() { 
+      test.equal(2, revert.callCount)
+      test.equal(2, update.callCount)
+      test.done() 
+    })
+  },
+  'flat folder structure with external': function(test) {
+
+    var m1 = createModule('foo')
+      , n1 = createModule('modules/n1')
+      , n2 = createModule('modules/n2')
+
+    m1.base = '/baz'
+    n1.base = n2.base = '/node_modules/dep'
+    
+    //this one wont be converted - entry point for external lib
+    n1.external = true
+
+    convert([m1, n1, n2], function(result) { 
+      test.equal(['baz/foo', 'modules/n1', 'dep/modules/n2'].join(), _.pluck(result, 'name').join())
+      test.equal(2, _.compact(_.pluck(result, 'external')).length)
+      test.done() 
+    })
   }
 }
 

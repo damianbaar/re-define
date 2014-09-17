@@ -4,7 +4,6 @@ var _ = require('lodash')
   , File = require('vinyl')
   , mock = require('mock-fs')
   , mockery = require('mockery')
-  , sinon = require('sinon')
 
 var bundle
 
@@ -44,7 +43,6 @@ exports['re-define core'] = {
     mockery.registerMock('./transform/convert-ast', spy('convert-ast'))
     mockery.registerMock('./transform/wrap-modules', spy('wrap-modules'))
     mockery.registerMock('./transform/rewrite-require', spy('rewrite-require'))
-    mockery.registerMock('./transform/slice-bundles', spy('slice-bundles'))
     mockery.registerMock('./transform/sort-modules', spy('sort-modules'))
 
     createBundle()
@@ -65,7 +63,7 @@ exports['re-define core'] = {
     cb()
   },
   'load file once': function(test) {
-    test.expect(3)
+    test.expect(2)
 
     mockery.registerMock('./file/load', 
       function(config) { 
@@ -82,22 +80,17 @@ exports['re-define core'] = {
     var f1 = new File({path: 'simple.js'})
     f1.contents = new Buffer('module.exports = {};require("a");require("b");require("c");')
 
-    var spy = sinon.spy()
-
     var f2 = new File({path: 'a.js'})
     f2.contents = new Buffer('module.exports = {}')
-    f2.revert = spy
 
     var f3 = new File({path: 'b.js'})
     f3.contents = new Buffer('module.exports = {}')
-    f3.revert = spy
 
     var f4 = new File({path: 'does-not-exists.js'})
 
     _.each([f1, f1, f2, f2, f3, f3, f4, f4], bundle.write)
 
     bundle.on('data', function(result) {
-      test.equal(4, spy.callCount)
       test.equal(result.length, 4)
       test.equal([false,false,false,false].join(), _.pluck(result, 'pending').join())
     }).on('end', test.done)

@@ -1,1 +1,31 @@
-//NOT IMPLEMENTED YET
+(function (parent, factory){
+  if (typeof exports === 'object') {
+    module.exports = factory(<%=
+           _.map(external, function(d){ return "require('" + d + "')" }).join(',') %>)
+  } else {
+    if (typeof define === 'function' && define.amd) {
+      define('<%- config.names.amd %>', [<%= 
+             _.map(external, function(d){ return "'" + d + "'" }).join(',') %>], factory)
+    }
+
+  <% _.chain(external)
+      .map(function(d) { return 'var ' + util.escape(d) + " = " + " parent." + util.global(d) })
+      .each(function(name) {;
+  %>  <%= name %>
+  <%})%>
+    <%= util.toGlobal('parent', config.names.global, "factory("+_.map(external, util.escape).join(',') + ")") %>
+  }
+  }(this, function (<%= _.map(external, util.escape).join(',') %>) {
+
+  var closure = {}
+
+  <% _.chain(external)
+      .map(function(d) { return "closure['" + d + "'] = " + util.escape(d) })
+      .each(function(name) {;
+  %><%= name %>
+  <%})%>
+
+var require = <%= util.getTemplate('default', ['closure']) %>
+<% if(config.returns) {%>return require('<%= config.returns %>') <%} else {%>return require <% } %>
+
+}.bind({})))
