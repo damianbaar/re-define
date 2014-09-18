@@ -59,7 +59,7 @@ var require = //externals: dep2,async/async
     }(this, function (b) {
       return { d3: 'd3' };
     }));
-}, {"__filename":"d3.js","__dirname":"node_modules/d3"}], 
+}, {"__filename":"index.js","__dirname":"node_modules/d3"}], 
 'jquery': [function(exports, require, module, __filename, __dirname) { 
     var a = require('jquery/lib/dep1');
     require('jquery/lib-2/dep1');
@@ -71,8 +71,8 @@ var require = //externals: dep2,async/async
     var $ = require('jquery'), d3 = require('d3');
     console.log('from lodash', $, d3);
     module.exports = 'lodash here';
-}, {"__filename":"lodash.js","__dirname":"vendor"}], 
-'jquery/jquery2': [function(exports, require, module, __filename, __dirname) { 
+}, {"__filename":"lodash.js","__dirname":"vendor/lodash"}], 
+'jquery2': [function(exports, require, module, __filename, __dirname) { 
     var a = require('jquery/lib/dep1');
     require('jquery/lib-2/dep1');
     require('d3');
@@ -122,7 +122,7 @@ module.exports = '<div id=\'module_name\' tabIndex=\'1\'>test</div>'
 'nananana': [function(exports, require, module, __filename, __dirname) { 
     var _ = require('lodash');
     var $ = require('jquery');
-    var $2 = require('jquery/jquery2');
+    var $2 = require('jquery2');
     var d3 = require('d3');
     var model = require('nananana/model/model');
     var view = require('nananana/view/view');

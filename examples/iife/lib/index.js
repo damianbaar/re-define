@@ -3,8 +3,8 @@ require(
   , "jquery"
   , "jquery2"
   , "d3"
-  , "./model/model"
-  , "./view/view"
+  , "./model/model.js"
+  , "./view/view.js"
   , "text!./template.html"
   , "d3/d3"
   ]

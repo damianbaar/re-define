@@ -1,4 +1,4 @@
-//externals: components/lookup 
+
 (function (modules, namespace, imports) {
   function require(name){
     if(!namespace[name]) {
@@ -27,11 +27,15 @@
   return require;
 })
 ({ 
-'my-site': [function(exports, require, module, __filename, __dirname) { 
-    var lookup = require('components/lookup');
-    lookup.create();
-}, {"__filename":"index.js","__dirname":"."}]
+'components/lookup': [function(exports, require, module, __filename, __dirname) { 
+    return {
+      create: function () {
+        console.log('Creating lookup ...');
+        return this;
+      }
+    };
+}, {"__filename":"lookup.js","__dirname":"components"}]
 }
-,  function() { this.org = this.org || {};this.org.site = this.org.site || {}; return this.org.site }.call(this) 
-, [this.org.component]
+,  function() { this.org = this.org || {};this.org.component = this.org.component || {}; return this.org.component }.call(this) 
+, []
 )

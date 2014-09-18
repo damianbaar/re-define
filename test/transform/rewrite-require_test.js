@@ -40,50 +40,57 @@ exports['rewrite-require'] = {
       test.done()
     })
   },
-  'add folder to dependency name': function(test) {
-    var m = createModule('foo/baz/bar')
-
-    m.update = function(val) {
-      test.equal(val, 'transform/foo/baz/bar')
-    }
-
-    convert([m], function(f) {
-      test.done()
-    })
-  },
   'add project name to dependency name': function(test) {
     var m = createModule('foo/baz/bar')
 
     m.update = function(val) {
-      test.equal(val, 'nanana/foo/baz/bar')
+      test.equal(val, 'proj/foo/baz/bar')
     }
 
     convert([m], function(f) {
       test.done()
-    },{project:'nanana'})
+    }, {project: 'proj'})
+  },
+  'empty project name': function(test) {
+    var m = createModule('foo/baz/bar')
+
+    m.update = function(val) {
+      test.equal(val, 'foo/baz/bar')
+    }
+
+    convert([m], function(f) {
+      test.done()
+    }, {project: null})
   },
   'update references - files which where referenced from other modules but path points to the same file': function(test) {
-    var m = createModule('foo/baz/bar')
-      , ref1 = createModule('../baz/bar')
+    var m = createModule('foo/baz/bar1')
+      , ref1 = createModule('foo/baz/bar2')
+      , spy = sinon.spy()
 
     m.references = ref1
 
-    m.update = function(val) { test.equal(val, 'transform/foo/baz/bar') }
-    ref1.update = function(val) { test.equal(val, 'transform/foo/baz/bar') }
+    m.update = spy
+    ref1.update = spy
 
-    convert([m], function() { test.done() })
+    convert([m], function() { 
+      test.equal(2, spy.callCount)
+      test.done() 
+    })
   },
   'group by base and align folders': function(test) {
     var m = createModule('foo')
       , ref1 = createModule('index')
 
     m.base = '/bar'
-    ref1.base = '/bar/node_modules/dep'
 
-    m.update = function(val) { test.equal(val, 'bar/foo') }
+    ref1.base = '/bar/node_modules/dep'
+    ref1.path = ref1.base + '/' + ref1.name + '.js'
+    ref1.external = true
+
+    m.update = function(val) { test.equal(val, 'nana/foo') }
     ref1.update = function(val) { test.equal(val, 'dep') }
 
-    convert([m, ref1], function() { test.done() })
+    convert([m, ref1], function() { test.done() }, {project:'nana'})
   },
   'revert external modules': function(test) {
     var m = createModule('foo')
@@ -114,21 +121,28 @@ exports['rewrite-require'] = {
       , n2 = createModule('modules/n2')
 
     m1.base = '/baz'
+
     n1.base = n2.base = '/node_modules/dep'
-    
+    n1.path = path.join(n1.base, 'modules/n1.js') 
+    n2.path = path.join(n2.base, 'modules/n2.js') 
+
+    n1.requiredAs = 'external/ref1'
+    n2.requiredAs = 'external/ref2'
+
     //this one wont be converted - entry point for external lib
     n1.external = true
+    n2.external = true
 
     convert([m1, n1, n2], function(result) { 
-      test.equal(['baz/foo', 'modules/n1', 'dep/modules/n2'].join(), _.pluck(result, 'name').join())
+      test.equal(['test/foo', 'external/ref1', 'external/ref2'].join(), _.pluck(result, 'name').join())
       test.equal(2, _.compact(_.pluck(result, 'external')).length)
       test.done() 
-    })
+    }, {project: 'test'})
   }
 }
 
-function createModule(name, empty) {
-  var m = Module({path: name + ".js", name: name});
+function createModule(name, empty, requiredAs) {
+  var m = Module({path: name + ".js", name: name, requiredAs: requiredAs});
   !empty && (m.contents = new Buffer(""))
   return m
 }

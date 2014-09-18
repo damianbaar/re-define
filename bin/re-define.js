@@ -92,11 +92,10 @@ var program = require('commander')
   function saveFile(file, cb) {
     mkdirp(path.dirname(file.path), function (err) {
       if (err) return cb(err)
-        console.log(file)
       fs.writeFile(file.path, file.contents, cb)
     })
   }
-  
+
   _.each(config.entries, function(e) {
     bundle.write(new File({path: e, cwd: config.base}))
   })

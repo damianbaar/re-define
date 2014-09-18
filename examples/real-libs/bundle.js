@@ -16688,5 +16688,5 @@
 }, {"__filename":"index.js","__dirname":"."}]
 }
 ,  function() { this.org = this.org || {};this.org.chart = this.org.chart || {}; return this.org.chart }.call(this) 
-, []
+, [window]
 )
