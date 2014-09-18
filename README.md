@@ -1,17 +1,17 @@
-## re-define
+## `<script src='re-define.js' />`
 Let's `re-define` something ... without any configuration ... just do the magic for me, yet another build tool.
 
-Easy way to pack your application source files into one file in order to build a bundle(s) you can use in <scipt> tag. `re-define` checks recursively `require` calls and could be used either to AMD or CommonJS files, since all AMD modules are converted into CJS.
+Easy way to pack your application source files into one file(s) in order to build a bundle(s) you can use in `<scipt>` tag. `re-define` checks recursively `require` calls and could be used either to AMD or CommonJS files, since all AMD modules are converted into CJS.
 
 Check [examples](/examples) to get better picture.
 
 ### Nice things
 * require function allows to reference different `namespaces`
 * all modules are wrapped in cjs wrapper `function(exports, require, module, __filename, __dirname)`
-* ability to split bundles based on `glob`, to extract common parts
+* ability to split bundles using `glob`, to extract common parts based on folder
 * when piping passing `vinyl` files (integration with gulp)
 * automatically loads configuration from file `re-define.json`
-* handling glob pattern
+* handling glob pattern as an input
 * for external deps (outside the base folder or those which live in node_modules/bower_components) it checks descriptor files, such as `bower.json` or `package.json`, if there is no descriptor it is trying to match file with requested dep name, check [re-define-include-external](https://github.com/damianbaar/re-define-include-external) to get more details
 * `re-define` make names for module appropriatelty to folder structure and expose it within given namespace which could be referenced further from any other different module, this is:
 assuming your module is placed in folder `my_awesome_component` all internal modules are presented as `my_awesome_component/**`. (check tests to get more [info](test/transform/rewrite-require_test.js))
