@@ -27,10 +27,10 @@
   return require;
 })
 ({ 
-'imports': [function(exports, require, module, __filename, __dirname) { 
+'my-site': [function(exports, require, module, __filename, __dirname) { 
     var lookup = require('components/lookup');
     lookup.create();
-}, {"__filename":"index.js","__dirname":"my-site"}]
+}, {"__filename":"index.js","__dirname":"."}]
 }
 ,  function() { this.org = this.org || {};this.org.site = this.org.site || {}; return this.org.site }.call(this) 
 , [this.org.component]

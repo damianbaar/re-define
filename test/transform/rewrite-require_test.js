@@ -130,12 +130,12 @@ exports['rewrite-require'] = {
     n3.base = process.cwd() + '/bower_components/'
     n3.path = path.join(n3.base, './n3/index.js') 
 
-    n1.requiredAs = 'n1/n1'
+    n1.requiredAs = 'n1'
     n2.requiredAs = 'n2'
     n3.requiredAs = 'n3'
 
     convert([m1, n1, n2, n3], function(result) { 
-      test.equal(['test/foo', 'n1/n1', 'n2', 'n3'].join(), _.pluck(result, 'name').join())
+      test.equal(['test/foo', 'n1', 'n2', 'n3'].join(), _.pluck(result, 'name').join())
       test.equal(3, _.compact(_.pluck(result, 'external')).length)
       test.done() 
     }, {project: 'test', base: process.cwd()})

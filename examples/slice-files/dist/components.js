@@ -44,28 +44,6 @@
       c: c
     };
 }, {"__filename":"b.js","__dirname":"common"}], 
-'d3/dep1': [function(exports, require, module, __filename, __dirname) { 
-    module.exports = 'dep1';
-}, {"__filename":"dep1.js","__dirname":"node_modules/d3"}], 
-'d3/lib/dep2': [function(exports, require, module, __filename, __dirname) { 
-    module.exports = { 'dep2': true };
-}, {"__filename":"dep2.js","__dirname":"node_modules/d3/lib"}], 
-'d3': [function(exports, require, module, __filename, __dirname) { 
-    (function (root, factory) {
-      if (typeof define === 'function' && define.amd) {
-        define([
-          'dep1',
-          'dep2'
-        ], factory);
-      } else if (typeof exports === 'object') {
-        module.exports = factory(require('d3/dep1'), require('d3/lib/dep2'), require('external-dep'));
-      } else {
-        root.returnExports = factory(root.dep1, root.dep2);
-      }
-    }(this, function (b) {
-      return { d3: 'd3' };
-    }));
-}, {"__filename":"d3.js","__dirname":"node_modules/d3"}], 
 'entry-1': [function(exports, require, module, __filename, __dirname) { 
     var a = require('common/a'), b = require('common/b'), d3 = require('d3');
     console.log('dirname: ', __dirname, 'filename: ', __filename);
