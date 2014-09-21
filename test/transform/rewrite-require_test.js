@@ -81,9 +81,9 @@ exports['rewrite-require'] = {
     var m = createModule('foo')
       , ref1 = createModule('index')
 
-    m.base = '/bar'
+    m.base = process.cwd()
 
-    ref1.base = '/bar/node_modules/dep'
+    ref1.base = '/node_modules/dep'
     ref1.path = ref1.base + '/' + ref1.name + '.js'
     ref1.external = true
 
@@ -114,30 +114,31 @@ exports['rewrite-require'] = {
       test.done() 
     })
   },
-  'flat folder structure with external': function(test) {
+  'flat structure for folders': function(test) {
 
     var m1 = createModule('foo')
-      , n1 = createModule('modules/n1')
-      , n2 = createModule('modules/n2')
+      , n1 = createModule('n1')
+      , n2 = createModule('n2')
+      , n3 = createModule('n3')
 
-    m1.base = '/baz'
+    m1.base = process.cwd()
 
-    n1.base = n2.base = '/node_modules/dep'
-    n1.path = path.join(n1.base, 'modules/n1.js') 
-    n2.path = path.join(n2.base, 'modules/n2.js') 
+    n1.base = n2.base = process.cwd() + '/node_modules/'
+    n1.path = path.join(n1.base, './n1/n1.js') 
+    n2.path = path.join(n2.base, './n2/n2.js') 
 
-    n1.requiredAs = 'external/ref1'
-    n2.requiredAs = 'external/ref2'
+    n3.base = process.cwd() + '/bower_components/'
+    n3.path = path.join(n3.base, './n3/index.js') 
 
-    //this one wont be converted - entry point for external lib
-    n1.external = true
-    n2.external = true
+    n1.requiredAs = 'n1/n1'
+    n2.requiredAs = 'n2'
+    n3.requiredAs = 'n3'
 
-    convert([m1, n1, n2], function(result) { 
-      test.equal(['test/foo', 'external/ref1', 'external/ref2'].join(), _.pluck(result, 'name').join())
-      test.equal(2, _.compact(_.pluck(result, 'external')).length)
+    convert([m1, n1, n2, n3], function(result) { 
+      test.equal(['test/foo', 'n1/n1', 'n2', 'n3'].join(), _.pluck(result, 'name').join())
+      test.equal(3, _.compact(_.pluck(result, 'external')).length)
       test.done() 
-    }, {project: 'test'})
+    }, {project: 'test', base: process.cwd()})
   }
 }
 
