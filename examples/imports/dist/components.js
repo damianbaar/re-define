@@ -1,4 +1,5 @@
 
+
 (function (modules, namespace, imports) {
   function require(name){
     if(!namespace[name]) {
@@ -34,7 +35,7 @@
         return this;
       }
     };
-}, {"__filename":"lookup.js","__dirname":"components"}]
+}, {"__filename":"lookup.js","__dirname":"."}]
 }
 ,  function() { this.org = this.org || {};this.org.component = this.org.component || {}; return this.org.component }.call(this) 
 , []

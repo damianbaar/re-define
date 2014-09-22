@@ -2,9 +2,6 @@ var transform = require('../../lib/transform/rewrite-require')
   , redefine = require('../../lib')
   , _ = require('lodash')
   , Module = require('re-define-module')
-  , acorn = require('acorn')
-  , through = require('through2')
-  , escodegen = require('escodegen')
   , path = require('path')
   , sinon = require('sinon')
 
@@ -138,7 +135,7 @@ exports['rewrite-require'] = {
       test.equal(['test/foo', 'n1', 'n2', 'n3'].join(), _.pluck(result, 'name').join())
       test.equal(3, _.compact(_.pluck(result, 'external')).length)
       test.done() 
-    }, {project: 'test', base: process.cwd()})
+    }, {project: 'test', cwd: process.cwd()})
   }
 }
 

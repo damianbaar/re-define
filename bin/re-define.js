@@ -11,7 +11,7 @@ var program = require('commander')
   , glob = require('glob')
 
   program
-    .option('--cwd'                       , 'CWD')
+    .option('--cwd [dir]'                 , 'CWD')
     .option('-b, --base [dir]'            , 'Base dir')
     .option('-o, --output [dir or file]'  , 'Output, when defined saving to appropriate files')
     .option('-t, --transforms [libs]'     , 'Attach transform stream', toArray)
@@ -36,6 +36,7 @@ var program = require('commander')
 
   var options = 
     { base           : program.base
+    , cwd            : program.cwd
     , output         : program.output
     , map            : program.mapDeps
     , wrapper        : program.wrapper
@@ -97,7 +98,10 @@ var program = require('commander')
   }
 
   _.each(config.entries, function(e) {
-    bundle.write(new File({path: e, cwd: config.base}))
+    bundle.write(new File({path: e
+    , cwd: (config.cwd && path.resolve(config.cwd)) || process.cwd()
+    , base: !!config.base && path.resolve(config.base)
+    }))
   })
 
   function toArray(val) { return _.map(val.split(','), function(d) { return d.replace(/\ /g, '') }) }
