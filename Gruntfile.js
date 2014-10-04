@@ -1,7 +1,7 @@
 
 module.exports = function(grunt) {
-  grunt.registerTask('default', ['nodeunit', 'watch'])
-  grunt.registerTask('test', ['nodeunit'])
+  grunt.registerTask('default', ['nodeunit', 'shell', 'mocha', 'watch'])
+  grunt.registerTask('test', ['mocha', 'nodeunit'])
 
   grunt.initConfig({
     mocha: {
