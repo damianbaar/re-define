@@ -1,0 +1,1 @@
+re-define './lib/index.js' --wrapper umd --base lib --returns 'lib/index.js' --globals '{"async/async":"async"}' --external '{"lodash":"./vendor/lodash/lodash.js", "jquery2":"./node_modules/jquery/jquery2.js"}' --map-deps '{"d3/d3":"d3"}' --imports 'parent.test' --project-name 'nananana' --namespace examples.umd > bundle.js

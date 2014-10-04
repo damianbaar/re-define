@@ -1,0 +1,1 @@
+(cd nested && ./build.sh)

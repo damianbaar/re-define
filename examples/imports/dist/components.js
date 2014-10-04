@@ -1,5 +1,4 @@
 
-
 (function (modules, namespace, imports) {
   function require(name){
     if(!namespace[name]) {
@@ -14,7 +13,7 @@
 
         var mod;
         for(var i=0; i < imports.length; i++) {
-          mod = imports[i][name];
+          mod = imports[i] && imports[i][name];
           if(mod) return mod;
         }
 
@@ -37,6 +36,6 @@
     };
 }, {"__filename":"lookup.js","__dirname":"."}]
 }
-,  function() { this.org = this.org || {};this.org.component = this.org.component || {}; return this.org.component }.call(this) 
+,  function() { this.examples = this.examples || {};this.examples.imports = this.examples.imports || {};this.examples.imports.component = this.examples.imports.component || {}; return this.examples.imports.component }.call(this) 
 , []
 )

@@ -12,7 +12,7 @@
 
         var mod;
         for(var i=0; i < imports.length; i++) {
-          mod = imports[i][name];
+          mod = imports[i] && imports[i][name];
           if(mod) return mod;
         }
 

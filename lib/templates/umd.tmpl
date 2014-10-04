@@ -1,4 +1,4 @@
-(function (parent, factory){
+;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
     define('<%- config.names.amd %>', [<%= 
            _.map(external, function(d){ return "'" + d + "'" }).join(',') %>], factory)

@@ -1,4 +1,3 @@
-
 //externals: components/lookup 
 (function (modules, namespace, imports) {
   function require(name){
@@ -14,7 +13,7 @@
 
         var mod;
         for(var i=0; i < imports.length; i++) {
-          mod = imports[i][name];
+          mod = imports[i] && imports[i][name];
           if(mod) return mod;
         }
 
@@ -33,6 +32,6 @@
     lookup.create();
 }, {"__filename":"index.js","__dirname":"."}]
 }
-,  function() { this.org = this.org || {};this.org.site = this.org.site || {}; return this.org.site }.call(this) 
-, [this.org.component]
+,  function() { this.examples = this.examples || {};this.examples.imports = this.examples.imports || {};this.examples.imports.org = this.examples.imports.org || {};this.examples.imports.org.site = this.examples.imports.org.site || {}; return this.examples.imports.org.site }.call(this) 
+, [examples.imports.component]
 )

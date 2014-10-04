@@ -1,1 +1,1 @@
-re-define './lib/index.js' --base lib --returns 'lib/index.js' --wrapper iife --globals '{"async/async":"this.async"}' --external '{"lodash":"./vendor/lodash/lodash.js", "jquery2":"./node_modules/jquery/jquery2.js"}' --map-deps '{"d3/d3":"d3"}' --imports 'parent.test' --project-name 'nananana' > bundle.js
+re-define index.js --wrapper iife --namespace examples.iife --returns index.js > bundle.js
