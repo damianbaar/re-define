@@ -1,7 +1,7 @@
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
     define('amd/name', ['dep2','async/async'], factory)
-  } else if (typeof exports === 'object') {
+  } else if (typeof module === "object" && !!module.exports) {
     module.exports = factory(require('dep2'),require('async/async'))
   } else {
     var dep2 =  parent.dep2

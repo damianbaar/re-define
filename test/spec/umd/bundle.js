@@ -44,9 +44,15 @@ var require =
   return require;
 })
 ({ 
+'umd/dep': [function(exports, require, module, __filename, __dirname) { 
+    module.exports = 'dep';
+}, {"__filename":"dep.js","__dirname":"."}], 
 'umd/umd': [function(exports, require, module, __filename, __dirname) { 
-return 'umd'
-
+    var dep = require('umd/dep');
+    module.exports = {
+      dep: dep,
+      name: 'umd'
+    };
 }, {"__filename":"umd.js","__dirname":"."}]
 }
 , {} 
