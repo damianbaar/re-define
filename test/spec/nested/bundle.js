@@ -35,7 +35,7 @@
     module.exports = 'b';
 }, {"__filename":"b.js","__dirname":"node_modules/a"}], 
 'd': [function(exports, require, module, __filename, __dirname) { 
-    module.exports = 'c';
+    module.exports = 'd';
 }, {"__filename":"d.js","__dirname":"node_modules/a/node_modules/d"}], 
 'a/c': [function(exports, require, module, __filename, __dirname) { 
     var d = require('d');
@@ -45,8 +45,9 @@
     require('a/b');
     require('a/c');
     require('common');
+    module.exports = 'main';
 }, {"__filename":"index.js","__dirname":"."}]
 }
-,  function() { this.examples = this.examples || {};this.examples.nested = this.examples.nested || {}; return this.examples.nested }.call(this) 
+,  function() { this.spec = this.spec || {};this.spec.nested = this.spec.nested || {}; return this.spec.nested }.call(this) 
 , []
 )

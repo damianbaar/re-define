@@ -2,7 +2,7 @@
   if (typeof define === 'function' && define.amd) {
     define('<%- config.names.amd %>', [<%= 
            _.map(external, function(d){ return "'" + d + "'" }).join(',') %>], factory)
-  } else if (typeof exports === 'object') {
+  } else if (typeof module === "object" && !!module.exports) {
     module.exports = factory(<%=
            _.map(external, function(d){ return "require('" + d + "')" }).join(',') %>)
   } else {

@@ -1,20 +1,12 @@
 
 module.exports = function(grunt) {
-  grunt.registerTask('default', ['nodeunit', 'shell', 'mocha', 'watch'])
-  grunt.registerTask('test', ['mocha', 'nodeunit'])
+  grunt.registerTask('default', ['shell', 'watch'])
+  grunt.registerTask('test', ['shell:tests', 'nodeunit'])
+  grunt.registerTask('update', ['shell:examples'])
 
   grunt.initConfig({
-    mocha: {
-      test: {
-        options: {
-          run: true
-        , log: true
-        },
-        src: ['test/browser/index.html']
-      }
-    },
     shell: {
-      tests:    { command: '(cd test/browser/ && ./build.sh)' }
+      tests:    { command: '(cd test/spec/ && ./build.sh)' }
     , examples: { command: '(cd examples/ && ./build.sh)' }
     },
     nodeunit: {
@@ -22,12 +14,11 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['test/**/**', 'lib/**/*.*', '*.*']
-    , tasks: ['nodeunit', 'shell', 'mocha']
+    , tasks: ['shell:tests', 'nodeunit']
     }
   })
 
   grunt.loadNpmTasks('grunt-contrib-nodeunit')
-  grunt.loadNpmTasks('grunt-mocha')
   grunt.loadNpmTasks('grunt-shell')
   grunt.loadNpmTasks('grunt-contrib-watch')
 }
