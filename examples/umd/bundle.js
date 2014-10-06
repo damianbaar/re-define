@@ -27,7 +27,7 @@ var require = //externals: dep2,async/async
         , f = modules[name]
 
       if(f) {
-        f = f[0].call(m, m, require, m, f[1].__filename, f[1].__dirname);
+        f = f[0].call(m, m.exports, require, m, f[1].__filename, f[1].__dirname);
         namespace[name] = f || m.exports;
       } else {
         if(!imports) throw new Error('Module does not exists ' + name);
