@@ -7,10 +7,10 @@ var fs = require('fs')
 
 exports['testing-bundles'] = testCase({
 
-  "nested - structure with dependencies comming from node_modules (pattern: default)" 
+  "nested dependencies - structure with dependencies comming from node_modules (pattern: default)" 
 : testCase({
     'create namespace and expose all modules': function(test) {
-      var ctx = sandbox(path.resolve(__dirname, 'spec/nested/bundle.js'))
+      var ctx = sandbox(path.resolve(__dirname, 'spec/nested-dependencies/bundle.js'))
         , spec = ctx.spec
 
       test.equal(spec.nested.common, 'common')
@@ -61,6 +61,20 @@ exports['testing-bundles'] = testCase({
       test.equal(globals.define.getCall(0).args[0], 'umd/module')
       test.ok(typeof globals.define.getCall(0).args[2] === "function")
       test.ok(globals.define.getCall(0).args[2]().toString(), {name:'umd', dep:'dep'})
+
+      test.done()
+    }
+  }),
+  "multiple-entry-points"
+: testCase({
+    'exposing modules': function(test) {
+      var ctx = sandbox(path.resolve(__dirname, 'spec/multiple-entry-points/bundle.js'))
+        , code = ctx.spec.multi
+
+      test.equal(code['test/dep'].name, 'dep')
+      test.equal(code['test'], 'INDEX')
+      test.equal(code['test/entry1'], 'ENTRY1')
+      test.equal(code['test/entry2'], 'ENTRY2')
 
       test.done()
     }
