@@ -65,6 +65,7 @@ exports['testing-bundles'] = testCase({
       test.done()
     }
   }),
+
   "multiple-entry-points"
 : testCase({
     'exposing modules': function(test) {
@@ -75,6 +76,23 @@ exports['testing-bundles'] = testCase({
       test.equal(code['test'], 'INDEX')
       test.equal(code['test/entry1'], 'ENTRY1')
       test.equal(code['test/entry2'], 'ENTRY2')
+
+      test.done()
+    },
+  }),
+
+  "referencing-nested-files"
+: testCase({
+    'exposing modules': function(test) {
+      var ctx = sandbox(path.resolve(__dirname, 'spec/referencing-nested-files/bundle.js'))
+        , code = ctx.spec.refs
+
+      test.equal(code['a'], 'a')
+      test.equal(code['a/c'], 'c')
+      test.equal(code['a/b'], 'b')
+      test.equal(code['a/b/d'], 'd')
+      test.equal(code['a/b/d/e'], 'e')
+      test.equal(code['refs'], 'refs')
 
       test.done()
     }

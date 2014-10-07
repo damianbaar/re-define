@@ -81,6 +81,7 @@ exports['rewrite-require'] = {
     m.base = process.cwd()
 
     ref1.base = '/node_modules/dep'
+    ref1.requiredAs = 'dep'
     ref1.path = ref1.base + '/' + ref1.name + '.js'
     ref1.external = true
 

@@ -55,7 +55,7 @@ var require = //externals: dep2,async/async
     var a = require('jquery/lib-2/dep1');
     return { name: 'dep' };
 }, {"__filename":"dep1.js","__dirname":"node_modules/jquery/lib"}], 
-'d3/dep1': [function(exports, require, module, __filename, __dirname) { 
+'umd/node_modules/d3/dep1': [function(exports, require, module, __filename, __dirname) { 
     module.exports = { test: 'test' };
 }, {"__filename":"dep1.js","__dirname":"node_modules/d3"}], 
 'd3': [function(exports, require, module, __filename, __dirname) { 
@@ -66,7 +66,7 @@ var require = //externals: dep2,async/async
           'dep2'
         ], factory);
       } else if (typeof exports === 'object') {
-        module.exports = factory(require('d3/dep1'), require('dep2'));
+        module.exports = factory(require('umd/node_modules/d3/dep1'), require('dep2'));
       } else {
         root.returnExports = factory(root.dep1, root.dep2);
       }
