@@ -25,7 +25,6 @@ assuming your module is placed in folder `my_awesome_component` all internal mod
 ### TODO
 * incremental builds
 * generating `sourcemaps`
-* disable warnings
 * separate namespace for bundles when slicing
 
 ### Limitation
@@ -68,7 +67,7 @@ Options:
 module.exports = 
   { names         : {amd: 'amd/name', global: 'global.name'}
   , returns       : ''
-  , globals       : {} //external module_name#global_ref
+  , globals       : {} //external {module_name:global_ref}, e.g. {"jquery":"$"}
   , project       : '' //project name
 
   //define cutting points for modules { glob_pattern: file }
