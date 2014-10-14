@@ -1,4 +1,5 @@
 var dep = require('dep')
 
 module.exports = { dep: dep
-                 , name: 'umd'}
+                 , name: 'umd'
+                 , data: require('./data.json') }

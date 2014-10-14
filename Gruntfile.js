@@ -1,4 +1,3 @@
-
 module.exports = function(grunt) {
   grunt.registerTask('default', ['shell', 'watch'])
   grunt.registerTask('test', ['shell:tests', 'nodeunit'])

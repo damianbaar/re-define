@@ -2,3 +2,4 @@
 (cd multiple-entry-points && ./build.sh)
 (cd referencing-nested-files && ./build.sh)
 (cd umd && ./build.sh)
+(cd index && ./build.sh)

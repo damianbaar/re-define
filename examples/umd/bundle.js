@@ -107,7 +107,7 @@ var require = //externals: dep2,async/async
     };
 }, {"__filename":"model.js","__dirname":"model"}], 
 'nananana/view/template.html': [function(exports, require, module, __filename, __dirname) { 
-module.exports = '<li></li><li></li><li></li><li></li>'
+module.exports = "<li></li><li></li><li></li><li></li>"
 }, {"__filename":"template.html","__dirname":"view"}], 
 'nananana/view/helper': [function(exports, require, module, __filename, __dirname) { 
     module.exports = {
@@ -130,7 +130,7 @@ module.exports = '<li></li><li></li><li></li><li></li>'
     };
 }, {"__filename":"view.js","__dirname":"view"}], 
 'nananana/template.html': [function(exports, require, module, __filename, __dirname) { 
-module.exports = '<div id=\'module_name\' tabIndex=\'1\'>test</div>'
+module.exports = "<div id=\"module_name\" tabIndex=\"1\">test</div>"
 }, {"__filename":"template.html","__dirname":"."}], 
 'nananana': [function(exports, require, module, __filename, __dirname) { 
     var _ = require('lodash');

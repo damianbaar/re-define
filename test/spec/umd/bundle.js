@@ -47,11 +47,16 @@ var require =
 'umd/dep': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'dep';
 }, {"__filename":"dep.js","__dirname":"."}], 
+'umd/data.json': [function(exports, require, module, __filename, __dirname) { 
+module.exports = { "test": true }
+
+}, {"__filename":"data.json","__dirname":"."}], 
 'umd/umd': [function(exports, require, module, __filename, __dirname) { 
     var dep = require('umd/dep');
     module.exports = {
       dep: dep,
-      name: 'umd'
+      name: 'umd',
+      data: require('umd/data.json')
     };
 }, {"__filename":"umd.js","__dirname":"."}]
 }
