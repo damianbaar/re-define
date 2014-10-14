@@ -110,16 +110,36 @@ exports['testing-bundles'] = testCase({
   "index"
 : testCase({
     'look-at-index-file': function(test) {
-      var ctx = sandbox(path.resolve(__dirname, 'spec/index/bundle.js'))
+      var globals = { require: sinon.spy() }
+        , ctx = sandbox(path.resolve(__dirname, 'spec/index/bundle.js'), globals)
         , code = ctx.spec
 
       test.ok(code.index.test)
+      test.ok(code.index['test/dep'])
       test.done()
     },
     'show-warnings': function(test) {
       var code = fs.readFileSync(path.resolve(__dirname, 'spec/index/bundle.js'), 'utf-8')
 
       test.ok(code.indexOf('//warning') === -1)
+      test.done()
+    }
+  }),
+
+  "external-require"
+: testCase({
+    'take a dep from external require': function(test) {
+      test.expect(2)
+
+      var globals = { require: function(a) {
+        test.equal(a.length, 2)
+        return 'external-require'
+      }}
+
+      var ctx = sandbox(path.resolve(__dirname, 'spec/external-require/bundle.js'), globals)
+        , code = ctx.spec.external
+
+      test.ok(code.test.ext === 'external-require')
       test.done()
     }
   })

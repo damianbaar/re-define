@@ -3,3 +3,4 @@
 (cd referencing-nested-files && ./build.sh)
 (cd umd && ./build.sh)
 (cd index && ./build.sh)
+(cd external-require && ./build.sh)
