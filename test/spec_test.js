@@ -132,7 +132,7 @@ exports['testing-bundles'] = testCase({
       test.expect(2)
 
       var globals = { require: function(a) {
-        test.equal(a.length, 2)
+        test.equal(arguments.length, 2)
         return 'external-require'
       }}
 

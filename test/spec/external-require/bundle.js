@@ -17,7 +17,7 @@
           if(mod) return mod;
         }
 
-        if(!!require) return require.call(null, arguments);
+        if(!!require) return require.apply(null, arguments);
         else if(!mod) throw new Error('Module does not exists ' + name);
       }
     }
@@ -37,6 +37,7 @@
 }, {"__filename":"dep.js","__dirname":"."}], 
 'test': [function(exports, require, module, __filename, __dirname) { 
     var dep = require('test/dep'), usingExternalRequire = require(['using-external-require'], function () {
+        console.log('method called from external require');
       });
     module.exports = {
       name: dep.toUpperCase('index'),

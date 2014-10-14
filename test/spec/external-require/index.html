@@ -7,8 +7,11 @@
   <body>
 
     <script type="text/javascript" charset="utf-8">
-      var require = function() {
+      var require = function(name, func) {
         console.log('external require', arguments)
+
+        setTimeout(func, 1000)
+
         return arguments
       } 
     </script>
