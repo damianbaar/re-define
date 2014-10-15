@@ -19,7 +19,7 @@ parent.examples.umd = factory(dep2,async_async);
   closure['async/async'] = async_async
   
 
-var require = //externals: dep2,async/async 
+var __req = //externals: dep2,async/async 
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
@@ -168,6 +168,6 @@ module.exports = "<div id=\"module_name\" tabIndex=\"1\">test</div>"
 , [closure,parent.test]
 )
 
-return require('nananana') 
+return __req('nananana') 
 
 }.bind({})))

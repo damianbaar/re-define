@@ -3,7 +3,7 @@
 var closure = {}
 
 
-var require = 
+var __req = 
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
@@ -45,6 +45,6 @@ var require =
 , [closure]
 )
 
- return require('iife') 
+ return __req('iife') 
 
 }.call({},this))
