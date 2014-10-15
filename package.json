@@ -1,6 +1,6 @@
 {
   "name": "re-define",
-  "version": "1.10.6",
+  "version": "1.10.7",
   "main": "lib/index.js",
   "bin": {
     "re-define": "./bin/re-define.js"
