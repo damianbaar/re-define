@@ -1,30 +1,31 @@
 
 (function (modules, namespace, imports) {
-  function require(name){
+  function __req(name){
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
 
       if(f) {
-        f = f[0].call(m, m, require, m, f[1].__filename, f[1].__dirname);
+        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
         namespace[name] = f || m.exports;
       } else {
-        if(!imports) throw new Error('Module does not exists ' + name);
+        var mod
+          , len = imports && imports.length;
 
-        var mod;
-        for(var i=0; i < imports.length; i++) {
-          mod = imports[i][name];
+        for(var i=0; i < len; i++) {
+          mod = imports[i] && imports[i][name];
           if(mod) return mod;
         }
 
-        if(!mod) throw new Error('Module does not exists ' + name);
+        if(!!require) return require.apply(null, arguments);
+        else if(!mod) throw new Error('Module does not exists ' + name);
       }
     }
     return namespace[name];
   }
 
-  for(var name in modules) require(name);
-  return require;
+  for(var name in modules) __req(name);
+  return __req;
 })
 ({ 
 'jquery': [function(exports, require, module, __filename, __dirname) { 

@@ -38,6 +38,7 @@
     "rewire": "^2.1.0"
   },
   "scripts": {
+    "prepublish": "grunt update",
     "test": "grunt test"
   },
   "repository": {
