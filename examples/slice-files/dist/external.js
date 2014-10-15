@@ -28,10 +28,10 @@
   return __req;
 })
 ({ 
-'dep1': [function(exports, require, module, __filename, __dirname) { 
+'d3/dep1': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'dep1';
 }, {"__filename":"dep1.js","__dirname":"node_modules/d3"}], 
-'lib/dep2': [function(exports, require, module, __filename, __dirname) { 
+'d3/lib/dep2': [function(exports, require, module, __filename, __dirname) { 
     module.exports = { 'dep2': true };
 }, {"__filename":"dep2.js","__dirname":"node_modules/d3/lib"}], 
 'd3': [function(exports, require, module, __filename, __dirname) { 
@@ -42,7 +42,7 @@
           'dep2'
         ], factory);
       } else if (typeof exports === 'object') {
-        module.exports = factory(require('dep1'), require('lib/dep2'), require('external-dep'));
+        module.exports = factory(require('d3/dep1'), require('d3/lib/dep2'), require('external-dep'));
       } else {
         root.returnExports = factory(root.dep1, root.dep2);
       }
