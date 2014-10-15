@@ -41,8 +41,15 @@
       });
     module.exports = {
       name: dep.toUpperCase('index'),
-      ext: usingExternalRequire
+      ext: require(['external-require'], function (ext) {
+        console.log(ext);
+      })
     };
+    setTimeout(function () {
+      require(['using-external-require'], function (dep) {
+        console.log('method called from external require', dep);
+      });
+    });
 }, {"__filename":"index.js","__dirname":"."}]
 }
 ,  function() { this.spec = this.spec || {};this.spec.external = this.spec.external || {}; return this.spec.external }.call(this) 

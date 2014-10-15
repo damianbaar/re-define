@@ -129,12 +129,17 @@ exports['testing-bundles'] = testCase({
   "external-require"
 : testCase({
     'take a dep from external require': function(test) {
-      test.expect(2)
+      test.expect(4)
 
-      var globals = { require: function(a) {
-        test.equal(arguments.length, 2)
-        return 'external-require'
-      }}
+      var globals = { 
+        require: function(a) {
+          test.ok(arguments.length > 0)
+          return 'external-require'
+        },
+        setTimeout: function(a) {
+          a()
+        }
+      }
 
       var ctx = sandbox(path.resolve(__dirname, 'spec/external-require/bundle.js'), globals)
         , code = ctx.spec.external

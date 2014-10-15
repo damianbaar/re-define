@@ -4,5 +4,13 @@ var dep = require('./dep')
   })
 
 module.exports = { name: dep.toUpperCase('index')
-                 , ext: usingExternalRequire }
+                 , ext: require(['external-require'], function(ext) {
+                    console.log(ext)
+                 })
+                 }
 
+setTimeout(function() {
+  require(['using-external-require'], function(dep) {
+    console.log('method called from external require', dep) 
+  })
+})

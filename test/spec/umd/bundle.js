@@ -15,7 +15,7 @@ parent.umd.module = factory();
 
   
 
-var require = 
+var __req = 
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
@@ -65,6 +65,6 @@ module.exports = { "test": true }
 , [closure]
 )
 
-return require('umd/umd') 
+return __req('umd/umd') 
 
 }.bind({})))

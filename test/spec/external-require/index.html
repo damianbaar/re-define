@@ -5,16 +5,21 @@
     <title>External require</title>
   </head>
   <body>
+    <script src="require.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="bundle.js" type="text/javascript" charset="utf-8"></script>
 
     <script type="text/javascript" charset="utf-8">
-      var require = function(name, func) {
-        console.log('external require', arguments)
-
-        setTimeout(func, 1000)
-
-        return arguments
-      } 
+      define('external-require', ['using-external-require'], function(dep) {
+        console.log('inner define as a dep', dep)
+        return 'require-external'
+      })
     </script>
-    <script src="bundle.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="external.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript" charset="utf-8">
+      console.log(spec.external)
+    </script>
   </body>
 </html>

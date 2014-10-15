@@ -7,7 +7,7 @@ var closure = {}
     .each(function(name) {;
 %><%= name %>
 <%})%>
-var require = <%= util.getTemplate('default', ['closure']) %>
-<% if(config.returns) {%> return require('<%= config.returns %>') <%} else {%> return require <% } %>
+var __req = <%= util.getTemplate('default', ['closure']) %>
+<% if(config.returns) {%> return __req('<%= config.returns %>') <%} else {%> return __req <% } %>
 
 }.call({},<%= _.map(['this'].concat(external), util.global).join(',') %>))
