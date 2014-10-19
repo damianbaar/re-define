@@ -1,13 +1,15 @@
-;(function (parent, factory){
-  if (typeof define === 'function' && define.amd) {
-    define('umd/module', [], factory)
-  } else if (typeof module === "object" && !!module.exports) {
+(function (parent, factory){
+  if (typeof exports === 'object') {
     module.exports = factory()
   } else {
-  
-    parent.umd = parent.umd || {};
-parent.umd.module = factory();
+    
 
+    parent.amd_global = parent.amd_global || {};
+parent.amd_global.module = factory();
+
+
+    if (typeof define === 'function' && define.amd)
+      define('amd-global/module', [], parent.amd_global.module)
   }
   }(this, function () {
 
@@ -45,26 +47,21 @@ var __req =
   return __req;
 })
 ({ 
-'umd/dep': [function(exports, require, module, __filename, __dirname) { 
+'amd-global/dep': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'dep';
 }, {"__filename":"dep.js","__dirname":"."}], 
-'umd/data.json': [function(exports, require, module, __filename, __dirname) { 
-module.exports = { "test": true }
-
-}, {"__filename":"data.json","__dirname":"."}], 
-'umd/umd': [function(exports, require, module, __filename, __dirname) { 
-    var dep = require('umd/dep');
+'amd-global': [function(exports, require, module, __filename, __dirname) { 
+    var dep = require('amd-global/dep');
     module.exports = {
       dep: dep,
-      name: 'umd',
-      data: require('umd/data.json')
+      name: 'amd-global'
     };
-}, {"__filename":"umd.js","__dirname":"."}]
+}, {"__filename":"index.js","__dirname":"."}]
 }
 , {} 
 , [closure]
 )
 
-return __req('umd/umd')
+return __req('amd-global')
 
 }.bind({})))

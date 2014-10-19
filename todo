@@ -1,0 +1,3 @@
+1. callbacks, onModuleLoaded (to provide some changes into src file)
+2. resolving __dirname
+3. done - callback

@@ -148,4 +148,36 @@ exports['testing-bundles'] = testCase({
       test.done()
     }
   })
+
+, "amd - global - exporting values"
+: testCase({
+    'amd and global with one factory': function(test) {
+      var globals = {define: sinon.spy()}
+      globals.define.amd = true
+
+      var ctx = sandbox(path.resolve(__dirname, 'spec/amd-global/bundle.js'), globals)
+        , global = ctx.amd_global.module
+
+      test.equal(globals.define.calledOnce, 1)
+      test.equal(globals.define.getCall(0).args[0], 'amd-global/module')
+      test.ok(typeof globals.define.getCall(0).args[2] === "object")
+
+      test.ok(global === globals.define.getCall(0).args[2])
+      test.done()
+    }
+  })
+
+, "iife"
+: testCase({
+    'attach to global': function(test) {
+      var globals = {window: {}}
+        , ctx = sandbox(path.resolve(__dirname, 'spec/iife/bundle.js'), globals)
+        , global = ctx
+
+      test.ok(globals.window.test)
+      test.ok(globals.window.test.dep)
+      test.ok(globals.window.test.name)
+      test.done()
+    }
+  })
 })

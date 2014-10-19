@@ -1,19 +1,7 @@
-;(function (parent, factory){
-  if (typeof define === 'function' && define.amd) {
-    define('umd/module', [], factory)
-  } else if (typeof module === "object" && !!module.exports) {
-    module.exports = factory()
-  } else {
-  
-    parent.umd = parent.umd || {};
-parent.umd.module = factory();
+(function (parent) {
 
-  }
-  }(this, function () {
+var closure = {}
 
-  var closure = {}
-
-  
 
 var __req = 
 (function (modules, namespace, imports) {
@@ -45,26 +33,21 @@ var __req =
   return __req;
 })
 ({ 
-'umd/dep': [function(exports, require, module, __filename, __dirname) { 
+'iife/dep': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'dep';
 }, {"__filename":"dep.js","__dirname":"."}], 
-'umd/data.json': [function(exports, require, module, __filename, __dirname) { 
-module.exports = { "test": true }
-
-}, {"__filename":"data.json","__dirname":"."}], 
-'umd/umd': [function(exports, require, module, __filename, __dirname) { 
-    var dep = require('umd/dep');
-    module.exports = {
+'iife': [function(exports, require, module, __filename, __dirname) { 
+    var dep = require('iife/dep');
+    window.test = {
       dep: dep,
-      name: 'umd',
-      data: require('umd/data.json')
+      name: 'iife'
     };
-}, {"__filename":"umd.js","__dirname":"."}]
+}, {"__filename":"index.js","__dirname":"."}]
 }
-, {} 
+,  function() { this.window = this.window || {};this.window.amd = this.window.amd || {};this.window.amd.global = this.window.amd.global || {}; return this.window.amd.global }.call(this) 
 , [closure]
 )
 
-return __req('umd/umd')
+return __req('iife')
 
-}.bind({})))
+}.call({},this))
