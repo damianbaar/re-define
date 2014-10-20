@@ -18,13 +18,14 @@ exports['rewrite-require'] = {
   'rewrite index file to folder': function(test) {
     var m = createModule('index')
 
+    //TODO reconsider that!!! whether should be fallback to libfolder
     m.update = function(val) {
       test.equal(val, 'transform')
     }
 
     convert([m], function(f) {
       test.done()
-    })
+    }, {project: 'transform'})
   },
   'rewrite file name when folder is the same what file is, d3/d3 -> d3': function(test) {
     var m = createModule('transform')

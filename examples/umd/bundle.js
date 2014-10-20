@@ -168,6 +168,6 @@ module.exports = "<div id=\"module_name\" tabIndex=\"1\">test</div>"
 , [closure,parent.test]
 )
 
-return __req('nananana') 
+return __req('nananana')
 
 }.bind({})))

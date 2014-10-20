@@ -45,6 +45,6 @@ var __req =
 , [closure]
 )
 
- return __req('iife') 
+return __req('iife')
 
 }.call({},this))

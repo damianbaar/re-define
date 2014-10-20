@@ -34,7 +34,7 @@
         return val.toUpperCase();
       }
     };
-}, {"__filename":"dep.js","__dirname":"."}], 
+}, {"__filename":"index.js","__dirname":"dep"}], 
 'test': [function(exports, require, module, __filename, __dirname) { 
     var dep = require('test/dep'), usingExternalRequire = require(['using-external-require'], function () {
         console.log('method called from external require');

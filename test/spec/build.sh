@@ -6,3 +6,4 @@
 (cd umd && ./build.sh)
 (cd index && ./build.sh)
 (cd external-require && ./build.sh)
+(cd referencing-from-index && ./build.sh)
