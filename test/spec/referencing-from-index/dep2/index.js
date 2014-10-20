@@ -1,0 +1,1 @@
+module.exports = 'DEP2'

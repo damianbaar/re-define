@@ -28,7 +28,7 @@
   return __req;
 })
 ({ 
-'my-site': [function(exports, require, module, __filename, __dirname) { 
+'index': [function(exports, require, module, __filename, __dirname) { 
     var lookup = require('components/lookup');
     lookup.create();
 }, {"__filename":"index.js","__dirname":"."}]

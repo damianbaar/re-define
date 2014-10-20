@@ -180,4 +180,24 @@ exports['testing-bundles'] = testCase({
       test.done()
     }
   })
+
+, "referencing from index"
+: testCase({
+    'correct initialization': function(test) {
+      var globals = {require: function(a) {
+        throw new Error('It should not be called as all deps are there', a)
+      }}
+        , ctx = sandbox(path.resolve(__dirname, 'spec/referencing-from-index/bundle.js'), globals)
+        , code = ctx.spec.refs
+
+      test.ok(_.has(code, 'refs/common'))
+      test.ok(_.has(code, 'refs/dep'))
+      test.ok(_.has(code, 'refs/dep2'))
+      test.ok(_.has(code, 'refs/common-2'))
+      test.ok(_.has(code, 'refs'))
+      test.equal(code['refs'], 'index')
+
+      test.done()
+    }
+  })
 })

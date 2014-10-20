@@ -15,10 +15,11 @@ exports['rewrite-require'] = {
     process.chdir(basedir)
     cb()
   },
-  'rewrite index file to folder': function(test) {
-    var m = createModule('index')
+  'rewrite main index file to project': function(test) {
+    var m = createModule('./index')
+    m.path = path.join(process.cwd(), 'index.js')
+    m.base = process.cwd()
 
-    //TODO reconsider that!!! whether should be fallback to libfolder
     m.update = function(val) {
       test.equal(val, 'transform')
     }
@@ -27,17 +28,44 @@ exports['rewrite-require'] = {
       test.done()
     }, {project: 'transform'})
   },
-  'rewrite file name when folder is the same what file is, d3/d3 -> d3': function(test) {
-    var m = createModule('transform')
+  'rewrite nested index file to folder when project name is defined': function(test) {
+    var m = createModule('index')
+    m.path = path.join(process.cwd(), 'a/index.js')
+    m.requiredAs = './index'
 
     m.update = function(val) {
-      test.equal(val, 'transform')
+      test.equal(val, 'transform/a')
+    }
+
+    convert([m], function(f) {
+      test.done()
+    }, {project: 'transform'})
+  },
+  'rewrite nested index file to folder when project name is not defined': function(test) {
+    var m = createModule('index')
+    m.path = path.join(process.cwd(), 'a/index.js')
+    m.requiredAs = './index'
+
+    m.update = function(val) {
+      test.equal(val, 'a')
     }
 
     convert([m], function(f) {
       test.done()
     })
   },
+  // HAHAHA hard to say
+  // 'rewrite file name when folder is the same what file is, d3/d3 -> d3': function(test) {
+  //   var m = createModule('transform')
+  //
+  //   m.update = function(val) {
+  //     test.equal(val, 'transform')
+  //   }
+  //
+  //   convert([m], function(f) {
+  //     test.done()
+  //   })
+  // },
   'add project name to dependency name': function(test) {
     var m = createModule('foo/baz/bar')
 

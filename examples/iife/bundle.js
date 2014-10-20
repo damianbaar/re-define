@@ -33,11 +33,11 @@ var __req =
   return __req;
 })
 ({ 
-'a': [function(exports, require, module, __filename, __dirname) { 
+'iife/a': [function(exports, require, module, __filename, __dirname) { 
 
 }, {"__filename":"a.js","__dirname":"."}], 
 'iife': [function(exports, require, module, __filename, __dirname) { 
-    var a = require('a');
+    var a = require('iife/a');
     window.iife = a;
 }, {"__filename":"index.js","__dirname":"."}]
 }
