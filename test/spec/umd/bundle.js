@@ -48,16 +48,21 @@ var __req =
 'umd/dep': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'dep';
 }, {"__filename":"dep.js","__dirname":"."}], 
+'umd/util.object': [function(exports, require, module, __filename, __dirname) { 
+    var dep = require('umd/dep');
+    module.exports = 'util object with dots in file';
+}, {"__filename":"util.object.js","__dirname":"."}], 
 'umd/data.json': [function(exports, require, module, __filename, __dirname) { 
 module.exports = { "test": true }
 
 }, {"__filename":"data.json","__dirname":"."}], 
 'umd/umd': [function(exports, require, module, __filename, __dirname) { 
-    var dep = require('umd/dep');
+    var dep = require('umd/dep'), util = require('umd/util.object');
     module.exports = {
       dep: dep,
       name: 'umd',
-      data: require('umd/data.json')
+      data: require('umd/data.json'),
+      dots: util
     };
 }, {"__filename":"umd.js","__dirname":"."}]
 }

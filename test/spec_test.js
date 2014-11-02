@@ -31,7 +31,7 @@ exports['testing-bundles'] = testCase({
 
       test.equal(keys[0], 'dep')
       test.equal(keys[1], 'name')
-      test.equal(keys.length, 3)
+      test.equal(keys.length, 4)
 
       test.done()
     },
