@@ -34,8 +34,7 @@
     "mock-fs": "^2.3.1",
     "mockery": "^1.4.0",
     "sinon": "^1.10.3",
-    "grunt-shell": "^1.1.1",
-    "rewire": "^2.1.0"
+    "grunt-shell": "^1.1.1"
   },
   "scripts": {
     "test": "grunt test"
