@@ -13,7 +13,7 @@ exports['get-ast'] = {
     test.expect(1)
 
     var m = createModule('main')
-    m.contents = acorn.parse(';var a = 10')
+    m.contents = new Buffer('####')
 
     try {
       convert(m)
@@ -38,7 +38,7 @@ function convert(file, done, write) {
 
   var stream = transform(redefine.config(), writer)
                 .on('data', function(f) {
-                  done(f)
+                  done && done(f)
                 })
 
   stream.write(file)
