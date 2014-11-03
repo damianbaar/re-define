@@ -9,7 +9,7 @@
     %><%= name %>
     <%})%>
 
-    <%= util.toGlobal('parent', config.names.global, "factory("+_.map(external, util.escape).join(',') + ")") %>
+    <%= util.toGlobal(['parent'].concat(config.names.global.split('.')), "factory("+_.map(external, util.escape).join(',') + ")") %>
 
     if (typeof define === 'function' && define.amd)
       define('<%- config.names.amd %>', [<%= 

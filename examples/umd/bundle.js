@@ -7,8 +7,8 @@
     var dep2 =  parent.dep2
     var async_async =  parent.async
   
-    parent.examples = parent.examples || {};
-parent.examples.umd = factory(dep2,async_async);
+    parent["examples"] = parent["examples"] || {};
+    parent["examples"]["umd"] = factory(dep2,async_async);
 
   }
   }(this, function (dep2,async_async) {

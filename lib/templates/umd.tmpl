@@ -11,7 +11,7 @@
       .each(function(name) {;
   %>  <%= name %>
   <%})%>
-    <%= util.toGlobal('parent', config.names.global, "factory("+_.map(external, util.escape).join(',') + ")") %>
+    <%= util.toGlobal(['parent'].concat(config.names.global.split('.')), "factory("+_.map(external, util.escape).join(',') + ")") %>
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
 

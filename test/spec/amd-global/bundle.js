@@ -4,8 +4,8 @@
   } else {
     
 
-    parent.amd_global = parent.amd_global || {};
-parent.amd_global.module = factory();
+    parent["amd_global"] = parent["amd_global"] || {};
+    parent["amd_global"]["module"] = factory();
 
 
     if (typeof define === 'function' && define.amd)

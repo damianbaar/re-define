@@ -5,8 +5,8 @@
     module.exports = factory()
   } else {
   
-    parent.umd = parent.umd || {};
-parent.umd.module = factory();
+    parent["umd"] = parent["umd"] || {};
+    parent["umd"]["module"] = factory();
 
   }
   }(this, function () {
