@@ -1,0 +1,46 @@
+require = (function (<%= _.map(['parent'].concat(external), util.escape).join(',') %>) {
+var __oldReq = typeof require == "function" && require
+  , closure = {}
+
+<% _.chain(external)
+    .map(function(d) { return "closure['" + d + "'] = " + util.escape(d) })
+    .each(function(name) {;
+%><%= name %>
+<%})%>
+
+return (function (modules, namespace, imports) {
+  function __req(name){
+    if(!namespace[name]) {
+      var m = {exports:{}}
+        , f = modules[name]
+
+      if(f) {
+        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        namespace[name] = f || m.exports;
+      } else {
+        var mod
+          , len = imports && imports.length;
+
+        for(var i=0; i < len; i++) {
+          mod = imports[i] && imports[i][name];
+          if(mod) return mod;
+        }
+
+        if(__oldReq) return __oldReq.apply(null, arguments);
+        throw new Error('Module does not exists ' + name);
+      }
+    }
+    return namespace[name];
+  }
+
+  for(var name in modules) __req(name);
+  return __req;
+})({ <% _.each(files, function(f, i, arr) { %>
+'<%= f.name %>': [function(exports, require, module, __filename, __dirname) { 
+<%= f.contents %>
+}, <%= JSON.stringify(f.properties) %>]<% if(arr.length - 1 > i) { %>, <% }}) %>
+}
+, <% if(config.namespace) { %> function() { <%= util.namespace(config.namespace, 'this') %> return this.<%= config.namespace %> }.call(this) <% } else { %>{} <% } %>
+, [<%= config.imports %>]
+)
+}.call({},<%= _.map(['this'].concat(external), util.global).join(',') %>))

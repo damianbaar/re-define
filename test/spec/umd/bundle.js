@@ -34,7 +34,7 @@ var __req =
           if(mod) return mod;
         }
 
-        if(!!require) return require.apply(null, arguments);
+        if(typeof require == "function" && require) return require.apply(null, arguments);
         else if(!mod) throw new Error('Module does not exists ' + name);
       }
     }

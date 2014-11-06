@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title></title>
+  </head>
+  <body>
+    Open DevTools
+
+    <script type="text/javascript" charset="utf-8">
+      var require = function(dep) {
+        console.log('calling ', dep)
+        return dep
+      }
+    </script>
+
+    <script src="bundle.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript" charset="utf-8">
+      //calling top level require
+      var notExist = require('test')
+        , urlFromBundle = require('url')
+        , punycodeFromBundle = require('punycode')
+
+      //index === project-name
+      var index = require('browserify')
+
+      console.log('url from bundle', urlFromBundle)
+      console.log('punycode from bundle', punycodeFromBundle)
+      console.log('index from bundle', index)
+    </script>
+  </body>
+</html>

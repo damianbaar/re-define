@@ -1,0 +1,16 @@
+{
+  "name": "test_bro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  , "build": "re-define index.js --wrapper browserify --project-name browserify > bundle.js"
+  },
+  "author": "Damian Baar <damian.baar@gmail.com> (http://github.com/damianbaar)",
+  "license": "ISC",
+  "dependencies": {
+    "querystring": "^0.2.0",
+    "url": "^0.10.1"
+  }
+}

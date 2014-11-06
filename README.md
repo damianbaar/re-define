@@ -5,7 +5,13 @@ Easy way to pack your application source files into one file(s) in order to buil
 
 Check [examples](/examples) to get better picture.
 
-### Nice things
+### Some differences, nice things in `re-define`
+* works well with `bower` and `npm`
+* connects javascript chunks in better organized code via namspaces
+* has a fallback to external require function, works with `requirejs`, `browserify`
+* exposing internal parts, makes flat folder structure for module name, all names are aligned to theirs cwd/base paths, so you can easly require internal part of lib as you get used to it with npm
+
+### What is inside
 * require function allows to reference different `namespaces`
 * all modules are wrapped in cjs wrapper `function(exports, require, module, __filename, __dirname)`
 * ability to split bundles using `glob`, to extract common parts based on folder
@@ -18,9 +24,8 @@ assuming your module is placed in folder `my_awesome_component` all internal mod
 
 ### Why
 * to provide better support for `amd`
-* to share code and expose more than one module within namespace and import from others
-* to be able to handle all modern js build systems in one
-* to generating templates tailored to your needs with all relevant information, i.e. external dependencies
+* to share code and expose more than one module within namespace and import it from others
+* to to handle `amd` and `CJS` togheter
 
 ### TODO
 * incremental builds
@@ -28,8 +33,7 @@ assuming your module is placed in folder `my_awesome_component` all internal mod
 * separate namespace for bundles when slicing
 
 ### Limitation
-* does not resolve circular dependencies
-* resolve only static `require` statements
+* resolve only static `require` statements (thinking)
 
 ### Getting Started
 Install the module: `npm install -g re-define`
@@ -50,7 +54,7 @@ Options:
 '--namespace [a.b.c.d]'       , 'Namespace for bundle'
 '--imports [namespaces]'      , 'Import namespaces'
 
-'-g, --globals [json]'        , 'Map externals to global - {jquery:this.jquery}'
+'-g, --globals [json]'        , 'Map require external calls to global - {jquery:this.jquery}'
 '-n, --names [json]'          , 'Register names for AMD/Global, i.e {amd:"sth",global:"sth.sth"}'
 '-r, --returns [file/module]' , 'Return module, could be specified as file or resolved module'
 '-w, --wrapper [type]'        , 'Wrapper type umd'
@@ -96,6 +100,13 @@ module.exports =
     }
   }
 ```
+
+* `globals`
+internally we require('jquery'), however jquery is only accessible via global, so to remap jquery to global.$ we need to set a mapping, like
+```
+globals: {'jquery': '$'}
+```
+this property matters only with following templates: `iife`, `umd`, `browserify`
 
 ###How it works
 ####Imports
