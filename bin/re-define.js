@@ -71,7 +71,7 @@ var program = require('commander')
      config.slice = confFile.slice || config.slice
   }
 
-  var bundle = redefine.bundle(config, (program.transform || []).concat([findExternal]))
+  var bundle = redefine.bundle(config, (program.transforms || []).concat([findExternal]))
 
   bundle
   .pipe(through.obj(function(file, enc, next) {
