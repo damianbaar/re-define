@@ -118,6 +118,7 @@ function createBundle() {
 
   config.wrapper = 'empty'
   config.project = 'project'
+  config.development = false
 
   var _spy = function(config) {
     return spy = through.obj(function(m,e,n) {
