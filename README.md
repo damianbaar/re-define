@@ -39,6 +39,7 @@ assuming your module is placed in folder `my_awesome_component` all internal mod
 Install the module: `npm install -g re-define`
 
 ###Usage
+#### command line
 ```
 re-define [file/files or glob pattern] -[options]
 ```
@@ -64,6 +65,31 @@ Options:
 '--discoverable [dirs]'       , 'External modules lib, such bower_components'
 '--descriptors [files]'       , 'Checking main file in external dep descriptor'
 '--skip [module]'             , 'Skip external module'
+```
+
+#### as stream
+```
+  //with single entry point
+  redefine
+    .fromFile( entryPoint
+             , { 'project-name': 'components'
+               , wrapper: 'browserify' }
+             , [ includeExternal({})
+               , reactify({}) ]
+             )
+    .pipe(res)
+
+  //many entry points
+  var bundle = redefine.bundle(redefine.config(), transforms)
+
+  bundle.pipe(process.stdout)
+
+  bundle.write(
+    new File({
+          path: e
+        , cwd: (config.cwd && path.resolve(config.cwd)) || process.cwd()
+        , base: path.dirname(e)
+        }))
 ```
 
 ###Config
