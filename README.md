@@ -68,7 +68,7 @@ Options:
 ```
 
 #### as stream
-```
+```js
   //with single entry point
   redefine
     .fromFile( entryPoint
@@ -162,6 +162,22 @@ To get more, check this [example](/examples/imports)
 ####Custom transforms
 * [usage](/bin/re-define.js#L56) or [grunt](https://github.com/damianbaar/grunt-re-define)
 * [example](https://github.com/damianbaar/re-define-include-external)
+* [setting an order for file streams](https://github.com/damianbaar/re-define-wrap)
+
+```js
+module.exports = function(yourConfig) {
+  var stream = function(globalConfig) {
+    return through2.obj(function(file, enc, next) {})
+  }
+
+  stream.order = `after`
+  stream.name = 'my-stream' //optionals, only needed for globalConfig reference
+
+  return stream
+}
+```
+
+> when order for stream `stream.order = after` then `file.contents = AST`
 
 ####Available transforms
 * [find-external](https://github.com/damianbaar/re-define-include-external)
