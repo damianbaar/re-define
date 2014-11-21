@@ -1,3 +1,8 @@
+//1. when attaching a custom transform possibility in index.js to get config[name] as default configuration
+//2. split streams to cache data and during end pass each
+//
+//
+
 var a = {};
 //globals/external
 //{'external': function() { return window.external }}

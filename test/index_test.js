@@ -103,6 +103,7 @@ function createBundle() {
     , result
 
   config.wrapper = 'empty'
+  config.development = false
 
   bundle = redefine.bundle(config)
   var _files = []

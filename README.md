@@ -7,6 +7,7 @@ Check [examples](/examples) to get better picture.
 
 ### Some differences, nice things in `re-define`
 * works well with `bower` and `npm`
+* incremental builds
 * connects javascript chunks in better organized code via namspaces
 * has a fallback to external require function, works with `requirejs`, `browserify`
 * exposing internal parts, makes flat folder structure for module name, all names are aligned to theirs cwd/base paths, so you can easly require internal part of lib as you get used to it with npm
@@ -28,7 +29,6 @@ assuming your module is placed in folder `my_awesome_component` all internal mod
 * to to handle `amd` and `CJS` togheter
 
 ### TODO
-* incremental builds
 * generating `sourcemaps`
 * separate namespace for bundles when slicing
 
@@ -39,6 +39,7 @@ assuming your module is placed in folder `my_awesome_component` all internal mod
 Install the module: `npm install -g re-define`
 
 ###Usage
+#### command line
 ```
 re-define [file/files or glob pattern] -[options]
 ```
@@ -66,24 +67,53 @@ Options:
 '--skip [module]'             , 'Skip external module'
 ```
 
+#### as stream
+```
+  //with single entry point
+  redefine
+    .fromFile( entryPoint
+             , { 'project-name': 'components'
+               , wrapper: 'browserify' }
+             , [ includeExternal({})
+               , reactify({}) ]
+             )
+    .pipe(res)
+
+  //many entry points
+  var bundle = redefine.bundle(redefine.config(), transforms)
+
+  bundle.pipe(process.stdout)
+
+  bundle.write(
+    new File({
+          path: e
+        , cwd: (config.cwd && path.resolve(config.cwd)) || process.cwd()
+        , base: path.dirname(e)
+        }))
+```
+
 ###Config
 ```js
 module.exports = 
   { names         : {amd: 'amd/name', global: 'global.name'}
+  , project       : '' //project name, adding a prefix to internal module name
   , returns       : ''
-  , globals       : {} //external {module_name:global_ref}, e.g. {"jquery":"$"}
-  , project       : '' //project name
+  , globals      : {} //external {lib:global}
 
-  //define cutting points for modules { glob_pattern: file }
+  //working directory
+  , cwd           : '.'
+  //define cutting points for modules { glob_pattern: file, ... }
   , slice         : {"**/**": "bundle.js"}
   //could be a folder (in case of many files) or just file, when not defined print output to console
   , output        : ''
-  //base folder, all modules will be aligned to that
-  , base          : '.'
+  //base folder, all modules will be aligned to this one, like cwd: a, file: a/b/c, base: a/b, file -> c
+  , base          : ''
   //wrapper file 
   , wrapper       : 'default'
-  //attach all bundled modules to namespace
-  , namespace: "your.namespace"
+  //attach all bundled modules to namespace, foo.baz.bar is allowed
+  , namespace: '' 
+  //needed for correct alignment module names
+  , alignToFolder: ['node_modules', 'bower_components']
   //exclude specific AMD dependencies
   , excludeAMDModules : ['\.css$', 'require', 'modules', 'exports']
   //regexp to detect an AMD plugins, first we need to remove the plugin prefix to get a path
@@ -92,12 +122,22 @@ module.exports =
   , imports: []
   //remap require calls, helpful when some libs have different reference to the same module
   , map: {}
+  //js extensions, needed for filename.with.dots.js
+  , jsExt: ['.js']
+  //check existence of main/dir file when referencing a dir, like require('folder') = folder/index.js
+  , dirExpanders: ['index.js', 'main.js']
+  //export __filename, __dirname
+  , exportPaths: true
   //format for escodegen
   , format: {
       indent: { style: '  ', base: 2 },
       space: ' ',
-      safeConcatenation:true 
+      compact: false,
+      safeConcatenation: false
     }
+  , showWarnings: false
+  , tempFolder: './.tmp'
+  , development: true
   }
 ```
 
@@ -122,6 +162,10 @@ To get more, check this [example](/examples/imports)
 ####Custom transforms
 * [usage](/bin/re-define.js#L56) or [grunt](https://github.com/damianbaar/grunt-re-define)
 * [example](https://github.com/damianbaar/re-define-include-external)
+
+####Available transforms
+* [find-external](https://github.com/damianbaar/re-define-include-external)
+* [react](https://github.com/damianbaar/re-define-react)
 
 ####Compilation time 
 Some results could be found [here](/examples/real-libs).
