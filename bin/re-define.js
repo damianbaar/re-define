@@ -32,6 +32,9 @@ var program = require('commander')
     .option('--discoverable [dirs]'   , 'External modules lib, such bower_components', toArray)
     .option('--descriptors [files]'   , 'Checking main file in external dep', toArray)
     .option('--skip [module]'         , 'Skip external module', toArray)
+
+    .option('--development'           , 'Development mode')
+
     .parse(process.argv)
 
   var options = 
@@ -46,6 +49,7 @@ var program = require('commander')
     , names          : program.names
     , globals        : program.globals
     , project        : program.projectName
+    , development    : !!program.development
     }
 
   config = redefine.config(options)

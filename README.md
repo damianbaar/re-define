@@ -61,6 +61,7 @@ Options:
 '-w, --wrapper [type]'        , 'Wrapper type umd'
 '-p, --project-name [name]'   , 'Project name, it becomes prefix for your internal modules name'
 
+'--development'               , 'Development mode'
 '--external [json]'           , 'Include module from external location {lib:path}')
 '--discoverable [dirs]'       , 'External modules lib, such bower_components'
 '--descriptors [files]'       , 'Checking main file in external dep descriptor'
