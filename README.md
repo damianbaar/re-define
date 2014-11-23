@@ -183,6 +183,7 @@ module.exports = function(yourConfig) {
 ####Available transforms
 * [find-external](https://github.com/damianbaar/re-define-include-external)
 * [react](https://github.com/damianbaar/re-define-react)
+* [wrap file](https://github.com/damianbaar/re-define-wrap)
 
 ####Compilation time 
 Some results could be found [here](/examples/real-libs).
