@@ -192,4 +192,4 @@ To run `re-define` in debug mode, just run `DEBUG=re-define:* re-define`
 
 #### File watcher
 There is no embeded watcher for files. In development mode `re-define` creates cache with resolved files so after second run checks against existency within temp and resolves again those which are fresh. 
-Watching with `nodemon`: `nodemon --exec 're-define index.js --namespace org.chart --imports window --return this --project-name real-libs --development --output bundle.js'`
+Watching with `nodemon --ignore bundle.js --exec 're-define index.js --development --output bundle.js'`
