@@ -167,15 +167,15 @@ To get more, check this [example](/examples/imports)
 
 ```js
 module.exports = function(yourConfig) {
-  var stream = function(globalConfig) {
+  var stream = function streamName(globalConfig) {
     return through2.obj(function(file, enc, next) {})
   }
 
   stream.order = `after`
-  stream.name = 'my-stream' //optionals, only needed for globalConfig reference
-
+  
   return stream
 }
+//if you give a name to your function then you can attach config within the global one, this is { streamName: myConfig }
 ```
 
 > when order for stream `stream.order = after` then `file.contents = AST`
