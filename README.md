@@ -7,7 +7,7 @@ Check [examples](/examples) to get better picture.
 
 ### Some differences, nice things in `re-define`
 * works well with `bower` and `npm`
-* incremental builds
+* incremental builds (enable `--development` flag)
 * connects javascript chunks in better organized code via namspaces
 * has a fallback to external require function, works with `requirejs`, `browserify`
 * exposing internal parts, makes flat folder structure for module name, all names are aligned to theirs cwd/base paths, so you can easly require internal part of lib as you get used to it with npm
