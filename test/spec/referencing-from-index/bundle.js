@@ -37,6 +37,9 @@
 'refs/dep2': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'DEP2';
 }, {"__filename":"index.js","__dirname":"dep2"}], 
+'refs/dep2': [function(exports, require, module, __filename, __dirname) { 
+    module.exports = 'DEP2';
+}, {"__filename":"index.js","__dirname":"dep2"}], 
 'refs/dep2/inner': [function(exports, require, module, __filename, __dirname) { 
     var idx = require('refs/dep2');
     module.exports = 'INNER';
