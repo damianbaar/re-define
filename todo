@@ -2,4 +2,4 @@
 2. resolving __dirname (detect globals)
 3. done - callback
 4. multiversioning, creating internal requires
-5. make possible seting a config for external transforms as config.custom-stream-name
+/* 5. make possible seting a config for external transforms as config.custom-stream-name */

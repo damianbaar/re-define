@@ -83,8 +83,9 @@ var program = require('commander')
       saveFile(file)
       this.unpipe(process.stdout)
     } else {
-      if(!!config.output) {
-        saveFile(config.output)
+      if(config.output) {
+        file.path = config.output
+        saveFile(file)
         this.unpipe(process.stdout)
       }
       else this.push(file.contents)
