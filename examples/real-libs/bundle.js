@@ -16619,8 +16619,26 @@
       this.d3 = d3;
     }();
 }, {"__filename":"d3.js","__dirname":"node_modules/d3"}], 
+'real-libs/package.json': [function(exports, require, module, __filename, __dirname) { 
+module.exports = {
+  "name": "real-libs",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Damian Baar <damian.baar@gmail.com> (http://github.com/damianbaar)",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^2.1.1",
+    "d3": "^3.4.11"
+  }
+}
+
+}, {"__filename":"package.json","__dirname":"."}], 
 'real-libs': [function(exports, require, module, __filename, __dirname) { 
-    var $ = require('jquery'), d3 = require('d3');
+    var $ = require('jquery'), d3 = require('d3'), __ = require('real-libs/package.json');
     var barData = [
         {
           'x': 1,

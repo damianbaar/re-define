@@ -1,5 +1,6 @@
 var $ = require('jquery')
   , d3 = require('d3')
+  , __ = require('package.json')
 
 var barData = [
     { 'x': 1, 'y': 5 }

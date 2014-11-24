@@ -34,7 +34,7 @@ var __req =
 })
 ({ 
 'iife/a': [function(exports, require, module, __filename, __dirname) { 
-
+    module.exports = 'test123';
 }, {"__filename":"a.js","__dirname":"."}], 
 'iife': [function(exports, require, module, __filename, __dirname) { 
     var a = require('iife/a');
