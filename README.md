@@ -11,6 +11,7 @@ Check [examples](/examples) to get better picture.
 * connects javascript chunks in better organized code via namspaces
 * has a fallback to external require function, works with `requirejs`, `browserify`
 * exposing internal parts, makes flat folder structure for module name, all names are aligned to theirs cwd/base paths, so you can easly require internal part of lib as you get used to it with npm
+* when dependency is missing then is treated as external without shouting, helpful when you'd like to keep some rarely changing parts in separation
 
 ### What is inside
 * require function allows to reference different `namespaces`
