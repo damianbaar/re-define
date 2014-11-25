@@ -139,6 +139,7 @@ module.exports =
     }
   , showWarnings: false
   , tempFolder: './.tmp'
+  , autoCacheClean: false
   , development: true
   }
 ```
@@ -149,6 +150,9 @@ internally we require('jquery'), however jquery is only accessible via global, s
 globals: {'jquery': '$'}
 ```
 this property matters only with following templates: `iife`, `umd`, `browserify`
+
+* `autoCacheClean` && `development`
+when development mode is enabled `re-define` creates a `.tmp` folder where stores resolved files to speed up compilation time, however when `autoCacheClean` flag is enabled, then is removing old entries, for the time being it is not well optimized and there is a noticable performance impact
 
 ###How it works
 ####Imports
