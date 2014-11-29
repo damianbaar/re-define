@@ -56,18 +56,20 @@ exports['rewrite-require'] = {
       test.done()
     })
   },
-  // // HAHAHA hard to say
-  // // 'rewrite file name when folder is the same what file is, d3/d3 -> d3': function(test) {
-  // //   var m = createModule('transform')
-  // //
-  // //   m.update = function(val) {
-  // //     test.equal(val, 'transform')
-  // //   }
-  // //
-  // //   convert([m], function(f) {
-  // //     test.done()
-  // //   })
-  // // },
+  'get folder as a prefix for modules from config.cwd': function(test) {
+    var cwd = process.cwd() + '/test-project' 
+
+    var m = createModule('transform')
+
+    m.path = cwd + '/dep.js'
+    m.base = cwd
+
+    m.update = function(val) { test.equal(val, 'test-project/dep') }
+
+    convert([m], function(f) {
+      test.done()
+    }, { cwd: cwd })
+  },
   'add project name to dependency name': function(test) {
     var m = createModule('foo/baz/bar')
 
