@@ -47,15 +47,15 @@ var __req =
 ({ 
 'umd/dep': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'dep';
-}, {"__filename":"dep.js","__dirname":"."}], 
+}, {"__filename":"","__dirname":""}], 
 'umd/util.object': [function(exports, require, module, __filename, __dirname) { 
     var dep = require('umd/dep');
     module.exports = 'util object with dots in file';
-}, {"__filename":"util.object.js","__dirname":"."}], 
+}, {"__filename":"","__dirname":""}], 
 'umd/data.json': [function(exports, require, module, __filename, __dirname) { 
 module.exports = { "test": true }
 
-}, {"__filename":"data.json","__dirname":"."}], 
+}, {"__filename":"","__dirname":""}], 
 'umd/umd': [function(exports, require, module, __filename, __dirname) { 
     var dep = require('umd/dep'), util = require('umd/util.object');
     module.exports = {
@@ -64,7 +64,7 @@ module.exports = { "test": true }
       data: require('umd/data.json'),
       dots: util
     };
-}, {"__filename":"umd.js","__dirname":"."}]
+}, {"__filename":"","__dirname":""}]
 }
 , {} 
 , [closure]

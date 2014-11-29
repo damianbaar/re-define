@@ -35,11 +35,11 @@ var __req =
 ({ 
 'iife/a': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'test123';
-}, {"__filename":"a.js","__dirname":"."}], 
+}, {"__filename":"","__dirname":""}], 
 'iife': [function(exports, require, module, __filename, __dirname) { 
     var a = require('iife/a');
     window.iife = a;
-}, {"__filename":"index.js","__dirname":"."}]
+}, {"__filename":"","__dirname":""}]
 }
 ,  function() { this.examples = this.examples || {};this.examples.iife = this.examples.iife || {}; return this.examples.iife }.call(this) 
 , [closure]

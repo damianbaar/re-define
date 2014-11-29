@@ -151,6 +151,15 @@ globals: {'jquery': '$'}
 ```
 this property matters only with following templates: `iife`, `umd`, `browserify`
 
+* 'wrappers'
+It is important to understand a purpose of particular templates and their limitation:
+default / browserify - import template with multientry points
+umd - one exports one module
+iife - 
+
+* `src`
+it only accepts entry points, do not try to use glob pattern for all of your files
+
 * `autoCacheClean` && `development`
 when development mode is enabled `re-define` creates a `.tmp` folder where stores resolved files to speed up compilation time, however when `autoCacheClean` flag is enabled, then is removing old entries, for the time being it is not well optimized and there is a noticable performance impact
 

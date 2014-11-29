@@ -28,14 +28,14 @@
   return __req;
 })
 ({ 
-'components/lookup': [function(exports, require, module, __filename, __dirname) { 
+'components/components/lookup': [function(exports, require, module, __filename, __dirname) { 
     return {
       create: function () {
         console.log('Creating lookup ...');
         return this;
       }
     };
-}, {"__filename":"lookup.js","__dirname":"."}]
+}, {"__filename":"","__dirname":""}]
 }
 ,  function() { this.examples = this.examples || {};this.examples.imports = this.examples.imports || {};this.examples.imports.component = this.examples.imports.component || {}; return this.examples.imports.component }.call(this) 
 , []

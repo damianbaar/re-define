@@ -35,14 +35,14 @@ var __req =
 ({ 
 'iife/dep': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'dep';
-}, {"__filename":"dep.js","__dirname":"."}], 
+}, {"__filename":"","__dirname":""}], 
 'iife': [function(exports, require, module, __filename, __dirname) { 
     var dep = require('iife/dep');
     window.test = {
       dep: dep,
       name: 'iife'
     };
-}, {"__filename":"index.js","__dirname":"."}]
+}, {"__filename":"","__dirname":""}]
 }
 ,  function() { this.window = this.window || {};this.window.amd = this.window.amd || {};this.window.amd.global = this.window.amd.global || {}; return this.window.amd.global }.call(this) 
 , [closure]

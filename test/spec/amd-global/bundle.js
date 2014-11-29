@@ -49,14 +49,14 @@ var __req =
 ({ 
 'amd-global/dep': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'dep';
-}, {"__filename":"dep.js","__dirname":"."}], 
+}, {"__filename":"","__dirname":""}], 
 'amd-global': [function(exports, require, module, __filename, __dirname) { 
     var dep = require('amd-global/dep');
     module.exports = {
       dep: dep,
       name: 'amd-global'
     };
-}, {"__filename":"index.js","__dirname":"."}]
+}, {"__filename":"","__dirname":""}]
 }
 , {} 
 , [closure]

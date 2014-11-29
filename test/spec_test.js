@@ -13,8 +13,10 @@ exports['testing-bundles'] = testCase({
       var ctx = sandbox(path.resolve(__dirname, 'spec/nested-dependencies/bundle.js'))
         , spec = ctx.spec
 
-      test.equal(spec.nested.common, 'common')
-      test.equal(spec.nested['a/b'], 'b')
+      test.equal(spec.nested['common/common'], 'common')
+      test.equal(spec.nested['common'], 'common/index')
+      test.equal(spec.nested['d/d'], 'd')
+      test.equal(spec.nested['a/c'], 'c')
       test.equal(spec.nested['a/c'], 'c')
       test.equal(spec.nested['test'], 'main')
 
@@ -96,11 +98,11 @@ exports['testing-bundles'] = testCase({
       var ctx = sandbox(path.resolve(__dirname, 'spec/referencing-nested-files/bundle.js'))
         , code = ctx.spec.refs
 
-      test.equal(code['a'], 'a')
-      test.equal(code['a/c'], 'c')
-      test.equal(code['a/b'], 'b')
-      test.equal(code['a/b/d'], 'd')
-      test.equal(code['a/b/d/e'], 'e')
+      test.equal(code['module-a'], 'a')
+      test.equal(code['module-a/c'], 'c')
+      test.equal(code['module-a/b'], 'b')
+      test.equal(code['module-a/b/d'], 'd')
+      test.equal(code['module-a/b/d/e'], 'e')
       test.equal(code['refs'], 'refs')
 
       test.done()

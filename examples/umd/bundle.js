@@ -1,25 +1,29 @@
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('amd/name', ['dep2','async/async'], factory)
+    define('amd/name', ['dep2','jquery','async/async','lodash/dep1'], factory)
   } else if (typeof module === "object" && !!module.exports) {
-    module.exports = factory(require('dep2'),require('async/async'))
+    module.exports = factory(require('dep2'),require('jquery'),require('async/async'),require('lodash/dep1'))
   } else {
     var dep2 =  parent.dep2
+    var jquery =  parent.jquery
     var async_async =  parent.async
+    var lodash_dep1 =  parent.lodash_dep1
   
     parent["examples"] = parent["examples"] || {};
-    parent["examples"]["umd"] = factory(dep2,async_async);
+    parent["examples"]["umd"] = factory(dep2,jquery,async_async,lodash_dep1);
 
   }
-  }(this, function (dep2,async_async) {
+  }(this, function (dep2,jquery,async_async,lodash_dep1) {
 
   var closure = {}
 
   closure['dep2'] = dep2
+  closure['jquery'] = jquery
   closure['async/async'] = async_async
+  closure['lodash/dep1'] = lodash_dep1
   
 
-var __req = //externals: dep2,async/async 
+var __req = //externals: dep2,jquery,async/async,lodash/dep1 
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
@@ -49,16 +53,9 @@ var __req = //externals: dep2,async/async
   return __req;
 })
 ({ 
-'jquery/lib-2/dep1': [function(exports, require, module, __filename, __dirname) { 
-    return { name: 'dep' };
-}, {"__filename":"dep1.js","__dirname":"node_modules/jquery/lib-2"}], 
-'jquery/lib/dep1': [function(exports, require, module, __filename, __dirname) { 
-    var a = require('jquery/lib-2/dep1');
-    return { name: 'dep' };
-}, {"__filename":"dep1.js","__dirname":"node_modules/jquery/lib"}], 
 'd3/dep1': [function(exports, require, module, __filename, __dirname) { 
     module.exports = { test: 'test' };
-}, {"__filename":"dep1.js","__dirname":"node_modules/d3"}], 
+}, {"__filename":"","__dirname":""}], 
 'd3': [function(exports, require, module, __filename, __dirname) { 
     (function (root, factory) {
       if (typeof define === 'function' && define.amd) {
@@ -74,30 +71,30 @@ var __req = //externals: dep2,async/async
     }(this, function (b) {
       return { d3: 'd3' };
     }));
-}, {"__filename":"index.js","__dirname":"node_modules/d3"}], 
-'jquery': [function(exports, require, module, __filename, __dirname) { 
-    var a = require('jquery/lib/dep1');
-    require('jquery/lib-2/dep1');
-    require('d3');
-    var a = 'jquery';
-    module.exports = { name: a };
-}, {"__filename":"jquery.js","__dirname":"node_modules/jquery"}], 
+}, {"__filename":"","__dirname":""}], 
 'lodash': [function(exports, require, module, __filename, __dirname) { 
     var $ = require('jquery'), d3 = require('d3');
     module.exports = 'lodash here';
-}, {"__filename":"lodash.js","__dirname":"vendor/lodash"}], 
+}, {"__filename":"","__dirname":""}], 
+'jquery/lib-2/dep1': [function(exports, require, module, __filename, __dirname) { 
+    return { name: 'dep' };
+}, {"__filename":"","__dirname":""}], 
+'jquery/lib/dep1': [function(exports, require, module, __filename, __dirname) { 
+    var a = require('jquery/lib-2/dep1');
+    return { name: 'dep' };
+}, {"__filename":"","__dirname":""}], 
 'jquery/jquery2': [function(exports, require, module, __filename, __dirname) { 
     var a = require('jquery/lib/dep1');
     require('jquery/lib-2/dep1');
     require('d3');
     var a = 'jquery';
     module.exports = { name: a };
-}, {"__filename":"jquery2.js","__dirname":"node_modules/jquery"}], 
+}, {"__filename":"","__dirname":""}], 
 'nananana/model/helper': [function(exports, require, module, __filename, __dirname) { 
     var async = require('async/async') || function () {
       };
     return { getAsync: async };
-}, {"__filename":"helper.js","__dirname":"model"}], 
+}, {"__filename":"","__dirname":""}], 
 'nananana/model/model': [function(exports, require, module, __filename, __dirname) { 
     var helper = require('nananana/model/helper');
     var async = helper.getAsync();
@@ -106,20 +103,20 @@ var __req = //externals: dep2,async/async
         return async ? 'async_data' : 'data';
       }
     };
-}, {"__filename":"model.js","__dirname":"model"}], 
+}, {"__filename":"","__dirname":""}], 
 'nananana/view/template.html': [function(exports, require, module, __filename, __dirname) { 
 module.exports = "<li></li><li></li><li></li><li></li>"
-}, {"__filename":"template.html","__dirname":"view"}], 
+}, {"__filename":"","__dirname":""}], 
 'nananana/view/helper': [function(exports, require, module, __filename, __dirname) { 
     module.exports = {
       escape: function () {
       }
     };
-}, {"__filename":"helper.js","__dirname":"view"}], 
+}, {"__filename":"","__dirname":""}], 
 'nananana/view/type': [function(exports, require, module, __filename, __dirname) { 
     exports.js = 'ast';
     exports.html = 'raw';
-}, {"__filename":"type.js","__dirname":"view"}], 
+}, {"__filename":"","__dirname":""}], 
 'nananana/view/view': [function(exports, require, module, __filename, __dirname) { 
     var tmpl = require('nananana/view/template.html'), model = require('nananana/model/model'), helper = require('nananana/view/helper'), type = require('nananana/view/type'), d3 = require('d3');
     module.exports = function () {
@@ -129,18 +126,19 @@ module.exports = "<li></li><li></li><li></li><li></li>"
         helper: helper
       };
     };
-}, {"__filename":"view.js","__dirname":"view"}], 
+}, {"__filename":"","__dirname":""}], 
 'nananana/template.html': [function(exports, require, module, __filename, __dirname) { 
 module.exports = "<div id=\"module_name\" tabIndex=\"1\">test</div>"
-}, {"__filename":"template.html","__dirname":"."}], 
+}, {"__filename":"","__dirname":""}], 
 'nananana': [function(exports, require, module, __filename, __dirname) { 
     var _ = require('lodash');
-    var $ = require('jquery');
-    var $2 = require('jquery/jquery2');
-    var d3 = require('d3');
-    var model = require('nananana/model/model');
-    var view = require('nananana/view/view');
-    var template = require('nananana/template.html');
+    var $ = require('lodash/dep1');
+    var $2 = require('jquery');
+    var d3 = require('jquery/jquery2');
+    var model = require('d3');
+    var view = require('nananana/model/model');
+    var template = require('nananana/view/view');
+    require('nananana/template.html');
     require('d3');
     var module = {
         jquery: $,
@@ -162,7 +160,7 @@ module.exports = "<div id=\"module_name\" tabIndex=\"1\">test</div>"
         }, null, 2);
       }
     };
-}, {"__filename":"index.js","__dirname":"."}]
+}, {"__filename":"","__dirname":""}]
 }
 ,  function() { this.examples = this.examples || {};this.examples.umd = this.examples.umd || {}; return this.examples.umd }.call(this) 
 , [closure,parent.test]

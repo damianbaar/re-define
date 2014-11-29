@@ -16,9 +16,10 @@ exports['rewrite-require'] = {
     cb()
   },
   'rewrite main index file to project': function(test) {
-    var m = createModule('./index')
+    var m = createModule('index')
     m.path = path.join(process.cwd(), 'index.js')
     m.base = process.cwd()
+    m.requiredAs = './index'
 
     m.update = function(val) {
       test.equal(val, 'transform')
@@ -29,7 +30,7 @@ exports['rewrite-require'] = {
     }, {project: 'transform'})
   },
   'rewrite nested index file to folder when project name is defined': function(test) {
-    var m = createModule('index')
+    var m = createModule('a')
     m.path = path.join(process.cwd(), 'a/index.js')
     m.requiredAs = './index'
 
@@ -44,28 +45,29 @@ exports['rewrite-require'] = {
   'rewrite nested index file to folder when project name is not defined': function(test) {
     var m = createModule('index')
     m.path = path.join(process.cwd(), 'a/index.js')
+    m.name = 'a/index'
     m.requiredAs = './index'
 
     m.update = function(val) {
-      test.equal(val, 'a')
+      test.equal(val, 'transform/a')
     }
 
     convert([m], function(f) {
       test.done()
     })
   },
-  // HAHAHA hard to say
-  // 'rewrite file name when folder is the same what file is, d3/d3 -> d3': function(test) {
-  //   var m = createModule('transform')
-  //
-  //   m.update = function(val) {
-  //     test.equal(val, 'transform')
-  //   }
-  //
-  //   convert([m], function(f) {
-  //     test.done()
-  //   })
-  // },
+  // // HAHAHA hard to say
+  // // 'rewrite file name when folder is the same what file is, d3/d3 -> d3': function(test) {
+  // //   var m = createModule('transform')
+  // //
+  // //   m.update = function(val) {
+  // //     test.equal(val, 'transform')
+  // //   }
+  // //
+  // //   convert([m], function(f) {
+  // //     test.done()
+  // //   })
+  // // },
   'add project name to dependency name': function(test) {
     var m = createModule('foo/baz/bar')
 
@@ -81,7 +83,7 @@ exports['rewrite-require'] = {
     var m = createModule('foo/baz/bar')
 
     m.update = function(val) {
-      test.equal(val, 'foo/baz/bar')
+      test.equal(val, 'transform/foo/baz/bar')
     }
 
     convert([m], function(f) {
@@ -109,7 +111,7 @@ exports['rewrite-require'] = {
 
     m.base = process.cwd()
 
-    ref1.base = '/node_modules/dep'
+    ref1.base = m.base + '/node_modules/dep'
     ref1.requiredAs = 'dep'
     ref1.path = ref1.base + '/' + ref1.name + '.js'
     ref1.external = true
@@ -117,7 +119,9 @@ exports['rewrite-require'] = {
     m.update = function(val) { test.equal(val, 'nana/foo') }
     ref1.update = function(val) { test.equal(val, 'dep') }
 
-    convert([m, ref1], function() { test.done() }, {project:'nana'})
+    convert( [m, ref1]
+           , function() { test.done() }
+           , { project:'nana', discoverable: ['node_modules']})
   },
   'revert external modules': function(test) {
     var m = createModule('foo')
@@ -157,15 +161,13 @@ exports['rewrite-require'] = {
     n3.base = process.cwd() + '/bower_components/'
     n3.path = path.join(n3.base, './n3/index.js') 
 
-    n1.requiredAs = 'n1'
-    n2.requiredAs = 'n2'
-    n3.requiredAs = 'n3'
+    n1.external = n2.external = n3.external = true
 
     convert([m1, n1, n2, n3], function(result) { 
-      test.equal(['test/foo', 'n1', 'n2', 'n3'].join(), _.pluck(result, 'name').join())
+      test.equal(['test/foo', 'n1/n1', 'n2/n2', 'n3'].join(), _.pluck(result, 'name').join())
       test.equal(3, _.compact(_.pluck(result, 'external')).length)
       test.done() 
-    }, {project: 'test', cwd: process.cwd()})
+    }, {project: 'test', cwd: process.cwd(), discoverable: ['node_modules', 'bower_components']})
   }
 }
 

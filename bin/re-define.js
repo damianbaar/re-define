@@ -104,8 +104,8 @@ var program = require('commander')
 
   _.each(config.entries, function(e) {
     bundle.write(new File({path: e
-    , cwd: (config.cwd && path.resolve(config.cwd)) || process.cwd()
-    , base: path.dirname(e)
+    // , cwd: (config.cwd && path.resolve(config.cwd)) || process.cwd()
+    // , base: (config.cwd && path.resolve(config.cwd)) || process.cwd()
     }))
   })
 

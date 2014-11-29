@@ -28,25 +28,26 @@
   return __req;
 })
 ({ 
-'a': [function(exports, require, module, __filename, __dirname) { 
-    module.exports = 'a';
-}, {"__filename":"index.js","__dirname":"node_modules/a"}], 
-'a/b': [function(exports, require, module, __filename, __dirname) { 
+'module-a/b': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'b';
-}, {"__filename":"index.js","__dirname":"node_modules/a/b"}], 
-'a/c': [function(exports, require, module, __filename, __dirname) { 
+}, {"__filename":"","__dirname":""}], 
+'module-a/c': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'c';
-}, {"__filename":"c.js","__dirname":"node_modules/a"}], 
-'a/b/d': [function(exports, require, module, __filename, __dirname) { 
+}, {"__filename":"","__dirname":""}], 
+'module-a/b/d': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'd';
-}, {"__filename":"index.js","__dirname":"node_modules/a/b/d"}], 
-'a/b/d/e': [function(exports, require, module, __filename, __dirname) { 
+}, {"__filename":"","__dirname":""}], 
+'module-a/b/d/e': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'e';
-}, {"__filename":"e.js","__dirname":"node_modules/a/b/d"}], 
+}, {"__filename":"","__dirname":""}], 
+'module-a': [function(exports, require, module, __filename, __dirname) { 
+    var b = require('module-a/b'), c = require('module-a/c'), d = require('module-a/b/d'), e = require('module-a/b/d/e');
+    module.exports = 'a';
+}, {"__filename":"","__dirname":""}], 
 'refs': [function(exports, require, module, __filename, __dirname) { 
-    var a = require('a'), b = require('a/b'), c = require('a/c'), d = require('a/b/d'), e = require('a/b/d/e');
+    var a = require('module-a'), b = require('module-a/b'), c = require('module-a/c'), d = require('module-a/b/d'), e = require('module-a/b/d/e');
     module.exports = 'refs';
-}, {"__filename":"index.js","__dirname":"."}]
+}, {"__filename":"","__dirname":""}]
 }
 ,  function() { this.spec = this.spec || {};this.spec.refs = this.spec.refs || {}; return this.spec.refs }.call(this) 
 , []

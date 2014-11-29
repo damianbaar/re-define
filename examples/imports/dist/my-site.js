@@ -28,10 +28,10 @@
   return __req;
 })
 ({ 
-'index': [function(exports, require, module, __filename, __dirname) { 
+'imports/my-site': [function(exports, require, module, __filename, __dirname) { 
     var lookup = require('components/lookup');
     lookup.create();
-}, {"__filename":"index.js","__dirname":"."}]
+}, {"__filename":"","__dirname":""}]
 }
 ,  function() { this.examples = this.examples || {};this.examples.imports = this.examples.imports || {};this.examples.imports.org = this.examples.imports.org || {};this.examples.imports.org.site = this.examples.imports.org.site || {}; return this.examples.imports.org.site }.call(this) 
 , [examples.imports.component]

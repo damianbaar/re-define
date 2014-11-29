@@ -1,5 +1,6 @@
 require(
   [ "lodash"
+  , "lodash/dep1"
   , "jquery"
   , "jquery/jquery2"
   , "d3"

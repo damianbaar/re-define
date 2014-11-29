@@ -29,25 +29,28 @@
 })
 ({ 
 'common': [function(exports, require, module, __filename, __dirname) { 
-    module.exports = 'common';
-}, {"__filename":"common.js","__dirname":"node_modules/common"}], 
+    module.exports = 'common/index';
+}, {"__filename":"","__dirname":""}], 
 'a/b': [function(exports, require, module, __filename, __dirname) { 
     require('common');
     module.exports = 'b';
-}, {"__filename":"b.js","__dirname":"node_modules/a"}], 
-'d': [function(exports, require, module, __filename, __dirname) { 
+}, {"__filename":"","__dirname":""}], 
+'d/d': [function(exports, require, module, __filename, __dirname) { 
     module.exports = 'd';
-}, {"__filename":"d.js","__dirname":"node_modules/a/node_modules/d"}], 
+}, {"__filename":"","__dirname":""}], 
 'a/c': [function(exports, require, module, __filename, __dirname) { 
-    var d = require('d');
+    var d = require('d/d');
     module.exports = 'c';
-}, {"__filename":"c.js","__dirname":"node_modules/a"}], 
+}, {"__filename":"","__dirname":""}], 
+'common/common': [function(exports, require, module, __filename, __dirname) { 
+    module.exports = 'common';
+}, {"__filename":"","__dirname":""}], 
 'test': [function(exports, require, module, __filename, __dirname) { 
     require('a/b');
     require('a/c');
-    require('common');
+    require('common/common');
     module.exports = 'main';
-}, {"__filename":"index.js","__dirname":"."}]
+}, {"__filename":"","__dirname":""}]
 }
 ,  function() { this.spec = this.spec || {};this.spec.nested = this.spec.nested || {}; return this.spec.nested }.call(this) 
 , []
