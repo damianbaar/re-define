@@ -28,7 +28,7 @@
   return __req;
 })
 ({ 
-'components/components/lookup': [function(exports, require, module, __filename, __dirname) { 
+'components/lookup': [function(exports, require, module, __filename, __dirname) { 
     return {
       create: function () {
         console.log('Creating lookup ...');

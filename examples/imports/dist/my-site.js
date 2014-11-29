@@ -28,7 +28,7 @@
   return __req;
 })
 ({ 
-'imports/my-site': [function(exports, require, module, __filename, __dirname) { 
+'my-site': [function(exports, require, module, __filename, __dirname) { 
     var lookup = require('components/lookup');
     lookup.create();
 }, {"__filename":"","__dirname":""}]

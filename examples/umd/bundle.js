@@ -1,29 +1,27 @@
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('amd/name', ['dep2','jquery','async/async','lodash/dep1'], factory)
+    define('amd/name', ['dep2','async/async','lodash/dep1'], factory)
   } else if (typeof module === "object" && !!module.exports) {
-    module.exports = factory(require('dep2'),require('jquery'),require('async/async'),require('lodash/dep1'))
+    module.exports = factory(require('dep2'),require('async/async'),require('lodash/dep1'))
   } else {
     var dep2 =  parent.dep2
-    var jquery =  parent.jquery
     var async_async =  parent.async
     var lodash_dep1 =  parent.lodash_dep1
   
     parent["examples"] = parent["examples"] || {};
-    parent["examples"]["umd"] = factory(dep2,jquery,async_async,lodash_dep1);
+    parent["examples"]["umd"] = factory(dep2,async_async,lodash_dep1);
 
   }
-  }(this, function (dep2,jquery,async_async,lodash_dep1) {
+  }(this, function (dep2,async_async,lodash_dep1) {
 
   var closure = {}
 
   closure['dep2'] = dep2
-  closure['jquery'] = jquery
   closure['async/async'] = async_async
   closure['lodash/dep1'] = lodash_dep1
   
 
-var __req = //externals: dep2,jquery,async/async,lodash/dep1 
+var __req = //externals: dep2,async/async,lodash/dep1 
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
@@ -53,6 +51,13 @@ var __req = //externals: dep2,jquery,async/async,lodash/dep1
   return __req;
 })
 ({ 
+'jquery/lib-2/dep1': [function(exports, require, module, __filename, __dirname) { 
+    return { name: 'dep' };
+}, {"__filename":"","__dirname":""}], 
+'jquery/lib/dep1': [function(exports, require, module, __filename, __dirname) { 
+    var a = require('jquery/lib-2/dep1');
+    return { name: 'dep' };
+}, {"__filename":"","__dirname":""}], 
 'd3/dep1': [function(exports, require, module, __filename, __dirname) { 
     module.exports = { test: 'test' };
 }, {"__filename":"","__dirname":""}], 
@@ -72,16 +77,16 @@ var __req = //externals: dep2,jquery,async/async,lodash/dep1
       return { d3: 'd3' };
     }));
 }, {"__filename":"","__dirname":""}], 
+'jquery': [function(exports, require, module, __filename, __dirname) { 
+    var a = require('jquery/lib/dep1');
+    require('jquery/lib-2/dep1');
+    require('d3');
+    var a = 'jquery';
+    module.exports = { name: a };
+}, {"__filename":"","__dirname":""}], 
 'lodash': [function(exports, require, module, __filename, __dirname) { 
     var $ = require('jquery'), d3 = require('d3');
     module.exports = 'lodash here';
-}, {"__filename":"","__dirname":""}], 
-'jquery/lib-2/dep1': [function(exports, require, module, __filename, __dirname) { 
-    return { name: 'dep' };
-}, {"__filename":"","__dirname":""}], 
-'jquery/lib/dep1': [function(exports, require, module, __filename, __dirname) { 
-    var a = require('jquery/lib-2/dep1');
-    return { name: 'dep' };
 }, {"__filename":"","__dirname":""}], 
 'jquery/jquery2': [function(exports, require, module, __filename, __dirname) { 
     var a = require('jquery/lib/dep1');
