@@ -149,13 +149,14 @@ internally we require('jquery'), however jquery is only accessible via global, s
 ```
 globals: {'jquery': '$'}
 ```
-this property matters only with following templates: `iife`, `umd`, `browserify`
+this property matters only with following templates: `iife`, `umd`, `browserify`, `global`
 
-* 'wrappers'
+* `wrappers`
 It is important to understand that some templates may not be compatibile with each other:
 
-if you need an import feature, use followings, `browserify / default / global': 
-`browserify` - use when your project based upon browserify (returns 'require' as a result and can be referenced further)
+if you need an import feature, use followings, `browserify / default / global`: 
+
+`browserify` - use when your project based upon browserify (returns `require` as a result and can be referenced further)
 `default / global` - default expose all modules, good that you'd get feeling whilist `requires` as in node ('component/internal-part')
 
 without additionall features, just fulfilled definition:

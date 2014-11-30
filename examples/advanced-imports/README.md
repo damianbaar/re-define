@@ -9,6 +9,12 @@ re-define --cwd app app/index.js --imports ns.org.components --namespace ns.org.
 ```
 #### Explanation
 
+* index
+```html
+    <script src="components.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+```
+
 * re-usable part
 
 `re-define --cwd components '**/index.js' --namespace ns.org.components > components.js`
@@ -16,13 +22,13 @@ re-define --cwd app app/index.js --imports ns.org.components --namespace ns.org.
 Get all `index.js` files from folders and expose them within `ns.org.components` namespace, once finished save everything to `components.js`
 
 * app
-
+```
 re-define --cwd app app/index.js --imports ns.org.components --namespace ns.org.app --globals '{"jquery":"$"}' --wrapper 'global' > app.js
 ```
 
 Start from `app/index.js`, import `ns.org.components` and register `api` within `ns.org.app`, when requesting `require(jquery)` get it from global scope as `$` and wrap it by `global` template to expose only returned module. (if there is not need to remap dependencies (jquery->$), you can import `window` as namespace, in this case it work only if `window.jquery` is available.
 
-```
+```js
 //components
 
 (function (modules, namespace, imports) {
@@ -53,7 +59,8 @@ Start from `app/index.js`, import `ns.org.components` and register `api` within 
 , []
 )
 ```
-```
+
+```js
 //app
 (function (parent, factory){
   if (typeof exports === 'object') {
