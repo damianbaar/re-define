@@ -152,13 +152,20 @@ globals: {'jquery': '$'}
 this property matters only with following templates: `iife`, `umd`, `browserify`
 
 * 'wrappers'
-It is important to understand a purpose of particular templates and their limitation:
-default / browserify - import template with multientry points
-umd - one exports one module
-iife - 
+It is important to understand that some templates may not be compatibile with each other:
+
+if you need an import feature, use followings, `browserify / default / global': 
+`browserify` - use when your project based upon browserify (returns 'require' as a result and can be referenced further)
+`default / global` - default expose all modules, good that you'd get feeling whilist `requires` as in node ('component/internal-part')
+
+without additionall features, just fulfilled definition:
+`umd` - expose one module compatibile with `amd/cjs/global`
+`iife` - auto invoke returned/last module, without sharing any info from internal scope
+
+There is plenty of use cases and how code could be reused, be creative!
 
 * `src`
-it only accepts entry points, do not try to use glob pattern for all of your files
+it only accepts entry points, referencing whole set like `**/**` is a bit pointless, since there is perfomance impact as well as you can include something which is not needed at all.
 
 * `autoCacheClean` && `development`
 when development mode is enabled `re-define` creates a `.tmp` folder where stores resolved files to speed up compilation time, however when `autoCacheClean` flag is enabled, then is removing old entries, for the time being it is not well optimized and there is a noticable performance impact
@@ -173,6 +180,7 @@ re-define lookup.js --namespace org.component
 re-define index.js --imports this.org.component --namespace org.site
 ```
 To get more, check this [example](/examples/imports)
+or this one, more advanced a bit [example](/examples/advanced-imports)
 
 ####Custom transforms
 * [usage](/bin/re-define.js#L56) or [grunt](https://github.com/damianbaar/grunt-re-define)

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title></title>
+  </head>
+  <body>
+    <h1>Open DevConsole</h1>
+
+    <script type="text/javascript" charset="utf-8">
+      var $ = { name:'jquery' }
+    </script>
+
+    <script src="components.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript" charset="utf-8">
+
+      console.log('------- APP ---------')
+      ns.org.app.start()
+
+      console.log('')
+      console.log('------- NAMESPACES ---------')
+
+      console.log('APP ns:', ns.org.app)
+      console.log('COMPONTENTS ns:', ns.org.components)
+    </script>
+  </body>
+</html>
