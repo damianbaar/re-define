@@ -65,7 +65,7 @@ Start from `app/index.js`, import `ns.org.components` and register module `api` 
 (function (parent, factory){
   if (typeof exports === 'object') {
     // Referenced exactly the same as with node
-    module.exports = factory(require('components/profile'),require('components/lookup'),require('jquery'))
+    module.exports = factory(require('jquery'))
   } else {
     var jquery =  parent.$
 
