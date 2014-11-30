@@ -11,8 +11,8 @@ re-define --cwd app app/index.js --imports ns.org.components --namespace ns.org.
 
 * index
 ```html
-    <script src="components.js" type="text/javascript" charset="utf-8"></script>
-    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+  <script src="components.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app.js" type="text/javascript" charset="utf-8"></script>
 ```
 
 * re-usable part

@@ -97,7 +97,7 @@ Options:
 ###Config
 ```js
 module.exports = 
-  { names         : {amd: 'amd/name', global: 'global.name'}
+  { names         : { amd: 'amd/name', global: 'global.name' }
   , project       : '' //project name, adding a prefix to internal module name
   , returns       : ''
   , globals      : {} //external {lib:global}
@@ -114,22 +114,21 @@ module.exports =
   , wrapper       : 'default'
   //attach all bundled modules to namespace, foo.baz.bar is allowed
   , namespace: '' 
-  //needed for correct alignment module names
-  , alignToFolder: ['node_modules', 'bower_components']
   //exclude specific AMD dependencies
   , excludeAMDModules : ['\.css$', 'require', 'modules', 'exports']
   //regexp to detect an AMD plugins, first we need to remove the plugin prefix to get a path
   , plugins      : ['^(text\/?)*!']
-  //import namespaces, if you need to take some deps from globals like jquery, define it as ['window']
+  , discoverable : ['bower_components', 'node_modules']
+  //import namespaces, if you need to take some deps from exported namespace
   , imports: []
   //remap require calls, helpful when some libs have different reference to the same module
   , map: {}
   //js extensions, needed for filename.with.dots.js
   , jsExt: ['.js']
   //check existence of main/dir file when referencing a dir, like require('folder') = folder/index.js
-  , dirExpanders: ['index.js', 'main.js']
-  //export __filename, __dirname
-  , exportPaths: true
+  , dirExpanders: ['index.js']
+  //when project is missing, inserting current folder as a prefix for modules
+  , autoInsertFolder: true
   //format for escodegen
   , format: {
       indent: { style: '  ', base: 2 },
@@ -137,6 +136,8 @@ module.exports =
       compact: false,
       safeConcatenation: false
     }
+  //export __filename, __dirname
+  , exportPaths: false 
   , showWarnings: false
   , tempFolder: './.tmp'
   , autoCacheClean: false
@@ -145,6 +146,7 @@ module.exports =
 ```
 
 * `globals`
+
 internally we require('jquery'), however jquery is only accessible via global, so to remap jquery to global.$ we need to set a mapping, like
 ```
 globals: {'jquery': '$'}
@@ -152,24 +154,33 @@ globals: {'jquery': '$'}
 this property matters only with following templates: `iife`, `umd`, `browserify`, `global`
 
 * `wrappers`
+
 It is important to understand that some templates may not be compatibile with each other:
 
 if you need an import feature, use followings, `browserify / default / global`: 
 
 `browserify` - use when your project based upon browserify (returns `require` as a result and can be referenced further)
-`default / global` - default expose all modules, good that you'd get feeling whilist `requires` as in node ('component/internal-part')
+`default` - expose all modules, to be able to import it further and get a feeling like when `require` in node ('component/internal-part')
+`global` - works with `default` as isolated module with one entry point, use `globals` property in config to remap require statement to global, like `code: require('jquery') -> config: globals: {jquery: $}`
 
-without additionall features, just fulfilled definition:
-`umd` - expose one module compatibile with `amd/cjs/global`
+wrappers without additional features, just fulfilled module definition:
+`umd` - expose one module compatibile with `amd/cjs/global`, import is not possible without runtime checking whether dependency is there for amd modules
 `iife` - auto invoke returned/last module, without sharing any info from internal scope
 
 There is plenty of use cases and how code could be reused, be creative!
 
 * `src`
+
 it only accepts entry points, referencing whole set like `**/**` is a bit pointless, since there is perfomance impact as well as you can include something which is not needed at all.
 
 * `autoCacheClean` && `development`
+
 when development mode is enabled `re-define` creates a `.tmp` folder where stores resolved files to speed up compilation time, however when `autoCacheClean` flag is enabled, then is removing old entries, for the time being it is not well optimized and there is a noticable performance impact
+
+* `map`
+
+remap require calls, helpful when some libs have different reference to the same module.
+i.e. `require('d3/d3')` -> `require('d3')` when config.map {'d3/d3':'d3'}
 
 ###How it works
 ####Imports
