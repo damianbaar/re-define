@@ -87,12 +87,7 @@ Options:
 
   bundle.pipe(process.stdout)
 
-  bundle.write(
-    new File({
-          path: e
-        , cwd: (config.cwd && path.resolve(config.cwd)) || process.cwd()
-        , base: path.dirname(e)
-        }))
+  bundle.write({ path: e })
 ```
 
 ###Config
@@ -187,7 +182,7 @@ i.e. `require('d3/d3')` when config.map {'d3/d3':'d3'} becomes `require('d3')`.
 
 * `imports`
 
-import namespaces, i.e. `org.components,window`, you can use also `window` as namespace when there is no need to remap anything, like `require('d3')`, `window.d3`. To get more configuration option, it could be used with `exclude` just to skip those dependencies which should be referenced from namespace instead of global or amd module.
+import namespaces, i.e. `org.components`, you can use also `window` as namespace when there is no need to remap anything, like `require('d3')`, `window.d3`. To get more configuration option, it could be used with `exclude` just to skip those dependencies which should be referenced from namespace instead of global or amd module.
 
 ###How it works
 ####Imports

@@ -43,9 +43,6 @@
 'components/lookup': [function(exports, require, module, __filename, __dirname) { 
     var dropdown = require('components/lookup/ui/ui'), util = require('components/lookup/util');
     module.exports = 'lookup';
-}, {"__filename":"","__dirname":""}], 
-'components': [function(exports, require, module, __filename, __dirname) { 
-    var a = require('components/profile'), b = require('components/lookup');
 }, {"__filename":"","__dirname":""}]
 }
 ,  function() { this.ns = this.ns || {};this.ns.org = this.ns.org || {};this.ns.org.components = this.ns.org.components || {}; return this.ns.org.components }.call(this) 
