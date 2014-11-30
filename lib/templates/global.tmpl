@@ -3,19 +3,19 @@
     module.exports = factory(<%=
            _.map(external, function(d){ return "require('" + d + "')" }).join(',') %>)
   } else {
-    <% _.chain(_.keys(config.globals))
+    <% _.chain(external)
         .map(function(d) { return 'var ' + util.escape(d) + " = " + " parent." + util.global(d) })
         .each(function(name) {;
     %><%= name %>
     <%})%>
 
-    <%= util.toGlobal(['parent'].concat(config.names.global.split('.')), "factory("+_.map(_.keys(config.globals), util.escape).join(',') + ")") %>
+    <%= util.toGlobal(['parent'].concat(config.names.global.split('.')), "factory("+_.map(external, util.escape).join(',') + ")") %>
   }
-  }(this, function (<%= _.map(_.keys(config.globals), util.escape).join(',') %>) {
+  }(this, function (<%= _.map(external, util.escape).join(',') %>) {
 
   var closure = {}
 
-  <% _.chain(_.keys(config.globals))
+  <% _.chain(external)
       .map(function(d) { return "closure['" + d + "'] = " + util.escape(d) })
       .each(function(name) {;
   %><%= name %>

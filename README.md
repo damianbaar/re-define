@@ -114,6 +114,8 @@ module.exports =
   , wrapper       : 'default'
   //attach all bundled modules to namespace, foo.baz.bar is allowed
   , namespace: '' 
+  //skip dependencies from externals (won't be included in wrapper as external dep for all module definition, assume that dep will be taken from namespace, works with glob 'dep_name/**')
+  , exclude: []
   //exclude specific AMD dependencies
   , excludeAMDModules : ['\.css$', 'require', 'modules', 'exports']
   //regexp to detect an AMD plugins, first we need to remove the plugin prefix to get a path
@@ -155,16 +157,16 @@ this property matters only with following templates: `iife`, `umd`, `browserify`
 
 * `wrappers`
 
-It is important to understand that some templates may not be compatibile with each other:
-
-if you need an import feature, use followings, `browserify / default / global`: 
+It is important to understand that some templates may not be compatibile with each other out of the box, sometimes you need to specify custom configuration.
 
 `browserify` - use when your project based upon browserify (returns `require` as a result and can be referenced further)
+
 `default` - expose all modules, to be able to import it further and get a feeling like when `require` in node ('component/internal-part')
+
 `global` - works with `default` as isolated module with one entry point, use `globals` property in config to remap require statement to global, like `code: require('jquery') -> config: globals: {jquery: $}`
 
-wrappers without additional features, just fulfilled module definition:
-`umd` - expose one module compatibile with `amd/cjs/global`, import is not possible without runtime checking whether dependency is there for amd modules
+`umd` - expose one module compatibile with `amd/cjs/global`, use `exclude` when you are referencing something from external namespace and it should not be included in `requirejs` call
+
 `iife` - auto invoke returned/last module, without sharing any info from internal scope
 
 There is plenty of use cases and how code could be reused, be creative!
@@ -180,7 +182,11 @@ when development mode is enabled `re-define` creates a `.tmp` folder where store
 * `map`
 
 remap require calls, helpful when some libs have different reference to the same module.
-i.e. `require('d3/d3')` -> `require('d3')` when config.map {'d3/d3':'d3'}
+i.e. `require('d3/d3')` when config.map {'d3/d3':'d3'} becomes `require('d3')`.
+
+* `imports`
+
+import namespaces, i.e. `org.components,window`, you can use also `window` as namespace when there is no need to remap anything, like `require('d3')`, `window.d3`. To get more configuration option, it could be used with `exclude` just to skip those dependencies which should be referenced from namespace instead of global or amd module.
 
 ###How it works
 ####Imports

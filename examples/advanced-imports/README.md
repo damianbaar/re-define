@@ -5,7 +5,7 @@ How to use import/export namespaces when one part let's say components need cust
 #### Build
 ```
 re-define --cwd components '**/index.js' --namespace ns.org.components > components.js
-re-define --cwd app app/index.js --imports ns.org.components --namespace ns.org.app --globals '{"jquery":"$"}' --wrapper 'global' > app.js
+re-define --cwd app app/index.js --imports ns.org.components --namespace ns.org.app --globals '{"jquery":"$"}' --wrapper 'global' --exclude 'components/**' > app.js
 ```
 #### Explanation
 
@@ -23,10 +23,10 @@ Get all `index.js` files from folders and expose them within `ns.org.components`
 
 * app
 ```
-re-define --cwd app app/index.js --imports ns.org.components --namespace ns.org.app --globals '{"jquery":"$"}' --wrapper 'global' > app.js
+re-define --cwd app app/index.js --imports ns.org.components --namespace ns.org.app --globals '{"jquery":"$"}' --wrapper 'global' --exclude 'components/**' > app.js
 ```
 
-Start from `app/index.js`, import `ns.org.components` and register `api` within `ns.org.app`, when requesting `require(jquery)` get it from global scope as `$` and wrap it by `global` template to expose only returned module. (if there is not need to remap dependencies (jquery->$), you can import `window` as namespace, in this case it work only if `window.jquery` is available.
+Start from `app/index.js`, import `ns.org.components` and register module `api` within `ns.org.app`, when requesting `require(jquery)` get it from global scope as `$` and wrap it by `global` template to expose only returned module. Exclude those dependencies which we assume belong to namespace, this is `components/**` and save it to `app.js`
 
 ```js
 //components

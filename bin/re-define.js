@@ -31,7 +31,8 @@ var program = require('commander')
     .option('--external [json]'       , 'Include module from external location', JSON.parse)
     .option('--discoverable [dirs]'   , 'External modules lib, such bower_components', toArray)
     .option('--descriptors [files]'   , 'Checking main file in external dep', toArray)
-    .option('--skip [module]'         , 'Skip external module', toArray)
+    .option('--skip [modules]'        , 'Do not include specified dependency and mark as dependency', toArray)
+    .option('--exclude [modules]'     , 'Do not include and do not specify as dependency', toArray)
 
     .option('--development'           , 'Development mode')
 
@@ -50,6 +51,7 @@ var program = require('commander')
     , globals        : program.globals
     , project        : program.projectName
     , development    : !!program.development
+    , exclude        : program.exclude
     }
 
   config = redefine.config(options)

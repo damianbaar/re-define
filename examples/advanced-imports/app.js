@@ -1,6 +1,6 @@
 (function (parent, factory){
   if (typeof exports === 'object') {
-    module.exports = factory(require('components/profile'),require('components/lookup'),require('jquery'))
+    module.exports = factory(require('jquery'))
   } else {
     var jquery =  parent.$
     
@@ -17,7 +17,7 @@
   closure['jquery'] = jquery
   
 
-var __req = //externals: components/profile,components/lookup,jquery 
+var __req = //externals: jquery 
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
