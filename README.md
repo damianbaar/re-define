@@ -4,6 +4,7 @@ Let's `re-define` something ... without any configuration ... just do the magic 
 Easy way to pack your application source files into one file(s) in order to build a bundle(s) you can use in `<scipt>` tag. `re-define` checks recursively `require` calls and could be used either to AMD or CommonJS files, since all AMD modules are converted into CJS.
 
 Check [examples](/examples) to get better picture.
+Simple [guide](/examples/advanced-imports) how to work with.
 
 ### Some differences, nice things in `re-define`
 * works well with `bower` and `npm`
