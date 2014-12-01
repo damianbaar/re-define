@@ -12,7 +12,7 @@
     <%= util.toGlobal(['parent'].concat(config.names.global.split('.')), "factory("+_.map(external, util.escape).join(',') + ")") %>
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
-
+  <%= util.getTemplate('part/globals') %>
   var closure = {}
 
   <% _.chain(external)

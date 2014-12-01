@@ -1,3 +1,4 @@
+<%= util.getTemplate('part/globals') %>
 <% if(!_.isEmpty(external)) { %>//externals: <%= external %> <% } %>
 <%= util.getTemplate('part/require') %>({ <% _.each(files, function(f, i, arr) { %>
 '<%= f.name %>': [function(exports, require, module, __filename, __dirname) { 

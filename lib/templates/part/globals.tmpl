@@ -1,1 +1,1 @@
-<% if(config.hasProcess) { %> var process = {}; process.env = {} <% } %>
+<% if(config.requireProcess) { %><%= util.safeInit('process.env') %><% } %>

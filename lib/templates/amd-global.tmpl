@@ -16,7 +16,7 @@
              _.map(external, function(d){ return "'" + d + "'" }).join(',') %>], parent.<%= config.names.global %>)
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
-
+  <%= util.getTemplate('part/globals') %>
   var closure = {}
 
   <% _.chain(external)

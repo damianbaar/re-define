@@ -1,5 +1,5 @@
 (function (<%= _.map(['parent'].concat(external), util.escape).join(',') %>) {
-
+<%= util.getTemplate('part/globals') %>
 var closure = {}
 
 <% _.chain(external)
