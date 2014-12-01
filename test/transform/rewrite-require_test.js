@@ -114,7 +114,6 @@ exports['rewrite-require'] = {
     m.base = process.cwd()
 
     ref1.base = m.base + '/node_modules/dep'
-    ref1.requiredAs = 'dep'
     ref1.path = ref1.base + '/' + ref1.name + '.js'
     ref1.external = true
 
@@ -170,11 +169,84 @@ exports['rewrite-require'] = {
       test.equal(3, _.compact(_.pluck(result, 'external')).length)
       test.done() 
     }, {project: 'test', cwd: process.cwd(), discoverable: ['node_modules', 'bower_components']})
+  },
+  'windows paths with grouping': function(test) {
+    var m = createModule('foo')
+      , ref1 = createModule('bar')
+      , ref2 = createModule('baz')
+      , base = _.partial(path.join, process.cwd())
+
+    m.path = base(m.name + '.js')
+
+    ref1.path = base('/node_modules/comp', ref1.name + '.js')
+    ref2.path = base('/node_modules/comp/a', ref2.name + '.js')
+
+    m.path = windowsPath(m.path)
+    ref1.path = windowsPath(ref1.path)
+    ref2.path = windowsPath(ref2.path)
+
+    m.update = function(val) { test.equal(val, 'nana/foo') }
+    ref1.update = function(val) { test.equal(val, 'comp/bar') }
+    ref2.update = function(val) { test.equal(val, 'comp/a/baz') }
+
+    convert( [m, ref1, ref2]
+           , function() { test.done() }
+           , { project:'nana', discoverable: ['node_modules']})
+  },
+  'windows paths with pkg name': function(test) {
+    var m = createModule('foo')
+      , ref1 = createModule('bar')
+      , ref2 = createModule('baz')
+      , base = _.partial(path.join, process.cwd())
+
+    m.path = base(m.name + '.js')
+
+    ref1.path = base('/node_modules/comp', ref1.name + '.js')
+    ref2.path = base('/node_modules/comp/a', ref2.name + '.js')
+
+    ref1.pkgName = 'component'
+
+    m.path = windowsPath(m.path)
+    ref1.path = windowsPath(ref1.path)
+    ref2.path = windowsPath(ref2.path)
+
+    m.update = function(val) { test.equal(val, 'nana/foo') }
+    ref1.update = function(val) { test.equal(val, 'component') }
+    ref2.update = function(val) { test.equal(val, 'component/a/baz') }
+
+    convert( [m, ref1, ref2]
+           , function() { test.done() }
+           , { project:'nana', discoverable: ['node_modules']})
+  },
+  'detect right folder for external dependency': function(test) {
+    var m = createModule('foo')
+      , ref1 = createModule('bar')
+      , ref2 = createModule('baz')
+      , base = _.partial(path.join, process.cwd())
+
+    m.path = base(m.name + '.js')
+
+    ref1.path = base('/node_modules/a/bower_components/b/node_modules/comp', ref1.name + '.js')
+    ref2.path = base('/node_modules/a/bower_components/comp/a', ref2.name + '.js')
+
+    m.path = windowsPath(m.path)
+    ref1.path = windowsPath(ref1.path)
+    ref2.path = windowsPath(ref2.path)
+
+    m.update = function(val) { test.equal(val, 'nana/foo') }
+    ref1.update = function(val) { test.equal(val, 'comp/bar') }
+    ref2.update = function(val) { test.equal(val, 'comp/a/baz') }
+
+    convert( [m, ref1, ref2]
+           , function() { test.done() }
+           , { project:'nana', discoverable: ['node_modules', 'bower_components']})
   }
 }
 
-function createModule(name, empty, requiredAs) {
-  var m = Module({path: name + ".js", name: name, requiredAs: requiredAs});
+function windowsPath(path) { return path.replace(/\//g,'\\') }
+
+function createModule(name, empty) {
+  var m = Module({path: name + ".js", name: name});
   !empty && (m.contents = new Buffer(""))
   return m
 }
