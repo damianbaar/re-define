@@ -12,9 +12,11 @@ return (function (modules, namespace, imports) {
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(f.slice(1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -35,9 +37,9 @@ return (function (modules, namespace, imports) {
   for(var name in modules) __req(name);
   return __req;
 })({ <% _.each(files, function(f, i, arr) { %>
-'<%= f.name %>': [function(exports, require, module, __filename, __dirname) { 
+'<%= f.name %>': [function(<%= ['exports','require','module'].concat(_.keys(f.properties)) %>) { 
 <%= f.contents %>
-}, <%= JSON.stringify(f.properties) %>]<% if(arr.length - 1 > i) { %>, <% }}) %>
+}<%= !_.isEmpty(f.properties) ? [null].concat(_.values(f.properties)) : '' %>]<% if(arr.length - 1 > i) { %>, <% }}) %>
 }
 , <% if(config.namespace) { %> function() { <%= util.namespace(config.namespace, 'this') %> return this.<%= config.namespace %> }.call(this) <% } else { %>{} <% } %>
 , [<%= config.imports %>]
