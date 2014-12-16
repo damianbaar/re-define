@@ -4,9 +4,11 @@
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(f.slice(1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -28,22 +30,22 @@
   return __req;
 })
 ({ 
-'components/profile': [function(exports, require, module, __filename, __dirname) { 
+'components/profile': [function(exports,require,module) { 
     module.exports = 'profile';
-}, {"__filename":"","__dirname":""}], 
-'dropdown': [function(exports, require, module, __filename, __dirname) { 
+}], 
+'dropdown': [function(exports,require,module) { 
     module.exports = 'dropdown';
-}, {"__filename":"","__dirname":""}], 
-'components/lookup/ui/ui': [function(exports, require, module, __filename, __dirname) { 
+}], 
+'components/lookup/ui/ui': [function(exports,require,module) { 
     var dd = require('dropdown');
-}, {"__filename":"","__dirname":""}], 
-'components/lookup/util': [function(exports, require, module, __filename, __dirname) { 
+}], 
+'components/lookup/util': [function(exports,require,module) { 
     module.exports = 'utils';
-}, {"__filename":"","__dirname":""}], 
-'components/lookup': [function(exports, require, module, __filename, __dirname) { 
+}], 
+'components/lookup': [function(exports,require,module) { 
     var dropdown = require('components/lookup/ui/ui'), util = require('components/lookup/util');
     module.exports = 'lookup';
-}, {"__filename":"","__dirname":""}]
+}]
 }
 ,  function() { this.ns = this.ns || {};this.ns.org = this.ns.org || {};this.ns.org.components = this.ns.org.components || {}; return this.ns.org.components }.call(this) 
 , []

@@ -2,3 +2,4 @@
 (cd umd && ./build.sh)
 (cd imports && ./build.sh)
 (cd slice-files && ./build.sh)
+(cd advanced-imports && ./build.sh)

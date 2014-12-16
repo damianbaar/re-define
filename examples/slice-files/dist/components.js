@@ -1,14 +1,14 @@
-
-
 //externals: d3 
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(f.slice(1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -30,24 +30,24 @@
   return __req;
 })
 ({ 
-'slice-files/common/c': [function(exports, require, module, __filename, __dirname) { 
+'slice-files/common/c': [function(exports,require,module,define) { 
     module.exports = { c: true };
-}, {"__filename":"","__dirname":""}], 
-'slice-files/common/a': [function(exports, require, module, __filename, __dirname) { 
+},null], 
+'slice-files/common/a': [function(exports,require,module,define) { 
     var c = require('slice-files/common/c');
     return {
       a: true,
       c: c
     };
-}, {"__filename":"","__dirname":""}], 
-'slice-files/common/b': [function(exports, require, module, __filename, __dirname) { 
+},null], 
+'slice-files/common/b': [function(exports,require,module,define) { 
     var c = require('slice-files/common/c');
     return {
       b: true,
       c: c
     };
-}, {"__filename":"","__dirname":""}], 
-'slice-files/entry-1': [function(exports, require, module, __filename, __dirname) { 
+},null], 
+'slice-files/entry-1': [function(exports,require,module,__filename,__dirname) { 
     var a = require('slice-files/common/a'), b = require('slice-files/common/b'), d3 = require('d3');
     console.log('dirname: ', __dirname, 'filename: ', __filename);
     module.exports = function () {
@@ -58,13 +58,13 @@
         ]
       };
     };
-}, {"__filename":"","__dirname":""}], 
-'slice-files/entry-2': [function(exports, require, module, __filename, __dirname) { 
+},"entry-1.js","."], 
+'slice-files/entry-2': [function(exports,require,module) { 
     var a = require('slice-files/common/a');
     module.exports = function () {
       return { 'entry-2': [a] };
     };
-}, {"__filename":"","__dirname":""}]
+}]
 }
 ,  function() { this.my = this.my || {};this.my.awesome = this.my.awesome || {};this.my.awesome.example = this.my.awesome.example || {}; return this.my.awesome.example }.call(this) 
 , [window]

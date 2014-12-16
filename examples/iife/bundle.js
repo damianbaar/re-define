@@ -1,22 +1,18 @@
 (function (parent) {
-
-
 var closure = {}
 
 
-
-
 var __req = 
-
-
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(f.slice(1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -38,13 +34,13 @@ var __req =
   return __req;
 })
 ({ 
-'iife/a': [function(exports, require, module, __filename, __dirname) { 
+'iife/a': [function(exports,require,module) { 
     module.exports = 'test123';
-}, {"__filename":"","__dirname":""}], 
-'iife': [function(exports, require, module, __filename, __dirname) { 
+}], 
+'iife': [function(exports,require,module) { 
     var a = require('iife/a');
     window.iife = a;
-}, {"__filename":"","__dirname":""}]
+}]
 }
 ,  function() { this.examples = this.examples || {};this.examples.iife = this.examples.iife || {}; return this.examples.iife }.call(this) 
 , [closure]

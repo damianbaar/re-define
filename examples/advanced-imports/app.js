@@ -11,7 +11,6 @@
 
   }
   }(this, function (jquery) {
-
   var closure = {}
 
   closure['jquery'] = jquery
@@ -23,9 +22,11 @@ var __req = //externals: jquery
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(f.slice(1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -47,7 +48,7 @@ var __req = //externals: jquery
   return __req;
 })
 ({ 
-'app': [function(exports, require, module, __filename, __dirname) { 
+'app': [function(exports,require,module) { 
     var profile = require('components/profile'), lookup = require('components/lookup'), $ = require('jquery');
     module.exports = {
       start: function () {
@@ -57,7 +58,7 @@ var __req = //externals: jquery
         console.log('start');
       }
     };
-}, {"__filename":"","__dirname":""}]
+}]
 }
 ,  function() { this.ns = this.ns || {};this.ns.org = this.ns.org || {};this.ns.org.app = this.ns.org.app || {}; return this.ns.org.app }.call(this) 
 , [closure,ns.org.components]

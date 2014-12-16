@@ -1,14 +1,14 @@
 
-
-
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(f.slice(1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -30,14 +30,14 @@
   return __req;
 })
 ({ 
-'components/lookup': [function(exports, require, module, __filename, __dirname) { 
+'components/lookup': [function(exports,require,module,define) { 
     return {
       create: function () {
         console.log('Creating lookup ...');
         return this;
       }
     };
-}, {"__filename":"","__dirname":""}]
+},null]
 }
 ,  function() { this.examples = this.examples || {};this.examples.imports = this.examples.imports || {};this.examples.imports.component = this.examples.imports.component || {}; return this.examples.imports.component }.call(this) 
 , []

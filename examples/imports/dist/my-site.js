@@ -1,14 +1,14 @@
-
-
 //externals: components/lookup 
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(f.slice(1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -30,10 +30,10 @@
   return __req;
 })
 ({ 
-'my-site': [function(exports, require, module, __filename, __dirname) { 
+'my-site': [function(exports,require,module) { 
     var lookup = require('components/lookup');
     lookup.create();
-}, {"__filename":"","__dirname":""}]
+}]
 }
 ,  function() { this.examples = this.examples || {};this.examples.imports = this.examples.imports || {};this.examples.imports.org = this.examples.imports.org || {};this.examples.imports.org.site = this.examples.imports.org.site || {}; return this.examples.imports.org.site }.call(this) 
 , [examples.imports.component]
