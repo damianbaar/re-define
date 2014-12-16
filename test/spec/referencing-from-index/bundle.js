@@ -1,6 +1,4 @@
 
-
-
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
@@ -31,28 +29,40 @@
 })
 ({ 
 'refs/common': [function(exports, require, module, __filename, __dirname) { 
+
+
     module.exports = 'COMMON';
-}, {"__filename":"","__dirname":""}], 
+}, {}], 
 'refs/dep': [function(exports, require, module, __filename, __dirname) { 
+
+
     var common = require('refs/common');
-}, {"__filename":"","__dirname":""}], 
+}, {}], 
 'refs/dep2': [function(exports, require, module, __filename, __dirname) { 
+
+
     module.exports = 'DEP2';
-}, {"__filename":"","__dirname":""}], 
+}, {}], 
 'refs/dep2/inner': [function(exports, require, module, __filename, __dirname) { 
+
+
     var idx = require('refs/dep2');
     module.exports = 'INNER';
-}, {"__filename":"","__dirname":""}], 
+}, {}], 
 'refs/common-2': [function(exports, require, module, __filename, __dirname) { 
+
+
     var dep2 = require('refs/dep2');
     module.exports = 'COMMON-2';
-}, {"__filename":"","__dirname":""}], 
+}, {}], 
 'refs': [function(exports, require, module, __filename, __dirname) { 
+
+
     var dep = require('refs/dep'), common = require('refs/common'), inner = require('refs/dep2/inner');
     var dep2 = require('refs/dep2');
     var common2 = require('refs/common-2');
     module.exports = 'index';
-}, {"__filename":"","__dirname":""}]
+}, {}]
 }
 ,  function() { this.spec = this.spec || {};this.spec.refs = this.spec.refs || {}; return this.spec.refs }.call(this) 
 , []

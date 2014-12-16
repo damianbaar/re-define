@@ -1,12 +1,13 @@
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('umd/module', [], factory)
+    define('amd/name', [], factory)
   } else if (typeof module === "object" && !!module.exports) {
     module.exports = factory()
   } else {
   
-    parent["umd"] = parent["umd"] || {};
-    parent["umd"]["module"] = factory();
+    parent["window"] = parent["window"] || {};
+    parent["window"]["amd"] = parent["window"]["amd"] || {};
+    parent["window"]["amd"]["global"] = factory();
 
   }
   }(this, function () {
@@ -42,39 +43,22 @@
   return __req;
 })
 ({ 
-'umd/dep': [function(exports, require, module, __filename, __dirname) { 
-
-
-    module.exports = 'dep';
-}, {}], 
-'umd/util.object': [function(exports, require, module, __filename, __dirname) { 
-
-
-    var dep = require('umd/dep');
-    module.exports = 'util object with dots in file';
-}, {}], 
-'umd/data.json': [function(exports, require, module, __filename, __dirname) { 
-
-
-module.exports = { "test": true }
-
-}, {}], 
-'umd/umd': [function(exports, require, module, __filename, __dirname) { 
-
-
-    var dep = require('umd/dep'), util = require('umd/util.object');
-    module.exports = {
-      dep: dep,
-      name: 'umd',
-      data: require('umd/data.json'),
-      dots: util
-    };
+'uses-process': [function(exports, require, module, __filename, __dirname) { 
+var process = process || {};process.env = process.env || {};
+var define = define || {};
+    var test = {
+        dep: dep,
+        name: 'iife'
+      };
+    process.env.TEST = 'test';
+    if (typeof define === 'function' && define.amd)
+      define('nanana');
 }, {}]
 }
-, {} 
+,  function() { this.window = this.window || {};this.window.amd = this.window.amd || {};this.window.amd.global = this.window.amd.global || {}; return this.window.amd.global }.call(this) 
 , [closure]
 )
 
-return __req('umd/umd')
+return __req('uses-process')
 
 }.bind({})))

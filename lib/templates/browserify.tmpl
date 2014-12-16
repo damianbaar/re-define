@@ -1,5 +1,4 @@
 require = (function (<%= _.map(['parent'].concat(external), util.escape).join(',') %>) {
-<%= util.getTemplate('part/globals') %>
 var __oldReq = typeof require == "function" && require
   , closure = {}
 

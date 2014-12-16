@@ -1,6 +1,4 @@
 
-
-
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
@@ -31,16 +29,20 @@
 })
 ({ 
 'test/dep': [function(exports, require, module, __filename, __dirname) { 
+
+
     module.exports = {
       toUpperCase: function (val) {
         return val.toUpperCase();
       }
     };
-}, {"__filename":"","__dirname":""}], 
+}, {}], 
 'test': [function(exports, require, module, __filename, __dirname) { 
+
+
     var dep = require('test/dep'), t = require('test' + 'test');
     module.exports = dep.toUpperCase('index');
-}, {"__filename":"","__dirname":""}]
+}, {}]
 }
 ,  function() { this.spec = this.spec || {};this.spec.index = this.spec.index || {}; return this.spec.index }.call(this) 
 , []

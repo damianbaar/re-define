@@ -16,15 +16,12 @@
              _.map(external, function(d){ return "'" + d + "'" }).join(',') %>], parent.<%= config.names.global %>)
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
-  <%= util.getTemplate('part/globals') %>
   var closure = {}
-
   <% _.chain(external)
       .map(function(d) { return "closure['" + d + "'] = " + util.escape(d) })
       .each(function(name) {;
   %><%= name %>
   <%})%>
-
 var __req = <%= util.getTemplate('default', ['closure']) %>
 return __req('<%= config.returns %>')
 

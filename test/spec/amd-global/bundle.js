@@ -12,15 +12,9 @@
       define('amd-global/module', [], parent.amd_global.module)
   }
   }(this, function () {
-  
-
   var closure = {}
-
   
-
 var __req = 
-
-
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
@@ -51,15 +45,19 @@ var __req =
 })
 ({ 
 'amd-global/dep': [function(exports, require, module, __filename, __dirname) { 
+
+
     module.exports = 'dep';
-}, {"__filename":"","__dirname":""}], 
+}, {}], 
 'amd-global': [function(exports, require, module, __filename, __dirname) { 
+
+
     var dep = require('amd-global/dep');
     module.exports = {
       dep: dep,
       name: 'amd-global'
     };
-}, {"__filename":"","__dirname":""}]
+}, {}]
 }
 , {} 
 , [closure]
