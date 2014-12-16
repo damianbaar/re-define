@@ -202,4 +202,18 @@ exports['testing-bundles'] = testCase({
       test.done()
     }
   })
+
+, "globals"
+: testCase({
+    'detect globals': function(test) {
+      var globals = {window: {}, define: sinon.spy()}
+        , ctx = sandbox(path.resolve(__dirname, 'spec/globals/bundle.js'), globals)
+        , global = globals.window.amd.global
+
+      test.equal(global.filename, 'index.js')
+      test.equal(global.dirname, '.')
+      test.ok(globals.define.notCalled)
+      test.done()
+    }
+  })
 })

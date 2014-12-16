@@ -7,4 +7,4 @@
 (cd index && ./build.sh)
 (cd external-require && ./build.sh)
 (cd referencing-from-index && ./build.sh)
-(cd uses-process && ./build.sh)
+(cd globals && ./build.sh)

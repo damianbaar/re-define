@@ -22,7 +22,7 @@
         , args
 
       if(f) {
-        args = [m.exports, __req, m].concat(Array.prototype.slice.call(arguments, 1))
+        args = [m.exports, __req, m].concat(f.slice(1))
         f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
@@ -45,20 +45,21 @@
   return __req;
 })
 ({ 
-'uses-process': [function(exports,require,module,process,define) { 
-    var test = {
-        dep: dep,
-        name: 'iife'
-      };
-    process.env.TEST = 'test';
+'globals': [function(exports,require,module,process,define,__filename,__dirname) { 
     if (typeof define === 'function' && define.amd)
       define('nanana');
-},{ env : {}},null]
+    process.env.TEST = 'test';
+    module.exports = {
+      process: process,
+      filename: __filename,
+      dirname: __dirname
+    };
+},window ? {env: {}} : process,null,"index.js","."]
 }
 ,  function() { this.window = this.window || {};this.window.amd = this.window.amd || {};this.window.amd.global = this.window.amd.global || {}; return this.window.amd.global }.call(this) 
 , [closure]
 )
 
-return __req('uses-process')
+return __req('globals')
 
 }.bind({})))

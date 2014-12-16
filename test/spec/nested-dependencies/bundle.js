@@ -7,7 +7,7 @@
         , args
 
       if(f) {
-        args = [m.exports, __req, m].concat(Array.prototype.slice.call(arguments, 1))
+        args = [m.exports, __req, m].concat(f.slice(1))
         f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
