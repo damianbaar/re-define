@@ -18,9 +18,11 @@
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(Array.prototype.slice.call(arguments, 1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -42,26 +44,18 @@
   return __req;
 })
 ({ 
-'umd/dep': [function(exports, require, module, __filename, __dirname) { 
-
-
+'umd/dep': [function(exports,require,module) { 
     module.exports = 'dep';
-}, {}], 
-'umd/util.object': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'umd/util.object': [function(exports,require,module) { 
     var dep = require('umd/dep');
     module.exports = 'util object with dots in file';
-}, {}], 
-'umd/data.json': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'umd/data.json': [function(exports,require,module) { 
 module.exports = { "test": true }
 
-}, {}], 
-'umd/umd': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'umd/umd': [function(exports,require,module) { 
     var dep = require('umd/dep'), util = require('umd/util.object');
     module.exports = {
       dep: dep,
@@ -69,7 +63,7 @@ module.exports = { "test": true }
       data: require('umd/data.json'),
       dots: util
     };
-}, {}]
+}]
 }
 , {} 
 , [closure]

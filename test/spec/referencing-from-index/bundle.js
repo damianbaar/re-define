@@ -4,9 +4,11 @@
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(Array.prototype.slice.call(arguments, 1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -28,41 +30,29 @@
   return __req;
 })
 ({ 
-'refs/common': [function(exports, require, module, __filename, __dirname) { 
-
-
+'refs/common': [function(exports,require,module) { 
     module.exports = 'COMMON';
-}, {}], 
-'refs/dep': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'refs/dep': [function(exports,require,module) { 
     var common = require('refs/common');
-}, {}], 
-'refs/dep2': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'refs/dep2': [function(exports,require,module) { 
     module.exports = 'DEP2';
-}, {}], 
-'refs/dep2/inner': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'refs/dep2/inner': [function(exports,require,module) { 
     var idx = require('refs/dep2');
     module.exports = 'INNER';
-}, {}], 
-'refs/common-2': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'refs/common-2': [function(exports,require,module) { 
     var dep2 = require('refs/dep2');
     module.exports = 'COMMON-2';
-}, {}], 
-'refs': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'refs': [function(exports,require,module) { 
     var dep = require('refs/dep'), common = require('refs/common'), inner = require('refs/dep2/inner');
     var dep2 = require('refs/dep2');
     var common2 = require('refs/common-2');
     module.exports = 'index';
-}, {}]
+}]
 }
 ,  function() { this.spec = this.spec || {};this.spec.refs = this.spec.refs || {}; return this.spec.refs }.call(this) 
 , []

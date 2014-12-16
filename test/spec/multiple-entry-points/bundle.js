@@ -4,9 +4,11 @@
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(Array.prototype.slice.call(arguments, 1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -28,32 +30,24 @@
   return __req;
 })
 ({ 
-'test/dep': [function(exports, require, module, __filename, __dirname) { 
-
-
+'test/dep': [function(exports,require,module) { 
     exports.toUpperCase = function (name) {
       return name.toUpperCase();
     };
     exports.name = 'dep';
-}, {}], 
-'test': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'test': [function(exports,require,module) { 
     var dep = require('test/dep');
     module.exports = dep.toUpperCase('index');
-}, {}], 
-'test/entry1': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'test/entry1': [function(exports,require,module) { 
     var dep = require('test/dep');
     module.exports = dep.toUpperCase('entry1');
-}, {}], 
-'test/entry2': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'test/entry2': [function(exports,require,module) { 
     var dep = require('test/dep');
     module.exports = dep.toUpperCase('entry2');
-}, {}]
+}]
 }
 ,  function() { this.spec = this.spec || {};this.spec.multi = this.spec.multi || {}; return this.spec.multi }.call(this) 
 , []

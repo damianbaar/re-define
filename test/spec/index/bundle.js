@@ -4,9 +4,11 @@
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(Array.prototype.slice.call(arguments, 1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -28,21 +30,17 @@
   return __req;
 })
 ({ 
-'test/dep': [function(exports, require, module, __filename, __dirname) { 
-
-
+'test/dep': [function(exports,require,module) { 
     module.exports = {
       toUpperCase: function (val) {
         return val.toUpperCase();
       }
     };
-}, {}], 
-'test': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'test': [function(exports,require,module) { 
     var dep = require('test/dep'), t = require('test' + 'test');
     module.exports = dep.toUpperCase('index');
-}, {}]
+}]
 }
 ,  function() { this.spec = this.spec || {};this.spec.index = this.spec.index || {}; return this.spec.index }.call(this) 
 , []

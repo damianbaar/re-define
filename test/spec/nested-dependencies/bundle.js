@@ -4,9 +4,11 @@
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(Array.prototype.slice.call(arguments, 1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -28,41 +30,29 @@
   return __req;
 })
 ({ 
-'common': [function(exports, require, module, __filename, __dirname) { 
-
-
+'common': [function(exports,require,module) { 
     module.exports = 'common/index';
-}, {}], 
-'a/b': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'a/b': [function(exports,require,module) { 
     require('common');
     module.exports = 'b';
-}, {}], 
-'d/d': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'d/d': [function(exports,require,module) { 
     module.exports = 'd';
-}, {}], 
-'a/c': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'a/c': [function(exports,require,module) { 
     var d = require('d/d');
     module.exports = 'c';
-}, {}], 
-'common/common': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'common/common': [function(exports,require,module) { 
     module.exports = 'common';
-}, {}], 
-'test': [function(exports, require, module, __filename, __dirname) { 
-
-
+}], 
+'test': [function(exports,require,module) { 
     require('a/b');
     require('a/c');
     require('common/common');
     module.exports = 'main';
-}, {}]
+}]
 }
 ,  function() { this.spec = this.spec || {};this.spec.nested = this.spec.nested || {}; return this.spec.nested }.call(this) 
 , []

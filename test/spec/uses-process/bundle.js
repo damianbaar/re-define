@@ -19,9 +19,11 @@
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(Array.prototype.slice.call(arguments, 1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -43,9 +45,7 @@
   return __req;
 })
 ({ 
-'uses-process': [function(exports, require, module, __filename, __dirname) { 
-var process = process || {};process.env = process.env || {};
-var define = define || {};
+'uses-process': [function(exports,require,module,process,define) { 
     var test = {
         dep: dep,
         name: 'iife'
@@ -53,7 +53,7 @@ var define = define || {};
     process.env.TEST = 'test';
     if (typeof define === 'function' && define.amd)
       define('nanana');
-}, {}]
+},{ env : {}},null]
 }
 ,  function() { this.window = this.window || {};this.window.amd = this.window.amd || {};this.window.amd.global = this.window.amd.global || {}; return this.window.amd.global }.call(this) 
 , [closure]
