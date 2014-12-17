@@ -8,12 +8,11 @@
         .each(function(name) {;
     %><%= name %>
     <%})%>
-
-    <%= util.toGlobal(['parent'].concat(config.names.global.split('.')), "factory("+_.map(external, util.escape).join(',') + ")") %>
-
+    var __f = factory(<%= _.map(external, util.escape).join(',') %>) 
+    <%= util.toGlobal(['parent'].concat(config.names.global.split('.')), '__f') %>
     if (typeof define === 'function' && define.amd)
       define('<%- config.names.amd %>', [<%= 
-             _.map(external, function(d){ return "'" + d + "'" }).join(',') %>], parent.<%= config.names.global %>)
+             _.map(external, function(d){ return "'" + d + "'" }).join(',') %>], __f)
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
   var closure = {}

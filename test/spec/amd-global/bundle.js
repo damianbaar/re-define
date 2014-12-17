@@ -3,13 +3,12 @@
     module.exports = factory()
   } else {
     
-
-    parent["amd_global"] = parent["amd_global"] || {};
-    parent["amd_global"]["module"] = factory();
-
+    var __f = factory() 
+    parent["amd-global"] = parent["amd-global"] || {};
+    parent["amd-global"]["module"] = __f;
 
     if (typeof define === 'function' && define.amd)
-      define('amd-global/module', [], parent.amd_global.module)
+      define('amd-global/module', [], __f)
   }
   }(this, function () {
   var closure = {}

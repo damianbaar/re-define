@@ -158,7 +158,7 @@ exports['testing-bundles'] = testCase({
       globals.define.amd = true
 
       var ctx = sandbox(path.resolve(__dirname, 'spec/amd-global/bundle.js'), globals)
-        , global = ctx.amd_global.module
+        , global = ctx['amd-global'].module
 
       test.equal(globals.define.calledOnce, 1)
       test.equal(globals.define.getCall(0).args[0], 'amd-global/module')
