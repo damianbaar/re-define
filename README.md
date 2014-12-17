@@ -134,8 +134,6 @@ module.exports =
       compact: false,
       safeConcatenation: false
     }
-  //export __filename, __dirname
-  , exportPaths: false 
   , showWarnings: false
   , tempFolder: './.tmp'
   , autoCacheClean: false
