@@ -27,6 +27,7 @@
   }
 
   for(var name in modules) __req(name);
+
   return __req;
 })
 ({ 
@@ -55,5 +56,5 @@
 }]
 }
 ,  function() { this.spec = this.spec || {};this.spec.nested = this.spec.nested || {}; return this.spec.nested }.call(this) 
-, []
+, window ? [] : []
 )

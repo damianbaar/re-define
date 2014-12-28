@@ -47,6 +47,7 @@
   }
 
   for(var name in modules) __req(name);
+
   return __req;
 })
 ({ 
@@ -57,7 +58,7 @@
     var a = require('jquery/lib-2/dep1');
     return { name: 'dep' };
 },null], 
-'d3/dep1': [function(exports,require,module) { 
+'dep1': [function(exports,require,module) { 
     module.exports = { test: 'test' };
 }], 
 'd3': [function(exports,require,module,define) { 
@@ -68,7 +69,7 @@
           'dep2'
         ], factory);
       } else if (typeof exports === 'object') {
-        module.exports = factory(require('d3/dep1'), require('dep2'));
+        module.exports = factory(require('dep1'), require('dep2'));
       } else {
         root.returnExports = factory(root.dep1, root.dep2);
       }
@@ -167,9 +168,9 @@ module.exports = "<div id=\"module_name\" tabIndex=\"1\">test</div>"
 }]
 }
 ,  function() { this.examples = this.examples || {};this.examples.umd = this.examples.umd || {}; return this.examples.umd }.call(this) 
-, [closure,parent.test]
+, window ? [closure,parent.test] : []
 )
 
-return __req('nananana')
+return __req('index.js')
 
 }.bind({})))

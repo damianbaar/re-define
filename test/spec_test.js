@@ -1,10 +1,13 @@
 var fs = require('fs')
   , path = require('path')
   , testCase = require('nodeunit').testCase
-  , sandbox = require('nodeunit').utils.sandbox
+  , _sandbox = require('nodeunit').utils.sandbox
   , sinon = require('sinon')
   , _ = require('lodash')
 
+sandbox = function(file, globals) {
+  return _sandbox(file, _.extend(globals || {}, { window: {} }) )
+}
 exports['testing-bundles'] = testCase({
 
   "nested dependencies - structure with dependencies comming from node_modules (pattern: default)" 
@@ -98,11 +101,11 @@ exports['testing-bundles'] = testCase({
       var ctx = sandbox(path.resolve(__dirname, 'spec/referencing-nested-files/bundle.js'))
         , code = ctx.spec.refs
 
-      test.equal(code['module-a'], 'a')
-      test.equal(code['module-a/c'], 'c')
-      test.equal(code['module-a/b'], 'b')
-      test.equal(code['module-a/b/d'], 'd')
-      test.equal(code['module-a/b/d/e'], 'e')
+      test.equal(code['a'], 'a')
+      test.equal(code['a/c'], 'c')
+      test.equal(code['a/b'], 'b')
+      test.equal(code['a/b/d'], 'd')
+      test.equal(code['a/b/d/e'], 'e')
       test.equal(code['refs'], 'refs')
 
       test.done()
@@ -154,7 +157,7 @@ exports['testing-bundles'] = testCase({
 , "amd - global - exporting values"
 : testCase({
     'amd and global with one factory': function(test) {
-      var globals = {define: sinon.spy()}
+      var globals = {window: {}, define: sinon.spy()}
       globals.define.amd = true
 
       var ctx = sandbox(path.resolve(__dirname, 'spec/amd-global/bundle.js'), globals)
@@ -162,9 +165,9 @@ exports['testing-bundles'] = testCase({
 
       test.equal(globals.define.calledOnce, 1)
       test.equal(globals.define.getCall(0).args[0], 'amd-global/module')
-      test.ok(typeof globals.define.getCall(0).args[2] === "object")
+      test.ok(typeof globals.define.getCall(0).args[1] === "function")
 
-      test.ok(global === globals.define.getCall(0).args[2])
+      test.ok(global === globals.define.getCall(0).args[1]())
       test.done()
     }
   })

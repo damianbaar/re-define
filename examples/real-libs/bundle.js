@@ -4,9 +4,11 @@
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
+        args = [m.exports, __req, m].concat(f.slice(1))
+        f = f[0].apply(m, args)
         namespace[name] = f || m.exports;
       } else {
         var mod
@@ -25,10 +27,11 @@
   }
 
   for(var name in modules) __req(name);
+
   return __req;
 })
 ({ 
-'jquery': [function(exports, require, module, __filename, __dirname) { 
+'jquery': [function(exports,require,module,define) { 
     (function (global, factory) {
       if (typeof module === 'object' && typeof module.exports === 'object') {
         module.exports = global.document ? factory(global, true) : function (w) {
@@ -5549,8 +5552,8 @@
       }
       return jQuery;
     }));
-}, {"__filename":"","__dirname":""}], 
-'d3': [function(exports, require, module, __filename, __dirname) { 
+},null], 
+'d3': [function(exports,require,module,define) { 
     !function () {
       var d3 = { version: '3.4.11' };
       if (!Date.now)
@@ -16618,8 +16621,8 @@
         module.exports = d3;
       this.d3 = d3;
     }();
-}, {"__filename":"","__dirname":""}], 
-'real-libs/package.json': [function(exports, require, module, __filename, __dirname) { 
+},null], 
+'package.json': [function(exports,require,module) { 
 module.exports = {
   "name": "real-libs",
   "version": "0.0.0",
@@ -16636,9 +16639,9 @@ module.exports = {
   }
 }
 
-}, {"__filename":"","__dirname":""}], 
-'real-libs': [function(exports, require, module, __filename, __dirname) { 
-    var $ = require('jquery'), d3 = require('d3'), __ = require('real-libs/package.json');
+}], 
+'real-libs': [function(exports,require,module) { 
+    var $ = require('jquery'), d3 = require('d3'), __ = require('package.json');
     var barData = [
         {
           'x': 1,
@@ -16704,8 +16707,8 @@ module.exports = {
         d3.select(this).attr('fill', 'grey');
       });
     });
-}, {"__filename":"","__dirname":""}]
+}]
 }
 ,  function() { this.org = this.org || {};this.org.chart = this.org.chart || {}; return this.org.chart }.call(this) 
-, [window]
+, window ? [window] : []
 )

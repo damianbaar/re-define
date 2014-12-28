@@ -27,6 +27,7 @@
   }
 
   for(var name in modules) __req(name);
+
   return __req;
 })
 ({ 
@@ -50,5 +51,5 @@
 }]
 }
 ,  function() { this.spec = this.spec || {};this.spec.multi = this.spec.multi || {}; return this.spec.multi }.call(this) 
-, []
+, window ? [] : []
 )

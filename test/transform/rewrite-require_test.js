@@ -138,6 +138,9 @@ exports['rewrite-require'] = {
     m.base = '/bar'
     m.contents = new Buffer('require("a");require("b")')
 
+    a.requiredAs = 'a'
+    b.requiredAs = 'b'
+
     ref1.base = '/bar/node_modules/dep'
 
     convert([m, ref1, a, b], function() { 
@@ -205,6 +208,7 @@ exports['rewrite-require'] = {
     ref2.path = base('/node_modules/comp/a', ref2.name + '.js')
 
     ref1.pkgName = 'component'
+    ref1.descriptor = {}
 
     m.path = windowsPath(m.path)
     ref1.path = windowsPath(ref1.path)
@@ -218,7 +222,7 @@ exports['rewrite-require'] = {
            , function() { test.done() }
            , { project:'nana', discoverable: ['node_modules']})
   },
-  'detect right folder for external dependency': function(test) {
+  'detect nearest lib folder when rewriting dependency': function(test) {
     var m = createModule('foo')
       , ref1 = createModule('bar')
       , ref2 = createModule('baz')
@@ -232,6 +236,8 @@ exports['rewrite-require'] = {
     m.path = windowsPath(m.path)
     ref1.path = windowsPath(ref1.path)
     ref2.path = windowsPath(ref2.path)
+
+    ref2.pkgName = 'comp'
 
     m.update = function(val) { test.equal(val, 'nana/foo') }
     ref1.update = function(val) { test.equal(val, 'comp/bar') }

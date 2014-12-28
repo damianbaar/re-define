@@ -42,6 +42,7 @@
   }
 
   for(var name in modules) __req(name);
+
   return __req;
 })
 ({ 
@@ -57,7 +58,7 @@
 },window ? {env: {}} : process,null,"index.js","."]
 }
 ,  function() { this.window = this.window || {};this.window.amd = this.window.amd || {};this.window.amd.global = this.window.amd.global || {}; return this.window.amd.global }.call(this) 
-, [closure]
+, window ? [closure] : []
 )
 
 return __req('globals')

@@ -27,6 +27,7 @@
   }
 
   for(var name in modules) __req(name);
+
   return __req;
 })
 ({ 
@@ -67,5 +68,5 @@
 }]
 }
 ,  function() { this.my = this.my || {};this.my.awesome = this.my.awesome || {};this.my.awesome.example = this.my.awesome.example || {}; return this.my.awesome.example }.call(this) 
-, [window]
+, window ? [window] : []
 )

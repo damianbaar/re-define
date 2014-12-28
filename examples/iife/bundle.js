@@ -31,6 +31,7 @@ var __req =
   }
 
   for(var name in modules) __req(name);
+
   return __req;
 })
 ({ 
@@ -43,7 +44,7 @@ var __req =
 }]
 }
 ,  function() { this.examples = this.examples || {};this.examples.iife = this.examples.iife || {}; return this.examples.iife }.call(this) 
-, [closure]
+, window ? [closure] : []
 )
 
 return __req('iife')

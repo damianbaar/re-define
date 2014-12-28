@@ -8,7 +8,7 @@
     parent["amd-global"]["module"] = __f;
 
     if (typeof define === 'function' && define.amd)
-      define('amd-global/module', [], __f)
+      define('amd-global/module', function() { return __f })
   }
   }(this, function () {
   var closure = {}
@@ -42,14 +42,15 @@ var __req =
   }
 
   for(var name in modules) __req(name);
+
   return __req;
 })
 ({ 
-'amd-global/dep': [function(exports,require,module) { 
+'dep': [function(exports,require,module) { 
     module.exports = 'dep';
 }], 
 'amd-global': [function(exports,require,module) { 
-    var dep = require('amd-global/dep');
+    var dep = require('dep');
     module.exports = {
       dep: dep,
       name: 'amd-global'
@@ -57,7 +58,7 @@ var __req =
 }]
 }
 , {} 
-, [closure]
+, window ? [closure] : []
 )
 
 return __req('amd-global')

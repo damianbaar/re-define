@@ -27,30 +27,31 @@
   }
 
   for(var name in modules) __req(name);
+
   return __req;
 })
 ({ 
-'module-a/b': [function(exports,require,module) { 
+'a/b': [function(exports,require,module) { 
     module.exports = 'b';
 }], 
-'module-a/c': [function(exports,require,module) { 
+'a/c': [function(exports,require,module) { 
     module.exports = 'c';
 }], 
-'module-a/b/d': [function(exports,require,module) { 
+'a/b/d': [function(exports,require,module) { 
     module.exports = 'd';
 }], 
-'module-a/b/d/e': [function(exports,require,module) { 
+'a/b/d/e': [function(exports,require,module) { 
     module.exports = 'e';
 }], 
-'module-a': [function(exports,require,module) { 
-    var b = require('module-a/b'), c = require('module-a/c'), d = require('module-a/b/d'), e = require('module-a/b/d/e');
+'a': [function(exports,require,module) { 
+    var b = require('a/b'), c = require('a/c'), d = require('a/b/d'), e = require('a/b/d/e');
     module.exports = 'a';
 }], 
 'refs': [function(exports,require,module) { 
-    var a = require('module-a'), b = require('module-a/b'), c = require('module-a/c'), d = require('module-a/b/d'), e = require('module-a/b/d/e');
+    var a = require('a'), b = require('a/b'), c = require('a/c'), d = require('a/b/d'), e = require('a/b/d/e');
     module.exports = 'refs';
 }]
 }
 ,  function() { this.spec = this.spec || {};this.spec.refs = this.spec.refs || {}; return this.spec.refs }.call(this) 
-, []
+, window ? [] : []
 )

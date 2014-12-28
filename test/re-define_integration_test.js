@@ -14,9 +14,9 @@ exports['integration'] = {
     createBundle()
 
     mock({
-      'a.js': '(function() { return "a" })()'
-    , 'b.js': 'define(function() { return "b" })'
-    , 'c.js': 'define([], function() { return "c" })'
+      './a.js': '(function() { return "a" })()'
+    , './b.js': 'define(function() { return "b" })'
+    , './c.js': 'define([], function() { return "c" })'
     })
     cb()
   },
@@ -26,7 +26,7 @@ exports['integration'] = {
   },
   'load dependencies and set namespace for require calls': function(test) {
     var file = new File({path: 'simple.js'})
-    file.contents = new Buffer('module.exports = {};require("a");require("b");require("c");')
+    file.contents = new Buffer('module.exports = {};require("./a");require("./b");require("./c");')
 
     _.each([file], bundle.write)
 
@@ -51,7 +51,7 @@ exports['integration'] = {
     }))
 
     file = new File({path: 'simple.js'})
-    file.contents = new Buffer('module.exports = {};require("a");require("b");require("c");')
+    file.contents = new Buffer('module.exports = {};require("./a");require("./b");require("./c");')
 
     _.each([ file
            , new File({path:'a.js'})

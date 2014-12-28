@@ -41,6 +41,7 @@
   }
 
   for(var name in modules) __req(name);
+
   return __req;
 })
 ({ 
@@ -66,7 +67,7 @@ module.exports = { "test": true }
 }]
 }
 , {} 
-, [closure]
+, window ? [closure] : []
 )
 
 return __req('umd/umd')

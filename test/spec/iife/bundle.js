@@ -31,14 +31,15 @@ var __req =
   }
 
   for(var name in modules) __req(name);
+
   return __req;
 })
 ({ 
-'iife/dep': [function(exports,require,module) { 
+'dep': [function(exports,require,module) { 
     module.exports = 'dep';
 }], 
 'iife': [function(exports,require,module) { 
-    var dep = require('iife/dep');
+    var dep = require('dep');
     window.test = {
       dep: dep,
       name: 'iife'
@@ -46,7 +47,7 @@ var __req =
 }]
 }
 ,  function() { this.window = this.window || {};this.window.amd = this.window.amd || {};this.window.amd.global = this.window.amd.global || {}; return this.window.amd.global }.call(this) 
-, [closure]
+, window ? [closure] : []
 )
 
 return __req('iife')

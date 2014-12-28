@@ -4,15 +4,14 @@
            _.map(external, function(d){ return "require('" + d + "')" }).join(',') %>)
   } else {
     <% _.chain(external)
-        .map(function(d) { return 'var ' + util.escape(d) + " = " + " parent." + util.global(d) })
+        .map(function(d) { return 'var ' + util.escape(d) + " = " + " parent." + util.global(d) + "|| require(d)" })
         .each(function(name) {;
     %><%= name %>
     <%})%>
     var __f = factory(<%= _.map(external, util.escape).join(',') %>) 
     <%= util.toGlobal(['parent'].concat(config.names.global.split('.')), '__f') %>
     if (typeof define === 'function' && define.amd)
-      define('<%- config.names.amd %>', [<%= 
-             _.map(external, function(d){ return "'" + d + "'" }).join(',') %>], __f)
+      define('<%- config.names.amd %>', function() { return __f })
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
   var closure = {}

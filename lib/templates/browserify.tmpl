@@ -38,6 +38,7 @@ return (function (modules, namespace, imports) {
   return __req;
 })({ <% _.each(files, function(f, i, arr) { %>
 '<%= f.name %>': [function(<%= ['exports','require','module'].concat(_.keys(f.properties)) %>) { 
+//<%= f.path %>
 <%= f.contents %>
 }<%= !_.isEmpty(f.properties) ? [null].concat(_.values(f.properties)) : '' %>]<% if(arr.length - 1 > i) { %>, <% }}) %>
 }
