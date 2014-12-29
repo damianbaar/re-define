@@ -105,10 +105,7 @@ var program = require('commander')
   }
 
   _.each(config.entries, function(e) {
-    bundle.write(new File({path: e
-    // , cwd: (config.cwd && path.resolve(config.cwd)) || process.cwd()
-    // , base: (config.cwd && path.resolve(config.cwd)) || process.cwd()
-    }))
+    bundle.write(new File({ path: e }))
   })
 
   function toArray(val) { return _.map(val.split(','), function(d) { return d.replace(/\ /g, '') }) }
