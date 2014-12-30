@@ -157,7 +157,7 @@ exports['testing-bundles'] = testCase({
 , "amd - global - exporting values"
 : testCase({
     'amd and global with one factory': function(test) {
-      var globals = {window: {}, define: sinon.spy()}
+      var globals = {window: {}, define: sinon.spy(), require: function() { return ''}}
       globals.define.amd = true
 
       var ctx = sandbox(path.resolve(__dirname, 'spec/amd-global/bundle.js'), globals)

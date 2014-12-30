@@ -32,20 +32,22 @@
 })
 ({ 
 'components/profile': [function(exports,require,module) { 
-    module.exports = 'profile';
+module.exports = 'profile';
 }], 
 'dropdown': [function(exports,require,module) { 
-    module.exports = 'dropdown';
+module.exports = 'dropdown';
 }], 
 'components/lookup/ui/ui': [function(exports,require,module) { 
-    var dd = require('dropdown');
+var dd;
+var dd = require('dropdown');
 }], 
 'components/lookup/util': [function(exports,require,module) { 
-    module.exports = 'utils';
+module.exports = 'utils';
 }], 
 'components/lookup': [function(exports,require,module) { 
-    var dropdown = require('components/lookup/ui/ui'), util = require('components/lookup/util');
-    module.exports = 'lookup';
+var dropdown, util;
+var dropdown = require('components/lookup/ui/ui'), util = require('components/lookup/util');
+module.exports = 'lookup';
 }]
 }
 ,  function() { this.ns = this.ns || {};this.ns.org = this.ns.org || {};this.ns.org.components = this.ns.org.components || {}; return this.ns.org.components }.call(this) 

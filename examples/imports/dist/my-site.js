@@ -32,8 +32,9 @@
 })
 ({ 
 'my-site': [function(exports,require,module) { 
-    var lookup = require('components/lookup');
-    lookup.create();
+var lookup;
+var lookup = require('components/lookup');
+lookup.create();
 }]
 }
 ,  function() { this.examples = this.examples || {};this.examples.imports = this.examples.imports || {};this.examples.imports.org = this.examples.imports.org || {};this.examples.imports.org.site = this.examples.imports.org.site || {}; return this.examples.imports.org.site }.call(this) 

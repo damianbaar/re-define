@@ -52,119 +52,127 @@
 })
 ({ 
 'jquery/lib-2/dep1': [function(exports,require,module,define) { 
-    return { name: 'dep' };
+return { name: 'dep' };
 },null], 
 'jquery/lib/dep1': [function(exports,require,module,define) { 
-    var a = require('jquery/lib-2/dep1');
-    return { name: 'dep' };
+var a;
+var a = require('jquery/lib-2/dep1');
+return { name: 'dep' };
 },null], 
 'dep1': [function(exports,require,module) { 
-    module.exports = { test: 'test' };
+module.exports = { test: 'test' };
 }], 
 'd3': [function(exports,require,module,define) { 
-    (function (root, factory) {
-      if (typeof define === 'function' && define.amd) {
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
         define([
-          'dep1',
-          'dep2'
+            'dep1',
+            'dep2'
         ], factory);
-      } else if (typeof exports === 'object') {
+    } else if (typeof exports === 'object') {
         module.exports = factory(require('dep1'), require('dep2'));
-      } else {
+    } else {
         root.returnExports = factory(root.dep1, root.dep2);
-      }
-    }(this, function (b) {
-      return { d3: 'd3' };
-    }));
+    }
+}(this, function (b) {
+    return { d3: 'd3' };
+}));
 },null], 
 'jquery': [function(exports,require,module,define) { 
-    var a = require('jquery/lib/dep1');
-    require('jquery/lib-2/dep1');
-    require('d3');
-    var a = 'jquery';
-    module.exports = { name: a };
+var a, a;
+var a = require('jquery/lib/dep1');
+require('jquery/lib-2/dep1');
+require('d3');
+var a = 'jquery';
+module.exports = { name: a };
 },null], 
 'lodash': [function(exports,require,module) { 
-    var $ = require('jquery'), d3 = require('d3');
-    module.exports = 'lodash here';
+var $, d3;
+var $ = require('jquery'), d3 = require('d3');
+module.exports = 'lodash here';
 }], 
 'jquery/jquery2': [function(exports,require,module,define) { 
-    var a = require('jquery/lib/dep1');
-    require('jquery/lib-2/dep1');
-    require('d3');
-    var a = 'jquery';
-    module.exports = { name: a };
+var a, a;
+var a = require('jquery/lib/dep1');
+require('jquery/lib-2/dep1');
+require('d3');
+var a = 'jquery';
+module.exports = { name: a };
 },null], 
 'nananana/model/helper': [function(exports,require,module,define) { 
-    var async = require('async/async') || function () {
-      };
-    return { getAsync: async };
+var async;
+var async = require('async/async') || function () {
+    };
+return { getAsync: async };
 },null], 
 'nananana/model/model': [function(exports,require,module,define) { 
-    var helper = require('nananana/model/helper');
-    var async = helper.getAsync();
-    return {
-      getData: function () {
+var helper, async;
+var helper = require('nananana/model/helper');
+var async = helper.getAsync();
+return {
+    getData: function () {
         return async ? 'async_data' : 'data';
-      }
-    };
+    }
+};
 },null], 
 'nananana/view/template.html': [function(exports,require,module) { 
 module.exports = "<li></li><li></li><li></li><li></li>"
 }], 
 'nananana/view/helper': [function(exports,require,module) { 
-    module.exports = {
-      escape: function () {
-      }
-    };
+module.exports = {
+    escape: function () {
+    }
+};
 }], 
 'nananana/view/type': [function(exports,require,module) { 
-    exports.js = 'ast';
-    exports.html = 'raw';
+exports.js = 'ast';
+exports.html = 'raw';
 }], 
 'nananana/view/view': [function(exports,require,module) { 
-    var tmpl = require('nananana/view/template.html'), model = require('nananana/model/model'), helper = require('nananana/view/helper'), type = require('nananana/view/type'), d3 = require('d3');
-    module.exports = function () {
-      return {
+var tmpl, model, helper, type, d3;
+var tmpl = require('nananana/view/template.html'), model = require('nananana/model/model'), helper = require('nananana/view/helper'), type = require('nananana/view/type'), d3 = require('d3');
+module.exports = function () {
+    return {
         model: model.getData(),
         view: tmpl,
         helper: helper
-      };
     };
+};
 }], 
 'nananana/template.html': [function(exports,require,module) { 
 module.exports = "<div id=\"module_name\" tabIndex=\"1\">test</div>"
 }], 
 'nananana': [function(exports,require,module) { 
-    var _ = require('lodash');
-    var $ = require('lodash/dep1');
-    var $2 = require('jquery');
-    var d3 = require('jquery/jquery2');
-    var model = require('d3');
-    var view = require('nananana/model/model');
-    var template = require('nananana/view/view');
-    require('nananana/template.html');
-    require('d3');
-    var module = {
+var _, $, $2, d3, model, view, template, module;
+var _ = require('lodash');
+var $ = require('lodash/dep1');
+var $2 = require('jquery');
+var d3 = require('jquery/jquery2');
+var model = require('d3');
+var view = require('nananana/model/model');
+var template = require('nananana/view/view');
+require('nananana/template.html');
+require('d3');
+var module = {
         jquery: $,
         d3: d3,
         model: model,
         view: view,
         template: template,
         lodash: _
-      };
-    return {
-      draw: function () {
+    };
+return {
+    draw: function () {
         document.querySelector('body').innerHTML = module.template;
         document.querySelector('#module_name').innerHTML = 'modules: ' + JSON.stringify({
-          d3: !!module.d3,
-          jquery: !!module.jquery,
-          model: !!module.model,
-          view: !!module.view,
-          lodash: module.lodash
+            d3: !!module.d3,
+            jquery: !!module.jquery,
+            model: !!module.model,
+            view: !!module.view,
+            lodash: module.lodash
         }, null, 2);
-      }
-    };
+    }
+};
 }]
 }
 ,  function() { this.examples = this.examples || {};this.examples.umd = this.examples.umd || {}; return this.examples.umd }.call(this) 

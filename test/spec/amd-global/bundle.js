@@ -1,19 +1,23 @@
 (function (parent, factory){
   if (typeof exports === 'object') {
-    module.exports = factory()
+    module.exports = factory(require('a-a'))
   } else {
+    var hasAMD = typeof define === 'function' && define.amd
+    var __req = (hasAMD && require) || function(name) { throw new Error('Missing external dep: ' + name); }
+
+    var a_a =  parent['a-a'] || parent['a_a'] || window['a_a'] || window['a-a'] || __req('a-a')
     
-    var __f = factory() 
+    var __f = factory(a_a) 
     parent["amd-global"] = parent["amd-global"] || {};
     parent["amd-global"]["module"] = __f;
 
-    if (typeof define === 'function' && define.amd)
-      define('amd-global/module', function() { return __f })
+    if (hasAMD) define('amd-global/module', function() { return __f })
   }
-  }(this, function () {
+  }(this, function (a_a) {
   var closure = {}
+  closure['a-a'] = a_a
   
-var __req = 
+var __req = //externals: a-a 
 (function (modules, namespace, imports) {
   function __req(name){
     if(!namespace[name]) {
@@ -46,11 +50,11 @@ var __req =
   return __req;
 })
 ({ 
-'dep': [function(exports,require,module) { 
+'amd-global/dep': [function(exports,require,module) { 
     module.exports = 'dep';
 }], 
 'amd-global': [function(exports,require,module) { 
-    var dep = require('dep');
+    var dep = require('amd-global/dep'), a = require('a-a');
     module.exports = {
       dep: dep,
       name: 'amd-global'

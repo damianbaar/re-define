@@ -3,15 +3,17 @@
     module.exports = factory(<%=
            _.map(external, function(d){ return "require('" + d + "')" }).join(',') %>)
   } else {
+    var hasAMD = typeof define === 'function' && define.amd
+    var __req = (hasAMD && require) || function(name) { throw new Error('Missing external dep: ' + name); }
+
     <% _.chain(external)
-        .map(function(d) { return 'var ' + util.escape(d) + " = " + " parent." + util.global(d) + "|| require(d)" })
+        .map(function(d) { return 'var ' + util.escape(d) + " = " + " parent['" + d + "'] || parent['" + util.global(d) + "'] || window['" + util.global(d) + "'] || window['" + d + "'] || __req('" + d + "')" })
         .each(function(name) {;
     %><%= name %>
     <%})%>
     var __f = factory(<%= _.map(external, util.escape).join(',') %>) 
     <%= util.toGlobal(['parent'].concat(config.names.global.split('.')), '__f') %>
-    if (typeof define === 'function' && define.amd)
-      define('<%- config.names.amd %>', function() { return __f })
+    if (hasAMD) define('<%- config.names.amd %>', function() { return __f })
   }
   }(this, function (<%= _.map(external, util.escape).join(',') %>) {
   var closure = {}
