@@ -50,16 +50,15 @@ var __req = //externals: jquery
 })
 ({ 
 'app': [function(exports,require,module) { 
-var profile, lookup, $;
-var profile = require('components/profile'), lookup = require('components/lookup'), $ = require('jquery');
-module.exports = {
-    start: function () {
+    var profile = require('components/profile'), lookup = require('components/lookup'), $ = require('jquery');
+    module.exports = {
+      start: function () {
         console.log(profile);
         console.log(lookup);
         console.log($);
         console.log('start');
-    }
-};
+      }
+    };
 }]
 }
 ,  function() { this.ns = this.ns || {};this.ns.org = this.ns.org || {};this.ns.org.app = this.ns.org.app || {}; return this.ns.org.app }.call(this) 

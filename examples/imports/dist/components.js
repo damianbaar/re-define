@@ -32,12 +32,12 @@
 })
 ({ 
 'components/lookup': [function(exports,require,module,define) { 
-return {
-    create: function () {
+    return {
+      create: function () {
         console.log('Creating lookup ...');
         return this;
-    }
-};
+      }
+    };
 },null]
 }
 ,  function() { this.examples = this.examples || {};this.examples.imports = this.examples.imports || {};this.examples.imports.component = this.examples.imports.component || {}; return this.examples.imports.component }.call(this) 

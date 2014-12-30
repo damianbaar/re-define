@@ -32,43 +32,39 @@
 })
 ({ 
 'slice-files/common/c': [function(exports,require,module,define) { 
-module.exports = { c: true };
+    module.exports = { c: true };
 },null], 
 'slice-files/common/a': [function(exports,require,module,define) { 
-var c;
-var c = require('slice-files/common/c');
-return {
-    a: true,
-    c: c
-};
+    var c = require('slice-files/common/c');
+    return {
+      a: true,
+      c: c
+    };
 },null], 
 'slice-files/common/b': [function(exports,require,module,define) { 
-var c;
-var c = require('slice-files/common/c');
-return {
-    b: true,
-    c: c
-};
+    var c = require('slice-files/common/c');
+    return {
+      b: true,
+      c: c
+    };
 },null], 
 'slice-files/entry-1': [function(exports,require,module,__filename,__dirname) { 
-var a, b, d3;
-var a = require('slice-files/common/a'), b = require('slice-files/common/b'), d3 = require('d3');
-console.log('dirname: ', __dirname, 'filename: ', __filename);
-module.exports = function () {
-    return {
+    var a = require('slice-files/common/a'), b = require('slice-files/common/b'), d3 = require('d3');
+    console.log('dirname: ', __dirname, 'filename: ', __filename);
+    module.exports = function () {
+      return {
         'entry-1': [
-            a,
-            b
+          a,
+          b
         ]
+      };
     };
-};
 },"entry-1.js","."], 
 'slice-files/entry-2': [function(exports,require,module) { 
-var a;
-var a = require('slice-files/common/a');
-module.exports = function () {
-    return { 'entry-2': [a] };
-};
+    var a = require('slice-files/common/a');
+    module.exports = function () {
+      return { 'entry-2': [a] };
+    };
 }]
 }
 ,  function() { this.my = this.my || {};this.my.awesome = this.my.awesome || {};this.my.awesome.example = this.my.awesome.example || {}; return this.my.awesome.example }.call(this) 

@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "acorn": "^0.6.0",
-    "ast-hoist": "^3.0.2",
     "ast-types": "^0.3.36",
     "async": "^0.9.0",
     "commander": "~2.1.0",
@@ -20,7 +19,6 @@
     "escodegen": "~1.2.0",
     "esformatter": "^0.4.3",
     "glob": "^4.0.5",
-    "hoister": "0.0.2",
     "lodash": "^2.4.1",
     "minimatch": "^1.0.0",
     "mkdirp": "^0.5.0",

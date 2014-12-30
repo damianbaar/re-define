@@ -36,12 +36,11 @@ var __req =
 })
 ({ 
 'iife/a': [function(exports,require,module) { 
-module.exports = 'test123';
+    module.exports = 'test123';
 }], 
 'iife': [function(exports,require,module) { 
-var a;
-var a = require('iife/a');
-window.iife = a;
+    var a = require('iife/a');
+    window.iife = a;
 }]
 }
 ,  function() { this.examples = this.examples || {};this.examples.iife = this.examples.iife || {}; return this.examples.iife }.call(this) 
