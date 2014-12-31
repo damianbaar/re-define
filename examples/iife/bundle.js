@@ -1,22 +1,11 @@
-require = (function (parent) {
-var __oldReq = typeof require == "function" && require
-  , closure = {}
+(function (parent) {
+var closure = {}
 
 
-var _p = []
-return (function (modules, namespace, imports) {
+var __req = 
+(function (modules, namespace, imports) {
+  var __circular = []
   function __req(name, override){
-    if(namespace[name] && !namespace[name].done) {
-      if(_p.indexOf(name) === -1) { 
-        _p[name] = (_p[name] || 1) + 1
-      }
-    }
-
-    if(override) {
-      delete namespace[name]
-      console.log('re require', name)
-      return __req(name)
-    }
 
     if(!namespace[name]) {
       var m = {exports:{}}
@@ -24,14 +13,11 @@ return (function (modules, namespace, imports) {
         , args
 
       if(f) {
-
-        args = [m.exports, function(x) {
-          return __req(x)
-        }, m].concat(f.slice(1))
-
-        namespace[name] = m
+        args = [m.exports, __req, m].concat(f.slice(1))
         m.done = false
+        namespace[name] = m.exports
         f = f[0].apply(m, args)
+        namespace[name] = f ? f : m.exports
         m.done = true
       } else {
         var mod
@@ -42,28 +28,31 @@ return (function (modules, namespace, imports) {
           if(mod) return mod;
         }
 
-        if(__oldReq) return __oldReq.apply(null, arguments);
-        throw new Error('Module does not exists ' + name);
+        if(typeof require == "function" && require) return require.apply(null, arguments);
+        else if(!mod) throw new Error('Module does not exists ' + name);
       }
     }
-    return namespace[name].exports;
+    return namespace[name];
   }
 
   for(var name in modules) __req(name);
-  for(var name in _p) __req(name, true);
 
   return __req;
-})({ 
+})
+({ 
 'iife/b': [function(exports,require,module) { 
+    module.exports.name = 'module b';
     var a = require('iife/a');
-    module.exports.test = 'b' + JSON.stringify(a.test);
+    module.exports.result = 'from a:' + JSON.stringify(a.name);
 }], 
 'iife/a': [function(exports,require,module) { 
+    module.exports.name = 'module a';
     var b = require('iife/b');
-    module.exports.test = 'test123' + JSON.stringify(b.test);
+    module.exports.result = 'from b:' + JSON.stringify(b.name);
 }], 
 'iife': [function(exports,require,module) { 
     var a = require('iife/a'), b = require('iife/b');
+    console.log(a, b);
     window.iife = a;
     module.exports = [
       a,
@@ -72,6 +61,9 @@ return (function (modules, namespace, imports) {
 }]
 }
 ,  function() { this.examples = this.examples || {};this.examples.iife = this.examples.iife || {}; return this.examples.iife }.call(this) 
-, []
+, window ? [closure] : []
 )
+
+return __req('iife')
+
 }.call({},this))

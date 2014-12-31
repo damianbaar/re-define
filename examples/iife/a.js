@@ -1,2 +1,5 @@
+module.exports.name = 'module a'
+
 var b = require('./b')
-module.exports.test = 'test123' + JSON.stringify(b.test)
+
+module.exports.result = 'from b:' + JSON.stringify(b.name)

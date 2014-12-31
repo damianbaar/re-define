@@ -1,6 +1,8 @@
 //externals: d3 
 (function (modules, namespace, imports) {
-  function __req(name){
+  var __circular = []
+  function __req(name, override){
+
     if(!namespace[name]) {
       var m = {exports:{}}
         , f = modules[name]
@@ -8,8 +10,11 @@
 
       if(f) {
         args = [m.exports, __req, m].concat(f.slice(1))
+        m.done = false
+        namespace[name] = m.exports
         f = f[0].apply(m, args)
-        namespace[name] = f || m.exports;
+        namespace[name] = f ? f : m.exports
+        m.done = true
       } else {
         var mod
           , len = imports && imports.length;
