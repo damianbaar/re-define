@@ -7,20 +7,11 @@ var __oldReq = typeof require == "function" && require
     .each(function(name) {;
 %><%= name %>
 <%})%>
-var _p = []
 return (function (modules, namespace, imports) {
+  var __circular = []
   function __req(name, override){
-    if(namespace[name] && !namespace[name].done) {
-      if(_p.indexOf(name) === -1) { 
-        _p[name] = (_p[name] || 1) + 1
-      }
-    }
-
-    if(override) {
-      delete namespace[name]
-      console.log('re require', name)
-      return __req(name)
-    }
+    if(namespace[name] && !namespace[name].done) __circular.push(name)
+    if(override) delete namespace[name]
 
     if(!namespace[name]) {
       var m = {exports:{}}
@@ -54,7 +45,7 @@ return (function (modules, namespace, imports) {
   }
 
   for(var name in modules) __req(name);
-  for(var name in _p) __req(name, true);
+  for(var i=0; i < __circular.length; i++) __req(__circular[i], true);
 
   return __req;
 })({ <% _.each(files, function(f, i, arr) { %>
