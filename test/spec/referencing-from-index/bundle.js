@@ -54,7 +54,9 @@
     module.exports = 'COMMON-2';
 }], 
 'refs': [function(exports,require,module) { 
-    var dep = require('refs/dep'), common = require('refs/common'), inner = require('refs/dep2/inner');
+    var dep = require('refs/dep');
+    var common = require('refs/common');
+    var inner = require('refs/dep2/inner');
     var dep2 = require('refs/dep2');
     var common2 = require('refs/common-2');
     module.exports = 'index';

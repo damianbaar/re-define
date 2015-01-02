@@ -59,7 +59,8 @@ var __req = //externals: a-a
     module.exports = 'dep';
 }], 
 'amd-global': [function(exports,require,module) { 
-    var dep = require('amd-global/dep'), a = require('a-a');
+    var dep = require('amd-global/dep');
+    var a = require('a-a');
     module.exports = {
       dep: dep,
       name: 'amd-global'

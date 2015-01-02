@@ -8,3 +8,4 @@
 (cd external-require && ./build.sh)
 (cd referencing-from-index && ./build.sh)
 (cd globals && ./build.sh)
+(cd vars && ./build.sh)

@@ -62,7 +62,8 @@ module.exports = { "test": true }
 
 }], 
 'umd/umd': [function(exports,require,module) { 
-    var dep = require('umd/dep'), util = require('umd/util.object');
+    var dep = require('umd/dep');
+    var util = require('umd/util.object');
     module.exports = {
       dep: dep,
       name: 'umd',

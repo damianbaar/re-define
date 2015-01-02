@@ -90,7 +90,8 @@
     module.exports = { name: a };
 },null], 
 'lodash': [function(exports,require,module) { 
-    var $ = require('jquery'), d3 = require('d3');
+    var $ = require('jquery');
+    var d3 = require('d3');
     module.exports = 'lodash here';
 }], 
 'jquery/jquery2': [function(exports,require,module,define) { 
@@ -128,7 +129,11 @@ module.exports = "<li></li><li></li><li></li><li></li>"
     exports.html = 'raw';
 }], 
 'nananana/view/view': [function(exports,require,module) { 
-    var tmpl = require('nananana/view/template.html'), model = require('nananana/model/model'), helper = require('nananana/view/helper'), type = require('nananana/view/type'), d3 = require('d3');
+    var tmpl = require('nananana/view/template.html');
+    var model = require('nananana/model/model');
+    var helper = require('nananana/view/helper');
+    var type = require('nananana/view/type');
+    var d3 = require('d3');
     module.exports = function () {
       return {
         model: model.getData(),

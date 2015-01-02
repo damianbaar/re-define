@@ -51,7 +51,8 @@ var __req =
     module.exports.result = 'from b:' + JSON.stringify(b.name);
 }], 
 'iife': [function(exports,require,module) { 
-    var a = require('iife/a'), b = require('iife/b');
+    var a = require('iife/a');
+    var b = require('iife/b');
     console.log(a, b);
     window.iife = a;
     module.exports = [

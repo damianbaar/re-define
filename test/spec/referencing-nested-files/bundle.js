@@ -49,11 +49,18 @@
     module.exports = 'e';
 }], 
 'a': [function(exports,require,module) { 
-    var b = require('a/b'), c = require('a/c'), d = require('a/b/d'), e = require('a/b/d/e');
+    var b = require('a/b');
+    var c = require('a/c');
+    var d = require('a/b/d');
+    var e = require('a/b/d/e');
     module.exports = 'a';
 }], 
 'refs': [function(exports,require,module) { 
-    var a = require('a'), b = require('a/b'), c = require('a/c'), d = require('a/b/d'), e = require('a/b/d/e');
+    var a = require('a');
+    var b = require('a/b');
+    var c = require('a/c');
+    var d = require('a/b/d');
+    var e = require('a/b/d/e');
     module.exports = 'refs';
 }]
 }

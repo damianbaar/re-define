@@ -44,7 +44,8 @@
     };
 }], 
 'test': [function(exports,require,module) { 
-    var dep = require('test/dep'), t = require('test' + 'test');
+    var dep = require('test/dep');
+    var t = require('test' + 'test');
     module.exports = dep.toUpperCase('index');
 }]
 }

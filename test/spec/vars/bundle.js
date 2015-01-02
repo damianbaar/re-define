@@ -1,4 +1,11 @@
+(function (parent,a,b,c) {
+var closure = {}
 
+closure['a'] = a
+closure['b'] = b
+closure['c'] = c
+
+var __req = //externals: a,b,c 
 (function (modules, namespace, imports) {
   var __circular = []
   function __req(name, override){
@@ -36,24 +43,21 @@
   return __req;
 })
 ({ 
-'components/profile': [function(exports,require,module) { 
-    module.exports = 'profile';
-}], 
-'dropdown': [function(exports,require,module) { 
-    module.exports = 'dropdown';
-}], 
-'components/lookup/ui/ui': [function(exports,require,module) { 
-    var dd = require('dropdown');
-}], 
-'components/lookup/util': [function(exports,require,module) { 
-    module.exports = 'utils';
-}], 
-'components/lookup': [function(exports,require,module) { 
-    var dropdown = require('components/lookup/ui/ui');
-    var util = require('components/lookup/util');
-    module.exports = 'lookup';
+'iife': [function(exports,require,module) { 
+    var a = require('a');
+    var b = require('b');
+    var c = require('c');
+    module.exports = [
+      a,
+      b,
+      c
+    ];
 }]
 }
-,  function() { this.ns = this.ns || {};this.ns.org = this.ns.org || {};this.ns.org.components = this.ns.org.components || {}; return this.ns.org.components }.call(this) 
-, window ? [] : []
+,  function() { this.window = this.window || {};this.window.amd = this.window.amd || {};this.window.amd.global = this.window.amd.global || {}; return this.window.amd.global }.call(this) 
+, window ? [closure] : []
 )
+
+return __req('iife')
+
+}.call({},this,a,b,c))

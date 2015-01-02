@@ -55,7 +55,9 @@ var __req = //externals: jquery
 })
 ({ 
 'app': [function(exports,require,module) { 
-    var profile = require('components/profile'), lookup = require('components/lookup'), $ = require('jquery');
+    var profile = require('components/profile');
+    var lookup = require('components/lookup');
+    var $ = require('jquery');
     module.exports = {
       start: function () {
         console.log(profile);

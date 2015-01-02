@@ -54,7 +54,9 @@
     };
 },null], 
 'slice-files/entry-1': [function(exports,require,module,__filename,__dirname) { 
-    var a = require('slice-files/common/a'), b = require('slice-files/common/b'), d3 = require('d3');
+    var a = require('slice-files/common/a');
+    var b = require('slice-files/common/b');
+    var d3 = require('d3');
     console.log('dirname: ', __dirname, 'filename: ', __filename);
     module.exports = function () {
       return {
