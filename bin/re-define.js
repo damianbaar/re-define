@@ -27,12 +27,12 @@ var program = require('commander')
     .option('-w, --wrapper [type]'        , 'Wrapper type umd')
     .option('-p, --project-name [name]'   , 'Project name')
 
-    //Find external file
     .option('--external [json]'       , 'Include module from external location', JSON.parse)
     .option('--discoverable [dirs]'   , 'External modules lib, such bower_components', toArray)
     .option('--descriptors [files]'   , 'Checking main file in external dep', toArray)
     .option('--skip [modules]'        , 'Do not include specified dependency and mark as dependency', toArray)
     .option('--exclude [modules]'     , 'Do not include and do not specify as dependency', toArray)
+    .option('--empty [modules]'       , 'Make modules empty', toArray)
 
     .option('--development'           , 'Development mode')
 
