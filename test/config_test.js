@@ -22,16 +22,6 @@ exports['config'] = {
                       + 'a["b"]["c"]["d"] = factory();\n'))
 
     test.done()
-  },
-
-  'safe var initialization': function(test) {
-    var redefine = require('../lib')
-      , safeInit = redefine.config().helpers.safeInit
-
-    test.equal( escape(safeInit('process.env'))
-              , escape('var process = process || {};process.env = process.env || {};'))
-
-    test.done()
   }
 
 }

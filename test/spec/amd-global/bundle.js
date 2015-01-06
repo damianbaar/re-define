@@ -4,8 +4,16 @@
   } else {
     var hasAMD = typeof define === 'function' && define.amd
     var __req = (hasAMD && require) || function(name) { throw new Error('Missing external dep: ' + name); }
+    var __find = function(ns, names) {
+      var _d, _p, i, k;
+      for(i = 0;i < names.length; i++) {
+        _p = (names[i] && names[i].split('.')) || []
+        for(k = 0; k < _p.length; k++) { _d = ns[_p[k]]; if(!_d) break; ns = _d;}
+        if(_d) return _d;
+      }
+    }
 
-    var a_a =  parent['a-a'] || parent['a_a'] || window['a_a'] || window['a-a'] || __req('a-a')
+    var a_a = __find(parent, ['a-a', 'a.b.c']) || __find(window, ['a-a', 'a.b.c']) || __req('a-a')
     
     var __f = factory(a_a) 
     parent["amd-global"] = parent["amd-global"] || {};
