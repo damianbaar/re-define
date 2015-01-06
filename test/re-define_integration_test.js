@@ -113,11 +113,9 @@ exports['integration'] = {
 };
 
 function createBundle() { 
-  var config = redefine.config()
+  var config = redefine.config({wrapper: 'empty', project:'project'})
     , result
 
-  config.wrapper = 'empty'
-  config.project = 'project'
   config.development = false
 
   var _spy = function(config) {
