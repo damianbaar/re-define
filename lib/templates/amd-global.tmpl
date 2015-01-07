@@ -15,7 +15,7 @@
     }
 
     <% _.chain(external)
-        .map(function(d) { return "var " + util.escape(d) + " = __find(parent, ['" + d + "', '" + util.global(d) + "']) || __find(window, ['" + d + "', '" + util.global(d) + "']) || __req('" + d + "')" 
+        .map(function(d) { return "var " + util.escape(d) + " = __find(parent, " + util.toString([d, util.global(d)]) + ") || __find(window, " + util.toString([d, util.global(d)]) + ") || __req('" + d + "')"
 })
         .each(function(name) {;
     %><%= name %>
