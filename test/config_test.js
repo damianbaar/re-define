@@ -9,6 +9,17 @@ exports['config'] = {
     test.done()
   },
 
+  'to array': function(test) {
+    var redefine = require('../lib')
+      , config = redefine.config({})
+      , _toString = config.helpers.toString
+
+    test.equal(_toString([1,2,3,4,5]), '[\'1\',\'2\',\'3\',\'4\',\'5\']')
+    test.equal(_toString([1,1,1]), "['1']")
+    test.equal(_toString(['a','a']), "['a']")
+    test.done()
+  },
+
   'globalize': function(test) {
     var redefine = require('../lib')
       , globalize = _.partialRight(redefine.config().helpers.toGlobal, 'factory()')
