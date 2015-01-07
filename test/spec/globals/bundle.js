@@ -60,10 +60,10 @@
       filename: __filename,
       dirname: __dirname
     };
-},window ? {env: {}} : process,null,"index.js","."]
+},typeof window === 'undefined' ? process : {env: {}},null,"index.js","."]
 }
 ,  function() { this.window = this.window || {};this.window.amd = this.window.amd || {};this.window.amd.global = this.window.amd.global || {}; return this.window.amd.global }.call(this) 
-, window ? [closure] : []
+, typeof window === 'undefined' ? [] : [closure]
 )
 
 return __req('globals')

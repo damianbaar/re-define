@@ -209,7 +209,7 @@ exports['testing-bundles'] = testCase({
 , "globals"
 : testCase({
     'detect globals': function(test) {
-      var globals = {window: {}, define: sinon.spy()}
+      var globals = {window: {}, define: sinon.spy(), console: console}
         , ctx = sandbox(path.resolve(__dirname, 'spec/globals/bundle.js'), globals)
         , global = globals.window.amd.global
 

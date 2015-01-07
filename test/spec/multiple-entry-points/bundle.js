@@ -56,5 +56,5 @@
 }]
 }
 ,  function() { this.spec = this.spec || {};this.spec.multi = this.spec.multi || {}; return this.spec.multi }.call(this) 
-, window ? [] : []
+, typeof window === 'undefined' ? [] : []
 )

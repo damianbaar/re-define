@@ -50,5 +50,5 @@
 }]
 }
 ,  function() { this.spec = this.spec || {};this.spec.index = this.spec.index || {}; return this.spec.index }.call(this) 
-, window ? [] : []
+, typeof window === 'undefined' ? [] : []
 )

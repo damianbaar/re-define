@@ -55,7 +55,7 @@ var __req = //externals: a,b,c
 }]
 }
 ,  function() { this.window = this.window || {};this.window.amd = this.window.amd || {};this.window.amd.global = this.window.amd.global || {}; return this.window.amd.global }.call(this) 
-, window ? [closure] : []
+, typeof window === 'undefined' ? [] : [closure]
 )
 
 return __req('iife')

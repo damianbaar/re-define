@@ -13,7 +13,7 @@
       }
     }
 
-    var a_a = __find(parent, ['a-a', 'a.b.c']) || __find(window, ['a-a', 'a.b.c']) || __req('a-a')
+    var a_a = __find(parent, ['a-a','a.b.c']) || __find(window, ['a-a','a.b.c']) || __req('a-a')
     
     var __f = factory(a_a) 
     parent["amd-global"] = parent["amd-global"] || {};
@@ -76,7 +76,7 @@ var __req = //externals: a-a
 }]
 }
 , {} 
-, window ? [closure] : []
+, typeof window === 'undefined' ? [] : [closure]
 )
 
 return __req('amd-global')

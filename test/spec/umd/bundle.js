@@ -73,7 +73,7 @@ module.exports = { "test": true }
 }]
 }
 , {} 
-, window ? [closure] : []
+, typeof window === 'undefined' ? [] : [closure]
 )
 
 return __req('umd/umd')

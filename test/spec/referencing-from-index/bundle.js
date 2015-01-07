@@ -63,5 +63,5 @@
 }]
 }
 ,  function() { this.spec = this.spec || {};this.spec.refs = this.spec.refs || {}; return this.spec.refs }.call(this) 
-, window ? [] : []
+, typeof window === 'undefined' ? [] : []
 )

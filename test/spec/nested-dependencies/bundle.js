@@ -61,5 +61,5 @@
 }]
 }
 ,  function() { this.spec = this.spec || {};this.spec.nested = this.spec.nested || {}; return this.spec.nested }.call(this) 
-, window ? [] : []
+, typeof window === 'undefined' ? [] : []
 )
