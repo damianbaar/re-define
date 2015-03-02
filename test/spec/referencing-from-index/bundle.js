@@ -1,6 +1,6 @@
 //re-define version:1.13.7
 require = (function() {
-  return (function (modules, namespace, imports) {
+return (function (modules, namespace, imports) {
   var __oldReq = typeof require == "function" && require
 
   function __req(name){
@@ -66,5 +66,4 @@ require = (function() {
 ,  function() { this.spec = this.spec || {};this.spec.refs = this.spec.refs || {}; return this.spec.refs }.call(this) 
 , typeof window === 'undefined' ? [] : []
 )
-
 })()
