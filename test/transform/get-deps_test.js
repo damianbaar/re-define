@@ -61,7 +61,7 @@ exports['get-deps'] = {
 
     m.path = base + 'main.js'
     m.base = base
-    m.contents = acorn.parse('require("dep1");')
+    m.contents = acorn.parse('require("./dep1");')
 
     convert(m, function(file) {
       var dep = file.dependencies[0]

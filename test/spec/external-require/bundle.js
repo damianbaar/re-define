@@ -1,20 +1,23 @@
+//re-define version:1.13.7
+require = (function() {
+  return (function (modules, namespace, imports) {
+  var __oldReq = typeof require == "function" && require
 
-(function (modules, namespace, imports) {
-  var __circular = []
-  function __req(name, override){
+  function __req(name){
 
     if(!namespace[name]) {
-      var m = {exports:{}}
-        , f = modules[name]
+      var f = modules[name]
+        , m = { exports:{} }
         , args
 
       if(f) {
-        args = [m.exports, __req, m].concat(f.slice(1))
-        m.done = false
-        namespace[name] = m.exports
-        f = f[0].apply(m, args)
-        namespace[name] = f ? f : m.exports
-        m.done = true
+
+        args = [m.exports, function(x) {
+          return __req(x)
+        }, m].concat(f.slice(1))
+
+        namespace[name] = m
+        f = f[0].apply(null, args)
       } else {
         var mod
           , len = imports && imports.length;
@@ -24,14 +27,12 @@
           if(mod) return mod;
         }
 
-        if(typeof require == "function" && require) return require.apply(null, arguments);
-        else if(!mod) throw new Error('Module does not exists ' + name);
+        if(__oldReq) return __oldReq.apply(null, arguments);
+        throw new Error('Module does not exists ' + name);
       }
     }
-    return namespace[name];
+    return namespace[name].exports;
   }
-
-  for(var name in modules) __req(name);
 
   return __req;
 })
@@ -45,22 +46,16 @@
 }], 
 'test': [function(exports,require,module) { 
     var dep = require('test/dep');
-    var usingExternalRequire = require(['using-external-require'], function () {
-        console.log('method called from external require');
-      });
-    module.exports = {
-      name: dep.toUpperCase('index'),
-      ext: require(['external-require'], function (ext) {
-        console.log(ext);
-      })
-    };
-    setTimeout(function () {
+    module.exports = function () {
       require(['using-external-require'], function (dep) {
         console.log('method called from external require', dep);
       });
-    });
+      return { name: dep.toUpperCase('index') };
+    };
 }]
 }
 ,  function() { this.spec = this.spec || {};this.spec.external = this.spec.external || {}; return this.spec.external }.call(this) 
 , typeof window === 'undefined' ? [] : []
 )
+
+})()

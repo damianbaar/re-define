@@ -1,3 +1,5 @@
+//re-define version:1.13.7
+//externals: a,b,c
 (function (parent,a,b,c) {
 var closure = {}
 
@@ -5,23 +7,24 @@ closure['a'] = a
 closure['b'] = b
 closure['c'] = c
 
-var __req = //externals: a,b,c 
-(function (modules, namespace, imports) {
-  var __circular = []
-  function __req(name, override){
+var __req = (function (modules, namespace, imports) {
+  var __oldReq = typeof require == "function" && require
+
+  function __req(name){
 
     if(!namespace[name]) {
-      var m = {exports:{}}
-        , f = modules[name]
+      var f = modules[name]
+        , m = { exports:{} }
         , args
 
       if(f) {
-        args = [m.exports, __req, m].concat(f.slice(1))
-        m.done = false
-        namespace[name] = m.exports
-        f = f[0].apply(m, args)
-        namespace[name] = f ? f : m.exports
-        m.done = true
+
+        args = [m.exports, function(x) {
+          return __req(x)
+        }, m].concat(f.slice(1))
+
+        namespace[name] = m
+        f = f[0].apply(null, args)
       } else {
         var mod
           , len = imports && imports.length;
@@ -31,14 +34,12 @@ var __req = //externals: a,b,c
           if(mod) return mod;
         }
 
-        if(typeof require == "function" && require) return require.apply(null, arguments);
-        else if(!mod) throw new Error('Module does not exists ' + name);
+        if(__oldReq) return __oldReq.apply(null, arguments);
+        throw new Error('Module does not exists ' + name);
       }
     }
-    return namespace[name];
+    return namespace[name].exports;
   }
-
-  for(var name in modules) __req(name);
 
   return __req;
 })

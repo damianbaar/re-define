@@ -35,8 +35,6 @@ var __req =
     return namespace[name];
   }
 
-  for(var name in modules) __req(name);
-
   return __req;
 })
 ({ 
@@ -62,7 +60,7 @@ var __req =
 }]
 }
 ,  function() { this.examples = this.examples || {};this.examples.iife = this.examples.iife || {}; return this.examples.iife }.call(this) 
-, window ? [closure] : []
+, typeof window === 'undefined' ? [] : [closure]
 )
 
 return __req('iife')

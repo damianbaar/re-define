@@ -2,7 +2,9 @@
   if (typeof exports === 'object') {
     module.exports = factory(<%=
            _.map(external, function(d){ return "require('" + d + "')" }).join(',') %>)
-  } else {
+  } 
+
+  if (typeof window != 'undefined') {
     var hasAMD = typeof define === 'function' && define.amd
     var __req = (hasAMD && require) || function(name) { throw new Error('Missing external dep: ' + name); }
     var __find = function(ns, names) {

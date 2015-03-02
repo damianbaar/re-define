@@ -1,7 +1,11 @@
+//re-define version:1.13.7
+//externals: a-a
 (function (parent, factory){
   if (typeof exports === 'object') {
     module.exports = factory(require('a-a'))
-  } else {
+  } 
+
+  if (typeof window != 'undefined') {
     var hasAMD = typeof define === 'function' && define.amd
     var __req = (hasAMD && require) || function(name) { throw new Error('Missing external dep: ' + name); }
     var __find = function(ns, names) {
@@ -25,23 +29,24 @@
   var closure = {}
   closure['a-a'] = a_a
   
-var __req = //externals: a-a 
-(function (modules, namespace, imports) {
-  var __circular = []
-  function __req(name, override){
+var __req = (function (modules, namespace, imports) {
+  var __oldReq = typeof require == "function" && require
+
+  function __req(name){
 
     if(!namespace[name]) {
-      var m = {exports:{}}
-        , f = modules[name]
+      var f = modules[name]
+        , m = { exports:{} }
         , args
 
       if(f) {
-        args = [m.exports, __req, m].concat(f.slice(1))
-        m.done = false
-        namespace[name] = m.exports
-        f = f[0].apply(m, args)
-        namespace[name] = f ? f : m.exports
-        m.done = true
+
+        args = [m.exports, function(x) {
+          return __req(x)
+        }, m].concat(f.slice(1))
+
+        namespace[name] = m
+        f = f[0].apply(null, args)
       } else {
         var mod
           , len = imports && imports.length;
@@ -51,14 +56,12 @@ var __req = //externals: a-a
           if(mod) return mod;
         }
 
-        if(typeof require == "function" && require) return require.apply(null, arguments);
-        else if(!mod) throw new Error('Module does not exists ' + name);
+        if(__oldReq) return __oldReq.apply(null, arguments);
+        throw new Error('Module does not exists ' + name);
       }
     }
-    return namespace[name];
+    return namespace[name].exports;
   }
-
-  for(var name in modules) __req(name);
 
   return __req;
 })

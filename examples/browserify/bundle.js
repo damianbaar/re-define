@@ -1,18 +1,23 @@
-require = (function (parent) {
-var __oldReq = typeof require == "function" && require
-  , closure = {}
+//re-define version:1.13.7
+require = (function() {
+  return (function (modules, namespace, imports) {
+  var __oldReq = typeof require == "function" && require
 
-
-
-return (function (modules, namespace, imports) {
   function __req(name){
+
     if(!namespace[name]) {
-      var m = {exports:{}}
-        , f = modules[name]
+      var f = modules[name]
+        , m = { exports:{} }
+        , args
 
       if(f) {
-        f = f[0].call(m, m.exports, __req, m, f[1].__filename, f[1].__dirname);
-        namespace[name] = f || m.exports;
+
+        args = [m.exports, function(x) {
+          return __req(x)
+        }, m].concat(f.slice(1))
+
+        namespace[name] = m
+        f = f[0].apply(null, args)
       } else {
         var mod
           , len = imports && imports.length;
@@ -26,13 +31,13 @@ return (function (modules, namespace, imports) {
         throw new Error('Module does not exists ' + name);
       }
     }
-    return namespace[name];
+    return namespace[name].exports;
   }
 
-  for(var name in modules) __req(name);
   return __req;
-})({ 
-'punycode': [function(exports, require, module, __filename, __dirname) { 
+})
+({ 
+'punycode': [function(exports,require,module,define) { 
     ;
     (function (root) {
       var freeExports = typeof exports == 'object' && exports;
@@ -41,11 +46,28 @@ return (function (modules, namespace, imports) {
       if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal) {
         root = freeGlobal;
       }
-      var punycode, maxInt = 2147483647, base = 36, tMin = 1, tMax = 26, skew = 38, damp = 700, initialBias = 72, initialN = 128, delimiter = '-', regexPunycode = /^xn--/, regexNonASCII = /[^ -~]/, regexSeparators = /\x2E|\u3002|\uFF0E|\uFF61/g, errors = {
+      var punycode;
+      var maxInt = 2147483647;
+      var base = 36;
+      var tMin = 1;
+      var tMax = 26;
+      var skew = 38;
+      var damp = 700;
+      var initialBias = 72;
+      var initialN = 128;
+      var delimiter = '-';
+      var regexPunycode = /^xn--/;
+      var regexNonASCII = /[^ -~]/;
+      var regexSeparators = /\x2E|\u3002|\uFF0E|\uFF61/g;
+      var errors = {
           'overflow': 'Overflow: input needs wider integers to process',
           'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
           'invalid-input': 'Invalid input'
-        }, baseMinusTMin = base - tMin, floor = Math.floor, stringFromCharCode = String.fromCharCode, key;
+        };
+      var baseMinusTMin = base - tMin;
+      var floor = Math.floor;
+      var stringFromCharCode = String.fromCharCode;
+      var key;
       function error(type) {
         throw RangeError(errors[type]);
       }
@@ -60,7 +82,11 @@ return (function (modules, namespace, imports) {
         return map(string.split(regexSeparators), fn).join('.');
       }
       function ucs2decode(string) {
-        var output = [], counter = 0, length = string.length, value, extra;
+        var output = [];
+        var counter = 0;
+        var length = string.length;
+        var value;
+        var extra;
         while (counter < length) {
           value = string.charCodeAt(counter++);
           if (value >= 55296 && value <= 56319 && counter < length) {
@@ -114,7 +140,21 @@ return (function (modules, namespace, imports) {
         return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
       }
       function decode(input) {
-        var output = [], inputLength = input.length, out, i = 0, n = initialN, bias = initialBias, basic, j, index, oldi, w, k, digit, t, baseMinusT;
+        var output = [];
+        var inputLength = input.length;
+        var out;
+        var i = 0;
+        var n = initialN;
+        var bias = initialBias;
+        var basic;
+        var j;
+        var index;
+        var oldi;
+        var w;
+        var k;
+        var digit;
+        var t;
+        var baseMinusT;
         basic = input.lastIndexOf(delimiter);
         if (basic < 0) {
           basic = 0;
@@ -157,7 +197,22 @@ return (function (modules, namespace, imports) {
         return ucs2encode(output);
       }
       function encode(input) {
-        var n, delta, handledCPCount, basicLength, bias, j, m, q, k, t, currentValue, output = [], inputLength, handledCPCountPlusOne, baseMinusT, qMinusT;
+        var n;
+        var delta;
+        var handledCPCount;
+        var basicLength;
+        var bias;
+        var j;
+        var m;
+        var q;
+        var k;
+        var t;
+        var currentValue;
+        var output = [];
+        var inputLength;
+        var handledCPCountPlusOne;
+        var baseMinusT;
+        var qMinusT;
         input = ucs2decode(input);
         inputLength = input.length;
         n = initialN;
@@ -250,8 +305,8 @@ return (function (modules, namespace, imports) {
         root.punycode = punycode;
       }
     }(this));
-}, {"__filename":"punycode.js","__dirname":"node_modules/url/node_modules/punycode"}], 
-'querystring/decode': [function(exports, require, module, __filename, __dirname) { 
+},null], 
+'url/decode': [function(exports,require,module) { 
     'use strict';
     function hasOwnProperty(obj, prop) {
       return Object.prototype.hasOwnProperty.call(obj, prop);
@@ -274,7 +329,12 @@ return (function (modules, namespace, imports) {
         len = maxKeys;
       }
       for (var i = 0; i < len; ++i) {
-        var x = qs[i].replace(regexp, '%20'), idx = x.indexOf(eq), kstr, vstr, k, v;
+        var x = qs[i].replace(regexp, '%20');
+        var idx = x.indexOf(eq);
+        var kstr;
+        var vstr;
+        var k;
+        var v;
         if (idx >= 0) {
           kstr = x.substr(0, idx);
           vstr = x.substr(idx + 1);
@@ -297,8 +357,8 @@ return (function (modules, namespace, imports) {
       }
       return obj;
     };
-}, {"__filename":"decode.js","__dirname":"node_modules/querystring"}], 
-'querystring/encode': [function(exports, require, module, __filename, __dirname) { 
+}], 
+'url/encode': [function(exports,require,module) { 
     'use strict';
     var stringifyPrimitive = function (v) {
       switch (typeof v) {
@@ -334,13 +394,13 @@ return (function (modules, namespace, imports) {
         return '';
       return encodeURIComponent(stringifyPrimitive(name)) + eq + encodeURIComponent(stringifyPrimitive(obj));
     };
-}, {"__filename":"encode.js","__dirname":"node_modules/querystring"}], 
-'querystring': [function(exports, require, module, __filename, __dirname) { 
+}], 
+'querystring': [function(exports,require,module) { 
     'use strict';
-    exports.decode = exports.parse = require('querystring/decode');
-    exports.encode = exports.stringify = require('querystring/encode');
-}, {"__filename":"index.js","__dirname":"node_modules/querystring"}], 
-'url': [function(exports, require, module, __filename, __dirname) { 
+    exports.decode = exports.parse = require('url/decode');
+    exports.encode = exports.stringify = require('url/encode');
+}], 
+'url': [function(exports,require,module) { 
     var punycode = require('punycode');
     exports.parse = urlParse;
     exports.resolve = urlResolve;
@@ -361,7 +421,9 @@ return (function (modules, namespace, imports) {
       this.path = null;
       this.href = null;
     }
-    var protocolPattern = /^([a-z0-9.+-]+:)/i, portPattern = /:[0-9]*$/, delims = [
+    var protocolPattern = /^([a-z0-9.+-]+:)/i;
+    var portPattern = /:[0-9]*$/;
+    var delims = [
         '<',
         '>',
         '"',
@@ -370,30 +432,40 @@ return (function (modules, namespace, imports) {
         '\r',
         '\n',
         '\t'
-      ], unwise = [
+      ];
+    var unwise = [
         '{',
         '}',
         '|',
         '\\',
         '^',
         '`'
-      ].concat(delims), autoEscape = ['\''].concat(unwise), nonHostChars = [
+      ].concat(delims);
+    var autoEscape = ['\''].concat(unwise);
+    var nonHostChars = [
         '%',
         '/',
         '?',
         ';',
         '#'
-      ].concat(autoEscape), hostEndingChars = [
+      ].concat(autoEscape);
+    var hostEndingChars = [
         '/',
         '?',
         '#'
-      ], hostnameMaxLen = 255, hostnamePartPattern = /^[a-z0-9A-Z_-]{0,63}$/, hostnamePartStart = /^([a-z0-9A-Z_-]{0,63})(.*)$/, unsafeProtocol = {
+      ];
+    var hostnameMaxLen = 255;
+    var hostnamePartPattern = /^[a-z0-9A-Z_-]{0,63}$/;
+    var hostnamePartStart = /^([a-z0-9A-Z_-]{0,63})(.*)$/;
+    var unsafeProtocol = {
         'javascript': true,
         'javascript:': true
-      }, hostlessProtocol = {
+      };
+    var hostlessProtocol = {
         'javascript': true,
         'javascript:': true
-      }, slashedProtocol = {
+      };
+    var slashedProtocol = {
         'http': true,
         'https': true,
         'ftp': true,
@@ -404,7 +476,8 @@ return (function (modules, namespace, imports) {
         'ftp:': true,
         'gopher:': true,
         'file:': true
-      }, querystring = require('querystring');
+      };
+    var querystring = require('querystring');
     function urlParse(url, parseQueryString, slashesDenoteHost) {
       if (url && isObject(url) && url instanceof Url)
         return url;
@@ -439,7 +512,8 @@ return (function (modules, namespace, imports) {
           if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
             hostEnd = hec;
         }
-        var auth, atSign;
+        var auth;
+        var atSign;
         if (hostEnd === -1) {
           atSign = rest.lastIndexOf('@');
         } else {
@@ -574,7 +648,11 @@ return (function (modules, namespace, imports) {
         auth = auth.replace(/%3A/i, ':');
         auth += '@';
       }
-      var protocol = this.protocol || '', pathname = this.pathname || '', hash = this.hash || '', host = false, query = '';
+      var protocol = this.protocol || '';
+      var pathname = this.pathname || '';
+      var hash = this.hash || '';
+      var host = false;
+      var query = '';
       if (this.host) {
         host = auth + this.host;
       } else if (this.hostname) {
@@ -682,7 +760,13 @@ return (function (modules, namespace, imports) {
         result.href = result.format();
         return result;
       }
-      var isSourceAbs = result.pathname && result.pathname.charAt(0) === '/', isRelAbs = relative.host || relative.pathname && relative.pathname.charAt(0) === '/', mustEndAbs = isRelAbs || isSourceAbs || result.host && relative.pathname, removeAllDots = mustEndAbs, srcPath = result.pathname && result.pathname.split('/') || [], relPath = relative.pathname && relative.pathname.split('/') || [], psychotic = result.protocol && !slashedProtocol[result.protocol];
+      var isSourceAbs = result.pathname && result.pathname.charAt(0) === '/';
+      var isRelAbs = relative.host || relative.pathname && relative.pathname.charAt(0) === '/';
+      var mustEndAbs = isRelAbs || isSourceAbs || result.host && relative.pathname;
+      var removeAllDots = mustEndAbs;
+      var srcPath = result.pathname && result.pathname.split('/') || [];
+      var relPath = relative.pathname && relative.pathname.split('/') || [];
+      var psychotic = result.protocol && !slashedProtocol[result.protocol];
       if (psychotic) {
         result.hostname = '';
         result.port = null;
@@ -824,16 +908,17 @@ return (function (modules, namespace, imports) {
     function isNullOrUndefined(arg) {
       return arg == null;
     }
-}, {"__filename":"url.js","__dirname":"node_modules/url"}], 
-'browserify': [function(exports, require, module, __filename, __dirname) { 
+}], 
+'browserify': [function(exports,require,module) { 
     var url = require('url');
     console.log(url.resolve('/one/two/three', 'four'));
     console.log(url.resolve('http://example.com/', '/one'));
     console.log(url.resolve('http://example.com/one', '/two'));
     module.exports = 'index';
-}, {"__filename":"index.js","__dirname":"."}]
+}]
 }
 , {} 
-, []
+, typeof window === 'undefined' ? [] : []
 )
-}.call({},this))
+
+})()

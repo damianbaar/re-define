@@ -1,24 +1,26 @@
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
-    define('amd/name', ['dep2','async/async','lodash/dep1'], factory)
+    define('amd/name', ['dep1','dep2','async/async','lodash/dep1'], factory)
   } else if (typeof module === "object" && !!module.exports) {
-    module.exports = factory(require('dep2'),require('async/async'),require('lodash/dep1'))
+    module.exports = factory(require('dep1'),require('dep2'),require('async/async'),require('lodash/dep1'))
   } else {
+    var dep1 =  parent.dep1
     var dep2 =  parent.dep2
     var async_async =  parent.async
     var lodash_dep1 =  parent.lodash_dep1
   
     parent["examples"] = parent["examples"] || {};
-    parent["examples"]["umd"] = factory(dep2,async_async,lodash_dep1);
+    parent["examples"]["umd"] = factory(dep1,dep2,async_async,lodash_dep1);
 
   }
-  }(this, function (dep2,async_async,lodash_dep1) {
+  }(this, function (dep1,dep2,async_async,lodash_dep1) {
   var closure = {}
 
+  closure['dep1'] = dep1
   closure['dep2'] = dep2
   closure['async/async'] = async_async
   closure['lodash/dep1'] = lodash_dep1
-  var __req = //externals: dep2,async/async,lodash/dep1 
+  var __req = //externals: dep1,dep2,async/async,lodash/dep1 
 (function (modules, namespace, imports) {
   var __circular = []
   function __req(name, override){
@@ -51,7 +53,6 @@
     return namespace[name];
   }
 
-  for(var name in modules) __req(name);
 
   return __req;
 })
@@ -63,9 +64,6 @@
     var a = require('jquery/lib-2/dep1');
     return { name: 'dep' };
 },null], 
-'dep1': [function(exports,require,module) { 
-    module.exports = { test: 'test' };
-}], 
 'd3': [function(exports,require,module,define) { 
     (function (root, factory) {
       if (typeof define === 'function' && define.amd) {
@@ -178,9 +176,9 @@ module.exports = "<div id=\"module_name\" tabIndex=\"1\">test</div>"
 }]
 }
 ,  function() { this.examples = this.examples || {};this.examples.umd = this.examples.umd || {}; return this.examples.umd }.call(this) 
-, window ? [closure,parent.test] : []
+, typeof window === 'undefined' ? [] : [closure,parent.test]
 )
 
-return __req('index.js')
+return __req('nananana')
 
 }.bind({})))

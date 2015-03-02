@@ -117,6 +117,7 @@ function createBundle() {
     , result
 
   config.development = false
+  config.buildInfo = false
 
   var _spy = function(config) {
     return spy = through.obj(function(m,e,n) {

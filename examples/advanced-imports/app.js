@@ -49,8 +49,6 @@ var __req = //externals: jquery
     return namespace[name];
   }
 
-  for(var name in modules) __req(name);
-
   return __req;
 })
 ({ 
@@ -69,7 +67,7 @@ var __req = //externals: jquery
 }]
 }
 ,  function() { this.ns = this.ns || {};this.ns.org = this.ns.org || {};this.ns.org.app = this.ns.org.app || {}; return this.ns.org.app }.call(this) 
-, window ? [closure,ns.org.components] : []
+, typeof window === 'undefined' ? [] : [closure,ns.org.components]
 )
 
 return __req('app')

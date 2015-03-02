@@ -12,7 +12,7 @@ module.exports = function(grunt) {
       all: ['test/**/**/*_test.js']
     },
     watch: {
-      files: ['test/**/**', 'lib/**/*.*', '*.*']
+      files: ['test/**', 'lib/**/*.*', '*.*']
     , tasks: ['shell:tests', 'nodeunit']
     }
   })

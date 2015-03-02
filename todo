@@ -1,5 +1,5 @@
 1. callbacks, onModuleLoaded (to provide some changes into src file)
-2. resolving __dirname (detect globals)
-3. done - callback
+2. global transforms (to be able to get a list of internal/external modules)
+3. generate header
 4. multiversioning, creating internal requires
 /* 5. make possible seting a config for external transforms as config.custom-stream-name */

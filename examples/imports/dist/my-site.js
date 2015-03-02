@@ -31,8 +31,6 @@
     return namespace[name];
   }
 
-  for(var name in modules) __req(name);
-
   return __req;
 })
 ({ 
@@ -42,5 +40,5 @@
 }]
 }
 ,  function() { this.examples = this.examples || {};this.examples.imports = this.examples.imports || {};this.examples.imports.org = this.examples.imports.org || {};this.examples.imports.org.site = this.examples.imports.org.site || {}; return this.examples.imports.org.site }.call(this) 
-, window ? [examples.imports.component] : []
+, typeof window === 'undefined' ? [] : [examples.imports.component]
 )
