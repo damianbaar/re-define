@@ -1,20 +1,23 @@
+//re-define version:0.0.2-alpha
+require = (function() {
+return (function (modules, namespace, imports) {
+  var __oldReq = typeof require == "function" && require
 
-(function (modules, namespace, imports) {
-  var __circular = []
-  function __req(name, override){
+  function __req(name){
 
     if(!namespace[name]) {
-      var m = {exports:{}}
-        , f = modules[name]
+      var f = modules[name]
+        , m = { exports:{} }
         , args
 
       if(f) {
-        args = [m.exports, __req, m].concat(f.slice(1))
-        m.done = false
-        namespace[name] = m.exports
-        f = f[0].apply(m, args)
-        namespace[name] = f ? f : m.exports
-        m.done = true
+
+        args = [m.exports, function(x) {
+          return __req(x)
+        }, m].concat(f.slice(1))
+
+        namespace[name] = m
+        f = f[0].apply(null, args)
       } else {
         var mod
           , len = imports && imports.length;
@@ -24,11 +27,11 @@
           if(mod) return mod;
         }
 
-        if(typeof require == "function" && require) return require.apply(null, arguments);
-        else if(!mod) throw new Error('Module does not exists ' + name);
+        if(__oldReq) return __oldReq.apply(null, arguments);
+        throw new Error('Module does not exists ' + name);
       }
     }
-    return namespace[name];
+    return namespace[name].exports;
   }
 
   return __req;
@@ -46,3 +49,4 @@
 ,  function() { this.examples = this.examples || {};this.examples.imports = this.examples.imports || {};this.examples.imports.component = this.examples.imports.component || {}; return this.examples.imports.component }.call(this) 
 , typeof window === 'undefined' ? [] : []
 )
+})()

@@ -1,3 +1,5 @@
+//re-define version:0.0.2-alpha
+//externals: dep1,dep2,async/async,lodash/dep1
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
     define('amd/name', ['dep1','dep2','async/async','lodash/dep1'], factory)
@@ -20,23 +22,24 @@
   closure['dep2'] = dep2
   closure['async/async'] = async_async
   closure['lodash/dep1'] = lodash_dep1
-  var __req = //externals: dep1,dep2,async/async,lodash/dep1 
-(function (modules, namespace, imports) {
-  var __circular = []
-  function __req(name, override){
+  var __req = (function (modules, namespace, imports) {
+  var __oldReq = typeof require == "function" && require
+
+  function __req(name){
 
     if(!namespace[name]) {
-      var m = {exports:{}}
-        , f = modules[name]
+      var f = modules[name]
+        , m = { exports:{} }
         , args
 
       if(f) {
-        args = [m.exports, __req, m].concat(f.slice(1))
-        m.done = false
-        namespace[name] = m.exports
-        f = f[0].apply(m, args)
-        namespace[name] = f ? f : m.exports
-        m.done = true
+
+        args = [m.exports, function(x) {
+          return __req(x)
+        }, m].concat(f.slice(1))
+
+        namespace[name] = m
+        f = f[0].apply(null, args)
       } else {
         var mod
           , len = imports && imports.length;
@@ -46,13 +49,12 @@
           if(mod) return mod;
         }
 
-        if(typeof require == "function" && require) return require.apply(null, arguments);
-        else if(!mod) throw new Error('Module does not exists ' + name);
+        if(__oldReq) return __oldReq.apply(null, arguments);
+        throw new Error('Module does not exists ' + name);
       }
     }
-    return namespace[name];
+    return namespace[name].exports;
   }
-
 
   return __req;
 })
