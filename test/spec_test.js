@@ -10,23 +10,26 @@ sandbox = function(file, globals) {
 }
 exports['testing-bundles'] = testCase({
 
-//   "nested dependencies - structure with dependencies comming from node_modules (pattern: default)" 
-// : testCase({
-//     'create namespace and expose all modules': function(test) {
-//       var ctx = sandbox(path.resolve(__dirname, 'spec/nested-dependencies/bundle.js'))
-//         , spec = ctx.spec
-//
-//       test.equal(spec.nested['common/common'], 'common')
-//       test.equal(spec.nested['common'], 'common/index')
-//       test.equal(spec.nested['d/d'], 'd')
-//       test.equal(spec.nested['a/c'], 'c')
-//       test.equal(spec.nested['a/c'], 'c')
-//       test.equal(spec.nested['test'], 'main')
-//
-//       test.done()
-//     }
-//   })
-//
+  "nested dependencies - structure with dependencies comming from node_modules (pattern: default)" 
+: testCase({
+    'create namespace and expose all modules': function(test) {
+      var ctx = sandbox(
+        [ path.resolve(__dirname, 'spec/nested-dependencies/bundle.js')
+        , path.resolve(__dirname, 'spec/nested-dependencies/__run__.js')]
+        , {})
+        , spec = ctx.spec
+
+      test.equal(spec.nested['common/common'].exports, 'common')
+      test.equal(spec.nested['common'].exports, 'common/index')
+      test.equal(spec.nested['d/d'].exports, 'd')
+      test.equal(spec.nested['a/c'].exports, 'c')
+      test.equal(spec.nested['a/c'].exports, 'c')
+      test.equal(spec.nested['test'].exports, 'main')
+
+      test.done()
+    }
+  }),
+
   "umd - exporting values"
 : testCase({
     'expose only factory function': function(test) {
@@ -199,25 +202,28 @@ exports['testing-bundles'] = testCase({
     }
   })
 
-// , "referencing from index"
-// : testCase({
-//     'correct initialization': function(test) {
-//       var globals = {require: function(a) {
-//         throw new Error('It should not be called as all deps are there', a)
-//       }}
-//         , ctx = sandbox(path.resolve(__dirname, 'spec/referencing-from-index/bundle.js'), globals)
-//         , code = ctx.spec.refs
-//
-//       test.ok(_.has(code, 'refs/common'))
-//       test.ok(_.has(code, 'refs/dep'))
-//       test.ok(_.has(code, 'refs/dep2'))
-//       test.ok(_.has(code, 'refs/common-2'))
-//       test.ok(_.has(code, 'refs'))
-//       test.equal(code['refs'], 'index')
-//
-//       test.done()
-//     }
-//   })
+, "referencing from index"
+: testCase({
+    'correct initialization': function(test) {
+      var globals = {require: function(a) {
+        throw new Error('It should not be called as all deps are there', a)
+      }}
+        , ctx = sandbox(
+          [ path.resolve(__dirname, 'spec/referencing-from-index/bundle.js'),
+          , path.resolve(__dirname, 'spec/referencing-from-index/__run__.js')]
+          , globals)
+        , code = ctx.spec.refs
+
+      test.ok(_.has(code, 'refs/common'))
+      test.ok(_.has(code, 'refs/dep'))
+      test.ok(_.has(code, 'refs/dep2'))
+      test.ok(_.has(code, 'refs/common-2'))
+      test.ok(_.has(code, 'refs'))
+      test.equal(code['refs'].exports, 'index')
+
+      test.done()
+    }
+  })
 
 , "globals"
 : testCase({
