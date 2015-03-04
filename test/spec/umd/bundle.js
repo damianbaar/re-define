@@ -1,4 +1,4 @@
-//re-define version:0.0.2-alpha
+//re-define version:0.0.3-alpha
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
     define('umd/module', [], factory)

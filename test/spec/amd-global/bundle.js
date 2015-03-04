@@ -1,4 +1,4 @@
-//re-define version:0.0.2-alpha
+//re-define version:0.0.3-alpha
 //externals: a-a
 (function (parent, factory){
   var __f
