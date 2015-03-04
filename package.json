@@ -27,7 +27,6 @@
     "rimraf": "^2.2.8",
     "stream-combiner": "^0.2.1",
     "through2": "^0.4.1",
-    "uglifyjs": "^2.3.6",
     "vinyl": "^0.2.3"
   },
   "devDependencies": {
