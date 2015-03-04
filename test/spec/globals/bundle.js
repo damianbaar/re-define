@@ -1,4 +1,4 @@
-//re-define version:0.0.3-alpha
+//re-define version:1.14.0
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
     define('amd/name', [], factory)
