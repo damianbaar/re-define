@@ -1,4 +1,4 @@
-//re-define version:0.0.2-alpha
+//re-define version:0.0.3-alpha
 require = (function() {
 return (function (modules, namespace, imports) {
   var __oldReq = typeof require == "function" && require

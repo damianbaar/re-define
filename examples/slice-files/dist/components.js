@@ -1,4 +1,4 @@
-//re-define version:0.0.2-alpha
+//re-define version:0.0.3-alpha
 //externals: d3
 require = (function() {
 return (function (modules, namespace, imports) {
