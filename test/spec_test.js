@@ -10,23 +10,26 @@ sandbox = function(file, globals) {
 }
 exports['testing-bundles'] = testCase({
 
-//   "nested dependencies - structure with dependencies comming from node_modules (pattern: default)" 
-// : testCase({
-//     'create namespace and expose all modules': function(test) {
-//       var ctx = sandbox(path.resolve(__dirname, 'spec/nested-dependencies/bundle.js'))
-//         , spec = ctx.spec
-//
-//       test.equal(spec.nested['common/common'], 'common')
-//       test.equal(spec.nested['common'], 'common/index')
-//       test.equal(spec.nested['d/d'], 'd')
-//       test.equal(spec.nested['a/c'], 'c')
-//       test.equal(spec.nested['a/c'], 'c')
-//       test.equal(spec.nested['test'], 'main')
-//
-//       test.done()
-//     }
-//   })
-//
+  "nested dependencies - structure with dependencies comming from node_modules (pattern: default)" 
+: testCase({
+    'create namespace and expose all modules': function(test) {
+      var ctx = sandbox(
+        [ path.resolve(__dirname, 'spec/nested-dependencies/bundle.js')
+        , path.resolve(__dirname, 'spec/nested-dependencies/__run__.js')]
+        , {})
+        , spec = ctx.spec
+
+      test.equal(spec.nested['common/common'].exports, 'common')
+      test.equal(spec.nested['common'].exports, 'common/index')
+      test.equal(spec.nested['d/d'].exports, 'd')
+      test.equal(spec.nested['a/c'].exports, 'c')
+      test.equal(spec.nested['a/c'].exports, 'c')
+      test.equal(spec.nested['test'].exports, 'main')
+
+      test.done()
+    }
+  }),
+
   "umd - exporting values"
 : testCase({
     'expose only factory function': function(test) {
@@ -79,58 +82,72 @@ exports['testing-bundles'] = testCase({
       test.done()
     }
   }),
-//
-//   "multiple-entry-points"
-// : testCase({
-//     'exposing modules': function(test) {
-//       var ctx = sandbox(path.resolve(__dirname, 'spec/multiple-entry-points/bundle.js'))
-//         , code = ctx.spec.multi
-//
-//       test.equal(code['test/dep'].name, 'dep')
-//       test.equal(code['test'], 'INDEX')
-//       test.equal(code['test/entry1'], 'ENTRY1')
-//       test.equal(code['test/entry2'], 'ENTRY2')
-//
-//       test.done()
-//     },
-//   }),
-//
-//   "referencing-nested-files"
-// : testCase({
-//     'exposing modules': function(test) {
-//       var ctx = sandbox(path.resolve(__dirname, 'spec/referencing-nested-files/bundle.js'))
-//         , code = ctx.spec.refs
-//
-//       test.equal(code['a'], 'a')
-//       test.equal(code['a/c'], 'c')
-//       test.equal(code['a/b'], 'b')
-//       test.equal(code['a/b/d'], 'd')
-//       test.equal(code['a/b/d/e'], 'e')
-//       test.equal(code['refs'], 'refs')
-//
-//       test.done()
-//     }
-//   }),
-//
-//   "index"
-// : testCase({
-//     // 'look-at-index-file': function(test) {
-//     //   var globals = { require: sinon.spy() }
-//     //     , ctx = sandbox(path.resolve(__dirname, 'spec/index/bundle.js'), globals)
-//     //     , code = ctx.spec
-//     //
-//     //   test.ok(code.index.test)
-//     //   test.ok(code.index['test/dep'])
-//     //   test.done()
-//     // },
-//     'show-warnings': function(test) {
-//       var code = fs.readFileSync(path.resolve(__dirname, 'spec/index/bundle.js'), 'utf-8')
-//
-//       test.ok(code.indexOf('//warning') === -1)
-//       test.done()
-//     }
-//   }),
-//
+
+  "multiple-entry-points"
+: testCase({
+    'exposing modules': function(test) {
+      var ctx = sandbox(
+        [path.resolve(__dirname, 'spec/multiple-entry-points/bundle.js'),
+         path.resolve(__dirname, 'spec/multiple-entry-points/__run__.js')],
+         { exports: {} })
+        , code = ctx.spec.multi
+
+      test.equal(code['test/dep'].exports.name, 'dep')
+      test.equal(code['test'].exports, 'INDEX')
+      test.equal(code['test/entry1'].exports, 'ENTRY1')
+      test.equal(code['test/entry2'].exports, 'ENTRY2')
+
+      test.done()
+    },
+  }),
+
+  "referencing-nested-files"
+: testCase({
+    'exposing modules within namespace': function(test) {
+      var globals = {
+          window: {},
+          module: {exports: {}}
+        }
+
+      var ctx = sandbox(
+        [ path.resolve(__dirname, 'spec/referencing-nested-files/bundle.js'),
+          path.resolve(__dirname, 'spec/referencing-nested-files/__run__.js')
+        ], globals)
+        , code = ctx.spec.refs
+
+      test.equal(code['a'].exports, 'a')
+      test.equal(code['a/c'].exports, 'c')
+      test.equal(code['a/b'].exports, 'b')
+      test.equal(code['a/b/d'].exports, 'd')
+      test.equal(code['a/b/d/e'].exports, 'e')
+      test.equal(code['refs'].exports, 'refs')
+
+      test.done()
+    }
+  }),
+
+  "index"
+: testCase({
+    'look-at-index-file': function(test) {
+      var globals = { require: sinon.spy() }
+        , ctx = sandbox(
+          [ path.resolve(__dirname, 'spec/index/bundle.js'),
+            path.resolve(__dirname, 'spec/index/__run__.js') ]
+        , globals)
+        , code = ctx.spec
+
+      test.equal(code.index.test.exports, 'INDEX')
+      test.ok(code.index['test/dep'].exports.toUpperCase)
+      test.done()
+    },
+    'show-warnings': function(test) {
+      var code = fs.readFileSync(path.resolve(__dirname, 'spec/index/bundle.js'), 'utf-8')
+
+      test.ok(code.indexOf('//warning') === -1)
+      test.done()
+    }
+  }),
+
   "external-require"
 : testCase({
     'take a dep from external require': function(test) {
@@ -185,25 +202,28 @@ exports['testing-bundles'] = testCase({
     }
   })
 
-// , "referencing from index"
-// : testCase({
-//     'correct initialization': function(test) {
-//       var globals = {require: function(a) {
-//         throw new Error('It should not be called as all deps are there', a)
-//       }}
-//         , ctx = sandbox(path.resolve(__dirname, 'spec/referencing-from-index/bundle.js'), globals)
-//         , code = ctx.spec.refs
-//
-//       test.ok(_.has(code, 'refs/common'))
-//       test.ok(_.has(code, 'refs/dep'))
-//       test.ok(_.has(code, 'refs/dep2'))
-//       test.ok(_.has(code, 'refs/common-2'))
-//       test.ok(_.has(code, 'refs'))
-//       test.equal(code['refs'], 'index')
-//
-//       test.done()
-//     }
-//   })
+, "referencing from index"
+: testCase({
+    'correct initialization': function(test) {
+      var globals = {require: function(a) {
+        throw new Error('It should not be called as all deps are there', a)
+      }}
+        , ctx = sandbox(
+          [ path.resolve(__dirname, 'spec/referencing-from-index/bundle.js'),
+          , path.resolve(__dirname, 'spec/referencing-from-index/__run__.js')]
+          , globals)
+        , code = ctx.spec.refs
+
+      test.ok(_.has(code, 'refs/common'))
+      test.ok(_.has(code, 'refs/dep'))
+      test.ok(_.has(code, 'refs/dep2'))
+      test.ok(_.has(code, 'refs/common-2'))
+      test.ok(_.has(code, 'refs'))
+      test.equal(code['refs'].exports, 'index')
+
+      test.done()
+    }
+  })
 
 , "globals"
 : testCase({

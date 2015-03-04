@@ -1,6 +1,8 @@
 (function (parent, factory){
+  var __f
+
   if (typeof exports === 'object') {
-    module.exports = factory(<%=
+    module.exports = __f = factory(<%=
            _.map(external, function(d){ return "require('" + d + "')" }).join(',') %>)
   } 
 
@@ -22,7 +24,7 @@
         .each(function(name) {;
     %><%= name %>
     <%})%>
-    var __f = factory(<%= _.map(external, util.escape).join(',') %>) 
+    __f = __f || factory(<%= _.map(external, util.escape).join(',') %>) 
     <%= util.toGlobal(['parent'].concat(config.names.global.split('.')), '__f') %>
     if (hasAMD) define('<%- config.names.amd %>', function() { return __f })
   }

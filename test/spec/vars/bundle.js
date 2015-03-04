@@ -1,4 +1,4 @@
-//re-define version:1.13.7
+//re-define version:1.14.0
 //externals: a,b,c
 (function (parent,a,b,c) {
 var closure = {}

@@ -198,14 +198,14 @@ exports['rewrite-require'] = {
   },
   'windows paths with pkg name': function(test) {
     var m = createModule('foo')
-      , ref1 = createModule('bar')
-      , ref2 = createModule('baz')
+      , ref1 = createModule('comp/bar')
+      , ref2 = createModule('comp/a/baz')
       , base = _.partial(path.join, process.cwd())
 
     m.path = base(m.name + '.js')
 
-    ref1.path = base('/node_modules/comp', ref1.name + '.js')
-    ref2.path = base('/node_modules/comp/a', ref2.name + '.js')
+    ref1.path = base('/node_modules/', ref1.name + '.js')
+    ref2.path = base('/node_modules/', ref2.name + '.js')
 
     ref1.pkgName = 'component'
     ref1.descriptor = {}
@@ -215,8 +215,8 @@ exports['rewrite-require'] = {
     ref2.path = windowsPath(ref2.path)
 
     m.update = function(val) { test.equal(val, 'nana/foo') }
-    ref1.update = function(val) { test.equal(val, 'component') }
-    ref2.update = function(val) { test.equal(val, 'component/a/baz') }
+    ref1.update = function(val) { test.equal(val, 'comp/bar') }
+    ref2.update = function(val) { test.equal(val, 'comp/a/baz') }
 
     convert( [m, ref1, ref2]
            , function() { test.done() }

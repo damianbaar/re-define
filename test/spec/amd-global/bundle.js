@@ -1,8 +1,10 @@
-//re-define version:1.13.7
+//re-define version:1.14.0
 //externals: a-a
 (function (parent, factory){
+  var __f
+
   if (typeof exports === 'object') {
-    module.exports = factory(require('a-a'))
+    module.exports = __f = factory(require('a-a'))
   } 
 
   if (typeof window != 'undefined') {
@@ -19,7 +21,7 @@
 
     var a_a = __find(parent, ['a-a','a.b.c']) || __find(window, ['a-a','a.b.c']) || __req('a-a')
     
-    var __f = factory(a_a) 
+    __f = __f || factory(a_a) 
     parent["amd-global"] = parent["amd-global"] || {};
     parent["amd-global"]["module"] = __f;
 
