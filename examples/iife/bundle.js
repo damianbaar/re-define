@@ -1,5 +1,5 @@
-//re-define version:0.0.3-alpha
-//library version:
+//re-define version:1.14.0
+//library version:1.2.0
 (function (parent) {
 var closure = {}
 
