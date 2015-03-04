@@ -1,1 +1,3 @@
-module.exports = 'dep'
+;define(function() {
+  return 'dep' 
+})

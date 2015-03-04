@@ -1,4 +1,4 @@
-//re-define version:1.14.0
+//re-define version:1.14.1
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
     define('umd/module', [], factory)
@@ -50,9 +50,9 @@
   return __req;
 })
 ({ 
-'umd/dep': [function(exports,require,module) { 
-    module.exports = 'dep';
-}], 
+'umd/dep': [function(exports,require,module,define) { 
+    return 'dep';
+},null], 
 'umd/util.object': [function(exports,require,module) { 
     var dep = require('umd/dep');
     module.exports = 'util object with dots in file';
