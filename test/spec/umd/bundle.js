@@ -1,4 +1,4 @@
-//re-define version:1.14.1
+//re-define version:1.14.2
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
     define('umd/module', [], factory)
@@ -29,8 +29,9 @@
           return __req(x)
         }, m].concat(f.slice(1))
 
-        namespace[name] = m
-        f = f[0].apply(null, args)
+        namespace[name] = m;
+        f = f[0].apply(null, args);
+        f && (m.exports = f);
       } else {
         var mod
           , len = imports && imports.length;
@@ -51,7 +52,7 @@
 })
 ({ 
 'umd/dep': [function(exports,require,module,define) { 
-    return 'dep';
+    return 'hello-amd';
 },null], 
 'umd/util.object': [function(exports,require,module) { 
     var dep = require('umd/dep');

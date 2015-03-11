@@ -1,4 +1,4 @@
-//re-define version:1.14.1
+//re-define version:1.14.2
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
     define('amd/name', [], factory)
@@ -30,8 +30,9 @@
           return __req(x)
         }, m].concat(f.slice(1))
 
-        namespace[name] = m
-        f = f[0].apply(null, args)
+        namespace[name] = m;
+        f = f[0].apply(null, args);
+        f && (m.exports = f);
       } else {
         var mod
           , len = imports && imports.length;

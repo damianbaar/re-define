@@ -37,6 +37,7 @@ exports['testing-bundles'] = testCase({
         , global = ctx.umd.module
         , keys = _.keys(global)
 
+      test.equal(global.dep, 'hello-amd')
       test.equal(keys[0], 'dep')
       test.equal(keys[1], 'name')
       test.equal(keys.length, 4)

@@ -1,4 +1,4 @@
-//re-define version:1.14.1
+//re-define version:1.14.2
 //externals: a,b,c
 (function (parent,a,b,c) {
 var closure = {}
@@ -23,8 +23,9 @@ var __req = (function (modules, namespace, imports) {
           return __req(x)
         }, m].concat(f.slice(1))
 
-        namespace[name] = m
-        f = f[0].apply(null, args)
+        namespace[name] = m;
+        f = f[0].apply(null, args);
+        f && (m.exports = f);
       } else {
         var mod
           , len = imports && imports.length;
