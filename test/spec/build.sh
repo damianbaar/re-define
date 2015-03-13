@@ -9,3 +9,4 @@
 (cd referencing-from-index && ./build.sh)
 (cd globals && ./build.sh)
 (cd vars && ./build.sh)
+(cd empty && ./build.sh)

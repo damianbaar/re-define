@@ -38,31 +38,18 @@ return (function (modules, namespace, imports) {
   return __req;
 })
 ({ 
-'common': [function(exports,require,module) { 
-    module.exports = 'common/index';
+'test/empty.html': [function(exports,require,module) { 
+module.exports = "[object Object]"
 }], 
-'a/b': [function(exports,require,module) { 
-    require('common');
-    module.exports = 'b';
-}], 
-'d/d': [function(exports,require,module) { 
-    module.exports = 'd';
-}], 
-'a/c': [function(exports,require,module) { 
-    var d = require('d/d');
-    module.exports = 'c';
-}], 
-'common/common': [function(exports,require,module) { 
-    module.exports = 'common';
+'test/empty': [function(exports,require,module) { 
+    '<div>error: empty file, /Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/test/spec/empty/empty.js</div>';
 }], 
 'test': [function(exports,require,module) { 
-    require('a/b');
-    require('a/c');
-    require('common/common');
-    module.exports = 'main';
+    var emptyText = require('test/empty.html');
+    var emptyJS = require('test/empty');
 }]
 }
-,  function() { this.spec = this.spec || {};this.spec.nested = this.spec.nested || {}; return this.spec.nested }.call(this) 
+,  function() { this.spec = this.spec || {};this.spec.external = this.spec.external || {}; return this.spec.external }.call(this) 
 , typeof window === 'undefined' ? [] : []
 )
 })()
