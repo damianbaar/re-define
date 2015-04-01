@@ -1,4 +1,4 @@
-//re-define version:1.14.2
+//re-define version:1.14.4
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
     define('umd/module', [], factory)
@@ -10,7 +10,7 @@
     parent["umd"]["module"] = factory();
 
   }
-  }(this, function () {
+  })(this, function () {
   var closure = {}
 
   var __req = (function (modules, namespace, imports) {
@@ -58,6 +58,20 @@
     var dep = require('umd/dep');
     module.exports = 'util object with dots in file';
 }], 
+'umd/view-1/template.html': [function(exports,require,module) { 
+module.exports = "<h1>View 1</h1>"
+}], 
+'umd/view-1': [function(exports,require,module,define) { 
+    var view = require('umd/view-1/template.html');
+    return view;
+},null], 
+'umd/view-2/template.html': [function(exports,require,module) { 
+module.exports = "<h1>View 2</h1>"
+}], 
+'umd/view-2': [function(exports,require,module,define) { 
+    var view = require('umd/view-2/template.html');
+    return view;
+},null], 
 'umd/data.json': [function(exports,require,module) { 
 module.exports = { "test": true }
 
@@ -65,18 +79,22 @@ module.exports = { "test": true }
 'umd/umd': [function(exports,require,module) { 
     var dep = require('umd/dep');
     var util = require('umd/util.object');
+    var view1 = require('umd/view-1');
+    var view2 = require('umd/view-2');
     module.exports = {
       dep: dep,
       name: 'umd',
       data: require('umd/data.json'),
-      dots: util
+      dots: util,
+      view1: view1,
+      view2: view2
     };
 }]
 }
-, {} 
+,  function() { this.test = this.test || {};this.test.umd = this.test.umd || {}; return this.test.umd }.call(this) 
 , typeof window === 'undefined' ? [] : [closure]
 )
 
 return __req('umd/umd')
 
-}.bind({})))
+})

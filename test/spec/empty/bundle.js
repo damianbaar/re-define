@@ -1,9 +1,6 @@
 //re-define version:1.14.4
-(function (parent) {
-var closure = {}
-
-
-var __req = (function (modules, namespace, imports) {
+require = (function() {
+return (function (modules, namespace, imports) {
   var __oldReq = typeof require == "function" && require
 
   function __req(name){
@@ -41,21 +38,18 @@ var __req = (function (modules, namespace, imports) {
   return __req;
 })
 ({ 
-'dep': [function(exports,require,module) { 
-    module.exports = 'dep';
+'test/empty.html': [function(exports,require,module) { 
+module.exports = "[object Object]"
 }], 
-'iife': [function(exports,require,module) { 
-    var dep = require('dep');
-    window.test = {
-      dep: dep,
-      name: 'iife'
-    };
+'test/empty': [function(exports,require,module) { 
+    '<div>error: empty file, /Users/damianbaar/Documents/Workspaces/HTML:JS:Node/re-define/test/spec/empty/empty.js</div>';
+}], 
+'test': [function(exports,require,module) { 
+    var emptyText = require('test/empty.html');
+    var emptyJS = require('test/empty');
 }]
 }
-,  function() { this.window = this.window || {};this.window.amd = this.window.amd || {};this.window.amd.global = this.window.amd.global || {}; return this.window.amd.global }.call(this) 
-, typeof window === 'undefined' ? [] : [closure]
+,  function() { this.spec = this.spec || {};this.spec.external = this.spec.external || {}; return this.spec.external }.call(this) 
+, typeof window === 'undefined' ? [] : []
 )
-
-return __req('iife')
-
-}.call({},this))
+})()

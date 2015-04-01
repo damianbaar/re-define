@@ -38,32 +38,45 @@ return (function (modules, namespace, imports) {
   return __req;
 })
 ({ 
-'a/b': [function(exports,require,module) { 
-    module.exports = 'b';
+'model/error.html': [function(exports,require,module) { 
+module.exports = "<div>error</div>"
 }], 
-'a/c': [function(exports,require,module) { 
-    module.exports = 'c';
+'model/model': [function(exports,require,module) { 
+    var errorTmpl = require('model/error.html');
+    module.exports = {
+      name: 'model',
+      error: errorTmpl
+    };
 }], 
-'a/b/d': [function(exports,require,module) { 
-    module.exports = 'd';
+'view/view.html': [function(exports,require,module) { 
+module.exports = "<div>view</div>"
 }], 
-'a/b/d/e': [function(exports,require,module) { 
-    module.exports = 'e';
+'view/view': [function(exports,require,module) { 
+    var view = require('view/view.html');
+    module.exports = {
+      name: 'model',
+      view: view
+    };
 }], 
-'a': [function(exports,require,module) { 
-    var b = require('a/b');
-    var c = require('a/c');
-    var d = require('a/b/d');
-    var e = require('a/b/d/e');
-    module.exports = 'a';
+'jquery/jquery.html': [function(exports,require,module) { 
+module.exports = "<div>view</div>"
+}], 
+'jquery/jquery': [function(exports,require,module) { 
+    var view = require('jquery/jquery.html');
+    module.exports = {
+      name: 'jquery',
+      template: view
+    };
 }], 
 'refs': [function(exports,require,module) { 
-    var a = require('a');
-    var b = require('a/b');
-    var c = require('a/c');
-    var d = require('a/b/d');
-    var e = require('a/b/d/e');
-    module.exports = 'refs';
+    var model = require('model/model');
+    var view = require('view/view');
+    var $ = require('jquery/jquery');
+    module.exports = {
+      model: model,
+      view: view,
+      jquery: $
+    };
 }]
 }
 ,  function() { this.spec = this.spec || {};this.spec.refs = this.spec.refs || {}; return this.spec.refs }.call(this) 

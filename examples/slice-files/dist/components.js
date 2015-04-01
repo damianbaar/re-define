@@ -1,4 +1,4 @@
-//re-define version:1.14.0
+//re-define version:1.14.4
 //externals: d3
 require = (function() {
 return (function (modules, namespace, imports) {
@@ -17,8 +17,9 @@ return (function (modules, namespace, imports) {
           return __req(x)
         }, m].concat(f.slice(1))
 
-        namespace[name] = m
-        f = f[0].apply(null, args)
+        namespace[name] = m;
+        f = f[0].apply(null, args);
+        f && (m.exports = f);
       } else {
         var mod
           , len = imports && imports.length;

@@ -13,7 +13,7 @@
   <%})%>
     <%= util.toGlobal(['parent'].concat(config.names.global.split('.')), "factory("+_.map(external, util.escape).join(',') + ")") %>
   }
-  }(this, function (<%= _.map(external, util.escape).join(',') %>) {
+  })(this, function (<%= _.map(external, util.escape).join(',') %>) {
   var closure = {}
 
   <% _.chain(external)
@@ -23,4 +23,4 @@
   <%})%>var __req = <%= util.getTemplate('default', ['closure']) %>
 return __req('<%= config.returns %>')
 
-}.bind({})))
+})

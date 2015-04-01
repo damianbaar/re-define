@@ -1,4 +1,4 @@
-//re-define version:1.14.2
+//re-define version:1.14.4
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
     define('amd/name', [], factory)
@@ -11,7 +11,7 @@
     parent["window"]["amd"]["global"] = factory();
 
   }
-  }(this, function () {
+  })(this, function () {
   var closure = {}
 
   var __req = (function (modules, namespace, imports) {
@@ -69,4 +69,4 @@
 
 return __req('globals')
 
-}.bind({})))
+})

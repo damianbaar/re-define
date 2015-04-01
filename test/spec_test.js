@@ -33,14 +33,19 @@ exports['testing-bundles'] = testCase({
   "umd - exporting values"
 : testCase({
     'expose only factory function': function(test) {
-      var ctx = sandbox(path.resolve(__dirname, 'spec/umd/bundle.js'))
+      var globals = {}
+
+      var ctx = sandbox(path.resolve(__dirname, 'spec/umd/bundle.js'), globals)
         , global = ctx.umd.module
         , keys = _.keys(global)
 
       test.equal(global.dep, 'hello-amd')
       test.equal(keys[0], 'dep')
       test.equal(keys[1], 'name')
-      test.equal(keys.length, 4)
+      test.equal(global.view1, '<h1>View 1</h1>')
+      test.equal(global.view2, '<h1>View 2</h1>')
+
+      test.equal(keys.length, 6)
 
       test.done()
     },
@@ -122,6 +127,32 @@ exports['testing-bundles'] = testCase({
       test.equal(code['a/b/d'].exports, 'd')
       test.equal(code['a/b/d/e'].exports, 'e')
       test.equal(code['refs'].exports, 'refs')
+
+      test.done()
+    }
+  }),
+
+  "referencing-from-root"
+: testCase({
+    'exposing modules within namespace': function(test) {
+      var globals = {
+          window: {},
+          module: {exports: {}}
+        }
+
+      var ctx = sandbox(
+        [ path.resolve(__dirname, 'spec/referencing-from-root/bundle.js'),
+          path.resolve(__dirname, 'spec/referencing-from-root/__run__.js')
+        ], globals)
+        , code = ctx.spec.refs
+      
+      test.equal(_.keys(code).length, 7, 'Missing module')
+      test.ok(code['model/model'], 'missing model')
+      test.ok(code['model/error.html'], 'missing error tempalte')
+      test.ok(code['view/view'], 'missing view')
+      test.ok(code['view/view.html'], 'missing view template')
+      test.ok(code['jquery/jquery'], 'missing jquery')
+      test.ok(code['jquery/jquery.html'], 'missing jquery template')
 
       test.done()
     }

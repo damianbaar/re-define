@@ -1,4 +1,4 @@
-//re-define version:1.14.0
+//re-define version:1.14.4
 //externals: dep1,dep2,async/async,lodash/dep1
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
@@ -15,7 +15,7 @@
     parent["examples"]["umd"] = factory(dep1,dep2,async_async,lodash_dep1);
 
   }
-  }(this, function (dep1,dep2,async_async,lodash_dep1) {
+  })(this, function (dep1,dep2,async_async,lodash_dep1) {
   var closure = {}
 
   closure['dep1'] = dep1
@@ -38,8 +38,9 @@
           return __req(x)
         }, m].concat(f.slice(1))
 
-        namespace[name] = m
-        f = f[0].apply(null, args)
+        namespace[name] = m;
+        f = f[0].apply(null, args);
+        f && (m.exports = f);
       } else {
         var mod
           , len = imports && imports.length;
@@ -183,4 +184,4 @@ module.exports = "<div id=\"module_name\" tabIndex=\"1\">test</div>"
 
 return __req('nananana')
 
-}.bind({})))
+})
