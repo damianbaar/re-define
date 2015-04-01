@@ -51,6 +51,7 @@ var program = require('commander')
     , globals        : program.globals
     , project        : program.projectName
     , development    : !!program.development
+    , discoverable   : program.discoverable
     , exclude        : program.exclude
     }
 

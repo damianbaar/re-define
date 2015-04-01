@@ -132,6 +132,32 @@ exports['testing-bundles'] = testCase({
     }
   }),
 
+  "referencing-from-root"
+: testCase({
+    'exposing modules within namespace': function(test) {
+      var globals = {
+          window: {},
+          module: {exports: {}}
+        }
+
+      var ctx = sandbox(
+        [ path.resolve(__dirname, 'spec/referencing-from-root/bundle.js'),
+          path.resolve(__dirname, 'spec/referencing-from-root/__run__.js')
+        ], globals)
+        , code = ctx.spec.refs
+      
+      test.equal(_.keys(code).length, 7, 'Missing module')
+      test.ok(code['model/model'], 'missing model')
+      test.ok(code['model/error.html'], 'missing error tempalte')
+      test.ok(code['view/view'], 'missing view')
+      test.ok(code['view/view.html'], 'missing view template')
+      test.ok(code['jquery/jquery'], 'missing jquery')
+      test.ok(code['jquery/jquery.html'], 'missing jquery template')
+
+      test.done()
+    }
+  }),
+
   "index"
 : testCase({
     'look-at-index-file': function(test) {
