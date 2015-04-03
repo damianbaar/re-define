@@ -1,4 +1,4 @@
-//re-define version:1.14.4
+//re-define version:1.14.5
 require = (function() {
 return (function (modules, namespace, imports) {
   var __oldReq = typeof require == "function" && require
@@ -51,11 +51,16 @@ module.exports = "<div>error</div>"
 'view/view.html': [function(exports,require,module) { 
 module.exports = "<div>view</div>"
 }], 
+'view/template/template.html': [function(exports,require,module) { 
+module.exports = "<div>tricky template</div>"
+}], 
 'view/view': [function(exports,require,module) { 
     var view = require('view/view.html');
+    var tmpl = require('view/template/template.html');
     module.exports = {
       name: 'model',
-      view: view
+      view: view,
+      template: tmpl
     };
 }], 
 'jquery/jquery.html': [function(exports,require,module) { 

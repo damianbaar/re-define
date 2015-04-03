@@ -146,11 +146,12 @@ exports['testing-bundles'] = testCase({
         ], globals)
         , code = ctx.spec.refs
       
-      test.equal(_.keys(code).length, 7, 'Missing module')
+      test.equal(_.keys(code).length, 8, 'Missing module')
       test.ok(code['model/model'], 'missing model')
       test.ok(code['model/error.html'], 'missing error tempalte')
       test.ok(code['view/view'], 'missing view')
       test.ok(code['view/view.html'], 'missing view template')
+      test.ok(code['view/template/template.html'], 'missing template')
       test.ok(code['jquery/jquery'], 'missing jquery')
       test.ok(code['jquery/jquery.html'], 'missing jquery template')
 
