@@ -1,7 +1,8 @@
-//var errorTmpl = require('text!model/error.html')
-var a = 10;
+// var errorTmpl = require('text!model/error.html')
+var errorTmpl = require('text!model/error.html')
+  , a = 10
 
-module.exports = { name: 'model'}//, error: errorTmpl }
+module.exports = { name: 'model', error: errorTmpl }
 
 test()
 

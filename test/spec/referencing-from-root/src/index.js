@@ -1,6 +1,6 @@
 var model = require('model/model')
   , view = require('view/view')
-  , $ = 3//require('jquery/jquery')
+  , $ = require('jquery/jquery')
 
 module.exports = { model: model
                  , view: view 
@@ -11,4 +11,5 @@ function abc() {
   console.log('yeah')
 }
 
+$.test()
 abc()
