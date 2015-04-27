@@ -1,4 +1,4 @@
-//re-define version:1.14.4
+//re-define version:1.14.6
 //externals: jquery
 (function (parent, factory){
   if (typeof exports === 'object') {

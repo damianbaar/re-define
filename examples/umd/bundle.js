@@ -1,4 +1,4 @@
-//re-define version:1.14.4
+//re-define version:1.14.6
 //externals: dep1,dep2,async/async,lodash/dep1
 ;(function (parent, factory){
   if (typeof define === 'function' && define.amd) {
